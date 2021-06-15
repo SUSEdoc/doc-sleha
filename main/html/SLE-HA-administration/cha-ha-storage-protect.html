@@ -347,11 +347,36 @@ Timeout (msgwait)  : 10
       </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#co-ha-sbd-st-timeout"><span class="callout">3</span></a> </p></td><td valign="top" align="left"><p>
        A <code class="systemitem">stonith-timeout</code> value of <code class="literal">40</code>
        would be appropriate if the <code class="literal">msgwait</code> timeout value for
-       SBD was set to <code class="literal">30</code> seconds.</p></td></tr></table></div></li><li class="step "><p>For a two-node cluster, decide if you want predictable or random delays. For
-   other cluster setups you do not need to set this parameter.</p><div class="variablelist "><dl class="variablelist"><dt id="id-1.4.4.8.9.15.8.2.1"><span class="term ">Predictable static delays</span></dt><dd><p>This parameter enables a static delay before executing STONITH actions.
+       SBD was set to <code class="literal">30</code> seconds.</p></td></tr></table></div></li><li class="step " id="st-ha-storage-protect-fencing-static-random"><p>
+    For a two-node cluster, in case of split-brain, there will be fencing issued from
+    each node to the other as expected. To prevent both nodes from being reset at practically
+    the same time, it is recommended to apply the following fencing
+    delays to help one of the nodes, or even the preferred node, win the fencing match.
+    For clusters with more than two nodes, you do not need to apply these delays.
+   </p><div class="variablelist "><dl class="variablelist"><dt id="id-1.4.4.8.9.15.8.2.1"><span class="term ">Priority fencing delay</span></dt><dd><p>
+        The <code class="literal">priority-fencing-delay</code> cluster property is disabled by
+        default. By configuring a delay value, if the other node is lost and it has
+        the higher total resource priority, the fencing targeting it will be delayed
+        for the specified amount of time. This means that in case of split-brain,
+        the more important node wins the fencing match .
+      </p><p>
+        Resources that matter can be configured with priority meta attribute. On
+        calculation, the priority values of the resources or instances that are running
+        on each node are summed up to be accounted. A promoted resource instance takes the
+        configured base priority plus one, so that it receives a higher value than any
+        unpromoted instance.
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">crm</code> configure property priority-fencing-delay=30</pre></div><p>
+        Even if <code class="literal">priority-fencing-delay</code> is used, we still
+        recommend also using <code class="literal">pcmk_delay_base</code> or
+        <code class="literal">pcmk_delay_max</code> as described below to address any
+        situations where the nodes happen to have equal priority.
+        The value of <code class="literal">priority-fencing-delay</code> should be significantly
+        greater than the maximum of <code class="literal">pcmk_delay_base</code> / <code class="literal">pcmk_delay_max</code>, 
+        and preferably twice the maximum.
+       </p></dd><dt id="id-1.4.4.8.9.15.8.2.2"><span class="term ">Predictable static delays</span></dt><dd><p>This parameter enables a static delay before executing STONITH actions.
       It ensures that the nodes do not fence each other if separate fencing resources
       and different delay values are being used. The targeted node will
-      loose in a <span class="quote">“<span class="quote ">fencing race</span>”</span>.
+      loose in a fencing match.
       The parameter can be used to <span class="quote">“<span class="quote ">mark</span>”</span> a specific node to survive
       in case of a split brain scenario in a two-node cluster.
       To make this succeed, it is essential to create two primitive STONITH
@@ -360,7 +385,7 @@ Timeout (msgwait)  : 10
       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> st-sbd-alice stonith:external/sbd params \
        pcmk_host_list=alice pcmk_delay_base=20
 <code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> st-sbd-bob stonith:external/sbd params \
-       pcmk_host_list=bob pcmk_delay_base=0</pre></div></dd><dt id="id-1.4.4.8.9.15.8.2.2"><span class="term ">Dynamic random delays</span></dt><dd><p>This parameter prevents double fencing when using slow devices such
+       pcmk_host_list=bob pcmk_delay_base=0</pre></div></dd><dt id="id-1.4.4.8.9.15.8.2.3"><span class="term ">Dynamic random delays</span></dt><dd><p>This parameter prevents double fencing when using slow devices such
        as SBD. It adds a random delay for STONITH actions on the fencing device.
        It is especially important for two-node clusters where otherwise both nodes
        might try to fence each other in case of a split brain scenario.</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> stonith_sbd stonith:external/sbd
