@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Running cluster reports without root access | Administration Guide | SUSE Linux Enterprise High Availability Extension 15 SP3</title><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" /><link rel="stylesheet" type="text/css" href="static/css/style.css" /><link rel="stylesheet" type="text/css" href="static/css/highlight.css" /><meta name="generator" content="DAPS 3.2.0 (https://opensuse.github.io/daps) using SUSE XSL Stylesheets 2.81.0 (based on DocBook XSL Stylesheets 1.79.2) - chunked" /><meta name="product-name" content="SUSE Linux Enterprise High Availability Extension" /><meta name="product-number" content="15 SP3" /><meta name="book-title" content="Administration Guide" /><meta name="chapter-title" content="Appendix D. Running cluster reports without root access" /><meta name="description" content="All cluster nodes must be able to access each other via SSH. Tools like crm report (for troubleshooting) and Hawk2's History Explorer require passwordless SSH access between the nodes, otherwise they can only collect data from the current node." /><meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi" /><meta name="tracker-type" content="bsc" /><meta name="tracker-bsc-component" content="Documentation" /><meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability 15 SP3" /><link rel="home" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation" /><link rel="up" href="part-appendix.html" title="Part IV. Appendix" /><link rel="prev" href="app-ha-management.html" title="Appendix C. Cluster management tools (command line)" /><link rel="next" href="gl-heartb.html" title="Glossary" />
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://static.opensuse.org/fonts/fonts.css" /></noscript><script src="static/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="static/js/script.js" type="text/javascript"></script><script src="static/js/highlight.min.js" type="text/javascript"></script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script></head><body class="draft offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-navigation">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><div id="_outer-wrap"><div id="_white-bg" style="background-color: #E11;"><div id="_header"><div id="_logo"><img src="static/images/logo.svg" alt="Logo" /></div><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-administration.html">Administration Guide</a><span> › </span><a class="crumb" href="part-appendix.html">Appendix</a><span> › </span><a class="crumb" href="app-crmreport-nonroot.html">Running cluster reports without root access</a></div><div class="clearme"></div></div></div><div id="_toolbar-wrap"><div id="_toolbar"><div id="_toc-area" class="inactive"><a id="_toc-area-button" class="tool" title="Contents" accesskey="c" href="index.html"><span class="tool-spacer"><span class="toc-icon">Contents</span><span class="clearme"></span></span><span class="tool-label">Contents</span></a><div class="active-contents bubble-corner"></div><div class="active-contents bubble"><div class="bubble-container"><h6>Administration Guide</h6><div id="_bubble-toc"><ol><li class="inactive"><a href="pre-ha.html"><span class="number"> </span><span class="name">Preface</span></a></li><li class="inactive"><a href="part-install.html"><span class="number">I </span><span class="name">Installation, setup and upgrade</span></a><ol><li class="inactive"><a href="cha-ha-concepts.html"><span class="number">1 </span><span class="name">Product overview</span></a></li><li class="inactive"><a href="cha-ha-requirements.html"><span class="number">2 </span><span class="name">System requirements and recommendations</span></a></li><li class="inactive"><a href="cha-ha-install.html"><span class="number">3 </span><span class="name">Installing the High Availability Extension</span></a></li><li class="inactive"><a href="cha-ha-ycluster.html"><span class="number">4 </span><span class="name">Using the YaST cluster module</span></a></li><li class="inactive"><a href="cha-ha-migration.html"><span class="number">5 </span><span class="name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li class="inactive"><a href="part-config.html"><span class="number">II </span><span class="name">Configuration and administration</span></a><ol><li class="inactive"><a href="cha-ha-config-basics.html"><span class="number">6 </span><span class="name">Configuration and administration basics</span></a></li><li class="inactive"><a href="cha-conf-hawk2.html"><span class="number">7 </span><span class="name">Configuring and managing cluster resources with Hawk2</span></a></li><li class="inactive"><a href="cha-ha-manual-config.html"><span class="number">8 </span><span class="name">Configuring and managing cluster resources (command line)</span></a></li><li class="inactive"><a href="cha-ha-agents.html"><span class="number">9 </span><span class="name">Adding or modifying resource agents</span></a></li><li class="inactive"><a href="cha-ha-fencing.html"><span class="number">10 </span><span class="name">Fencing and STONITH</span></a></li><li class="inactive"><a href="cha-ha-storage-protect.html"><span class="number">11 </span><span class="name">Storage protection and SBD</span></a></li><li class="inactive"><a href="cha-ha-qdevice.html"><span class="number">12 </span><span class="name">QDevice and QNetd</span></a></li><li class="inactive"><a href="cha-ha-acl.html"><span class="number">13 </span><span class="name">Access control lists</span></a></li><li class="inactive"><a href="cha-ha-netbonding.html"><span class="number">14 </span><span class="name">Network device bonding</span></a></li><li class="inactive"><a href="cha-ha-lb.html"><span class="number">15 </span><span class="name">Load balancing</span></a></li><li class="inactive"><a href="cha-ha-geo.html"><span class="number">16 </span><span class="name">Geo clusters (multi-site clusters)</span></a></li><li class="inactive"><a href="cha-ha-maintenance.html"><span class="number">17 </span><span class="name">Executing maintenance tasks</span></a></li></ol></li><li class="inactive"><a href="part-storage.html"><span class="number">III </span><span class="name">Storage and data replication</span></a><ol><li class="inactive"><a href="cha-ha-storage-dlm.html"><span class="number">18 </span><span class="name">Distributed Lock Manager (DLM)</span></a></li><li class="inactive"><a href="cha-ha-ocfs2.html"><span class="number">19 </span><span class="name">OCFS2</span></a></li><li class="inactive"><a href="cha-ha-gfs2.html"><span class="number">20 </span><span class="name">GFS2</span></a></li><li class="inactive"><a href="cha-ha-drbd.html"><span class="number">21 </span><span class="name">DRBD</span></a></li><li class="inactive"><a href="cha-ha-clvm.html"><span class="number">22 </span><span class="name">Cluster logical volume manager (Cluster LVM)</span></a></li><li class="inactive"><a href="cha-ha-cluster-md.html"><span class="number">23 </span><span class="name">Cluster multi-device (Cluster MD)</span></a></li><li class="inactive"><a href="cha-ha-samba.html"><span class="number">24 </span><span class="name">Samba clustering</span></a></li><li class="inactive"><a href="cha-ha-rear.html"><span class="number">25 </span><span class="name">Disaster recovery with Rear (Relax-and-Recover)</span></a></li></ol></li><li class="inactive"><a href="part-appendix.html"><span class="number">IV </span><span class="name">Appendix</span></a><ol><li class="inactive"><a href="app-ha-troubleshooting.html"><span class="number">A </span><span class="name">Troubleshooting</span></a></li><li class="inactive"><a href="app-naming.html"><span class="number">B </span><span class="name">Naming conventions</span></a></li><li class="inactive"><a href="app-ha-management.html"><span class="number">C </span><span class="name">Cluster management tools (command line)</span></a></li><li class="inactive"><a href="app-crmreport-nonroot.html"><span class="number">D </span><span class="name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li class="inactive"><a href="gl-heartb.html"><span class="number"> </span><span class="name">Glossary</span></a></li><li class="inactive"><a href="bk02ape.html"><span class="number">E </span><span class="name">GNU licenses</span></a></li></ol></div><div class="clearme"></div></div></div></div><div id="_nav-area" class="inactive"><div class="tool"><span class="nav-inner"><span class="tool-label">Navigation</span><a accesskey="p" class="tool-spacer" title="Appendix C. Cluster management tools (command line)" href="app-ha-management.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Glossary" href="gl-heartb.html"><span class="next-icon">→</span></a></span></div></div></div></div><div id="_fixed-header-wrap" style="background-color: #E11;" class="inactive"><div id="_fixed-header"><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-administration.html">Administration Guide</a><span> › </span><a class="crumb" href="part-appendix.html">Appendix</a><span> › </span><a class="crumb" href="app-crmreport-nonroot.html">Running cluster reports without root access</a></div><div class="buttons"><a class="top-button button" href="#">Top</a><div class="button"><a accesskey="p" class="tool-spacer" title="Appendix C. Cluster management tools (command line)" href="app-ha-management.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Glossary" href="gl-heartb.html"><span class="next-icon">→</span></a></div><div class="clearme"></div></div><div class="clearme"></div></div></div><div id="_content" class="draft "><div class="documentation"><div class="appendix " id="app-crmreport-nonroot"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname "><span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span></span> <span class="productnumber "><span class="productnumber"><span class="phrase">15 SP3</span></span></span></div><div><h2 class="title"><span class="number">D </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Running cluster reports without <code class="systemitem">root</code> access</span> <a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_crmreport_passl.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_crmreport_passl.xml</li><li><span class="ds-label">ID: </span>app-crmreport-nonroot</li></ul></div></div></div></div><div class="line"><div class="toc"><dl><dt><span class="sect1"><a href="app-crmreport-nonroot.html#sec-crmreport-nonroot-user"><span class="number">D.1 </span><span class="name">Creating a local user account</span></a></span></dt><dt><span class="sect1"><a href="app-crmreport-nonroot.html#sec-crmreport-nonroot-ssh"><span class="number">D.2 </span><span class="name">Configuring a passwordless SSH account</span></a></span></dt><dt><span class="sect1"><a href="app-crmreport-nonroot.html#sec-crmreport-nonroot-sudo"><span class="number">D.3 </span><span class="name">Configuring <code class="command">sudo</code></span></a></span></dt><dt><span class="sect1"><a href="app-crmreport-nonroot.html#sec-crmreport-nonroot-execute"><span class="number">D.4 </span><span class="name">Generating a cluster report</span></a></span></dt></dl></div></div><p>
+  All cluster nodes must be able to access each other via SSH. Tools like
+  <code class="command">crm report</code> (for
+  troubleshooting) and Hawk2's <span class="guimenu ">History Explorer</span> require
+  passwordless SSH access between the nodes, otherwise they can only collect
+  data from the current node.
+ </p><p>
+  If passwordless SSH <code class="systemitem">root</code> access does not comply with regulatory
+  requirements, you can use a work-around for running cluster reports. It
+  consists of the following basic steps:
+ </p><div class="orderedlist "><ol class="orderedlist" type="1"><li class="listitem "><p>
+    Creating a dedicated local user account (for running
+    <code class="command">crm report</code>).
+   </p></li><li class="listitem "><p>
+    Configuring passwordless SSH access for that user account, ideally by
+    using a non-standard SSH port.
+   </p></li><li class="listitem "><p>
+    Configuring <code class="command">sudo</code> for that user.
+   </p></li><li class="listitem "><p>
+    Running <code class="command">crm report</code> as
+    that user.
+   </p></li></ol></div><p>
+  By default when <code class="command">crm report</code> is run, it attempts to 
+  log in to
+  remote nodes first as <code class="systemitem">root</code>, then as user
+  <code class="systemitem">hacluster</code>. However, if your
+  local security policy prevents <code class="systemitem">root</code> login using SSH, the script
+  execution will fail on all remote nodes. Even attempting to run the script
+  as user <code class="systemitem">hacluster</code> will fail
+  because this is a service account, and its shell is set to
+  <code class="filename">/bin/false</code>, which prevents login. Creating a
+  dedicated local user is the only option to successfully run the
+  <code class="command">crm report</code> script on
+  all nodes in the High Availability cluster.
+ </p><div class="sect1 " id="sec-crmreport-nonroot-user"><div class="titlepage"><div><div><h2 class="title"><span class="number">D.1 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Creating a local user account</span> <a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#sec-crmreport-nonroot-user">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_crmreport_passl.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_crmreport_passl.xml</li><li><span class="ds-label">ID: </span>sec-crmreport-nonroot-user</li></ul></div></div></div></div><p>
+   In the following example, we will create a local user named
+   <code class="systemitem">hareport</code> from command line. The
+   password can be anything that meets your security requirements.
+   Alternatively, you can create the user account and set the password with
+   YaST.
+  </p><div class="procedure " id="id-1.4.6.5.7.3"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure D.1: </span><span class="name">Creating a dedicated user account for running cluster reports </span><a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#id-1.4.6.5.7.3">#</a></h6></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     Start a shell and create a user
+     <code class="systemitem">hareport</code> with a home
+     directory <code class="filename">/home/hareport </code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">useradd</code> -m -d /home/hareport -c "HA Report" hareport</pre></div></li><li class="step "><p>
+     Set a password for the user:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code>passwd hareport</pre></div></li><li class="step "><p>
+     When prompted, enter and re-enter a password for the user.
+    </p></li></ol></div></div><div id="id-1.4.6.5.7.4" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg" /><h6>Important: Same user is required on each cluster node</h6><p>
+    To create the same user account on all nodes, repeat the steps above on
+    each cluster node.
+   </p></div></div><div class="sect1 " id="sec-crmreport-nonroot-ssh"><div class="titlepage"><div><div><h2 class="title"><span class="number">D.2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Configuring a passwordless SSH account</span> <a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#sec-crmreport-nonroot-ssh">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_crmreport_passl.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_crmreport_passl.xml</li><li><span class="ds-label">ID: </span>sec-crmreport-nonroot-ssh</li></ul></div></div></div></div><div class="procedure " id="id-1.4.6.5.8.2"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure D.2: </span><span class="name">Configuring the SSH daemon for a non-standard port </span><a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#id-1.4.6.5.8.2">#</a></h6></div><div class="procedure-contents"><p>
+    By default, the SSH daemon and the SSH client talk and listen on port
+    <code class="literal">22</code>. If your network security guidelines require the
+    default SSH port to be changed to an alternate high numbered port, you
+    need to modify the daemon's configuration file
+    <code class="filename">/etc/ssh/sshd_config</code>.
+   </p><ol class="procedure" type="1"><li class="step "><p>
+     To modify the default port, search the file for the
+     <code class="literal">Port</code> line, uncomment it and edit it according to
+     your wishes. For example, set it to:
+    </p><div class="verbatim-wrap"><pre class="screen">Port 5022</pre></div></li><li class="step "><p>
+     If your organization does not permit the <code class="systemitem">root</code> user to access
+     other servers, search the file for the
+     <code class="literal">PermitRootLogin</code> entry, uncomment it and set it to
+     <code class="literal">no</code>:
+    </p><div class="verbatim-wrap"><pre class="screen">PermitRootLogin no</pre></div></li><li class="step "><p>
+     Alternatively, add the respective lines to the end of the file by
+     executing the following commands:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code>echo “PermitRootLogin no” &gt;&gt; /etc/ssh/sshd_config
+<code class="prompt root">root # </code>echo “Port 5022” &gt;&gt; /etc/ssh/sshd_config</pre></div></li><li class="step "><p>
+     After modifying <code class="filename">/etc/ssh/sshd_config</code>, restart the
+     SSH daemon to make the new settings take effect:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code>systemctl restart sshd</pre></div></li></ol></div></div><div id="id-1.4.6.5.8.3" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg" /><h6>Important: Same settings are required on each cluster node</h6><p>
+    Repeat the SSH daemon configuration above on each cluster node.
+   </p></div><div class="procedure " id="id-1.4.6.5.8.4"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure D.3: </span><span class="name">Configuring the SSH client for a non-standard port </span><a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#id-1.4.6.5.8.4">#</a></h6></div><div class="procedure-contents"><p>
+    If the SSH port change is going to be made on all nodes in the cluster,
+    it is useful to modify the SSH configuration file,
+    <code class="filename">/etc/ssh/sshd_config</code>. 
+    </p><ol class="procedure" type="1"><li class="step "><p>
+     To modify the default port, search the file for the
+     <code class="literal">Port</code> line, uncomment it and edit it according to
+     your wishes. For example, set it to:
+    </p><div class="verbatim-wrap"><pre class="screen">Port 5022</pre></div></li><li class="step "><p>
+     Alternatively, add the respective line to the end of the file by
+     executing the following commands:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code>echo “Port 5022” &gt;&gt; /etc/ssh/ssh_config</pre></div></li></ol></div></div><div id="id-1.4.6.5.8.5" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg" /><h6>Note: Settings only required on one node</h6><p>
+    The SSH client configuration above is only needed on the node on which
+    you want to run the cluster report.</p><p>Alternatively, you can use the <code class="option">-X</code> option to run the
+    <code class="command">crm report</code> with a custom SSH port or even make
+    <code class="command">crm report</code> use your custom SSH port by default. For
+    details, see <a class="xref" href="app-crmreport-nonroot.html#pro-crmreport-custom-ssh" title="Generating a cluster report using a custom SSH port">Procedure D.5, “Generating a cluster report using a custom SSH port”</a>.</p></div><div class="procedure " id="id-1.4.6.5.8.6"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure D.4: </span><span class="name">Configuring shared SSH keys </span><a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#id-1.4.6.5.8.6">#</a></h6></div><div class="procedure-contents"><p>
+    You can access other servers using SSH and not be asked for a
+    password. While this may appear insecure at first sight, it is actually
+    a very secure access method since the users can only access servers that
+    their public key has been shared with. The shared key must be created as
+    the user that will use the key.
+   </p><ol class="procedure" type="1"><li class="step "><p>
+     Log in to one of the nodes with the user account that you have created
+     for running cluster reports (in our example above, the user account was
+     <code class="systemitem">hareport</code>).
+    </p></li><li class="step "><p>
+     Generate a new key:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">hareport &gt; </code>ssh-keygen –t rsa</pre></div><p>
+     This command will generate a 2048 bit key by default. The default
+     location for the key is <code class="filename">~/.ssh/</code>. You are asked to
+     set a passphrase on the key. However, do not enter a passphrase because
+     for passwordless login there must not be a passphrase on the key.
+     </p></li><li class="step "><p>
+     After the keys have been generated, copy the public key to
+     <span class="emphasis"><em>each</em></span> of the other nodes
+     (<span class="emphasis"><em>including</em></span> the node where you created the key):
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">hareport &gt; </code>ssh-copy-id -i ~/.ssh/id_rsa.pub <em class="replaceable ">HOSTNAME_OR_IP</em></pre></div><p>
+     In the command, you can either use the DNS name for each server, an
+     alias, or the IP address. During the copy process you will be asked to
+     accept the host key for each node, and you will need to provide the
+     password for the <code class="systemitem">hareport</code>
+     user account (this will be the only time you need to enter it).
+    </p></li><li class="step "><p>
+     After the key is shared to all cluster nodes, test if you can log in as
+     user <code class="systemitem">hareport</code> to the other
+     nodes by using passwordless SSH:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">hareport &gt; </code>ssh <em class="replaceable ">HOSTNAME_OR_IP</em></pre></div><p>
+     You should be automatically connected to the remote server without
+     being asked to accept a certificate or enter a password.
+    </p></li></ol></div></div><div id="id-1.4.6.5.8.7" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg" /><h6>Note: Settings only required on one node</h6><p>
+    If you intend to run the cluster report from the same node each time, it
+    is sufficient to execute the procedure above on this node only.
+    Otherwise repeat the procedure on each node.
+   </p></div></div><div class="sect1 " id="sec-crmreport-nonroot-sudo"><div class="titlepage"><div><div><h2 class="title"><span class="number">D.3 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Configuring <code class="command">sudo</code></span> <a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#sec-crmreport-nonroot-sudo">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_crmreport_passl.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_crmreport_passl.xml</li><li><span class="ds-label">ID: </span>sec-crmreport-nonroot-sudo</li></ul></div></div></div></div><p>
+   The <code class="command">sudo</code> command allows a regular user to quickly
+   become <code class="systemitem">root</code> and issue a command, with or without providing a
+   password. Sudo access can be given to all root-level commands or to
+   specific commands only. Sudo typically uses aliases to define the entire
+   command string.
+  </p><p>
+   To configure sudo either use <code class="command">visudo</code>
+   (<span class="emphasis"><em>not</em></span> vi) or YaST.
+  </p><div id="id-1.4.6.5.9.4" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg" /><h6>Warning: Do not use vi</h6><p>
+    For sudo configuration from command line, you must edit the sudoers file
+    as <code class="systemitem">root</code> with <code class="command">visudo</code>. Using any other editor may
+    result in syntax or file permission errors that prevent sudo from
+    running.
+   </p></div><div class="procedure "><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     Log in as <code class="systemitem">root</code>.
+    </p></li><li class="step "><p>
+     To open the <code class="filename">/etc/sudoers</code> file, enter
+     <code class="command">visudo</code>.
+    </p></li><li class="step "><p> Look for the following categories: <code class="literal">Host alias
+      specification</code>,<code class="literal">User alias specification</code>,
+      <code class="literal">Cmnd alias specification</code>, and <code class="literal">Runas alias
+      specification</code>. </p></li><li class="step "><p>
+     Add the following entries to the respective categories in
+     <code class="filename">/etc/sudoers</code>:
+    </p><div class="verbatim-wrap"><pre class="screen">Host_Alias	CLUSTER = alice,bob,charlie <span id="ha-sudoers-host-alias"></span><span class="callout">1</span>
+User_Alias HA = hareport <span id="ha-sudoers-user-alias"></span><span class="callout">2</span>
+Cmnd_Alias HA_ALLOWED = /bin/su, /usr/sbin/crm report *<span id="ha-sudoers-cmd-alias"></span><span class="callout">3</span>
+Runas_Alias R = root <span id="ha-sudoers-runas-alias"></span><span class="callout">4</span></pre></div><div class="calloutlist "><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#ha-sudoers-host-alias"><span class="callout">1</span></a> </p></td><td valign="top" align="left"><p>
+       The host alias defines on which server (or range of servers) the sudo
+       user has rights to issue commands. In the host alias you can use DNS
+       names, or IP addresses, or specify an entire network range (for
+       example, <code class="literal">172.17.12.0/24</code>). To limit the scope of
+       access you should specify the host names for the cluster nodes only.
+      </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#ha-sudoers-user-alias"><span class="callout">2</span></a> </p></td><td valign="top" align="left"><p>
+       The user alias allows you to add multiple local user accounts to a
+       single alias. However, in this case you could avoid creating an alias since
+       only one account is being used. In the example above, we added the
+       <code class="systemitem">hareport</code> user which we have
+       created for running cluster reports.
+      </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#ha-sudoers-cmd-alias"><span class="callout">3</span></a> </p></td><td valign="top" align="left"><p>
+       The command alias defines which commands can be executed by the user.
+       This is useful if you want to limit what the non-root user can access
+       when using <code class="command">sudo</code>. In this case the
+       <code class="systemitem">hareport</code>
+       user account will need access to the commands <code class="command">crm report</code>
+       and <code class="command">su</code>.
+      </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#ha-sudoers-runas-alias"><span class="callout">4</span></a> </p></td><td valign="top" align="left"><p>
+       The <code class="literal">runas</code> alias specifies the account that the command will be run
+       as. In this case <code class="systemitem">root</code>.
+      </p></td></tr></table></div></li><li class="step "><p>Search for the following two lines:</p><div class="verbatim-wrap"><pre class="screen">Defaults targetpw
+ALL     ALL=(ALL) ALL</pre></div><p>As they would conflict with the setup we want to create, disable them:</p><div class="verbatim-wrap"><pre class="screen">#Defaults targetpw
+#ALL     ALL=(ALL) ALL</pre></div></li><li class="step "><p>Look for the <code class="literal">User privilege specification</code>.</p></li><li class="step "><p>After having defined the aliases above, you can now add the following
+     rule there:</p><div class="verbatim-wrap"><pre class="screen">HA	CLUSTER = (R) NOPASSWD:HA_ALLOWED</pre></div><p>The <code class="literal">NOPASSWORD</code> option ensures that the user
+      <code class="systemitem">hareport</code> can execute the cluster
+     report without providing a password.</p></li></ol></div></div><div id="id-1.4.6.5.9.6" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg" /><h6>Important: Same sudo configuration is required on each cluster node</h6><p>
+    This sudo configuration must be made on all nodes in the cluster. No
+    other changes are needed for sudo and no services need to be restarted.
+   </p></div></div><div class="sect1 " id="sec-crmreport-nonroot-execute"><div class="titlepage"><div><div><h2 class="title"><span class="number">D.4 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Generating a cluster report</span> <a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#sec-crmreport-nonroot-execute">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_crmreport_passl.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_crmreport_passl.xml</li><li><span class="ds-label">ID: </span>sec-crmreport-nonroot-execute</li></ul></div></div></div></div><p>To run cluster reports with the settings you have configured above, you need to be logged
+   in to one of the nodes as user <code class="systemitem">hareport</code>. 
+   To start a cluster report, use the  <code class="command">crm report</code> command.
+   For example: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">crm report</code> -f 0:00 -n "alice bob charlie"</pre></div><p>This command will extract all information since <code class="literal">0 am</code> on the named nodes
+   and create a <code class="literal">*.tar.bz2</code> archive named
+     <code class="filename">pcmk-<em class="replaceable ">DATE</em>.tar.bz2</code> in
+     the current directory.</p><div class="procedure " id="pro-crmreport-custom-ssh"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure D.5: </span><span class="name">Generating a cluster report using a custom SSH port </span><a title="Permalink" class="permalink" href="app-crmreport-nonroot.html#pro-crmreport-custom-ssh">#</a></h6></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>When using a custom SSH port, use the <code class="option">-X</code> with
+     <code class="command">crm report</code> to modify the client's SSH port. For example,
+     if your custom SSH port is <code class="literal">5022</code>, use the following
+     command:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code>crm report -X "-p 5022" [...]</pre></div></li><li class="step "><p>To set your custom SSH port permanently for
+     <code class="command">crm report</code>, start the interactive crm shell:</p><div class="verbatim-wrap"><pre class="screen">crm options</pre></div></li><li class="step "><p>
+     Enter the following:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)options# </code> set core.report_tool_options "-X -oPort=5022"</pre></div></li></ol></div></div></div></div></div><div class="page-bottom"><div id="_bottom-navigation"><a class="nav-link" href="gl-heartb.html"><span class="next-icon">→</span><span class="nav-label">Glossary</span></a><a class="nav-link" href="app-ha-management.html"><span class="prev-icon">←</span><span class="nav-label"><span class="number">Appendix C </span>Cluster management tools (command line)</span></a></div><div class="_share-print"><div class="online-contents share"><strong>Share this page: </strong><span class="share-buttons"><span class="_share-fb bottom-button">Facebook</span><span class="spacer"> • </span><span class="_share-in bottom-button">LinkedIn</span><span class="spacer"> • </span><span class="_share-tw bottom-button">Twitter</span><span class="spacer"> • </span><span class="_share-mail bottom-button">E-Mail</span></span></div><div class="print"><span class="_print-button bottom-button">Print this page</span></div><div class="clearme"></div></div></div></div><div id="_inward"></div></div><div id="_footer-wrap"><div id="_footer"><p>©
+        2021 
+        SUSE</p><ul><li><a href="https://jobs.suse.com/" target="_top">Careers</a></li><li><a href="https://www.suse.com/company/legal/" target="_top">Legal</a></li><li><a href="https://www.suse.com/company/about/" target="_top">About</a></li><li><a href="https://www.suse.com/contact/" target="_top">Contact Us</a></li></ul></div></div></body></html>

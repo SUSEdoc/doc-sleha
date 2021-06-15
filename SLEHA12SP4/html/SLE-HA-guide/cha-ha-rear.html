@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Disaster Recovery with Relax-and-Recover (Rear) | Administration Guide | SUSE Linux Enterprise High Availability Extension 12 SP4</title><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" /><link rel="stylesheet" type="text/css" href="static/css/style.css" /><link rel="stylesheet" type="text/css" href="static/css/highlight.css" /><meta name="generator" content="DAPS 3.2.0 (https://opensuse.github.io/daps) using SUSE XSL Stylesheets 2.81.0 (based on DocBook XSL Stylesheets 1.79.2) - chunked" /><meta name="product-name" content="SUSE Linux Enterprise High Availability Extension" /><meta name="product-number" content="12 SP4" /><meta name="book-title" content="Administration Guide" /><meta name="chapter-title" content="Chapter 24. Disaster Recovery with Relax-and-Recover (Rear)" /><meta name="description" content="Relax-and-Recover (ReaR, in this chapter abbreviated as Rear) is a disaster recovery framework for use by system administrators. It is a collection of Bash scripts that need to be adjusted to the specific production environment that is to be protected in case of disaster." /><meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi" /><meta name="tracker-type" content="bsc" /><meta name="tracker-bsc-component" content="Documentation" /><meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 12 SP4" /><link rel="home" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation" /><link rel="up" href="part-storage.html" title="Part III. Storage and Data Replication" /><link rel="prev" href="cha-ha-samba.html" title="Chapter 23. Samba Clustering" /><link rel="next" href="part-appendix.html" title="Part IV. Appendix" />
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://static.opensuse.org/fonts/fonts.css"></link>');
+}
+else {
+  document.write('<link rel="stylesheet" type="text/css" href="static/css/fonts-onlylocal.css"></link>');
+}
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://static.opensuse.org/fonts/fonts.css" /></noscript><script src="static/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="static/js/script.js" type="text/javascript"></script><script src="static/js/highlight.min.js" type="text/javascript"></script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script></head><body class="draft offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-navigation">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><div id="_outer-wrap"><div id="_white-bg" style="background-color: #E11;"><div id="_header"><div id="_logo"><img src="static/images/logo.png" alt="Logo" /></div><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-sleha.html">Administration Guide</a><span> › </span><a class="crumb" href="part-storage.html">Storage and Data Replication</a><span> › </span><a class="crumb" href="cha-ha-rear.html">Disaster Recovery with Relax-and-Recover (Rear)</a></div><div class="clearme"></div></div></div><div id="_toolbar-wrap"><div id="_toolbar"><div id="_toc-area" class="inactive"><a id="_toc-area-button" class="tool" title="Contents" accesskey="c" href="index.html"><span class="tool-spacer"><span class="toc-icon">Contents</span><span class="clearme"></span></span><span class="tool-label">Contents</span></a><div class="active-contents bubble-corner"></div><div class="active-contents bubble"><div class="bubble-container"><h6>Administration Guide</h6><div id="_bubble-toc"><ol><li class="inactive"><a href="pre-ha.html"><span class="number"> </span><span class="name">About This Guide</span></a></li><li class="inactive"><a href="part-install.html"><span class="number">I </span><span class="name">Installation, Setup and Upgrade</span></a><ol><li class="inactive"><a href="cha-ha-concepts.html"><span class="number">1 </span><span class="name">Product Overview</span></a></li><li class="inactive"><a href="cha-ha-requirements.html"><span class="number">2 </span><span class="name">System Requirements and Recommendations</span></a></li><li class="inactive"><a href="cha-ha-install.html"><span class="number">3 </span><span class="name">Installing the High Availability Extension</span></a></li><li class="inactive"><a href="cha-ha-setup.html"><span class="number">4 </span><span class="name">Using the YaST Cluster Module</span></a></li><li class="inactive"><a href="cha-ha-migration.html"><span class="number">5 </span><span class="name">Upgrading Your Cluster and Updating Software Packages</span></a></li></ol></li><li class="inactive"><a href="part-config.html"><span class="number">II </span><span class="name">Configuration and Administration</span></a><ol><li class="inactive"><a href="cha-ha-config-basics.html"><span class="number">6 </span><span class="name">Configuration and Administration Basics</span></a></li><li class="inactive"><a href="cha-conf-hawk2.html"><span class="number">7 </span><span class="name">Configuring and Managing Cluster Resources with Hawk2</span></a></li><li class="inactive"><a href="cha-ha-manual-config.html"><span class="number">8 </span><span class="name">Configuring and Managing Cluster Resources (Command Line)</span></a></li><li class="inactive"><a href="cha-ha-agents.html"><span class="number">9 </span><span class="name">Adding or Modifying Resource Agents</span></a></li><li class="inactive"><a href="cha-ha-fencing.html"><span class="number">10 </span><span class="name">Fencing and STONITH</span></a></li><li class="inactive"><a href="cha-ha-storage-protect.html"><span class="number">11 </span><span class="name">Storage Protection and SBD</span></a></li><li class="inactive"><a href="cha-ha-acl.html"><span class="number">12 </span><span class="name">Access Control Lists</span></a></li><li class="inactive"><a href="cha-ha-netbonding.html"><span class="number">13 </span><span class="name">Network Device Bonding</span></a></li><li class="inactive"><a href="cha-ha-lb.html"><span class="number">14 </span><span class="name">Load Balancing</span></a></li><li class="inactive"><a href="cha-ha-geo.html"><span class="number">15 </span><span class="name">Geo Clusters (Multi-Site Clusters)</span></a></li><li class="inactive"><a href="cha-ha-maintenance.html"><span class="number">16 </span><span class="name">Executing Maintenance Tasks</span></a></li></ol></li><li class="inactive"><a href="part-storage.html"><span class="number">III </span><span class="name">Storage and Data Replication</span></a><ol><li class="inactive"><a href="cha-ha-storage-dlm.html"><span class="number">17 </span><span class="name">Distributed Lock Manager (DLM)</span></a></li><li class="inactive"><a href="cha-ha-ocfs2.html"><span class="number">18 </span><span class="name">OCFS2</span></a></li><li class="inactive"><a href="cha-ha-gfs2.html"><span class="number">19 </span><span class="name">GFS2</span></a></li><li class="inactive"><a href="cha-ha-drbd.html"><span class="number">20 </span><span class="name">DRBD</span></a></li><li class="inactive"><a href="cha-ha-clvm.html"><span class="number">21 </span><span class="name">Cluster Logical Volume Manager (cLVM)</span></a></li><li class="inactive"><a href="cha-ha-cluster-md.html"><span class="number">22 </span><span class="name">Cluster Multi-device (Cluster MD)</span></a></li><li class="inactive"><a href="cha-ha-samba.html"><span class="number">23 </span><span class="name">Samba Clustering</span></a></li><li class="inactive"><a href="cha-ha-rear.html"><span class="number">24 </span><span class="name">Disaster Recovery with Relax-and-Recover (Rear)</span></a></li></ol></li><li class="inactive"><a href="part-appendix.html"><span class="number">IV </span><span class="name">Appendix</span></a><ol><li class="inactive"><a href="app-ha-troubleshooting.html"><span class="number">A </span><span class="name">Troubleshooting</span></a></li><li class="inactive"><a href="app-naming.html"><span class="number">B </span><span class="name">Naming Conventions</span></a></li><li class="inactive"><a href="app-ha-management.html"><span class="number">C </span><span class="name">Cluster Management Tools (Command Line)</span></a></li><li class="inactive"><a href="app-crmreport-nonroot.html"><span class="number">D </span><span class="name">Running Cluster Reports Without <code class="systemitem">root</code> Access</span></a></li><li class="inactive"><a href="app-ha-docupdates.html"><span class="number">E </span><span class="name">Documentation Updates</span></a></li></ol></li><li class="inactive"><a href="gl-heartb.html"><span class="number"> </span><span class="name">Glossary</span></a></li><li class="inactive"><a href="bk01apf.html"><span class="number">F </span><span class="name">GNU Licenses</span></a></li></ol></div><div class="clearme"></div></div></div></div><div id="_nav-area" class="inactive"><div class="tool"><span class="nav-inner"><span class="tool-label">Navigation</span><a accesskey="p" class="tool-spacer" title="Chapter 23. Samba Clustering" href="cha-ha-samba.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Part IV. Appendix" href="part-appendix.html"><span class="next-icon">→</span></a></span></div></div></div></div><div id="_fixed-header-wrap" style="background-color: #E11;" class="inactive"><div id="_fixed-header"><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-sleha.html">Administration Guide</a><span> › </span><a class="crumb" href="part-storage.html">Storage and Data Replication</a><span> › </span><a class="crumb" href="cha-ha-rear.html">Disaster Recovery with Relax-and-Recover (Rear)</a></div><div class="buttons"><a class="top-button button" href="#">Top</a><div class="button"><a accesskey="p" class="tool-spacer" title="Chapter 23. Samba Clustering" href="cha-ha-samba.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Part IV. Appendix" href="part-appendix.html"><span class="next-icon">→</span></a></div><div class="clearme"></div></div><div class="clearme"></div></div></div><div id="_content" class="draft "><div class="documentation"><div class="chapter " id="cha-ha-rear"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname "><span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span></span> <span class="productnumber "><span class="productnumber"><span class="phrase">12 SP4</span></span></span></div><div><h2 class="title"><span class="number">24 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Disaster Recovery with Relax-and-Recover (Rear)</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>cha-ha-rear</li></ul></div></div><div><div class="abstract"><p>
+    Relax-and-Recover (<span class="quote">“<span class="quote ">ReaR</span>”</span>, in this chapter
+    abbreviated as Rear) is a disaster recovery framework for use by
+    system administrators. It is a collection of Bash scripts that need to
+    be adjusted to the specific production environment that is to be
+    protected in case of disaster.
+   </p><p>
+    No disaster recovery solution will  work out-of-the-box. Therefore
+    it is essential to take preparations <span class="emphasis"><em>before</em></span> any
+    disaster happens.
+   </p></div></div></div></div><div class="line"><div class="toc"><dl><dt><span class="sect1"><a href="cha-ha-rear.html#sec-ha-rear-concept"><span class="number">24.1 </span><span class="name">Conceptual Overview</span></a></span></dt><dt><span class="sect1"><a href="cha-ha-rear.html#sec-ha-rear-config"><span class="number">24.2 </span><span class="name">Setting Up Rear and Your Backup Solution</span></a></span></dt><dt><span class="sect1"><a href="cha-ha-rear.html#sec-ha-rear-mkbackup"><span class="number">24.3 </span><span class="name">Creating the Recovery Installation System</span></a></span></dt><dt><span class="sect1"><a href="cha-ha-rear.html#sec-ha-rear-testing"><span class="number">24.4 </span><span class="name">Testing the Recovery Process</span></a></span></dt><dt><span class="sect1"><a href="cha-ha-rear.html#sec-ha-rear-recover"><span class="number">24.5 </span><span class="name">Recovering from Disaster</span></a></span></dt><dt><span class="sect1"><a href="cha-ha-rear.html#sec-ha-rear-more"><span class="number">24.6 </span><span class="name">For More Information</span></a></span></dt></dl></div></div><div class="sect1 " id="sec-ha-rear-concept"><div class="titlepage"><div><div><h2 class="title"><span class="number">24.1 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Conceptual Overview</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept</li></ul></div></div></div></div><p>
+   The following sections describe the general disaster recovery concept and
+   the basic steps you need to execute for successful recovery with
+   Rear. They also provide some guidance on Rear requirements,
+
+   some limitations to be aware of, and scenarios and backup tools.
+  </p><div id="id-1.3.5.10.3.3" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.png" /><h6>Note: Understanding Rear</h6><p>
+     Understanding Rear's complex functionality is essential for making the
+     tool work as intended. Therefore, read this chapter carefully and
+     familiarize yourself with Rear before a disaster strikes. You should also be
+     aware of Rear's known limitations and test your system in advance.
+    </p></div><div class="sect2 " id="sec-ha-rear-concept-drp"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.1 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Creating a Disaster Recovery Plan</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-drp">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-drp</li></ul></div></div></div></div><p>
+    <span class="emphasis"><em>Before</em></span> the worst scenario happens, take action:
+    analyze your IT infrastructure for any substantial risks, evaluate your
+    budget, and create a disaster recovery plan. If you do not already have
+    a disaster recovery plan at hand, find some information on each step
+    below:
+   </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p><span class="formalpara-title">Risk Analysis. </span>
+       Conduct a solid risk analysis of your infrastructure. List all the
+       possible threats and evaluate how serious they are. Determine how
+       likely these threats are and prioritize them. It is recommended to
+       use a simple categorization: probability and impact.
+      </p></li><li class="listitem "><p><span class="formalpara-title">Budget Planning. </span>
+       The outcome of the analysis is an overview, which risks can be
+       tolerated and which are critical for your business. Ask yourself how
+       you can minimize risks and how much will it cost. Depending on how
+       big your company is, spend two to fifteen percent of the overall IT
+       budget on disaster recovery.
+      </p></li><li class="listitem "><p><span class="formalpara-title">Disaster Recovery Plan Development. </span>
+       Make checklists, test procedures, establish and assign priorities,
+       and inventory your IT infrastructure. Define how to deal with a
+       problem when some services in your infrastructure fail.
+      </p></li><li class="listitem "><p><span class="formalpara-title">Test. </span>
+       After defining an elaborate plan, test it. Test it at least once a
+       year. Use the same testing hardware as your main IT infrastructure.
+      </p></li></ul></div></div><div class="sect2 " id="sec-ha-rear-concept-recovery"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">What Does Disaster Recovery Mean?</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-recovery">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-recovery</li></ul></div></div></div></div><p>
+    If a system in a production environment has been destroyed (for whatever
+    reasons—be it broken hardware, a misconfiguration or software
+    problems), you need to re-create the system. The recreation can be done
+    either on the same hardware or on compatible replacement hardware.
+    Re-creating a system means more than restoring files from a backup.
+    It also includes preparing the system's storage (with regard to partitioning, file
+    systems, and mount points), and reinstalling the boot
+    loader.
+   </p></div><div class="sect2 " id="sec-ha-rear-concept-basics"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.3 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">How Does Disaster Recovery With Rear Work?</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-basics">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-basics</li></ul></div></div></div></div><p>
+    While the system is up and running, create a backup of the files and
+    create a recovery system on a recovery medium. The recovery system
+    contains a recovery installer.
+   </p><p>
+    In case the system has been destroyed, replace broken hardware (if
+    needed), boot the recovery system from the recovery medium and launch
+    the recovery installer. The recovery installer re-creates the system:
+    First, it prepares the storage (partitioning, file systems, mount
+    points), then it restores the files from the backup. Finally, it
+    reinstalls the boot loader.
+   </p></div><div class="sect2 " id="sec-ha-rear-concept-requirements"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.4 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Rear Requirements</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-requirements">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-requirements</li></ul></div></div></div></div><p>
+    To use Rear you need at least two identical systems: the machine
+    that runs your production environment and an identical test machine.
+    <span class="quote">“<span class="quote ">Identical</span>”</span> in this context means that you can, for
+    example, replace a network card with another one using the same Kernel
+    driver.
+   </p><div id="id-1.3.5.10.3.7.3" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.png" /><h6>Warning: Identical Drivers Required</h6><p>
+     If a hardware component does not use the same driver as the one in
+     your production environment, it is not considered identical by
+     Rear.
+    </p></div></div><div class="sect2 " id="sec-ha-rear-concept-versions"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.5 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Rear Version Updates</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-versions">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-versions</li></ul></div></div></div></div><p>
+    To be compatible with older service packs, <span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span> <span class="productnumber"><span class="phrase">12 SP4</span></span>
+    ships with different Rear versions: 1.16 (included in RPM package
+    <span class="package ">rear116</span>), 1.17.2.a (<span class="package ">rear1172a</span>),
+    1.18.a (<span class="package ">rear118a</span>), and 2.4 (<span class="package ">rear23a</span>).
+    The latest version contains some
+    later enhancements from the upstream GitHub project.
+   </p><div id="id-1.3.5.10.3.8.3" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.png" /><h6>Note: Find Important Information in Changelogs</h6><p>
+     Any information about bugfixes, incompatibilities, and other issues can
+     be found in the changelogs of the packages. It is recommended to review
+     also later package versions of Rear in case you need to re-validate
+     your disaster recovery procedure.
+    </p></div><p>
+     Be aware of the following issues with Rear:
+   </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+      To allow disaster recover on UEFI systems, you need version 1.18.a
+      and the package <span class="package ">ebiso</span>. Only this version supports the
+      new helper tool <code class="filename">/usr/bin/ebiso</code>. This helper tool is
+      used to create a UEFI-bootable Rear system ISO image.
+     </p></li><li class="listitem "><p>
+      If you have a tested and fully functional disaster recovery procedure
+      with one Rear version, do not update Rear. Keep the Rear package
+      and do not change your disaster recovery method!
+     </p></li><li class="listitem "><p>
+      Version updates for Rear are provided as separate packages that
+      intentionally conflict with each other to prevent your installed version
+      getting accidentally replaced with another version.
+     </p></li></ul></div><p>
+    In the following cases you need to completely re-validate your existing
+    disaster recovery procedure:
+   </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+      For each Rear version update.
+     </p></li><li class="listitem "><p>When you update Rear manually.</p></li><li class="listitem "><p>
+      For each software that is used by Rear.
+     </p></li><li class="listitem "><p>
+      If you update low-level system components such as <code class="command">parted</code>,
+       <code class="command">btrfs</code> and similar.
+     </p></li></ul></div></div><div class="sect2 " id="sec-ha-rear-concept-limit"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.6 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Limitations with Btrfs</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-limit">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-limit</li></ul></div></div></div></div><p>
+    The following limitations apply if you use Btrfs.
+   </p><div class="variablelist "><dl class="variablelist"><dt id="id-1.3.5.10.3.9.3.1"><span class="term ">Your System Includes Subvolumes, but No Snapshots Subvolumes</span></dt><dd><p>
+       At least Rear version 1.17.2.a is required. This version supports re-creating
+       <span class="quote">“<span class="quote ">normal</span>”</span> Btrfs subvolume structure (no snapshot
+       subvolumes).
+      </p></dd><dt id="id-1.3.5.10.3.9.3.2"><span class="term ">Your System Includes Snapshot Subvolumes</span></dt><dd><div id="id-1.3.5.10.3.9.3.2.2.1" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.png" /><h6>Warning</h6><p>
+        Btrfs snapshot subvolumes <span class="emphasis"><em>cannot</em></span> be backed up
+        and restored as usual with file-based backup software.
+       </p></div><p>
+       While recent snapshot subvolumes on Btrfs file systems need
+       almost no disk space (because of Btrfs's copy-on-write functionality),
+       those files would be backed up as complete files when using
+       file-based backup software. They would end up twice in the backup
+       with their original file size. Therefore, it is impossible to
+       restore the snapshots as they have been before on the original
+       system.
+      </p></dd><dt id="id-1.3.5.10.3.9.3.3"><span class="term ">Your SLE12 System Needs Matching Rear Configuration</span></dt><dd><p>
+       The setup in SLE12 GA, SLE12 SP1, and SLE12 SP2 have several
+       incompatible Btrfs default structures. As such, it is
+       crucial to use a matching Rear configuration file. See the example
+       files <code class="filename">/usr/share/rear/conf/examples/SLE12*-btrfs-example.conf</code>.
+      </p></dd></dl></div></div><div class="sect2 " id="sec-ha-rear-concept-scenarios"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.7 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Scenarios and Backup Tools</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-scenarios">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-scenarios</li></ul></div></div></div></div><p>
+    Rear can create a disaster recovery system (including a system-specific
+    recovery installer) that can be booted from a local medium (like a hard
+    disk, a flash disk, a DVD/CD-R) or via PXE. The backup data can be
+    stored on a network file system, for example NFS, as described in
+    <a class="xref" href="cha-ha-rear.html#ex-ha-rear-nfs-server-backup" title="Using an NFS Server to Store the File Backup">Example 24.1</a>.
+   </p><p>
+    Rear does not replace a file backup, but complements it. By
+    default, Rear supports the generic <code class="command">tar</code> command,
+    and several third-party backup tools (such as Tivoli Storage Manager,
+    QNetix Galaxy, Symantec NetBackup, EMC NetWorker, or HP DataProtector).
+    Refer to
+    <a class="xref" href="cha-ha-rear.html#ex-ha-rear-config-EMC" title="Using Third-Party Backup Tools Like EMC NetWorker">Example 24.2</a> for an
+    example configuration of using Rear with EMC NetWorker as backup
+    tool.
+   </p></div><div class="sect2 " id="sec-ha-rear-concept-overview"><div class="titlepage"><div><div><h3 class="title"><span class="number">24.1.8 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Basic Steps</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-overview">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-concept-overview</li></ul></div></div></div></div><p>
+    For a successful recovery with Rear in case of disaster, you need
+    to execute the following basic steps:
+   </p><div class="variablelist "><dl class="variablelist"><dt id="id-1.3.5.10.3.11.3.1"><span class="term "><a class="xref" href="cha-ha-rear.html#sec-ha-rear-config" title="24.2. Setting Up Rear and Your Backup Solution">Setting Up Rear and Your Backup Solution</a>
+     </span></dt><dd><p>
+       This includes tasks like editing the Rear configuration file,
+       adjusting the Bash scripts, and configuring the backup solution that
+       you want to use.
+      </p></dd><dt id="id-1.3.5.10.3.11.3.2"><span class="term "><a class="xref" href="cha-ha-rear.html#sec-ha-rear-mkbackup" title="24.3. Creating the Recovery Installation System">Creating the Recovery Installation System</a>
+     </span></dt><dd><p>
+       While the system to be protected is up and running use the
+       <code class="command">rear mkbackup</code> command to create a file backup and
+       to generate a recovery system that contains a system-specific
+       Rear recovery installer.
+      </p></dd><dt id="id-1.3.5.10.3.11.3.3"><span class="term "><a class="xref" href="cha-ha-rear.html#sec-ha-rear-testing" title="24.4. Testing the Recovery Process">Testing the Recovery Process</a>
+     </span></dt><dd><p>
+       Whenever you have created a disaster recovery medium with Rear,
+       test the disaster recovery process thoroughly. It is essential to use
+       a test machine that has <span class="emphasis"><em>identical</em></span> hardware like
+       the one that is part of your production environment. For details,
+       refer to <a class="xref" href="cha-ha-rear.html#sec-ha-rear-concept-requirements" title="24.1.4. Rear Requirements">Section 24.1.4, “Rear Requirements”</a>.
+      </p></dd><dt id="id-1.3.5.10.3.11.3.4"><span class="term "><a class="xref" href="cha-ha-rear.html#sec-ha-rear-recover" title="24.5. Recovering from Disaster">Recovering from Disaster</a>
+     </span></dt><dd><p>
+       After a disaster has occurred, replace any broken hardware (if
+       necessary). Then boot the Rear recovery system and start the
+       recovery installer with the <code class="command">rear recover</code> command.
+      </p></dd></dl></div></div></div><div class="sect1 " id="sec-ha-rear-config"><div class="titlepage"><div><div><h2 class="title"><span class="number">24.2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Setting Up Rear and Your Backup Solution</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-config">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-config</li></ul></div></div></div></div><p>
+   To set up Rear, you need to edit at least the Rear
+   configuration file <code class="filename">/etc/rear/local.conf</code> and, if
+   needed, the Bash scripts that are part of the Rear framework.
+  </p><p>
+   In particular, you need to define the following tasks that Rear
+   should do:
+  </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p><span class="formalpara-title">When your system is booted with UEFI. </span>
+      If your system boots with a UEFI boot loader, install the package
+      <span class="package ">ebiso</span> and add the following line into
+      <code class="filename">/etc/rear/local.conf</code>:
+     </p><div class="verbatim-wrap"><pre class="screen">ISO_MKISOFS_BIN=/usr/bin/ebiso</pre></div></li><li class="listitem "><p><span class="formalpara-title">How to back up files and how to create and store the disaster recovery system. </span>
+      This needs to be configured in
+      <code class="filename">/etc/rear/local.conf</code>.
+     </p></li><li class="listitem "><p><span class="formalpara-title">What to re-create exactly (partitioning, file systems, mount points, etc.). </span>
+      This can be defined in <code class="filename">/etc/rear/local.conf</code> (for
+      example, what to exclude). To re-create non-standard systems, you may
+      need to enhance the Bash scripts.
+     </p></li><li class="listitem "><p><span class="formalpara-title">How the recovery process works. </span>
+      To change how Rear generates the recovery installer, or to adapt
+      what the Rear recovery installer does, you need to edit the Bash
+      scripts.
+     </p></li></ul></div><p>
+   To configure Rear, add your options to the
+   <code class="filename">/etc/rear/local.conf</code> configuration file. (The former
+   configuration file <code class="filename">/etc/rear/sites.conf</code> has been
+   removed from the package. However, if you have such a file from your last
+   setup, Rear will still use it.)
+  </p><p>
+   All Rear configuration variables and their default values are set in
+   <code class="filename">/usr/share/rear/conf/default.conf</code>.
+   Some example files (<code class="filename">*example.conf</code>) for user configurations
+   (for example, what is set in <code class="filename">/etc/rear/local.conf</code>)
+   are available in the <code class="filename">examples</code> subdirectory.
+   Find more information in the Rear man page.
+  </p><p>
+   You should start with a matching example configuration file as template
+   and adapt it as needed to create your particular configuration file.
+   Copy various options from several example configuration files and paste them
+   into your specific <code class="filename">/etc/rear/local.conf</code> file that
+   matches your particular system.
+   Do not use original example configuration files, because they provide an
+   overview of variables that can be used for specific setups.
+  </p><p>
+   After you have changed the Rear configuration file, run the
+   following command and check its output:
+  </p><div class="verbatim-wrap"><pre class="screen">rear dump</pre></div><div class="complex-example"><div class="example" id="ex-ha-rear-nfs-server-backup"><div class="example-title-wrap"><h6 class="example-title"><span class="number">Example 24.1: </span><span class="name">Using an NFS Server to Store the File Backup </span><a title="Permalink" class="permalink" href="cha-ha-rear.html#ex-ha-rear-nfs-server-backup">#</a></h6></div><div class="example-contents"><p>
+    Rear can be used in different scenarios. The following example uses
+    an NFS server as storage for the file backup.
+   </p></div></div></div><div class="procedure "><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     Set up an NFS server with YaST as described in the SUSE Linux Enterprise Server
+     <span class="productnumber"><span class="phrase">12 SP4</span></span> Administration Guide, chapter <em class="citetitle ">Sharing File Systems
+     with NFS</em>. It is available from <a class="link" href="http://www.suse.com/documentation/" target="_blank">http://www.suse.com/documentation/</a>.
+    </p></li><li class="step "><p>
+     Define the configuration for your NFS server in the
+     <code class="filename">/etc/exports</code> file. Make sure the directory on the
+     NFS server (where you want the backup data to be available), has the
+     right mount options. For example:
+    </p><div class="verbatim-wrap"><pre class="screen"><em class="replaceable ">/srv/nfs</em> *([...],rw,no_root_squash,[...])</pre></div><p>
+     Replace <code class="filename">/srv/nfs</code> with the path to your
+     backup data on the NFS server and adjust the mount options. You will
+     probably need <code class="literal">no_root_squash</code> to access the backup
+     data as the <code class="command">rear mkbackup</code> command runs as
+     <code class="systemitem">root</code>.
+    </p></li><li class="step "><p>
+     Adjust the various <code class="varname">BACKUP</code> parameters in the
+     configuration file <code class="filename">/etc/rear/local.conf</code> to make
+     Rear store the file backup on the respective NFS server. Find 
+     examples in your installed system under
+     <code class="filename">/usr/share/rear/conf/examples/SLE12-*-example.conf</code>.
+    </p></li></ol></div></div><div class="complex-example"><div class="example" id="ex-ha-rear-config-EMC"><div class="example-title-wrap"><h6 class="example-title"><span class="number">Example 24.2: </span><span class="name">Using Third-Party Backup Tools Like EMC NetWorker </span><a title="Permalink" class="permalink" href="cha-ha-rear.html#ex-ha-rear-config-EMC">#</a></h6></div><div class="example-contents"><p>
+    Using third-party backup tools instead of <code class="command">tar</code>
+    requires appropriate settings in the Rear configuration file.
+   </p><p>
+    The following is an example configuration for EMC NetWorker. Add this
+    configuration snippet to <code class="filename">/etc/rear/local.conf</code> and
+    adjust it according to your setup:
+   </p><div class="verbatim-wrap"><pre class="screen">BACKUP=NSR
+    OUTPUT=ISO
+    BACKUP_URL=nfs://<em class="replaceable ">host.example.com/path/to/rear/backup</em>
+    OUTPUT_URL=nfs://<em class="replaceable ">host.example.com/path/to/rear/backup</em>
+    NSRSERVER=<em class="replaceable ">backupserver.example.com</em>
+    RETENTION_TIME="Month"</pre></div></div></div></div></div><div class="sect1 " id="sec-ha-rear-mkbackup"><div class="titlepage"><div><div><h2 class="title"><span class="number">24.3 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Creating the Recovery Installation System</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-mkbackup">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-mkbackup</li></ul></div></div></div></div><p>
+   After you have configured Rear as described in
+   <a class="xref" href="cha-ha-rear.html#sec-ha-rear-config" title="24.2. Setting Up Rear and Your Backup Solution">Section 24.2</a>, create the
+   recovery installation system (including the Rear recovery installer)
+   plus the file backup with the following command:
+  </p><div class="verbatim-wrap"><pre class="screen">rear -d  -D mkbackup</pre></div><p>
+   It executes the following steps:
+  </p><div class="orderedlist "><ol class="orderedlist" type="1"><li class="listitem "><p>
+     Analyzing the target system and gathering information, in particular
+     about the disk layout (partitioning, file systems, mount points) and
+     about the boot loader.
+    </p></li><li class="listitem "><p>
+     Creating a bootable recovery system with the information gathered in
+     the first step. The resulting Rear recovery installer is
+     <span class="emphasis"><em>specific</em></span> to the system that you want to protect
+     from disaster. It can only be used to re-create this specific system.
+    </p></li><li class="listitem "><p>
+     Calling the configured backup tool to back up system and user files.
+    </p></li></ol></div></div><div class="sect1 " id="sec-ha-rear-testing"><div class="titlepage"><div><div><h2 class="title"><span class="number">24.4 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Testing the Recovery Process</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-testing">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-testing</li></ul></div></div></div></div><p>
+   After having created the recovery system, test the recovery process on a
+   test machine with identical hardware. See also
+   <a class="xref" href="cha-ha-rear.html#sec-ha-rear-concept-requirements" title="24.1.4. Rear Requirements">Section 24.1.4, “Rear Requirements”</a>. Make sure the test
+   machine is correctly set up and can serve as a replacement for your main
+   machine.
+  </p><div id="id-1.3.5.10.6.3" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.png" /><h6>Warning: Extensive Testing on Identical Hardware</h6><p>
+    Thorough testing of the disaster recovery process on machines is
+    required. Test the recovery procedure on a regular basis to ensure
+    everything works as expected.
+   </p></div><div class="procedure " id="pro-ha-rear-testing"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure 24.1: </span><span class="name">Performing a Disaster Recovery on a Test Machine </span><a title="Permalink" class="permalink" href="cha-ha-rear.html#pro-ha-rear-testing">#</a></h6></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     Create a recovery medium by burning the recovery system that you have
+     created in
+     <a class="xref" href="cha-ha-rear.html#sec-ha-rear-mkbackup" title="24.3. Creating the Recovery Installation System">Section 24.3</a> to a
+     DVD or CD. Alternatively, you can use a network boot via PXE.
+    </p></li><li class="step "><p>
+     Boot the test machine from the recovery medium.
+    </p></li><li class="step "><p>
+     From the menu, select <span class="guimenu ">Recover</span>.
+    </p></li><li class="step "><p>
+     Log in as <code class="systemitem">root</code> (no password needed).
+    </p></li><li class="step "><p>
+     Enter the following command to start the recovery installer:
+    </p><div class="verbatim-wrap"><pre class="screen">rear -d -D recover</pre></div><p>
+     For details about the steps that Rear takes during the process,
+     see <a class="xref" href="cha-ha-rear.html#ol-ha-rear-recovers-steps" title="Recovery Process">Recovery Process</a>.
+    </p></li><li class="step "><p>
+     After the recovery process has finished, check whether the system has been
+     successfully re-created and can serve as a replacement for your original
+     system in the production environment.
+    </p></li></ol></div></div></div><div class="sect1 " id="sec-ha-rear-recover"><div class="titlepage"><div><div><h2 class="title"><span class="number">24.5 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Recovering from Disaster</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-recover">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-recover</li></ul></div></div></div></div><p>
+   In case a disaster has occurred, replace any broken hardware if
+   necessary. Then proceed as described in
+   <a class="xref" href="cha-ha-rear.html#pro-ha-rear-testing" title="Performing a Disaster Recovery on a Test Machine">Procedure 24.1</a>, using
+   either the repaired machine (or a tested, identical machine that can
+   serve as a replacement for your original system).
+  </p><p>
+   The <code class="command">rear recover</code> command will execute the following
+   steps:
+  </p><div class="orderedlist " id="ol-ha-rear-recovers-steps"><div class="orderedlist-title-wrap"><h6 class="orderedlist-title"><span class="name">Recovery Process </span><a title="Permalink" class="permalink" href="cha-ha-rear.html#ol-ha-rear-recovers-steps">#</a></h6></div><ol class="orderedlist" type="1"><li class="listitem "><p>
+     Restoring the disk layout (partitions, file systems, and mount points).
+    </p></li><li class="listitem "><p>
+     Restoring the system and user files from the backup.
+    </p></li><li class="listitem "><p>
+     Restoring the boot loader.
+    </p></li></ol></div></div><div class="sect1 " id="sec-ha-rear-more"><div class="titlepage"><div><div><h2 class="title"><span class="number">24.6 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">For More Information</span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-more">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/ha_rear.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_rear.xml</li><li><span class="ds-label">ID: </span>sec-ha-rear-more</li></ul></div></div></div></div><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+     <a class="link" href="http://en.opensuse.org/SDB:Disaster_Recovery" target="_blank">http://en.opensuse.org/SDB:Disaster_Recovery</a>
+    </p></li><li class="listitem "><p>
+     <code class="command">rear</code> man page
+    </p></li><li class="listitem "><p>
+     <code class="filename">/usr/share/doc/packages/rear/README</code>
+    </p></li></ul></div></div></div></div><div class="page-bottom"><div id="_bottom-navigation"><a class="nav-link" href="part-appendix.html"><span class="next-icon">→</span><span class="nav-label"><span class="number">Part IV </span>Appendix</span></a><a class="nav-link" href="cha-ha-samba.html"><span class="prev-icon">←</span><span class="nav-label"><span class="number">Chapter 23 </span>Samba Clustering</span></a></div><div class="_share-print"><div class="online-contents share"><strong>Share this page: </strong><span class="share-buttons"><span class="_share-fb bottom-button">Facebook</span><span class="spacer"> • </span><span class="_share-in bottom-button">LinkedIn</span><span class="spacer"> • </span><span class="_share-tw bottom-button">Twitter</span><span class="spacer"> • </span><span class="_share-mail bottom-button">E-Mail</span></span></div><div class="print"><span class="_print-button bottom-button">Print this page</span></div><div class="clearme"></div></div></div></div><div id="_inward"></div></div><div id="_footer-wrap"><div id="_footer"><p>©
+        2021 
+        SUSE</p><ul><li><a href="https://jobs.suse.com/" target="_top">Careers</a></li><li><a href="https://www.suse.com/company/legal/" target="_top">Legal</a></li><li><a href="https://www.suse.com/company/about/" target="_top">About</a></li><li><a href="https://www.suse.com/contact/" target="_top">Contact Us</a></li></ul></div></div></body></html>

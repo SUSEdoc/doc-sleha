@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Configuring Cluster Resources and Constraints | Geo Clustering Guide | SUSE Linux Enterprise High Availability Extension 12 SP5</title><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" /><link rel="stylesheet" type="text/css" href="static/css/style.css" /><link rel="stylesheet" type="text/css" href="static/css/highlight.css" /><meta name="generator" content="DAPS 3.2.0 (https://opensuse.github.io/daps) using SUSE XSL Stylesheets 2.81.0 (based on DocBook XSL Stylesheets 1.79.2) - chunked" /><meta name="product-name" content="SUSE Linux Enterprise High Availability Extension" /><meta name="product-number" content="12 SP5" /><meta name="book-title" content="Geo Clustering Guide" /><meta name="chapter-title" content="Chapter 6. Configuring Cluster Resources and Constraints" /><meta name="description" content="Apart from the resources and constraints that you need to define for your specific cluster setup, Geo clusters require additional resources and constraints as described below. You can either configure them with the crm shell (crmsh) as demonstrated in the examples below, or with the HA Web Konsole (…" /><meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi" /><meta name="tracker-type" content="bsc" /><meta name="tracker-bsc-component" content="Documentation" /><meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability 12 SP5" /><link rel="home" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation" /><link rel="up" href="book-sleha-geo.html" title="Geo Clustering Guide" /><link rel="prev" href="cha-ha-geo-sync.html" title="Chapter 5. Synchronizing Configuration Files Across All Sites and Arbitrators" /><link rel="next" href="cha-ha-geo-ip-relocation.html" title="Chapter 7. Setting Up IP Relocation via DNS Update" />
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://static.opensuse.org/fonts/fonts.css"></link>');
+}
+else {
+  document.write('<link rel="stylesheet" type="text/css" href="static/css/fonts-onlylocal.css"></link>');
+}
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://static.opensuse.org/fonts/fonts.css" /></noscript><script src="static/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="static/js/script.js" type="text/javascript"></script><script src="static/js/highlight.min.js" type="text/javascript"></script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script></head><body class="draft offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-navigation">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><div id="_outer-wrap"><div id="_white-bg" style="background-color: #E11;"><div id="_header"><div id="_logo"><img src="static/images/logo.png" alt="Logo" /></div><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-sleha-geo.html">Geo Clustering Guide</a><span> › </span><a class="crumb" href="cha-ha-geo-rsc.html">Configuring Cluster Resources and Constraints</a></div><div class="clearme"></div></div></div><div id="_toolbar-wrap"><div id="_toolbar"><div id="_toc-area" class="inactive"><a id="_toc-area-button" class="tool" title="Contents" accesskey="c" href="index.html"><span class="tool-spacer"><span class="toc-icon">Contents</span><span class="clearme"></span></span><span class="tool-label">Contents</span></a><div class="active-contents bubble-corner"></div><div class="active-contents bubble"><div class="bubble-container"><h6>Geo Clustering Guide</h6><div id="_bubble-toc"><ol><li class="inactive"><a href="cha-ha-geo-challenges.html"><span class="number">1 </span><span class="name">Challenges for Geo Clusters</span></a></li><li class="inactive"><a href="cha-ha-geo-concept.html"><span class="number">2 </span><span class="name">Conceptual Overview</span></a></li><li class="inactive"><a href="cha-ha-geo-req.html"><span class="number">3 </span><span class="name">Requirements</span></a></li><li class="inactive"><a href="cha-ha-geo-booth.html"><span class="number">4 </span><span class="name">Setting Up the Booth Services</span></a></li><li class="inactive"><a href="cha-ha-geo-sync.html"><span class="number">5 </span><span class="name">Synchronizing Configuration Files Across All Sites and Arbitrators</span></a></li><li class="inactive"><a href="cha-ha-geo-rsc.html"><span class="number">6 </span><span class="name">Configuring Cluster Resources and Constraints</span></a></li><li class="inactive"><a href="cha-ha-geo-ip-relocation.html"><span class="number">7 </span><span class="name">Setting Up IP Relocation via DNS Update</span></a></li><li class="inactive"><a href="cha-ha-geo-manage.html"><span class="number">8 </span><span class="name">Managing Geo Clusters</span></a></li><li class="inactive"><a href="cha-ha-geo-trouble.html"><span class="number">9 </span><span class="name">Troubleshooting</span></a></li><li class="inactive"><a href="cha-ha-geo-upgrade.html"><span class="number">10 </span><span class="name">Upgrading to the Latest Product Version</span></a></li><li class="inactive"><a href="sec-ha-geo-more.html"><span class="number">11 </span><span class="name">For More Information</span></a></li><li class="inactive"><a href="bk02apa.html"><span class="number">A </span><span class="name">GNU Licenses</span></a></li></ol></div><div class="clearme"></div></div></div></div><div id="_nav-area" class="inactive"><div class="tool"><span class="nav-inner"><span class="tool-label">Navigation</span><a accesskey="p" class="tool-spacer" title="Chapter 5. Synchronizing Configuration Files Across All Sites and Arbitrators" href="cha-ha-geo-sync.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Chapter 7. Setting Up IP Relocation via DNS Update" href="cha-ha-geo-ip-relocation.html"><span class="next-icon">→</span></a></span></div></div></div></div><div id="_fixed-header-wrap" style="background-color: #E11;" class="inactive"><div id="_fixed-header"><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-sleha-geo.html">Geo Clustering Guide</a><span> › </span><a class="crumb" href="cha-ha-geo-rsc.html">Configuring Cluster Resources and Constraints</a></div><div class="buttons"><a class="top-button button" href="#">Top</a><div class="button"><a accesskey="p" class="tool-spacer" title="Chapter 5. Synchronizing Configuration Files Across All Sites and Arbitrators" href="cha-ha-geo-sync.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Chapter 7. Setting Up IP Relocation via DNS Update" href="cha-ha-geo-ip-relocation.html"><span class="next-icon">→</span></a></div><div class="clearme"></div></div><div class="clearme"></div></div></div><div id="_content" class="draft "><div class="documentation"><div class="chapter " id="cha-ha-geo-rsc"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname "><span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span></span> <span class="productnumber "><span class="productnumber"><span class="phrase">12 SP5</span></span></span></div><div><h1 class="title"><span class="number">6 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Configuring Cluster Resources and Constraints</span> <a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/geo_resources_i.xml" title="Edit the source file for this section">Edit source</a></h1><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>geo_resources_i.xml</li><li><span class="ds-label">ID: </span>cha-ha-geo-rsc</li></ul></div></div></div></div><div class="line"><div class="toc"><dl><dt><span class="sect1"><a href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-ticket-dep"><span class="number">6.1 </span><span class="name">Configuring Ticket Dependencies of Resources</span></a></span></dt><dt><span class="sect1"><a href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-boothd"><span class="number">6.2 </span><span class="name">Configuring a Resource Group for <code class="systemitem">boothd</code></span></a></span></dt><dt><span class="sect1"><a href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-order"><span class="number">6.3 </span><span class="name">Adding an Ordering Constraint</span></a></span></dt><dt><span class="sect1"><a href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-sync-cib"><span class="number">6.4 </span><span class="name">Transferring the Resource Configuration to Other Cluster Sites</span></a></span></dt></dl></div></div><p>
+  Apart from the resources and constraints that you need to define for your
+  specific cluster setup, Geo clusters require additional resources and
+  constraints as described below. You can either configure them with the
+  crm shell (crmsh) as demonstrated in the examples below, or with the
+  HA Web Konsole (Hawk2).
+ </p><p>
+  This chapter focuses on tasks specific to Geo clusters. For an introduction
+  to your preferred cluster management tool and general instructions on how to
+  configure resources and constraints with it, refer to one of the following
+  chapters in the <em class="citetitle ">Administration Guide</em> for <span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span>:
+ </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+    <span class="intraxref">Book “Administration Guide”, Chapter 7 “Configuring and Managing Cluster Resources with Hawk2”</span>
+   </p></li><li class="listitem "><p>
+   <span class="intraxref">Book “Administration Guide”, Chapter 8 “Configuring and Managing Cluster Resources (Command Line)”</span>
+   </p></li></ul></div><p>
+  If you have set up your Geo cluster with the bootstrap scripts, the cluster
+  resources needed for booth have been configured already (including a resource
+  group for boothd). In this case, you can skip
+  <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-boothd" title="6.2. Configuring a Resource Group for boothd">Section 6.2</a> and only
+  need to execute the remaining steps below to complete the cluster resource
+  configuration.
+ </p><p>
+  If you are setting up your Geo cluster manually, you need to execute all of
+  the following steps:
+ </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+
+    <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-ticket-dep" title="6.1. Configuring Ticket Dependencies of Resources">Section 6.1, “Configuring Ticket Dependencies of Resources”</a>
+   </p></li><li class="listitem "><p>
+
+    <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-boothd" title="6.2. Configuring a Resource Group for boothd">Section 6.2, “Configuring a Resource Group for <code class="systemitem">boothd</code>”</a>
+   </p></li><li class="listitem "><p>
+
+    <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-order" title="6.3. Adding an Ordering Constraint">Section 6.3, “Adding an Ordering Constraint”</a>
+   </p></li><li class="listitem "><p>
+
+    <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-sync-cib" title="6.4. Transferring the Resource Configuration to Other Cluster Sites">Section 6.4, “Transferring the Resource Configuration to Other Cluster Sites”</a>
+   </p></li></ul></div><div id="id-1.4.8.8" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.png" /><h6>Important: No CIB Synchronization Across Sites</h6><p>
+   The CIB is <span class="emphasis"><em>not</em></span> automatically synchronized across
+   cluster sites of a Geo cluster. All resources that must be highly
+   available across the Geo cluster need to be configured for each site
+   accordingly or need to be transferred to the other site or sites.
+  </p><p>
+   To simplify transfer, any resources with site-specific parameters can be
+   configured in such a way that the parameters' values depend on the name of
+   the cluster site where the resource is running (see also
+   <a class="xref" href="cha-ha-geo-req.html" title="Chapter 3. Requirements">Chapter 3, <em>Requirements</em></a>, <em class="citetitle ">Other Requirements and
+   Recommendations</em>).
+  </p><p>
+   After you have configured the resources on one site, you can tag the
+   resources that are needed on all cluster sites, export them from the current
+   CIB, and import them into the CIB of another cluster site. For details, see
+   <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-sync-cib" title="6.4. Transferring the Resource Configuration to Other Cluster Sites">Section 6.4, “Transferring the Resource Configuration to Other Cluster Sites”</a>.
+  </p></div><div class="sect1 " id="sec-ha-geo-rsc-ticket-dep"><div class="titlepage"><div><div><h2 class="title"><span class="number">6.1 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Configuring Ticket Dependencies of Resources</span> <a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-ticket-dep">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/geo_resources_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>geo_resources_i.xml</li><li><span class="ds-label">ID: </span>sec-ha-geo-rsc-ticket-dep</li></ul></div></div></div></div><p>
+     For Geo clusters, you can specify which resources depend on a
+     certain ticket. Together with this special type of constraint, you can
+     set a <code class="literal">loss-policy</code> that defines what should happen to
+     the respective resources if the ticket is revoked. The attribute
+     <code class="literal">loss-policy</code> can have the following values:
+    </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+       <code class="literal">fence</code>: Fence the nodes that are running the
+       relevant resources.
+      </p></li><li class="listitem "><p>
+       <code class="literal">stop</code>: Stop the relevant resources.
+      </p></li><li class="listitem "><p>
+       <code class="literal">freeze</code>: Do nothing to the relevant resources.
+      </p></li><li class="listitem "><p>
+       <code class="literal">demote</code>: Demote relevant resources that are running
+       in <code class="literal">master</code> mode to <code class="literal">slave</code> mode.
+      </p></li></ul></div><div class="procedure " id="pro-ha-geo-setup-rsc-constraints"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure 6.1: </span><span class="name">Configuring Ticket Dependencies of Resources with crmsh </span><a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#pro-ha-geo-setup-rsc-constraints">#</a></h6></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     On one of the nodes of cluster amsterdam, start a shell and log in as
+     <code class="systemitem">root</code> or equivalent.
+
+    </p></li><li class="step "><p>
+     Enter <code class="command">crm configure</code> to switch to the interactive
+     crm shell.
+    </p></li><li class="step " id="step-ha-geo-setup-rsc-constraints"><p>
+     Configure constraints that define which resources depend on a certain
+     ticket. For example, to make a primitive resource <code class="literal">rsc1</code>
+     depend on <code class="literal">ticketA</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">rsc_ticket</code> rsc1-req-ticketA ticketA: \
+  rsc1 loss-policy="fence"</pre></div><p>
+     In case <code class="literal">ticketA</code> is revoked, the node running the
+     resource should be fenced.
+    </p></li><li class="step "><p>
+     If you want other resources to depend on further tickets, create as many
+     constraints as necessary with <code class="command">rsc_ticket</code>.
+    </p></li><li class="step "><p>
+     Review your changes with <code class="command">show</code>.
+    </p></li><li class="step "><p>
+     If everything is correct, submit your changes with
+     <code class="command">commit</code> and leave the crm live configuration with
+     <code class="command">exit</code>.
+    </p><p>
+     The configuration is saved to the CIB.
+    </p></li></ol></div></div></div><div class="sect1 " id="sec-ha-geo-rsc-boothd"><div class="titlepage"><div><div><h2 class="title"><span class="number">6.2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Configuring a Resource Group for <code class="systemitem">boothd</code></span> <a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-boothd">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/geo_resources_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>geo_resources_i.xml</li><li><span class="ds-label">ID: </span>sec-ha-geo-rsc-boothd</li></ul></div></div></div></div><p>
+   If you have set up your Geo cluster with the
+   <code class="systemitem">ha-cluster-init</code> bootstrap scripts, you can skip the
+   following procedure as the resources and the resource group for boothd have
+   already been configured in this case.
+  </p><p>
+      Each site needs to run one instance of
+      <code class="systemitem">boothd</code> that communicates
+      with the other booth daemons. The daemon can be started on any node,
+      therefore it should be configured as primitive resource. To make the
+      <code class="systemitem">boothd</code> resource stay on the same node, if
+      possible, add resource stickiness to the configuration. As each daemon
+      needs a persistent IP address, configure another primitive with a
+      virtual IP address. Group both primitives:</p><div class="procedure "><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     On one of the nodes of cluster <code class="literal">amsterdam</code>, start a
+     shell and log in as <code class="systemitem">root</code> or equivalent.
+    </p></li><li class="step "><p>
+     Enter <code class="command">crm configure</code> to switch to the interactive
+     crm shell.
+    </p></li><li class="step "><p>
+     Enter the following to create both primitive resources and to add them to
+     one group, <code class="literal">g-booth</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> ip-booth ocf:heartbeat:IPaddr2 \
+  params iflabel="ha" nic="eth1" cidr_netmask="24"
+  params rule #cluster-name eq amsterdam ip="192.168.201.100" \
+  params rule #cluster-name eq berlin ip="192.168.202.100"
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> booth-site ocf:pacemaker:booth-site \
+  meta resource-stickiness="INFINITY" \
+  params config="nfs" op monitor interval="10s"
+<code class="prompt custom">crm(live)configure# </code><code class="command">group</code> g-booth ip-booth booth-site</pre></div><p>
+     With this configuration, each booth daemon will be available at its
+     individual IP address, independent of the node the daemon is running on.
+    </p></li><li class="step "><p>
+     Review your changes with <code class="command">show</code>.
+    </p></li><li class="step "><p>
+     If everything is correct, submit your changes with
+     <code class="command">commit</code> and leave the crm live configuration with
+     <code class="command">exit</code>.
+    </p><p>
+     The configuration is saved to the CIB.
+    </p></li></ol></div></div></div><div class="sect1 " id="sec-ha-geo-rsc-order"><div class="titlepage"><div><div><h2 class="title"><span class="number">6.3 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Adding an Ordering Constraint</span> <a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-order">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/geo_resources_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>geo_resources_i.xml</li><li><span class="ds-label">ID: </span>sec-ha-geo-rsc-order</li></ul></div></div></div></div><p>
+      If a ticket has been granted to a site but all nodes of that site
+      should fail to host the <code class="systemitem">boothd</code>
+      resource group for any reason, a <span class="quote">“<span class="quote ">split-brain</span>”</span> situation
+      among the geographically dispersed sites may occur. In that case, no
+      <code class="systemitem">boothd</code> instance would be available to safely manage failover of the
+      ticket to another site. To avoid a potential concurrency violation of the
+      ticket (the ticket is granted to multiple sites simultaneously), add an
+      ordering constraint: 
+     </p><div class="procedure "><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     On one of the nodes of cluster amsterdam, start a shell and log in as
+     <code class="systemitem">root</code> or equivalent.
+    </p></li><li class="step "><p>
+     Enter <code class="command">crm configure</code> to switch to the interactive
+     crm shell.
+    </p></li><li class="step "><p>
+     Create an ordering constraint, for example:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> o-booth-before-rsc1 inf: g-booth rsc1</pre></div><p>
+     It defines that <code class="literal">rsc1</code> (which depends on
+     <code class="literal">ticketA</code>) can only be started after the
+     <code class="literal">g-booth</code> resource group.
+    </p></li><li class="step "><p>
+     For any other resources that depend on a certain ticket, define further
+     ordering constraints.
+    </p></li><li class="step "><p>
+     Review your changes with <code class="command">show</code>.
+    </p></li><li class="step "><p>
+     If everything is correct, submit your changes with
+     <code class="command">commit</code> and leave the crm live configuration with
+     <code class="command">exit</code>.
+    </p><p>
+     The configuration is saved to the CIB.
+    </p></li></ol></div></div></div><div class="sect1 " id="sec-ha-geo-rsc-sync-cib"><div class="titlepage"><div><div><h2 class="title"><span class="number">6.4 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Transferring the Resource Configuration to Other Cluster Sites</span> <a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-sync-cib">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/geo_resources_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>geo_resources_i.xml</li><li><span class="ds-label">ID: </span>sec-ha-geo-rsc-sync-cib</li></ul></div></div></div></div><p>
+   After having completed or changed your resource configuration for one
+   cluster site, transfer it to the other sites of your Geo cluster.
+  </p><p>
+   To simplify the transfer, you can tag any resources that are needed on all
+   cluster sites, export them from the current CIB, and import them into the
+   CIB of another cluster site. Tagging does not create any colocation or
+   ordering relationship between the resources.
+  </p><p>
+   <a class="xref" href="cha-ha-geo-rsc.html#pro-ha-geo-rsc-sync-cib-export" title="Tagging and Exporting a Resource Configuration">Procedure 6.2, “Tagging and Exporting a Resource Configuration”</a> and
+   <a class="xref" href="cha-ha-geo-rsc.html#pro-ha-geo-rsc-sync-cib-import" title="Importing a Tagged Resource Configuration">Procedure 6.3, “Importing a Tagged Resource Configuration”</a> give an example of how
+   to do so. They are based on the following prerequisites:
+  </p><div class="itemizedlist "><div class="itemizedlist-title-wrap"><h6 class="itemizedlist-title"><span class="name">Prerequisites </span><a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#id-1.4.8.12.5">#</a></h6></div><ul class="itemizedlist"><li class="listitem "><p>
+     You have a Geo cluster with two sites: cluster
+     <code class="literal">amsterdam</code> and cluster <code class="literal">berlin</code>.
+    </p></li><li class="listitem "><p>
+     The cluster names for each site are defined in the respective
+     <code class="filename">/etc/corosync/corosync.conf</code> files:
+    </p><div class="verbatim-wrap"><pre class="screen">totem {
+     [...]
+     cluster_name: amsterdam
+     }</pre></div><p>
+     This can either be done manually (by editing <code class="filename">/etc/corosync/corosync.conf</code>) or with the
+     YaST cluster module (by switching to the <span class="guimenu ">Communication
+     Channels</span> category and defining a <span class="guimenu ">Cluster
+     Name</span>). Afterward, stop and start the <code class="systemitem">pacemaker</code>
+     service for the changes to take effect:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">systemctl</code> stop pacemaker
+<code class="prompt root">root # </code><code class="command">systemctl</code> start pacemaker</pre></div></li><li class="listitem "><p>
+     The necessary resources for booth and for all services that should be
+     highly available across your Geo cluster have been configured in the CIB
+     on site <code class="literal">amsterdam</code>. They will be imported to the CIB on
+     site <code class="literal">berlin</code>.
+    </p></li></ul></div><div class="procedure " id="pro-ha-geo-rsc-sync-cib-export"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure 6.2: </span><span class="name">Tagging and Exporting a Resource Configuration </span><a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#pro-ha-geo-rsc-sync-cib-export">#</a></h6></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step "><p>
+     Log in to one of the nodes of cluster <code class="literal">amsterdam</code>.
+    </p></li><li class="step "><p>
+     Start the cluster with:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">systemctl</code> start pacemaker</pre></div></li><li class="step "><p>
+     Enter <code class="command">crm configure</code> to switch to the interactive
+     crm shell.
+    </p></li><li class="step "><p>
+     Review the current CIB configuration:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code>show</pre></div></li><li class="step "><p>
+     Mark the resources and constraints that are needed across the Geo
+     cluster with the tag <code class="literal">geo_resources</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">tag</code> geo_resources: \
+  <em class="replaceable ">LIST_OF_RESOURCES_and_CONSTRAINTS_FOR_REQUIRED_SERVICES</em> <span id="co-geo-rsc-any"></span><span class="callout">1</span>\
+  rsc1-req-ticketA ip-booth booth-site g-booth o-booth-before-rsc1 <span id="co-geo-rsc-booth"></span><span class="callout">2</span></pre></div><div class="calloutlist "><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#co-geo-rsc-any"><span class="callout">1</span></a> </p></td><td valign="top" align="left"><p>
+       Any resources and constraints of your specific setup that you need on
+       all sites of the Geo cluster (for example, resources for DRBD as
+       described at 
+       <a class="link" href="https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html" target="_blank">https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html</a>).
+      </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#co-geo-rsc-booth"><span class="callout">2</span></a> </p></td><td valign="top" align="left"><p>
+       Resources and constraints for boothd (primitives, booth resource group,
+       ticket dependency, additional ordering constraint), see
+       <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-ticket-dep" title="6.1. Configuring Ticket Dependencies of Resources">Section 6.1</a>
+       to <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-order" title="6.3. Adding an Ordering Constraint">Section 6.3</a>.
+      </p></td></tr></table></div></li><li class="step "><p>
+     Review your changes with <code class="command">show</code>.
+    </p></li><li class="step "><p>
+     If the configuration is according to your wishes, submit your changes with
+     <code class="command">submit</code> and leave the crm live shell with
+     <code class="command">exit</code>.
+    </p></li><li class="step " id="st-ha-geo-rsc-sync-cib-export-start"><p>
+     Export the tagged resources and constraints to a file named
+     <code class="filename">exported.cib</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">crm configure show</code> tag:geo_resources geo_resources &gt; exported.cib</pre></div><p>
+     The command <code class="command">crm configure show
+     tag:</code><em class="replaceable ">TAGNAME</em> shows all resources that
+     belong to the tag <em class="replaceable ">TAGNAME</em>.
+    </p></li></ol></div></div><div class="procedure " id="pro-ha-geo-rsc-sync-cib-import"><div class="procedure-title-wrap"><h6 class="procedure-title"><span class="number">Procedure 6.3: </span><span class="name">Importing a Tagged Resource Configuration </span><a title="Permalink" class="permalink" href="cha-ha-geo-rsc.html#pro-ha-geo-rsc-sync-cib-import">#</a></h6></div><div class="procedure-contents"><p>
+    To import the saved configuration file into the CIB of the second cluster
+    site, proceed as follows:
+   </p><ol class="procedure" type="1"><li class="step "><p>
+     Log in to one of the nodes of cluster <code class="literal">berlin</code>.
+    </p></li><li class="step "><p>
+     Start the cluster with:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">systemctl</code> start pacemaker</pre></div></li><li class="step "><p>
+     Copy the file <code class="filename">exported.cib</code> from cluster
+     <code class="literal">amsterdam</code> to this node.
+     
+    </p></li><li class="step "><p>
+     Import the tagged resources and constraints from the file
+     <code class="filename">exported.cib</code> into the CIB of cluster
+     <code class="literal">berlin</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">crm configure load</code> update <em class="replaceable ">PATH_TO_FILE/exported.cib</em></pre></div><p>
+     When using the <code class="option">update</code> parameter for the <code class="command">crm
+     configure load</code> command, crmsh tries to integrate the contents
+     of the file into the current CIB configuration (instead of replacing the
+     current CIB with the file contents).
+    </p></li><li class="step " id="st-ha-geo-rsc-sync-cib-import-stop"><p>
+     View the updated CIB configuration with the following command:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">crm configure show</code></pre></div><p>
+     The imported resources and constraints will appear in the CIB.
+    </p></li></ol></div></div></div></div></div><div class="page-bottom"><div id="_bottom-navigation"><a class="nav-link" href="cha-ha-geo-ip-relocation.html"><span class="next-icon">→</span><span class="nav-label"><span class="number">Chapter 7 </span>Setting Up IP Relocation via DNS Update</span></a><a class="nav-link" href="cha-ha-geo-sync.html"><span class="prev-icon">←</span><span class="nav-label"><span class="number">Chapter 5 </span>Synchronizing Configuration Files Across All Sites and Arbitrators</span></a></div><div class="_share-print"><div class="online-contents share"><strong>Share this page: </strong><span class="share-buttons"><span class="_share-fb bottom-button">Facebook</span><span class="spacer"> • </span><span class="_share-in bottom-button">LinkedIn</span><span class="spacer"> • </span><span class="_share-tw bottom-button">Twitter</span><span class="spacer"> • </span><span class="_share-mail bottom-button">E-Mail</span></span></div><div class="print"><span class="_print-button bottom-button">Print this page</span></div><div class="clearme"></div></div></div></div><div id="_inward"></div></div><div id="_footer-wrap"><div id="_footer"><p>©
+        2021 
+        SUSE</p><ul><li><a href="https://jobs.suse.com/" target="_top">Careers</a></li><li><a href="https://www.suse.com/company/legal/" target="_top">Legal</a></li><li><a href="https://www.suse.com/company/about/" target="_top">About</a></li><li><a href="https://www.suse.com/contact/" target="_top">Contact Us</a></li></ul></div></div></body></html>

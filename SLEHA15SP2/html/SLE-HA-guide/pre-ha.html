@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>About This Guide | Administration Guide | SUSE Linux Enterprise High Availability Extension 15 SP2</title><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" /><link rel="stylesheet" type="text/css" href="static/css/style.css" /><link rel="stylesheet" type="text/css" href="static/css/highlight.css" /><meta name="generator" content="DAPS 3.2.0 (https://opensuse.github.io/daps) using SUSE XSL Stylesheets 2.81.0 (based on DocBook XSL Stylesheets 1.79.2) - chunked" /><meta name="product-name" content="SUSE Linux Enterprise High Availability Extension" /><meta name="product-number" content="15 SP2" /><meta name="book-title" content="Administration Guide" /><meta name="chapter-title" content="About This Guide" /><meta name="description" content="This guide is intended for administrators who need to set up, configure, and maintain clusters with SUSE® Linux Enterprise High Availability Extension. For quick and efficient configuration and administration, the product includes both a graphical user interface and a command line interface (CLI). For performing key tasks, both approaches are covered in this guide. Thus, you can choose the appropriate tool that matches your needs." /><meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi" /><meta name="tracker-type" content="bsc" /><meta name="tracker-bsc-component" content="Documentation" /><meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15 SP2" /><link rel="home" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation" /><link rel="up" href="book-sleha-guide.html" title="Administration Guide" /><link rel="prev" href="book-sleha-guide.html" title="Administration Guide" /><link rel="next" href="part-install.html" title="Part I. Installation, Setup and Upgrade" />
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://static.opensuse.org/fonts/fonts.css" /></noscript><script src="static/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="static/js/script.js" type="text/javascript"></script><script src="static/js/highlight.min.js" type="text/javascript"></script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script></head><body class="draft offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-navigation">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><div id="_outer-wrap"><div id="_white-bg" style="background-color: #E11;"><div id="_header"><div id="_logo"><img src="static/images/logo.svg" alt="Logo" /></div><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-sleha-guide.html">Administration Guide</a><span> › </span><a class="crumb" href="pre-ha.html">About This Guide</a></div><div class="clearme"></div></div></div><div id="_toolbar-wrap"><div id="_toolbar"><div id="_toc-area" class="inactive"><a id="_toc-area-button" class="tool" title="Contents" accesskey="c" href="index.html"><span class="tool-spacer"><span class="toc-icon">Contents</span><span class="clearme"></span></span><span class="tool-label">Contents</span></a><div class="active-contents bubble-corner"></div><div class="active-contents bubble"><div class="bubble-container"><h6>Administration Guide</h6><div id="_bubble-toc"><ol><li class="inactive"><a href="pre-ha.html"><span class="number"> </span><span class="name">About This Guide</span></a></li><li class="inactive"><a href="part-install.html"><span class="number">I </span><span class="name">Installation, Setup and Upgrade</span></a><ol><li class="inactive"><a href="cha-ha-concepts.html"><span class="number">1 </span><span class="name">Product Overview</span></a></li><li class="inactive"><a href="cha-ha-requirements.html"><span class="number">2 </span><span class="name">System Requirements and Recommendations</span></a></li><li class="inactive"><a href="cha-ha-install.html"><span class="number">3 </span><span class="name">Installing the High Availability Extension</span></a></li><li class="inactive"><a href="cha-ha-ycluster.html"><span class="number">4 </span><span class="name">Using the YaST Cluster Module</span></a></li><li class="inactive"><a href="cha-ha-migration.html"><span class="number">5 </span><span class="name">Upgrading Your Cluster and Updating Software Packages</span></a></li></ol></li><li class="inactive"><a href="part-config.html"><span class="number">II </span><span class="name">Configuration and Administration</span></a><ol><li class="inactive"><a href="cha-ha-config-basics.html"><span class="number">6 </span><span class="name">Configuration and Administration Basics</span></a></li><li class="inactive"><a href="cha-conf-hawk2.html"><span class="number">7 </span><span class="name">Configuring and Managing Cluster Resources with Hawk2</span></a></li><li class="inactive"><a href="cha-ha-manual-config.html"><span class="number">8 </span><span class="name">Configuring and Managing Cluster Resources (Command Line)</span></a></li><li class="inactive"><a href="cha-ha-agents.html"><span class="number">9 </span><span class="name">Adding or Modifying Resource Agents</span></a></li><li class="inactive"><a href="cha-ha-fencing.html"><span class="number">10 </span><span class="name">Fencing and STONITH</span></a></li><li class="inactive"><a href="cha-ha-storage-protect.html"><span class="number">11 </span><span class="name">Storage Protection and SBD</span></a></li><li class="inactive"><a href="cha-ha-qdevice.html"><span class="number">12 </span><span class="name">QDevice and QNetd</span></a></li><li class="inactive"><a href="cha-ha-acl.html"><span class="number">13 </span><span class="name">Access Control Lists</span></a></li><li class="inactive"><a href="cha-ha-netbonding.html"><span class="number">14 </span><span class="name">Network Device Bonding</span></a></li><li class="inactive"><a href="cha-ha-lb.html"><span class="number">15 </span><span class="name">Load Balancing</span></a></li><li class="inactive"><a href="cha-ha-geo.html"><span class="number">16 </span><span class="name">Geo Clusters (Multi-Site Clusters)</span></a></li><li class="inactive"><a href="cha-ha-maintenance.html"><span class="number">17 </span><span class="name">Executing Maintenance Tasks</span></a></li></ol></li><li class="inactive"><a href="part-storage.html"><span class="number">III </span><span class="name">Storage and Data Replication</span></a><ol><li class="inactive"><a href="cha-ha-storage-dlm.html"><span class="number">18 </span><span class="name">Distributed Lock Manager (DLM)</span></a></li><li class="inactive"><a href="cha-ha-ocfs2.html"><span class="number">19 </span><span class="name">OCFS2</span></a></li><li class="inactive"><a href="cha-ha-gfs2.html"><span class="number">20 </span><span class="name">GFS2</span></a></li><li class="inactive"><a href="cha-ha-drbd.html"><span class="number">21 </span><span class="name">DRBD</span></a></li><li class="inactive"><a href="cha-ha-clvm.html"><span class="number">22 </span><span class="name">Cluster Logical Volume Manager (Cluster LVM)</span></a></li><li class="inactive"><a href="cha-ha-cluster-md.html"><span class="number">23 </span><span class="name">Cluster Multi-device (Cluster MD)</span></a></li><li class="inactive"><a href="cha-ha-samba.html"><span class="number">24 </span><span class="name">Samba Clustering</span></a></li><li class="inactive"><a href="cha-ha-rear.html"><span class="number">25 </span><span class="name">Disaster Recovery with Rear (Relax-and-Recover)</span></a></li></ol></li><li class="inactive"><a href="part-appendix.html"><span class="number">IV </span><span class="name">Appendix</span></a><ol><li class="inactive"><a href="app-ha-troubleshooting.html"><span class="number">A </span><span class="name">Troubleshooting</span></a></li><li class="inactive"><a href="app-naming.html"><span class="number">B </span><span class="name">Naming Conventions</span></a></li><li class="inactive"><a href="app-ha-management.html"><span class="number">C </span><span class="name">Cluster Management Tools (Command Line)</span></a></li><li class="inactive"><a href="app-crmreport-nonroot.html"><span class="number">D </span><span class="name">Running Cluster Reports Without <code class="systemitem">root</code> Access</span></a></li></ol></li><li class="inactive"><a href="gl-heartb.html"><span class="number"> </span><span class="name">Glossary</span></a></li><li class="inactive"><a href="bk02ape.html"><span class="number">E </span><span class="name">GNU Licenses</span></a></li></ol></div><div class="clearme"></div></div></div></div><div id="_nav-area" class="inactive"><div class="tool"><span class="nav-inner"><span class="tool-label">Navigation</span><a accesskey="p" class="tool-spacer" title="Administration Guide" href="book-sleha-guide.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Part I. Installation, Setup and Upgrade" href="part-install.html"><span class="next-icon">→</span></a></span></div></div></div></div><div id="_fixed-header-wrap" style="background-color: #E11;" class="inactive"><div id="_fixed-header"><div class="crumbs"><a class="book-link" href="index.html" title="SUSE Linux Enterprise High Availability Extension Documentation"><span class="book-icon">SUSE Linux Enterprise High Availability Extension Documentation</span></a><span> › </span><a class="crumb" href="book-sleha-guide.html">Administration Guide</a><span> › </span><a class="crumb" href="pre-ha.html">About This Guide</a></div><div class="buttons"><a class="top-button button" href="#">Top</a><div class="button"><a accesskey="p" class="tool-spacer" title="Administration Guide" href="book-sleha-guide.html"><span class="prev-icon">←</span></a><a accesskey="n" class="tool-spacer" title="Part I. Installation, Setup and Upgrade" href="part-install.html"><span class="next-icon">→</span></a></div><div class="clearme"></div></div><div class="clearme"></div></div></div><div id="_content" class="draft "><div class="documentation"><div class="preface " id="pre-ha"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname "><span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span></span> <span class="productnumber "><span class="productnumber"><span class="phrase">15 SP2</span></span></span></div><div><h1 class="title"><span class="number"> </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">About This Guide</span> <a title="Permalink" class="permalink" href="pre-ha.html#">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_intro.xml" title="Edit the source file for this section">Edit source</a></h1><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_intro.xml</li><li><span class="ds-label">ID: </span>pre-ha</li></ul></div></div><div><div class="abstract"><p> This guide is intended for administrators who need to set up, configure,
+  and maintain clusters with <span class="roductnamereg"><span class="phrase">SUSE® Linux Enterprise High Availability Extension</span></span>. For quick and efficient 
+  configuration and administration, the product includes both a graphical user
+  interface and a command line interface (CLI). For performing key tasks,
+  both approaches are covered in this guide. Thus, you can choose the appropriate
+  tool that matches your needs.</p></div></div></div></div><div class="line"><div class="toc"><dl><dt><span class="sect1"><a href="pre-ha.html#id-1.4.2.5"><span class="name">Available Documentation</span></a></span></dt><dt><span class="sect1"><a href="pre-ha.html#id-1.4.2.6"><span class="name">Giving Feedback</span></a></span></dt><dt><span class="sect1"><a href="pre-ha.html#id-1.4.2.7"><span class="name">Documentation Conventions</span></a></span></dt><dt><span class="sect1"><a href="pre-ha.html#id-1.4.2.8"><span class="name">Product Life Cycle and Support</span></a></span></dt></dl></div></div><p>
+  This guide is divided into the following parts:
+ </p><div class="variablelist "><dl class="variablelist"><dt id="id-1.4.2.4.1"><span class="term "><a class="xref" href="part-install.html" title="Part I. Installation, Setup and Upgrade">Installation, Setup and Upgrade</a>
+   </span></dt><dd><p>
+     Before starting to install and configure your cluster, make yourself
+     familiar with cluster fundamentals and architecture, get an overview of
+     the key features and benefits. Learn which hardware and software
+     requirements must be met and what preparations to take before executing
+     the next steps. Perform the installation and basic setup of your HA
+     cluster using YaST. Learn how to upgrade your cluster to the most recent
+     release version or how to update individual packages.
+    </p></dd><dt id="id-1.4.2.4.2"><span class="term "><a class="xref" href="part-config.html" title="Part II. Configuration and Administration">Configuration and Administration</a>
+   </span></dt><dd><p>
+     Add, configure and manage cluster resources with either the Web
+     interface (Hawk2), or the command line interface (crmsh). To
+     avoid unauthorized access to the cluster configuration, define roles
+     and assign them to certain users for fine-grained control. Learn how to
+     use load balancing and fencing. If you consider writing your own
+     resource agents or modifying existing ones, get some background
+     information on how to create different types of resource agents.
+    </p></dd><dt id="id-1.4.2.4.3"><span class="term "><a class="xref" href="part-storage.html" title="Part III. Storage and Data Replication">Storage and Data Replication</a>
+   </span></dt><dd><p>
+     <span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span> ships with the cluster-aware file systems OCFS2 and
+     GFS2, and the Cluster Logical Volume Manager (Cluster LVM). For
+     replication of your data, use DRBD*. It lets you mirror the data
+     of a High Availability service from the active node of a cluster to its standby
+     node. Furthermore, a clustered Samba server also provides a High Availability
+     solution for heterogeneous environments.
+    </p></dd><dt id="id-1.4.2.4.4"><span class="term "><a class="xref" href="part-appendix.html" title="Part IV. Appendix">Appendix</a>
+   </span></dt><dd><p>Contains an overview of common problems and their solution. Presents the
+     naming conventions used in this documentation with regard to clusters,
+     resources and constraints.  
+     Contains a glossary with HA-specific terminology.</p></dd></dl></div><div class="sect1 " id="id-1.4.2.5"><div class="titlepage"><div><div><h2 class="title"><span class="number">1 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Available Documentation</span> <a title="Permalink" class="permalink" href="pre-ha.html#id-1.4.2.5">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_intro_available_doc_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>common_intro_available_doc_i.xml</li><li><span class="ds-label">ID: </span><span class="ds-message">no ID found</span></li></ul></div></div></div></div><a id="id-1.4.2.5.3" class="indexterm"></a><a id="id-1.4.2.5.4" class="indexterm"></a><div id="id-1.4.2.5.5" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg" /><h6>Note: Online Documentation and Latest Updates</h6><p>
+   Documentation for our products is available at
+   <a class="link" href="https://documentation.suse.com/" target="_blank">https://documentation.suse.com/</a>, where you can also
+   find the latest updates, and browse or download the documentation in various formats.
+   The latest documentation updates can usually be found in the English language version.
+  </p></div><p>The following documentation is available for this product:
+ </p><div class="variablelist "><dl class="variablelist"><dt id="id-1.4.2.5.7.1"><span class="term ">Installation and Setup Quick Start
+   </span></dt><dd><p>
+      This document guides you through the setup of a very basic two-node cluster,
+    using the bootstrap scripts provided by the
+    <code class="systemitem">ha-cluster-bootstrap</code> package.
+    This includes the configuration of a virtual IP address as a cluster
+    resource and the use of SBD on shared storage as a node fencing mechanism.
+    </p></dd><dt id="id-1.4.2.5.7.2"><span class="term ">Administration Guide
+   </span></dt><dd><p>
+      This guide is intended for administrators who need to set up, configure,
+  and maintain clusters with <span class="roductnamereg"><span class="phrase">SUSE® Linux Enterprise High Availability Extension</span></span>. For quick and efficient 
+  configuration and administration, the product includes both a graphical user
+  interface and a command line interface (CLI). For performing key tasks,
+  both approaches are covered in this guide. Thus, you can choose the appropriate
+  tool that matches your needs.
+    </p></dd><dt id="id-1.4.2.5.7.3"><span class="term ">Highly Available NFS Storage with DRBD and Pacemaker
+   </span></dt><dd><p>
+      This document describes how to set up highly available NFS storage in a
+    two-node cluster, using the following components:
+    DRBD* (Distributed Replicated Block Device), LVM (Logical Volume Manager), 
+    and Pacemaker as cluster resource manager.
+    </p></dd><dt id="id-1.4.2.5.7.4"><span class="term ">Pacemaker Remote Quick Start
+   </span></dt><dd><p>
+      This document guides you through the setup of a High Availability cluster with a remote
+   node or a guest node, managed by Pacemaker and <code class="systemitem">pacemaker_remote</code>.
+   <span class="emphasis"><em>Remote</em></span> in <code class="systemitem">pacemaker_remote</code>
+   does not refer to physical distance, but to the special status of nodes that
+   do not run the complete cluster stack and thus are not regular members of the
+   cluster.
+    </p></dd><dt id="id-1.4.2.5.7.5"><span class="term ">Geo Clustering Quick Start
+   </span></dt><dd><p>
+      Geo clustering protects workloads across globally distributed data
+   centers. This document guides you through the basic setup of a
+   Geo cluster, using the Geo bootstrap scripts provided by the
+   <code class="systemitem">ha-cluster-bootstrap</code>
+   package.
+    </p></dd><dt id="id-1.4.2.5.7.6"><span class="term ">Geo Clustering Guide
+   </span></dt><dd><p>
+      This document covers the setup options and parameters for Geo clusters and
+   their components, such as booth ticket manager, the specific Csync2 setup, and the
+   configuration of the required cluster resources (and how to transfer them to
+   other sites in case of changes). Learn how to monitor and manage Geo clusters
+   from command line or with the Hawk2 Web interface.
+    </p></dd></dl></div></div><div class="sect1 " id="id-1.4.2.6"><div class="titlepage"><div><div><h2 class="title"><span class="number">2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Giving Feedback</span> <a title="Permalink" class="permalink" href="pre-ha.html#id-1.4.2.6">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_intro_feedback_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>common_intro_feedback_i.xml</li><li><span class="ds-label">ID: </span><span class="ds-message">no ID found</span></li></ul></div></div></div></div><p>
+  Your feedback and contribution to this documentation is welcome!
+  Several channels are available:
+ </p><div class="variablelist "><dl class="variablelist"><dt id="id-1.4.2.6.4.1"><span class="term ">Service Requests and Support</span></dt><dd><p>
+     For services and support options available for your product, refer to
+     <a class="link" href="http://www.suse.com/support/" target="_blank">http://www.suse.com/support/</a>.
+    </p><p>
+     To open a service request, you need a subscription at SUSE Customer Center. Go to
+     <a class="link" href="https://scc.suse.com/support/requests" target="_blank">https://scc.suse.com/support/requests</a>, log in, and click
+     <span class="guimenu ">Create New</span>.
+    </p></dd><dt id="id-1.4.2.6.4.2"><span class="term ">Bug Reports</span></dt><dd><p>
+     Report issues with the documentation at <a class="link" href="https://bugzilla.suse.com/" target="_blank">https://bugzilla.suse.com/</a>.
+     To simplify this process, you can use the <span class="guimenu ">Report
+      Documentation Bug</span> links next to headlines in the HTML
+     version of this document. These preselect the right product and
+     category in Bugzilla and add a link to the current section.
+     You can start typing your bug report right away. A Bugzilla
+     account is required.
+    </p></dd><dt id="id-1.4.2.6.4.3"><span class="term ">Contributions</span></dt><dd><p>
+     To contribute to this documentation, use the <span class="guimenu ">Edit Source</span>
+     links next to headlines in the HTML version of this document. They
+     take you to the source code on GitHub, where you can open a pull request.
+     A GitHub account is required.
+    </p><p>
+     For more information about the documentation environment used for this
+     documentation, see <a class="link" href="https://github.com/SUSE/doc-sleha/blob/master/README.adoc" target="_blank">the repository's
+      README</a>.
+     
+    </p></dd><dt id="id-1.4.2.6.4.4"><span class="term ">Mail</span></dt><dd><p>
+     Alternatively, you can report errors and send feedback concerning the
+     documentation to &lt;<a class="email" href="mailto:doc-team@suse.com">doc-team@suse.com</a>&gt;. Make sure to include the
+     document title, the product version and the publication date of the
+     documentation. Refer to the relevant section number and title (or
+     include the URL) and provide a concise description of the problem.
+    </p></dd></dl></div></div><div class="sect1 " id="id-1.4.2.7"><div class="titlepage"><div><div><h2 class="title"><span class="number">3 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Documentation Conventions</span> <a title="Permalink" class="permalink" href="pre-ha.html#id-1.4.2.7">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_intro_typografie_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>common_intro_typografie_i.xml</li><li><span class="ds-label">ID: </span><span class="ds-message">no ID found</span></li></ul></div></div></div></div><p>
+  The following notices and typographical conventions are used
+  in this documentation:
+ </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">tux &gt; </code><code class="command">command</code></pre></div><p>
+    Commands that can be run by any user, including the <code class="systemitem">root</code> user.
+   </p></li><li class="listitem "><div class="verbatim-wrap"><pre class="screen"><code class="prompt root">root # </code><code class="command">command</code></pre></div><p>
+    Commands that must be run with <code class="systemitem">root</code> privileges. Often you
+    can also prefix these commands with the <code class="command">sudo</code> command to
+    run them.
+   </p></li><li class="listitem "><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code></pre></div><p>Commands executed in the interactive crm shell. For details,
+   see <a class="xref" href="cha-ha-manual-config.html" title="Chapter 8. Configuring and Managing Cluster Resources (Command Line)">Chapter 8, <em>Configuring and Managing Cluster Resources (Command Line)</em></a>.</p></li><li class="listitem "><p>
+    <code class="filename">/etc/passwd</code>: directory names and file names
+   </p></li><li class="listitem "><p>
+    <em class="replaceable ">PLACEHOLDER</em>: replace
+    <em class="replaceable ">PLACEHOLDER</em> with the actual value
+   </p></li><li class="listitem "><p>
+    <code class="envar">PATH</code>: the environment variable PATH
+   </p></li><li class="listitem "><p>
+    <code class="command">ls</code>, <code class="option">--help</code>: commands, options, and
+    parameters
+   </p></li><li class="listitem "><p>
+    <code class="systemitem">user</code>: users or groups
+   </p></li><li class="listitem "><p>
+    <span class="package ">packagename</span>: name of a package
+   </p></li><li class="listitem "><p>
+    <span class="keycap">Alt</span>, <span class="keycap">Alt</span><span class="key-connector">–</span><span class="keycap">F1</span>: a key to press or a key combination;
+    keys are shown in uppercase as on a keyboard
+   </p></li><li class="listitem "><p>
+    <span class="guimenu ">File</span>, <span class="guimenu ">File</span> › <span class="guimenu ">Save As</span>: menu items, buttons
+   </p></li><li class="listitem "><p><strong class="arch-arrow-start">amd64, em64t, ipf</strong>
+    This paragraph is only relevant for the architectures
+    <code class="literal">amd64</code>, <code class="literal">em64t</code>, and
+    <code class="literal">ipf</code>. The arrows mark the beginning and the end of the
+    text block.
+   <strong class="arch-arrow-end"></strong></p></li><li class="listitem "><p>
+    <span class="emphasis"><em>Dancing Penguins</em></span> (Chapter
+    <span class="emphasis"><em>Penguins</em></span>, ↑Another Manual): This is a
+    reference to a chapter in another manual.
+   </p></li><li class="listitem "><p>Notices</p><div id="id-1.4.2.7.4.14.2" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg" /><h6>Warning</h6><p>
+     Vital information you must be aware of before proceeding. Warns you about
+     security issues, potential loss of data, damage to hardware, or physical
+     hazards.
+    </p></div><div id="id-1.4.2.7.4.14.3" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg" /><h6>Important</h6><p>
+     Important information you should be aware of before proceeding.
+    </p></div><div id="id-1.4.2.7.4.14.4" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg" /><h6>Note</h6><p>
+     Additional information, for example about differences in software
+     versions.
+    </p></div><div id="id-1.4.2.7.4.14.5" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg" /><h6>Tip</h6><p>
+     Helpful information, like a guideline or a piece of practical advice.
+    </p></div></li></ul></div><p>
+  For an overview of naming conventions with regard to cluster nodes and
+  names, resources, and constraints, see <a class="xref" href="app-naming.html" title="Appendix B. Naming Conventions">Appendix B, <em>Naming Conventions</em></a>.
+ </p></div><div class="sect1 " id="id-1.4.2.8"><div class="titlepage"><div><div><h2 class="title"><span class="number">4 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Product Life Cycle and Support</span> <a title="Permalink" class="permalink" href="pre-ha.html#id-1.4.2.8">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_intro_lifecycle_support_i.xml" title="Edit the source file for this section">Edit source</a></h2><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>common_intro_lifecycle_support_i.xml</li><li><span class="ds-label">ID: </span><span class="ds-message">no ID found</span></li></ul></div></div></div></div><p>
+  SUSE products are supported for up to 13 years. To check the life cycle
+  dates for your product, see
+  <a class="link" href="https://www.suse.com/lifecycle/" target="_blank">https://www.suse.com/lifecycle/</a>.
+ </p><p>
+  For SUSE Linux Enterprise, the following life cycles and release cycles apply:
+ </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+    SUSE Linux Enterprise Server has a 13-year life cycle: 10 years of general support and three years
+    of extended support.
+   </p></li><li class="listitem "><p>
+    SUSE Linux Enterprise Desktop has a 10-year life cycle: seven years of general support and three
+    years of extended support.
+   </p></li><li class="listitem "><p>
+    Major releases are published every four years. Service packs are published
+    every 12-14 months.
+   </p></li><li class="listitem "><p>
+    SUSE supports previous SUSE Linux Enterprise service packs for six months after the
+    release of a new service pack.
+   </p></li></ul></div><p>
+  For some products, Long Term Service Pack Support (LTSS) is available. Find
+  information about our support policy and options at
+  <a class="link" href="https://www.suse.com/support/policy.html" target="_blank">https://www.suse.com/support/policy.html</a> and
+  <a class="link" href="https://www.suse.com/support/programs/long-term-service-pack-support.html" target="_blank">https://www.suse.com/support/programs/long-term-service-pack-support.html</a>.
+ </p><p>
+  Modules have a different life cycle, update policy, and update timeline than
+  their base products. Modules contain software packages and are fully
+  supported parts of <span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span>.
+ </p><div class="sect2 " id="id-1.4.2.8.8"><div class="titlepage"><div><div><h3 class="title"><span class="number">4.1 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Support Statement for <span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span></span> <a title="Permalink" class="permalink" href="pre-ha.html#id-1.4.2.8.8">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_intro_lifecycle_support_i.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>common_intro_lifecycle_support_i.xml</li><li><span class="ds-label">ID: </span><span class="ds-message">no ID found</span></li></ul></div></div></div></div><p>
+   To receive support, you need an appropriate subscription with SUSE. To
+   view the specific support offerings available to you, go to
+   <a class="link" href="https://www.suse.com/support/" target="_blank">https://www.suse.com/support/</a> and select your product.
+  </p><p>
+   The support levels are defined as follows:
+  </p><div class="variablelist "><dl class="variablelist"><dt id="id-1.4.2.8.8.4.1"><span class="term ">L1</span></dt><dd><p>
+      Problem determination, which means technical support designed to provide
+      compatibility information, usage support, ongoing maintenance,
+      information gathering and basic troubleshooting using available
+      documentation.
+     </p></dd><dt id="id-1.4.2.8.8.4.2"><span class="term ">L2</span></dt><dd><p>
+      Problem isolation, which means technical support designed to analyze
+      data, reproduce customer problems, isolate problem area and provide a
+      resolution for problems not resolved by Level 1 or prepare for
+      Level 3.
+     </p></dd><dt id="id-1.4.2.8.8.4.3"><span class="term ">L3</span></dt><dd><p>
+      Problem resolution, which means technical support designed to resolve
+      problems by engaging engineering to resolve product defects which have
+      been identified by Level 2 Support.
+     </p></dd></dl></div><p>
+   For contracted customers and partners, <span class="productname"><span class="phrase">SUSE Linux Enterprise High Availability Extension</span></span> is delivered with L3
+   support for all packages, except for the following:
+  </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+     Technology previews.
+    </p></li><li class="listitem "><p>
+     Sound, graphics, fonts, and artwork.
+    </p></li><li class="listitem "><p>
+     Packages that require an additional customer contract.
+    </p></li><li class="listitem "><p>
+     Some packages shipped as part of the module <span class="emphasis"><em>Workstation
+     Extension</em></span> are L2-supported only.
+    </p></li><li class="listitem "><p>
+     Packages with names ending in <span class="package ">-devel</span> (containing header
+     files and similar developer resources) will only be supported together
+     with their main packages.
+    </p></li></ul></div><p>
+   SUSE will only support the usage of original packages. That is, packages
+   that are unchanged and not recompiled.
+  </p></div><div class="sect2 " id="id-1.4.2.8.9"><div class="titlepage"><div><div><h3 class="title"><span class="number">4.2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Technology Previews</span> <a title="Permalink" class="permalink" href="pre-ha.html#id-1.4.2.8.9">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_intro_lifecycle_support_i.xml" title="Edit the source file for this section">Edit source</a></h3><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>common_intro_lifecycle_support_i.xml</li><li><span class="ds-label">ID: </span><span class="ds-message">no ID found</span></li></ul></div></div></div></div><p>
+    Technology previews are packages, stacks, or features delivered by SUSE
+    to provide glimpses into upcoming innovations. The previews are included for
+    your convenience to give you the chance to test new technologies within your
+    environment. We would appreciate your feedback! If you test a technology
+    preview, please contact your SUSE representative and let them know about
+    your experience and use cases. Your input is helpful for future development.
+   </p><p>
+    However, technology previews come with the following limitations:
+   </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
+      Technology previews are still in development. Therefore, they may be functionally
+      incomplete, unstable, or in other ways  <span class="emphasis"><em>not</em></span> suitable
+      for production use.
+     </p></li><li class="listitem "><p>
+      Technology previews are <span class="emphasis"><em>not</em></span> supported.
+     </p></li><li class="listitem "><p>
+      Technology previews may only be available for specific hardware
+      architectures.
+     </p></li><li class="listitem "><p>
+      Details and functionality of technology previews are subject to change.
+      As a result, upgrading to subsequent releases of a technology preview may
+      be impossible and require a fresh installation.
+     </p></li><li class="listitem "><p>
+      Technology previews can be dropped at any time. For example, if SUSE
+      discovers that a preview does not meet the customer or market needs, or does
+      not prove to comply with enterprise standards. SUSE does not commit to
+      providing a supported version of such technologies in the future.
+     </p></li></ul></div><p>
+   For an overview of technology previews shipped with your product, see the
+   release notes at <a class="link" href="https://www.suse.com/releasenotes/" target="_blank">https://www.suse.com/releasenotes/</a>.
+  </p></div></div></div></div><div class="page-bottom"><div id="_bottom-navigation"><a class="nav-link" href="part-install.html"><span class="next-icon">→</span><span class="nav-label"><span class="number">Part I </span>Installation, Setup and Upgrade</span></a><a class="nav-link" href="book-sleha-guide.html"><span class="prev-icon">←</span><span class="nav-label">Administration Guide</span></a></div><div class="_share-print"><div class="online-contents share"><strong>Share this page: </strong><span class="share-buttons"><span class="_share-fb bottom-button">Facebook</span><span class="spacer"> • </span><span class="_share-in bottom-button">LinkedIn</span><span class="spacer"> • </span><span class="_share-tw bottom-button">Twitter</span><span class="spacer"> • </span><span class="_share-mail bottom-button">E-Mail</span></span></div><div class="print"><span class="_print-button bottom-button">Print this page</span></div><div class="clearme"></div></div></div></div><div id="_inward"></div></div><div id="_footer-wrap"><div id="_footer"><p>©
+        2021 
+        SUSE</p><ul><li><a href="https://jobs.suse.com/" target="_top">Careers</a></li><li><a href="https://www.suse.com/company/legal/" target="_top">Legal</a></li><li><a href="https://www.suse.com/company/about/" target="_top">About</a></li><li><a href="https://www.suse.com/contact/" target="_top">Contact Us</a></li></ul></div></div></body></html>
