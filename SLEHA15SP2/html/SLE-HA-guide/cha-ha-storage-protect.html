@@ -373,22 +373,24 @@ Timeout (msgwait)  : 10
         The value of <code class="literal">priority-fencing-delay</code> should be significantly
         greater than the maximum of <code class="literal">pcmk_delay_base</code> / <code class="literal">pcmk_delay_max</code>, 
         and preferably twice the maximum.
-       </p></dd><dt id="id-1.4.4.8.9.15.8.2.2"><span class="term ">Predictable static delays</span></dt><dd><p>This parameter enables a static delay before executing STONITH actions.
-      It ensures that the nodes do not fence each other if separate fencing resources
-      and different delay values are being used. The targeted node will
-      loose in a fencing match.
-      The parameter can be used to <span class="quote">“<span class="quote ">mark</span>”</span> a specific node to survive
-      in case of a split brain scenario in a two-node cluster.
+       </p></dd><dt id="id-1.4.4.8.9.15.8.2.2"><span class="term ">Predictable static delays</span></dt><dd><p>This parameter adds a static delay before executing STONITH actions.
+      To prevent the nodes from getting reset at the same time under split-brain of
+      a two-node cluster, configure separate fencing resources with different delay values.
+      The preferred node can be marked with the parameter to be targeted with a longer
+      fencing delay, so that it wins any fencing match.
       To make this succeed, it is essential to create two primitive STONITH
       devices for each node. In the following configuration, alice will win
       and survive in case of a split brain scenario:
       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> st-sbd-alice stonith:external/sbd params \
        pcmk_host_list=alice pcmk_delay_base=20
 <code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> st-sbd-bob stonith:external/sbd params \
-       pcmk_host_list=bob pcmk_delay_base=0</pre></div></dd><dt id="id-1.4.4.8.9.15.8.2.3"><span class="term ">Dynamic Random Delays</span></dt><dd><p>This parameter prevents double fencing when using slow devices such
-       as SBD. It adds a random delay for STONITH actions on the fencing device.
-       It is especially important for two-node clusters where otherwise both nodes
-       might try to fence each other in case of a split brain scenario.</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> stonith_sbd stonith:external/sbd
+       pcmk_host_list=bob pcmk_delay_base=0</pre></div></dd><dt id="id-1.4.4.8.9.15.8.2.3"><span class="term ">Dynamic Random Delays</span></dt><dd><p>This parameter adds a random delay for STONITH actions on the fencing device.
+       Rather than a static delay targeting a specific node, the parameter
+       <em class="parameter ">pcmk_delay_max</em> adds a random delay for any fencing
+       with the fencing resource to prevent double reset. Unlike
+       <em class="parameter ">pcmk_delay_base</em>, this parameter can be specified for
+       an unified fencing resource targeting multiple nodes.
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> stonith_sbd stonith:external/sbd
   params pcmk_delay_max=30</pre></div></dd></dl></div></li><li class="step "><p>
      Review your changes with <code class="command">show</code>.
     </p></li><li class="step "><p>
