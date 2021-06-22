@@ -1025,7 +1025,7 @@ monitor_0     interval=5s timeout=20s</pre></div><div id="id-1.4.4.3.5.9.11" cla
        on the same node, <code class="varname">alice</code>:
       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> vip1 ocf:heartbeat:IPaddr2 params ip=192.168.1.5
 <code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> vip2 ocf:heartbeat:IPaddr2 params ip=192.168.1.6
-<code class="prompt custom">crm(live)configure# </code><code class="command">location</code> loc-alice { vip1 vip2 } Mandatory: alice</pre></div></div></div></div><p>
+<code class="prompt custom">crm(live)configure# </code><code class="command">location</code> loc-alice { vip1 vip2 } inf: alice</pre></div></div></div></div><p>
       If you want to use resource sets to replace a configuration of
       colocation constraints, consider the following two examples:
      </p><div class="example" id="id-1.4.4.3.7.3.5.3.5"><div class="example-title-wrap"><h6 class="example-title"><span class="number">Example 6.5: </span><span class="name">A Chain of Colocated Resources </span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#id-1.4.4.3.7.3.5.3.5">#</a></h6></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">&lt;constraints&gt;
