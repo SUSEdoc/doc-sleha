@@ -179,8 +179,8 @@ username=USERNAME password=PASSW0RD
 primitive st-ibmrsa-2 stonith:external/ibmrsa-telnet \
 params nodename=bob ip_address=192.168.0.102 \
 username=USERNAME password=PASSW0RD
-location l-st-alice st-ibmrsa-1 -Mandatory: alice
-location l-st-bob st-ibmrsa-2 -Mandatory: bob
+location l-st-alice st-ibmrsa-1 -inf: alice
+location l-st-bob st-ibmrsa-2 -inf: bob
 commit</pre></div><p>
      In this example, location constraints are used for the following
      reason: There is always a certain probability that the STONITH
