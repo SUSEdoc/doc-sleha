@@ -665,12 +665,12 @@ hostname (string): Hostname
      <code class="varname">vip1</code> and <code class="varname">vip2</code>:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> vip1 ocf:heartbeat:IPaddr2 params ip=192.168.1.5
 <code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> vip2 ocf:heartbeat:IPaddr2 params ip=192.168.1.6
-<code class="prompt custom">crm(live)configure# </code><code class="command">location</code> loc-alice { vip1 vip2 } Mandatory: alice</pre></div><p>
+<code class="prompt custom">crm(live)configure# </code><code class="command">location</code> loc-alice { vip1 vip2 } inf: alice</pre></div><p>
      In some cases it is much more efficient and convenient to use resource
      patterns for your <code class="command">location</code> command. A resource
      pattern is a regular expression between two slashes. For example, the
      above virtual IP addresses can be all matched with the following:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location</code>  loc-alice /vip.*/ Mandatory: alice</pre></div></div><div class="sect3 " id="sec-ha-manual-config-constraints-collocational"><div class="titlepage"><div><div><h4 class="title"><span class="number">8.3.5.2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Colocational Constraints</span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-collocational">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP1/xml/ha_config_cli.xml" title="Edit the source file for this section">Edit source</a></h4><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_config_cli.xml</li><li><span class="ds-label">ID: </span>sec-ha-manual-config-constraints-collocational</li></ul></div></div></div></div><p>
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location</code>  loc-alice /vip.*/ inf: alice</pre></div></div><div class="sect3 " id="sec-ha-manual-config-constraints-collocational"><div class="titlepage"><div><div><h4 class="title"><span class="number">8.3.5.2 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Colocational Constraints</span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-collocational">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP1/xml/ha_config_cli.xml" title="Edit the source file for this section">Edit source</a></h4><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_config_cli.xml</li><li><span class="ds-label">ID: </span>sec-ha-manual-config-constraints-collocational</li></ul></div></div></div></div><p>
      The <code class="command">colocation</code> command is used to define what
      resources should run on the same or on different hosts.
     </p><p>
@@ -684,7 +684,7 @@ hostname (string): Hostname
      For example, to run the resources with the IDs
      <code class="literal">filesystem_resource</code> and <code class="literal">nfs_group</code>
      always on the same host, use the following constraint:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> nfs_on_filesystem Mandatory: nfs_group filesystem_resource</pre></div><p>
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> nfs_on_filesystem inf: nfs_group filesystem_resource</pre></div><p>
      For a master slave configuration, it is necessary to know if the
      current node is a master in addition to running the resource locally.
     </p></div><div class="sect3 " id="sec-ha-manual-config-constraints-weak-bond"><div class="titlepage"><div><div><h4 class="title"><span class="number">8.3.5.3 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Collocating Sets for Resources Without Dependency</span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-weak-bond">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP1/xml/ha_config_cli.xml" title="Edit the source file for this section">Edit source</a></h4><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_config_cli.xml</li><li><span class="ds-label">ID: </span>sec-ha-manual-config-constraints-weak-bond</li></ul></div></div></div></div><p>
@@ -711,7 +711,7 @@ hostname (string): Hostname
     </p><p>
      Use the following command in the <code class="command">crm</code> shell to
      configure an ordering constraint:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> nfs_after_filesystem mandatory: filesystem_resource nfs_group</pre></div></div><div class="sect3 " id="sec-ha-manual-config-constraints-example"><div class="titlepage"><div><div><h4 class="title"><span class="number">8.3.5.5 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Constraints for the Example Configuration</span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-example">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP1/xml/ha_config_cli.xml" title="Edit the source file for this section">Edit source</a></h4><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_config_cli.xml</li><li><span class="ds-label">ID: </span>sec-ha-manual-config-constraints-example</li></ul></div></div></div></div><p>
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> nfs_after_filesystem Mandatory: filesystem_resource nfs_group</pre></div></div><div class="sect3 " id="sec-ha-manual-config-constraints-example"><div class="titlepage"><div><div><h4 class="title"><span class="number">8.3.5.5 </span><span xmlns:dm="urn:x-suse:ns:docmanager" class="name">Constraints for the Example Configuration</span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-example">#</a><a class="report-bug" target="_blank" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP1/xml/ha_config_cli.xml" title="Edit the source file for this section">Edit source</a></h4><div class="doc-status"><ul><li><span class="ds-label">File Name: </span>ha_config_cli.xml</li><li><span class="ds-label">ID: </span>sec-ha-manual-config-constraints-example</li></ul></div></div></div></div><p>
      The example used for this section would not work without additional
      constraints. It is essential that all resources run on the same machine
      as the master of the DRBD resource. The DRBD resource must be master
@@ -721,15 +721,15 @@ hostname (string): Hostname
     </p><div class="itemizedlist "><ul class="itemizedlist"><li class="listitem "><p>
        The file system must always be on the same node as the master of the
        DRBD resource.
-      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> filesystem_on_master Mandatory: \
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> filesystem_on_master inf: \
     filesystem_resource drbd_resource:Master</pre></div></li><li class="listitem "><p>
        The NFS server and the IP address must be on the same node as the
        file system.
-      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> nfs_with_fs Mandatory: \
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> nfs_with_fs inf: \
    nfs_group filesystem_resource</pre></div></li><li class="listitem "><p>
        The NFS server and the IP address start after the file system is
        mounted:
-      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> nfs_second mandatory: \
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> nfs_second Mandatory: \
    filesystem_resource:start nfs_group</pre></div></li><li class="listitem "><p>
        The file system must be mounted on a node after the DRBD resource is
        promoted to master on this node.

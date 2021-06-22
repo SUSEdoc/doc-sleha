@@ -155,7 +155,7 @@ hljs.configure({
     op monitor interval="60" timeout="60"
 <code class="prompt custom">crm(live)configure# </code><code class="command">group</code> g-ctdb ctdb nmb smb
 <code class="prompt custom">crm(live)configure# </code><code class="command">clone</code> cl-ctdb g-ctdb meta interleave="true"
-<code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> col-ctdb-with-clusterfs Mandatory: cl-ctdb cl-clusterfs
+<code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> col-ctdb-with-clusterfs inf: cl-ctdb cl-clusterfs
 <code class="prompt custom">crm(live)configure# </code><code class="command">order</code> o-clusterfs-then-ctdb Mandatory: cl-clusterfs cl-ctdb
 <code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li><li class="step "><p>
      Add a clustered IP address:
