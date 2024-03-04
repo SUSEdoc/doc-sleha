@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP3 | Administration Guide | Storage protection and SBD</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Storage protection and SBD | SLE HA 15 SP3"/>
+<meta name="description" content="SBD (STONITH Block Device) provides a node fencing mec…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP3"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 13. Storage protection and SBD"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability 15 SP3"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Storage protection and SBD | SLE HA 15 SP3"/>
+<meta property="og:description" content="SBD (STONITH Block Device) provides a node fencing mechanism for Pacemaker-based clusters through the exchange of messages v…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Storage protection and SBD | SLE HA 15 SP3"/>
+<meta name="twitter:description" content="SBD (STONITH Block Device) provides a node fencing mechanism for Pacemaker-based clusters through the exchange of messages v…"/>
+<link rel="prev" href="cha-ha-fencing.html" title="Chapter 12. Fencing and STONITH"/><link rel="next" href="cha-ha-qdevice.html" title="Chapter 14. QDevice and QNetd"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and administration</a><span> / </span><a class="crumb" href="cha-ha-storage-protect.html">Storage protection and SBD</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" you-are-here"><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">18 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">19 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">20 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">22 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">23 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">25 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">26 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">27 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">28 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-storage-protect" data-id-title="Storage protection and SBD"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP3</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    SBD (STONITH Block Device) provides a node fencing mechanism for
+    Pacemaker-based clusters through the exchange of messages via shared block
+    storage (SAN, iSCSI, FCoE, etc.). This isolates the fencing
+    mechanism from changes in firmware version or dependencies on specific
+    firmware controllers. SBD needs a watchdog on each node to ensure that misbehaving
+    nodes are really stopped. Under certain conditions, it is also possible to use
+    SBD without shared storage, by running it in diskless mode.
+   </p><p>
+    The <span class="package">ha-cluster-bootstrap</span> scripts provide an automated
+    way to set up a cluster with the option of using SBD as fencing mechanism.
+    For details, see the <span class="intraxref">Article “Installation and Setup Quick Start”</span>. However,
+    manually setting up SBD provides you with more options regarding the
+    individual settings.
+   </p><p>
+    This chapter explains the concepts behind SBD. It guides you through
+    configuring the components needed by SBD to protect your cluster from
+    potential data corruption in case of a split brain scenario.
+   </p><p>
+    In addition to node level fencing, you can use additional mechanisms for storage
+    protection, such as LVM exclusive activation or OCFS2 file locking support
+    (resource level fencing). They protect your system against administrative or
+    application faults.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-storage-protect-overview" data-id-title="Conceptual overview"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.1 </span><span class="title-name">Conceptual overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-overview">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>SBD expands to <span class="emphasis"><em>Storage-Based Death</em></span> or
+        <span class="emphasis"><em>STONITH Block Device</em></span>.
+      </p><p>
+        The highest priority of the High Availability cluster stack is to protect the integrity
+        of data. This is achieved by preventing uncoordinated concurrent access
+        to data storage. The cluster stack takes care of this using several
+        control mechanisms.
+      </p><p>
+        However, network partitioning or software malfunction could potentially
+        cause scenarios where several DCs are elected in a cluster. If this
+        so-called split brain scenario were allowed to unfold, data corruption
+        might occur.
+      </p><p>
+        Node fencing via STONITH is the primary mechanism to prevent this.
+        Using SBD as a node fencing mechanism is one way of shutting down nodes
+        without using an external power off device in case of a split brain scenario.
+      </p><div class="variablelist"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">SBD components and mechanisms </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#id-1.4.4.11.3.6">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.4.11.3.6.2"><span class="term">SBD partition</span></dt><dd><p> In an environment where all nodes have access to shared storage, a
+      small partition of the device is formatted for use with SBD. The size of
+      the partition depends on the block size of the used disk (for example,
+      1 MB for standard SCSI disks with 512 byte block size or
+      4 MB for DASD disks with 4 kB block size). The initialization
+      process creates a message layout on the device with slots for up to 255
+      nodes.</p></dd><dt id="id-1.4.4.11.3.6.3"><span class="term">SBD daemon</span></dt><dd><p> After the respective SBD daemon is configured, it is brought online
+      on each node before the rest of the cluster stack is started. It is
+      terminated after all other cluster components have been shut down, thus
+      ensuring that cluster resources are never activated without SBD
+      supervision. </p></dd><dt id="id-1.4.4.11.3.6.4"><span class="term">Messages</span></dt><dd><p>
+      The daemon automatically allocates one of the message slots on the
+      partition to itself, and constantly monitors it for messages addressed
+      to itself. Upon receipt of a message, the daemon immediately complies
+      with the request, such as initiating a power-off or reboot cycle for
+      fencing.
+     </p><p>
+      Also, the daemon constantly monitors connectivity to the storage device, and
+      terminates itself in case the partition becomes unreachable. This
+      guarantees that it is not disconnected from fencing messages. If the
+      cluster data resides on the same logical unit in a different partition,
+      this is not an additional point of failure: The workload will terminate
+      anyway if the storage connectivity has been lost.
+     </p></dd><dt id="id-1.4.4.11.3.6.5"><span class="term">Watchdog</span></dt><dd><p>
+      Whenever SBD is used, a correctly working watchdog is crucial.
+      Modern systems support a <span class="emphasis"><em>hardware watchdog</em></span>
+      that needs to be <span class="quote">“<span class="quote">tickled</span>”</span> or <span class="quote">“<span class="quote">fed</span>”</span> by a
+      software component. The software component (in this case, the SBD daemon)
+      <span class="quote">“<span class="quote">feeds</span>”</span> the watchdog by regularly writing a service pulse
+      to the watchdog. If the daemon stops feeding the watchdog, the hardware
+      will enforce a system restart. This protects against failures of the SBD
+      process itself, such as dying, or becoming stuck on an I/O error.
+     </p></dd></dl></div><p>
+   If Pacemaker integration is activated, SBD will not self-fence if device
+   majority is lost. For example, your cluster contains three nodes: A, B, and
+   C. Because of a network split, A can only see itself while B and C can
+   still communicate. In this case, there are two cluster partitions: one
+   with quorum because of being the majority (B, C), and one without (A).
+   If this happens while the majority of fencing devices are unreachable,
+   node A would immediately commit suicide, but nodes B and C would
+   continue to run.
+   </p></section><section class="sect1" id="sec-ha-storage-protect-steps" data-id-title="Overview of manually setting up SBD"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.2 </span><span class="title-name">Overview of manually setting up SBD</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-steps">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  The following steps are necessary to manually set up storage-based protection.
+  They must be executed as <code class="systemitem">root</code>. Before you start, check <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-req" title="13.3. Requirements">Section 13.3, “Requirements”</a>.
+  </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog" title="13.6. Setting up the watchdog">Setting up the watchdog</a>
+    </p></li><li class="step"><p>Depending on your scenario, either use SBD with one to three devices or in diskless mode.
+     For an outline, see <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-fencing-number" title="13.4. Number of SBD devices">Section 13.4, “Number of SBD devices”</a>. The detailed setup
+     is described in:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+       <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-fencing-setup" title="13.7. Setting up SBD with devices">Setting up SBD with devices</a>
+      </p></li><li class="listitem"><p>
+       <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-diskless-sbd" title="13.8. Setting up diskless SBD">Setting up diskless SBD</a>
+      </p></li></ul></div></li><li class="step"><p>
+     <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-test" title="13.9. Testing SBD and fencing">Testing SBD and fencing</a>
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-storage-protect-req" data-id-title="Requirements"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.3 </span><span class="title-name">Requirements</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-req">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>You can use up to three SBD devices for storage-based fencing.
+     When using one to three devices, the shared storage must be accessible from all nodes.</p></li><li class="listitem"><p>The path to the shared storage device must be persistent and
+      consistent across all nodes in the cluster. Use stable device names
+      such as <code class="filename">/dev/disk/by-id/dm-uuid-part1-mpath-abcedf12345</code>.
+     </p></li><li class="listitem"><p>The shared storage can be connected via Fibre Channel (FC),
+     Fibre Channel over Ethernet (FCoE), or even iSCSI. </p></li><li class="listitem"><p> The shared storage segment <span class="emphasis"><em>must not</em></span>
+     use host-based RAID, LVM, or DRBD*. DRBD can be split, which is
+     problematic for SBD, as there cannot be two states in SBD.
+     Cluster multi-device (Cluster MD) cannot be used for SBD.
+    </p></li><li class="listitem"><p> However, using storage-based RAID and multipathing is
+     recommended for increased reliability. </p></li><li class="listitem"><p>An SBD device can be shared between different clusters, as
+     long as no more than 255 nodes share the device. </p></li><li class="listitem"><p>For clusters with more than two nodes, you can also use SBD in
+    <span class="emphasis"><em>diskless</em></span> mode.
+   </p></li></ul></div></section><section class="sect1" id="sec-ha-storage-protect-fencing-number" data-id-title="Number of SBD devices"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.4 </span><span class="title-name">Number of SBD devices</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-fencing-number">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p> SBD supports the use of up to three devices: </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.11.6.3.1"><span class="term">One device</span></dt><dd><p>
+      The most simple implementation. It is appropriate for clusters where
+      all of your data is on the same shared storage.
+     </p></dd><dt id="id-1.4.4.11.6.3.2"><span class="term">Two devices</span></dt><dd><p>
+      This configuration is primarily useful for environments that use
+      host-based mirroring but where no third storage device is available.
+      SBD will not terminate itself if it loses access to one mirror leg,
+      allowing the cluster to continue. However, since SBD does not have
+      enough knowledge to detect an asymmetric split of the storage, it
+      will not fence the other side while only one mirror leg is available.
+      Thus, it cannot automatically tolerate a second failure while one of
+      the storage arrays is down.
+     </p></dd><dt id="id-1.4.4.11.6.3.3"><span class="term">Three devices</span></dt><dd><p>
+      The most reliable configuration. It is resilient against outages of
+      one device—be it because of failures or maintenance. SBD
+      will terminate itself only if more than one device is lost and if required,
+      depending on the status of the cluster partition or node. If at least
+      two devices are still accessible, fencing messages can be successfully
+      transmitted.
+     </p><p>
+      This configuration is suitable for more complex scenarios where
+      storage is not restricted to a single array. Host-based mirroring
+      solutions can have one SBD per mirror leg (not mirrored itself), and
+      an additional tie-breaker on iSCSI.
+     </p></dd><dt id="id-1.4.4.11.6.3.4"><span class="term">Diskless</span></dt><dd><p>This configuration is useful if you want a fencing mechanism without
+     shared storage. In this diskless mode, SBD fences nodes by using the
+     hardware watchdog without relying on any shared device.
+     However, diskless SBD cannot handle a split brain scenario for
+     a two-node cluster. Use this option only for clusters with <span class="emphasis"><em>more than two</em></span> nodes.</p></dd></dl></div></section><section class="sect1" id="sec-ha-storage-protect-watchdog-timings" data-id-title="Calculation of timeouts"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.5 </span><span class="title-name">Calculation of timeouts</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog-timings">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      When using SBD as a fencing mechanism, it is vital to consider the timeouts
+      of all components, because they depend on each other.
+    </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.11.7.3.1"><span class="term">Watchdog timeout</span></dt><dd><p>
+        This timeout is set during initialization of the SBD device. It depends
+        mostly on your storage latency. The majority of devices must be successfully
+        read within this time. Otherwise, the node might self-fence.
+       </p><div id="id-1.4.4.11.7.3.1.2.2" data-id-title="Multipath or iSCSI setup" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Multipath or iSCSI setup</div><p>
+          If your SBD device(s) reside on a multipath setup or iSCSI, the timeout
+          should be  set to the time required to detect a path failure and switch
+          to the next path.
+          </p><p>
+           This also means that in <code class="filename">/etc/multipath.conf</code> the
+           value of  <code class="literal">max_polling_interval</code> must be less than
+           <code class="literal">watchdog</code> timeout.
+         </p></div></dd><dt id="id-1.4.4.11.7.3.2"><span class="term"><code class="literal">msgwait</code> Timeout</span></dt><dd><p>
+        This timeout is set during initialization of the SBD device. It defines
+        the time after which a message written to a node's slot on the SBD device
+        is considered delivered. The timeout should be long enough for the node to
+        detect that it needs to self-fence.
+       </p><p>
+        However, if the <code class="literal">msgwait</code> timeout is relatively long,
+        a fenced cluster node might rejoin before the fencing action returns.
+        This can be mitigated by setting the <code class="varname">SBD_DELAY_START</code>
+        parameter in the SBD configuration, as described in
+        <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-config" title="Editing the SBD configuration file">Procedure 13.4</a>
+        in
+        <a class="xref" href="cha-ha-storage-protect.html#st-ha-storage-protect-sbd-delay-start" title="Step 3">Step 3</a>.
+       </p></dd><dt id="id-1.4.4.11.7.3.3"><span class="term"><code class="literal">stonith-timeout</code> in the CIB</span></dt><dd><p>
+        This timeout is set in the CIB as a global cluster property. It defines
+        how long to wait for the STONITH action (reboot, on, off) to complete.
+       </p></dd><dt id="id-1.4.4.11.7.3.4"><span class="term"><code class="literal">stonith-watchdog-timeout</code> in the CIB</span></dt><dd><p>
+        This timeout is set in the CIB as a global cluster property. If not set
+        explicitly, it defaults to <code class="literal">0</code>, which is appropriate for
+        using SBD with one to three devices. For use of SBD in diskless mode, see <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-confdiskless" title="Configuring diskless SBD">Procedure 13.8, “Configuring diskless SBD”</a> for more details.</p></dd></dl></div><p>
+   If you change the watchdog timeout, you need to adjust the other two timeouts
+   as well. The following <span class="quote">“<span class="quote">formula</span>”</span> expresses the relationship
+   between these three values:
+  </p><div class="example" id="ex-ha-storage-protect-sbd-timings" data-id-title="Formula for timeout calculation"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 13.1: </span><span class="title-name">Formula for timeout calculation </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#ex-ha-storage-protect-sbd-timings">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">Timeout (msgwait) &gt;= (Timeout (watchdog) * 2)
+stonith-timeout &gt;= Timeout (msgwait) + 20%</pre></div></div></div><p>
+    For example, if you set the watchdog timeout to <code class="literal">120</code>,
+    set the <code class="literal">msgwait</code> timeout to at least <code class="literal">240</code> and the
+    <code class="literal">stonith-timeout</code> to at least <code class="literal">288</code>.
+   </p><p>
+     If you use the <span class="package">ha-cluster-bootstrap</span> scripts to set up a
+     cluster and to initialize the SBD device, the relationship between these
+     timeouts is automatically considered.
+    </p></section><section class="sect1" id="sec-ha-storage-protect-watchdog" data-id-title="Setting up the watchdog"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.6 </span><span class="title-name">Setting up the watchdog</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p> SUSE Linux Enterprise High Availability ships with several kernel modules that provide
+   hardware-specific watchdog drivers. For a list of the most commonly used
+   ones, see <a class="xref" href="cha-ha-storage-protect.html#tab-ha-storage-protect-watchdog-drivers" title="Commonly used watchdog drivers">Commonly used watchdog drivers</a>.
+ </p><p>
+  For clusters in production environments we recommend to use a hardware-specific
+  watchdog driver. However, if no watchdog matches your hardware,
+  <code class="systemitem">softdog</code> can be used as kernel
+  watchdog module.
+ </p><p>
+   SUSE Linux Enterprise High Availability uses the SBD daemon as the software component that <span class="quote">“<span class="quote">feeds</span>”</span>
+   the watchdog.</p><section class="sect2" id="sec-ha-storage-protect-hw-watchdog" data-id-title="Using a hardware watchdog"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">13.6.1 </span><span class="title-name">Using a hardware watchdog</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-hw-watchdog">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>Finding the right watchdog kernel module for a given system is not
+    trivial. Automatic probing fails very often. As a result, lots of modules
+    are already loaded before the right one gets a chance.</p><p>
+     The following table lists some commonly used watchdog drivers. However, this is
+     not a complete list of supported drivers. If your hardware is not listed here,
+     you can also find a list of choices in the directories
+     <code class="filename">/lib/modules/<em class="replaceable">KERNEL_VERSION</em>/kernel/drivers/watchdog</code>
+     and
+     <code class="filename">/lib/modules/<em class="replaceable">KERNEL_VERSION</em>/kernel/drivers/ipmi</code>.
+     Alternatively, ask your hardware or
+     system vendor for details on system-specific watchdog configuration.
+    </p><div class="table" id="tab-ha-storage-protect-watchdog-drivers" data-id-title="Commonly used watchdog drivers"><div class="title-container"><div class="table-title-wrap"><div class="table-title"><span class="title-number-name"><span class="title-number">Table 13.1: </span><span class="title-name">Commonly used watchdog drivers </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#tab-ha-storage-protect-watchdog-drivers">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="table-contents"><table style="border-collapse: collapse; border-top: 1px solid ; border-bottom: 1px solid ; border-left: 1px solid ; border-right: 1px solid ; "><colgroup><col/><col/></colgroup><thead><tr><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">Hardware</th><th style="border-bottom: 1px solid ; ">Driver</th></tr></thead><tbody><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">HP</td><td style="border-bottom: 1px solid ; "><code class="systemitem">hpwdt</code></td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">Dell, Lenovo (Intel TCO)</td><td style="border-bottom: 1px solid ; "><code class="systemitem">iTCO_wdt</code></td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">Fujitsu</td><td style="border-bottom: 1px solid ; "><code class="systemitem">ipmi_watchdog</code></td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">LPAR on IBM Power</td><td style="border-bottom: 1px solid ; "><code class="systemitem">pseries-wdt</code></td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">VM on IBM z/VM</td><td style="border-bottom: 1px solid ; "><code class="systemitem">vmwatchdog</code></td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">Xen VM (DomU)</td><td style="border-bottom: 1px solid ; "><code class="systemitem">xen_xdt</code></td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">VM on VMware vSphere</td><td style="border-bottom: 1px solid ; "><code class="systemitem">wdat_wdt</code></td></tr><tr><td style="border-right: 1px solid ; ">Generic</td><td><code class="systemitem">softdog</code></td></tr></tbody></table></div></div><div id="id-1.4.4.11.8.5.5" data-id-title="Accessing the watchdog timer" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Accessing the watchdog timer</div><p>Some hardware vendors ship systems management software that uses the
+     watchdog for system resets (for example, HP ASR daemon). If the watchdog is
+     used by SBD, disable such software. No other software must access the
+     watchdog timer. </p></div><div class="procedure" id="pro-ha-storage-protect-watchdog" data-id-title="Loading the correct kernel module"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.1: </span><span class="title-name">Loading the correct kernel module </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-watchdog">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>To make sure the correct watchdog module is loaded, proceed as follows:</p><ol class="procedure" type="1"><li class="step"><p>List the drivers that have been installed with your kernel version:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">rpm</code> -ql kernel-<em class="replaceable">VERSION</em> | <code class="command">grep</code> watchdog</pre></div></li><li class="step" id="st-ha-storage-listwatchdog-modules"><p>List any watchdog modules that are currently loaded in the kernel:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lsmod</code> | <code class="command">egrep</code> "(wd|dog)"</pre></div></li><li class="step"><p>If you get a result, unload the wrong module:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">rmmod</code> <em class="replaceable">WRONG_MODULE</em></pre></div></li><li class="step"><p> Enable the watchdog module that matches your hardware: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">echo</code> <em class="replaceable">WATCHDOG_MODULE</em> &gt; /etc/modules-load.d/watchdog.conf
+<code class="prompt root"># </code><code class="command">systemctl</code> restart systemd-modules-load</pre></div></li><li class="step"><p>Test whether the watchdog module is loaded correctly:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lsmod</code> | <code class="command">grep</code> dog</pre></div></li><li class="step"><p>Verify if the watchdog device is available and works:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ls -l</code> /dev/watchdog*
+<code class="prompt root"># </code><code class="command">sbd</code> query-watchdog</pre></div><p> If your watchdog device is not available, stop here and check the
+      module name and options. Maybe use another driver. </p></li><li class="step"><p>
+      Verify if the watchdog device works:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sbd</code> -w <em class="replaceable">WATCHDOG_DEVICE</em> test-watchdog</pre></div></li><li class="step"><p>
+      Reboot your machine to make sure there are no conflicting kernel modules. For example,
+      if you find the message <code class="literal">cannot register ...</code> in your log, this would indicate
+      such conflicting modules. To ignore such modules, refer to <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/cha-mod.html#sec-mod-modprobe-blacklist" target="_blank">https://documentation.suse.com/sles/html/SLES-all/cha-mod.html#sec-mod-modprobe-blacklist</a>.
+     </p></li></ol></div></div></section><section class="sect2" id="sec-ha-storage-protect-sw-watchdog" data-id-title="Using the software watchdog (softdog)"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">13.6.2 </span><span class="title-name">Using the software watchdog (softdog)</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-sw-watchdog">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    For clusters in production environments we recommend to use a hardware-specific watchdog
+    driver. However, if no watchdog matches your hardware, <code class="systemitem">softdog</code> can be used as kernel watchdog module. </p><div id="id-1.4.4.11.8.6.3" data-id-title="Softdog limitations" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Softdog limitations</div><p>
+     The softdog driver assumes that at least one CPU is still running. If all
+     CPUs are stuck, the code in the softdog driver that should reboot the system
+     will never be executed. In contrast, hardware watchdogs keep working even
+     if all CPUs are stuck.
+    </p></div><div class="procedure" id="pro-ha-storage-protect-sw-watchdog" data-id-title="Loading the softdog kernel module"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.2: </span><span class="title-name">Loading the softdog kernel module </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sw-watchdog">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Enable the softdog watchdog:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">echo</code> softdog &gt; /etc/modules-load.d/watchdog.conf
+<code class="prompt root"># </code><code class="command">systemctl</code> restart systemd-modules-load</pre></div></li><li class="step"><p>Test whether the softdog watchdog module is loaded correctly:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lsmod</code> | <code class="command">grep</code> softdog</pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-storage-protect-fencing-setup" data-id-title="Setting up SBD with devices"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.7 </span><span class="title-name">Setting up SBD with devices</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-fencing-setup">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The following steps are necessary for setup:
+  </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-create" title="Initializing the SBD devices">Initializing the SBD devices</a>
+        </p></li><li class="step"><p>
+     <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-config" title="Editing the SBD configuration file">Editing the SBD configuration file</a>
+    </p></li><li class="step"><p>
+     <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-services" title="Enabling and starting the SBD service">Enabling and starting the SBD service</a>
+    </p></li><li class="step"><p>
+     <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-test" title="Testing the SBD devices">Testing the SBD devices</a>
+    </p></li><li class="step"><p>
+     <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-fencing" title="Configuring the cluster to use SBD">Configuring the cluster to use SBD</a>
+    </p></li></ol></div></div><p>
+    Before you start, make sure the block device or devices you want to use for
+    SBD meet the requirements specified in <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-req" title="13.3. Requirements">Section 13.3</a>.
+  </p><p>
+   When setting up the SBD devices, you need to take several timeout values into
+   account. For details, see <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog-timings" title="13.5. Calculation of timeouts">Section 13.5, “Calculation of timeouts”</a>.
+  </p><p>
+   The node will terminate itself if the SBD daemon running on it has not
+   updated the watchdog timer fast enough. After having set the timeouts, test
+   them in your specific environment.
+  </p><div class="procedure" id="pro-ha-storage-protect-sbd-create" data-id-title="Initializing the SBD devices"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.3: </span><span class="title-name">Initializing the SBD devices </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-create">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+    To use SBD with shared storage, you must first create the messaging
+    layout on one to three block devices. The <code class="command">sbd create</code> command
+    will write a metadata header to the specified device or devices. It will also
+    initialize the messaging slots for up to 255 nodes. If executed without any
+    further options, the command will use the default timeout settings.</p><div id="id-1.4.4.11.9.7.3" data-id-title="Overwriting existing data" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Overwriting existing data</div><p> Make sure the device or devices you want to use for SBD do not hold any
+       important data. When you execute the <code class="command">sbd create</code>
+       command, roughly the first megabyte of the specified block devices
+       will be overwritten without further requests or backup.
+      </p></div><ol class="procedure" type="1"><li class="step"><p>Decide which block device or block devices to use for SBD.</p></li><li class="step"><p>Initialize the SBD device with the following command: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sbd -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> create</code></pre></div><p> To use more than one device for SBD, specify the <code class="option">-d</code> option multiple times, for
+      example: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sbd -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID1</em> -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID2</em> -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID3</em> create</code></pre></div></li><li class="step"><p>If your SBD device resides on a multipath group, use the <code class="option">-1</code>
+      and <code class="option">-4</code> options to adjust the timeouts to use for SBD. For
+      details, see <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog-timings" title="13.5. Calculation of timeouts">Section 13.5, “Calculation of timeouts”</a>.
+      All timeouts are given in seconds:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sbd -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> -4 180</code><span class="callout" id="co-ha-sbd-msgwait">1</span> <code class="command">-1 90</code><span class="callout" id="co-ha-sbd-watchdog">2</span> <code class="command">create</code></pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-sbd-msgwait"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p> The <code class="option">-4</code> option is used to specify the
+         <code class="literal">msgwait</code> timeout. In the example above, it is set to
+         <code class="literal">180</code> seconds. </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-sbd-watchdog"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p> The <code class="option">-1</code> option is used to specify the
+         <code class="literal">watchdog</code> timeout. In the example above, it is set
+        to <code class="literal">90</code> seconds. The minimum allowed value for the
+        emulated watchdog is <code class="literal">15</code> seconds. </p></td></tr></table></div></li><li class="step"><p>Check what has been written to the device: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sbd -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> dump</code>
+Header version     : 2.1
+UUID               : 619127f4-0e06-434c-84a0-ea82036e144c
+Number of slots    : 255
+Sector size        : 512
+Timeout (watchdog) : 5
+Timeout (allocate) : 2
+Timeout (loop)     : 1
+Timeout (msgwait)  : 10
+==Header on disk /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> is dumped</pre></div><p> As you can see, the timeouts are also stored in the header, to ensure
+    that all participating nodes agree on them. </p></li></ol></div></div><p>
+    After you have initialized the SBD devices, edit the SBD configuration file,
+    then enable and start the respective services for the changes to take effect.
+   </p><div class="procedure" id="pro-ha-storage-protect-sbd-config" data-id-title="Editing the SBD configuration file"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.4: </span><span class="title-name">Editing the SBD configuration file </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-config">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Open the file <code class="filename">/etc/sysconfig/sbd</code>.</p></li><li class="step"><p>Search for the following parameter: <em class="parameter">SBD_DEVICE</em>.
+     </p><p>It specifies the devices to monitor and to use for exchanging SBD messages.
+     </p><p> Edit this line by replacing /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>
+     with your SBD device:</p><div class="verbatim-wrap"><pre class="screen">SBD_DEVICE="/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>"</pre></div><p> If you need to specify multiple devices in the first line, separate them with semicolons
+     (the order of the devices does not matter):</p><div class="verbatim-wrap"><pre class="screen">SBD_DEVICE="/dev/disk/by-id/<em class="replaceable">DEVICE_ID1</em>;/dev/disk/by-id/<em class="replaceable">DEVICE_ID2</em>;/dev/disk/by-id/<em class="replaceable">DEVICE_ID3</em>"</pre></div><p> If the SBD device is not accessible, the daemon fails to start and inhibits
+     cluster start-up. </p></li><li class="step" id="st-ha-storage-protect-sbd-delay-start"><p>Search for the following parameter: <em class="parameter">SBD_DELAY_START</em>.</p><p>
+      Enables or disables a delay. Set <em class="parameter">SBD_DELAY_START</em>
+      to <code class="literal">yes</code> if <code class="literal">msgwait</code> is relatively
+      long, but your cluster nodes boot very fast.
+      Setting this parameter to <code class="literal">yes</code> delays the start of
+      SBD on boot. This is sometimes necessary with virtual machines.
+    </p><p>
+      The default delay length is the same as the <code class="literal">msgwait</code> timeout value.
+      Alternatively, you can specify an integer, in seconds, instead of <code class="literal">yes</code>.
+    </p><p>
+      If you enable <em class="parameter">SBD_DELAY_START</em>, you must also check the SBD service file
+      to ensure that the value of <code class="literal">TimeoutStartSec</code> is greater than the value of
+      <em class="parameter">SBD_DELAY_START</em>. For more information, see
+      <a class="link" href="https://www.suse.com/support/kb/doc/?id=000019356" target="_blank">https://www.suse.com/support/kb/doc/?id=000019356</a>.
+    </p></li></ol></div></div><p>After you have added your SBD devices to the SBD configuration file,
+  enable the SBD daemon. The SBD daemon is a critical piece
+  of the cluster stack. It needs to be running when the cluster stack is running.
+  Thus, the <code class="systemitem">sbd</code> service is started as a dependency whenever
+  the cluster services are started.</p><div class="procedure" id="pro-ha-storage-protect-sbd-services" data-id-title="Enabling and starting the SBD service"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.5: </span><span class="title-name">Enabling and starting the SBD service </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-services">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>On each node, enable the SBD service:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> enable sbd</pre></div><p>It will be started together with the Corosync service whenever the
+     cluster services are started.</p></li><li class="step"><p>Restart the cluster services on each node:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> cluster restart</pre></div><p> This automatically triggers the start of the SBD daemon. </p></li></ol></div></div><p>
+   As a next step, test the SBD devices as described in <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-test" title="Testing the SBD devices">Procedure 13.6</a>.
+  </p><div class="procedure" id="pro-ha-storage-protect-sbd-test" data-id-title="Testing the SBD devices"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.6: </span><span class="title-name">Testing the SBD devices </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-sbd-test">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p> The following command will dump the node slots and their current
+      messages from the SBD device: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sbd -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> list</code></pre></div><p> Now you should see all cluster nodes that have ever been started with SBD listed here.
+     For example, if you have a two-node cluster, the message slot should show
+      <code class="literal">clear</code> for both nodes:</p><div class="verbatim-wrap"><pre class="screen">0       alice        clear
+1       bob          clear</pre></div></li><li class="step"><p> Try sending a test message to one of the nodes: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sbd -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> message alice test</code></pre></div></li><li class="step"><p> The node will acknowledge the receipt of the message in the system
+      log files: </p><div class="verbatim-wrap"><pre class="screen">May 03 16:08:31 alice sbd[66139]: /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>: notice: servant:
+Received command test from bob on disk /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em></pre></div><p> This confirms that SBD is indeed up and running on the node and
+      that it is ready to receive messages. </p></li></ol></div></div><p>
+   As a final step, you need to adjust the cluster configuration as described in
+   <a class="xref" href="cha-ha-storage-protect.html#pro-ha-storage-protect-fencing" title="Configuring the cluster to use SBD">Procedure 13.7</a>.
+  </p><div class="procedure" id="pro-ha-storage-protect-fencing" data-id-title="Configuring the cluster to use SBD"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.7: </span><span class="title-name">Configuring the cluster to use SBD </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-fencing">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Start a shell and log in as <code class="systemitem">root</code> or equivalent.
+    </p></li><li class="step"><p>
+     Run <code class="command">crm</code> <code class="option">configure</code>.
+    </p></li><li class="step"><p>Enter the following:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">property</code> stonith-enabled="true" <span class="callout" id="co-ha-sbd-st-enabled">1</span>
+<code class="prompt custom">crm(live)configure# </code><code class="command">property</code> stonith-watchdog-timeout=0 <span class="callout" id="co-ha-sbd-watchdog-timeout">2</span>
+<code class="prompt custom">crm(live)configure# </code><code class="command">property</code> stonith-timeout="40s" <span class="callout" id="co-ha-sbd-st-timeout">3</span></pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-sbd-st-enabled"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       This is the default configuration, because clusters without STONITH are not supported.
+       But in case STONITH has been deactivated for testing purposes,
+       make sure this parameter is set to <code class="literal">true</code> again.</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-sbd-watchdog-timeout"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>If not explicitly set, this value defaults to <code class="literal">0</code>,
+        which is appropriate for use of SBD with one to three devices.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-sbd-st-timeout"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       To calculate the <em class="parameter">stonith-timeout</em>, refer to
+       <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog-timings" title="13.5. Calculation of timeouts">Section 13.5, “Calculation of timeouts”</a>.
+       A <code class="systemitem">stonith-timeout</code> value of <code class="literal">40</code>
+       would be appropriate if the <code class="literal">msgwait</code> timeout value for
+       SBD was set to <code class="literal">30</code> seconds.</p></td></tr></table></div></li><li class="step" id="st-ha-storage-protect-fencing-static-random"><p>
+    Configure the SBD STONITH resource. You do not need to clone this resource.
+   </p><p>
+    For a two-node cluster, in case of split brain, there will be fencing issued from
+    each node to the other as expected. To prevent both nodes from being reset at practically
+    the same time, it is recommended to apply the following fencing
+    delays to help one of the nodes, or even the preferred node, win the fencing match.
+    For clusters with more than two nodes, you do not need to apply these delays.
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.11.9.15.5.3.1"><span class="term">Priority fencing delay</span></dt><dd><p>
+        The <code class="literal">priority-fencing-delay</code> cluster property is disabled by
+        default. By configuring a delay value, if the other node is lost and it has
+        the higher total resource priority, the fencing targeting it will be delayed
+        for the specified amount of time. This means that in case of split-brain,
+        the more important node wins the fencing match .
+      </p><p>
+        Resources that matter can be configured with priority meta attribute. On
+        calculation, the priority values of the resources or instances that are running
+        on each node are summed up to be accounted. A promoted resource instance takes the
+        configured base priority plus one, so that it receives a higher value than any
+        unpromoted instance.
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure property priority-fencing-delay=30</pre></div><p>
+        Even if <code class="literal">priority-fencing-delay</code> is used, we still
+        recommend also using <code class="literal">pcmk_delay_base</code> or
+        <code class="literal">pcmk_delay_max</code> as described below to address any
+        situations where the nodes happen to have equal priority.
+        The value of <code class="literal">priority-fencing-delay</code> should be significantly
+        greater than the maximum of <code class="literal">pcmk_delay_base</code> / <code class="literal">pcmk_delay_max</code>,
+        and preferably twice the maximum.
+       </p></dd><dt id="id-1.4.4.11.9.15.5.3.2"><span class="term">Predictable static delay</span></dt><dd><p>This parameter adds a static delay before executing STONITH actions.
+      To prevent the nodes from getting reset at the same time under split-brain of
+      a two-node cluster, configure separate fencing resources with different delay values.
+      The preferred node can be marked with the parameter to be targeted with a longer
+      fencing delay, so that it wins any fencing match.
+      To make this succeed, it is essential to create two primitive STONITH
+      devices for each node. In the following configuration, alice will win
+      and survive in case of a split brain scenario:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> st-sbd-alice stonith:external/sbd params \
+pcmk_host_list=alice pcmk_delay_base=20
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> st-sbd-bob stonith:external/sbd params \
+pcmk_host_list=bob pcmk_delay_base=0</pre></div></dd><dt id="id-1.4.4.11.9.15.5.3.3"><span class="term">Dynamic random delay</span></dt><dd><p>This parameter adds a random delay for STONITH actions on the fencing device.
+       Rather than a static delay targeting a specific node, the parameter
+       <em class="parameter">pcmk_delay_max</em> adds a random delay for any fencing
+       with the fencing resource to prevent double reset. Unlike
+       <em class="parameter">pcmk_delay_base</em>, this parameter can be specified for
+       an unified fencing resource targeting multiple nodes.
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> stonith_sbd stonith:external/sbd
+params pcmk_delay_max=30</pre></div><div id="id-1.4.4.11.9.15.5.3.3.2.3" data-id-title="pcmk_delay_max might not prevent double reset in a split-brain scenario" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: <em class="parameter">pcmk_delay_max</em> might not prevent double reset
+       in a split-brain scenario</div><p>
+        The lower the value of <em class="parameter">pcmk_delay_max</em>, the higher
+        the chance that a double reset might still occur.
+       </p><p>
+        If your aim is to have a predictable survivor, use a priority fencing delay
+        or predictable static delay.
+       </p></div></dd></dl></div></li><li class="step"><p>
+     Review your changes with <code class="command">show</code>.
+    </p></li><li class="step"><p>
+     Submit your changes with <code class="command">commit</code> and leave the crm live
+     configuration with <code class="command">quit</code>.
+    </p></li></ol></div></div><p> After the resource has started, your cluster is successfully
+    configured for use of SBD. It will use this method in case a
+    node needs to be fenced.</p></section><section class="sect1" id="sec-ha-storage-protect-diskless-sbd" data-id-title="Setting up diskless SBD"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.8 </span><span class="title-name">Setting up diskless SBD</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-diskless-sbd">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>SBD can be operated in a diskless mode. In this mode, a watchdog device
+    will be used to reset the node in the following cases: if it loses quorum,
+    if any monitored daemon is lost and not recovered, or if Pacemaker decides
+    that the node requires fencing. Diskless SBD is based on
+    <span class="quote">“<span class="quote">self-fencing</span>”</span> of a node, depending on the status of the cluster,
+    the quorum and some reasonable assumptions. No STONITH SBD resource
+    primitive is needed in the CIB.
+   </p><div id="id-1.4.4.11.10.3" data-id-title="Do not block Corosync traffic in the local firewall" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Do not block Corosync traffic in the local firewall</div><p>
+     Diskless SBD relies on reformed membership and loss of quorum to achieve
+     fencing. Corosync traffic must be able to pass through all network interfaces,
+     including the loopback interface, and must not be blocked by a local firewall.
+     Otherwise, Corosync cannot reform a new membership, which can cause a
+     split-brain scenario that cannot be handled by diskless SBD fencing.
+    </p></div><div id="id-1.4.4.11.10.4" data-id-title="Number of cluster nodes" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Number of cluster nodes</div><p>
+         Do <span class="emphasis"><em>not</em></span> use diskless SBD as a fencing mechanism
+         for two-node clusters.
+         Use diskless SBD only for clusters with three or more nodes.
+         SBD in diskless mode cannot handle split brain scenarios for two-node clusters.
+         If you want to use diskless SBD for two-node clusters, use QDevice as
+         described in <a class="xref" href="cha-ha-qdevice.html" title="Chapter 14. QDevice and QNetd">Chapter 14, <em>QDevice and QNetd</em></a>.
+      </p></div><div class="procedure" id="pro-ha-storage-protect-confdiskless" data-id-title="Configuring diskless SBD"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.8: </span><span class="title-name">Configuring diskless SBD </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#pro-ha-storage-protect-confdiskless">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Open the file <code class="filename">/etc/sysconfig/sbd</code> and use
+      the following entries:</p><div class="verbatim-wrap"><pre class="screen">SBD_PACEMAKER=yes
+SBD_STARTMODE=always
+SBD_DELAY_START=no
+SBD_WATCHDOG_DEV=/dev/watchdog
+SBD_WATCHDOG_TIMEOUT=5</pre></div><p>
+       The <code class="varname">SBD_DEVICE</code> entry is not needed as no shared
+       disk is used. When this parameter is missing, the <code class="systemitem">sbd</code>
+       service does not start any watcher process for SBD devices.
+      </p><p>
+        If you need to delay the start of SBD on boot, change <code class="varname">SBD_DELAY_START</code>
+        to <code class="literal">yes</code>. The default delay length is double the value of
+        <code class="varname">SBD_WATCHDOG_TIMEOUT</code>. Alternatively, you can specify an integer,
+        in seconds, instead of <code class="literal">yes</code>.
+      </p><div id="id-1.4.4.11.10.5.2.5" data-id-title="SBD_WATCHDOG_TIMEOUT for diskless SBD and QDevice" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: <code class="literal">SBD_WATCHDOG_TIMEOUT</code> for diskless SBD and QDevice</div><p>
+        If you use QDevice with diskless SBD, the <code class="literal">SBD_WATCHDOG_TIMEOUT</code>
+        value must be greater than QDevice's <code class="literal">sync_timeout</code> value,
+        or SBD will time out and fail to start.
+       </p><p>
+        The default value for <code class="literal">sync_timeout</code> is 30 seconds.
+        Therefore, set <code class="literal">SBD_WATCHDOG_TIMEOUT</code> to a greater value,
+        such as <code class="literal">35</code>.
+       </p></div></li><li class="step"><p>On each node, enable the SBD service:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> enable sbd</pre></div><p>It will be started together with the Corosync service whenever the
+      cluster services are started.</p></li><li class="step"><p>Restart the cluster services on each node:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> cluster restart</pre></div><p> This automatically triggers the start of the SBD daemon. </p></li><li class="step"><p>
+       Check if the parameter <em class="parameter">have-watchdog=true</em> has
+       been automatically set:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show | grep have-watchdog
+         have-watchdog=true</pre></div></li><li class="step"><p>Run <code class="command">crm configure</code> and set the following cluster
+      properties on the crm shell:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">property</code> stonith-enabled="true" <span class="callout" id="co-ha-sbd-stonith-enabled">1</span>
+<code class="prompt custom">crm(live)configure# </code><code class="command">property</code> stonith-watchdog-timeout=10 <span class="callout" id="co-ha-sbd-diskless-watchdog-timeout">2</span></pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-sbd-stonith-enabled"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       This is the default configuration, because clusters without STONITH are not supported.
+       But in case STONITH has been deactivated for testing purposes,
+       make sure this parameter is set to <code class="literal">true</code> again.</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-sbd-diskless-watchdog-timeout"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>For diskless SBD, this parameter must not equal zero.
+       It defines after how long it is assumed that the fencing target has already
+       self-fenced. Therefore its value needs to be &gt;= the value of
+       <code class="varname">SBD_WATCHDOG_TIMEOUT</code> in <code class="filename">/etc/sysconfig/sbd</code>.
+       Starting with SUSE Linux Enterprise High Availability 15, if you set <em class="parameter">stonith-watchdog-timeout</em>
+       to a negative value, Pacemaker will automatically calculate this timeout
+       and set it to twice the value of <em class="parameter">SBD_WATCHDOG_TIMEOUT</em>.
+      </p></td></tr></table></div></li><li class="step"><p>
+     Review your changes with <code class="command">show</code>.
+    </p></li><li class="step"><p>
+     Submit your changes with <code class="command">commit</code> and leave the crm live
+     configuration with <code class="command">quit</code>.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-storage-protect-test" data-id-title="Testing SBD and fencing"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.9 </span><span class="title-name">Testing SBD and fencing</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-test">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>To test whether SBD works as expected for node fencing purposes, use one or all
+    of the following methods:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.11.11.3.1"><span class="term">Manually triggering fencing of a node</span></dt><dd><p>To trigger a fencing action for node <em class="replaceable">NODENAME</em>:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> node fence <em class="replaceable">NODENAME</em></pre></div><p>Check if the node is fenced and if the other nodes consider the node as fenced
+      after the <em class="parameter">stonith-watchdog-timeout</em>.</p></dd><dt id="id-1.4.4.11.11.3.2"><span class="term">Simulating an SBD failure</span></dt><dd><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Identify the process ID of the SBD inquisitor:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> status sbd
+● sbd.service - Shared-storage based fencing daemon
+
+   Loaded: loaded (/usr/lib/systemd/system/sbd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Tue 2018-04-17 15:24:51 CEST; 6 days ago
+     Docs: man:sbd(8)
+  Process: 1844 ExecStart=/usr/sbin/sbd $SBD_OPTS -p /var/run/sbd.pid watch (code=exited, status=0/SUCCESS)
+ Main PID: 1859 (sbd)
+    Tasks: 4 (limit: 4915)
+   CGroup: /system.slice/sbd.service
+           ├─<span class="strong"><strong>1859 sbd: inquisitor</strong></span>
+[...]</pre></div></li><li class="step"><p>Simulate an SBD failure by terminating the SBD inquisitor process.
+       In our example, the process ID of the SBD inquisitor is
+         <code class="literal">1859</code>):</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">kill</code> -9 1859</pre></div><p>
+        The node proactively self-fences. The other nodes notice the loss of
+        the node and consider it has self-fenced after the
+        <em class="parameter">stonith-watchdog-timeout</em>.
+       </p></li></ol></div></div></dd><dt id="id-1.4.4.11.11.3.3"><span class="term">Triggering fencing through a monitor operation failure</span></dt><dd><p>With a normal configuration, a failure of a resource <span class="emphasis"><em>stop operation</em></span>
+      will trigger fencing. To trigger fencing manually, you can produce a failure
+      of a resource stop operation. Alternatively, you can temporarily change
+      the configuration of a resource <span class="emphasis"><em>monitor operation</em></span>
+      and produce a monitor failure as described below:</p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Configure an <code class="literal">on-fail=fence</code> property for a resource monitor
+        operation:</p><div class="verbatim-wrap"><pre class="screen">op monitor interval=10 on-fail=fence</pre></div></li><li class="step"><p>Let the monitoring operation fail (for example, by terminating the respective
+        daemon, if the resource relates to a service).</p><p>This failure triggers a fencing action.</p></li></ol></div></div></dd></dl></div></section><section class="sect1" id="sec-ha-storage-protect-rsc-fencing" data-id-title="Additional mechanisms for storage protection"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.10 </span><span class="title-name">Additional mechanisms for storage protection</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-rsc-fencing">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>Apart from node fencing via STONITH there are other methods to achieve
+    storage protection at a resource level. For example, SCSI-3 and SCSI-4 use
+    persistent reservations whereas <code class="literal">sfex</code> provides a locking
+    mechanism. Both methods are explained in the following subsections.
+  </p><section class="sect2" id="sec-ha-storage-protect-sgpersist" data-id-title="Configuring an sg_persist resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">13.10.1 </span><span class="title-name">Configuring an sg_persist resource</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-sgpersist">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The SCSI specifications 3 and 4 define <span class="emphasis"><em>persistent reservations</em></span>.
+    These are SCSI protocol features and can be used for I/O fencing and failover.
+    This feature is implemented in the <code class="command">sg_persist</code> Linux
+    command.
+   </p><div id="id-1.4.4.11.12.4.4" data-id-title="SCSI disk compatibility" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: SCSI disk compatibility</div><p> Any backing disks for <code class="literal">sg_persist</code> must be SCSI
+     disk compatible. <code class="literal">sg_persist</code> only works for devices like
+     SCSI disks or iSCSI LUNs.
+     
+     Do <span class="emphasis"><em>not</em></span> use it for IDE, SATA, or any block devices
+     which do not support the SCSI protocol. </p></div><p>Before you proceed, check if your disk supports
+    persistent reservations. Use the following command (replace
+     <em class="replaceable">DEVICE_ID</em> with your device name):</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sg_persist -n --in --read-reservation -d /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em></code></pre></div><p>The result shows whether your disk supports persistent reservations:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Supported disk:</p><div class="verbatim-wrap"><pre class="screen">PR generation=0x0, there is NO reservation held</pre></div></li><li class="listitem"><p>Unsupported disk:</p><div class="verbatim-wrap"><pre class="screen">PR in (Read reservation): command not supported
+Illegal request, Invalid opcode</pre></div></li></ul></div><p>If you get an error message (like the one above), replace the old
+    disk with an SCSI compatible disk. Otherwise proceed as follows:</p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Create the primitive resource <code class="literal">sg_persist</code>,
+      using a stable device name for the disk:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive sg sg_persist \
+    params devs="/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>" reservation_type=3 \
+    op monitor interval=60 timeout=60</code></pre></div></li><li class="step"><p> Add the <code class="literal">sg_persist</code> primitive to a master-slave
+      group: 
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">ms</code> ms-sg sg \
+    meta master-max=1 notify=true</pre></div></li><li class="step"><p>Test the setup. When the resource is promoted, you can
+      mount and write to the disk partitions on the cluster node where
+      the primary instance is running, but you cannot write on the cluster node
+      where the secondary instance is running.</p></li><li class="step"><p> Add a file system primitive for Ext4, using a stable device name for
+     the disk partition: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive ext4 Filesystem \
+    params device="/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>" directory="/mnt/ext4" fstype=ext4</code></pre></div></li><li class="step"><p> Add the following order relationship plus a collocation between the
+      <code class="literal">sg_persist</code> master and the file system resource: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order o-ms-sg-before-ext4 Mandatory: ms-sg:promote ext4:start</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">colocation col-ext4-with-sg-persist inf: ext4 ms-sg:Promoted</code></pre></div></li><li class="step"><p> Check all your changes with the <code class="command">show changed</code> command.
+     </p></li><li class="step"><p> Commit your changes. </p></li></ol></div></div><p>For more information, refer to the <code class="command">sg_persist</code> man
+    page.</p></section><section class="sect2" id="sec-ha-storage-protect-exstoract" data-id-title="Ensuring exclusive storage activation with sfex"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">13.10.2 </span><span class="title-name">Ensuring exclusive storage activation with <code class="literal">sfex</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-exstoract">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     
+    This section introduces <code class="literal">sfex</code>, an additional low-level
+    mechanism to lock access to shared storage exclusively to one node. Note
+    that sfex does not replace STONITH. As sfex requires shared
+    storage, it is recommended that the SBD node fencing mechanism described
+    above is used on another partition of the storage.
+   </p><p>
+    By design, sfex cannot be used with workloads that require concurrency
+    (such as OCFS2). It serves as a layer of protection for classic failover
+    style workloads. This is similar to an SCSI-2 reservation in effect, but
+    more general.
+   </p><section class="sect3" id="sec-ha-storage-protect-exstoract-description" data-id-title="Overview"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">13.10.2.1 </span><span class="title-name">Overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-exstoract-description">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     In a shared storage environment, a small partition of the storage is set
+     aside for storing one or more locks.
+    </p><p>
+     Before acquiring protected resources, the node must first acquire the
+     protecting lock. The ordering is enforced by Pacemaker. The sfex
+     component ensures that even if Pacemaker were subject to a split brain
+     situation, the lock will never be granted more than once.
+    </p><p>
+     These locks must also be refreshed periodically, so that a node's death
+     does not permanently block the lock and other nodes can proceed.
+    </p></section><section class="sect3" id="sec-ha-storage-protect-exstoract-requirements" data-id-title="Setup"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">13.10.2.2 </span><span class="title-name">Setup</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-exstoract-requirements">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     In the following, learn how to create a shared partition for use with
+     sfex and how to configure a resource for the sfex lock in the CIB. A
+     single sfex partition can hold any number of locks, and needs 1 KB
+     of storage space allocated per lock.
+     By default, <code class="command">sfex_init</code> creates one lock on the partition.
+    </p><div id="id-1.4.4.11.12.5.5.3" data-id-title="Requirements" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Requirements</div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        The shared partition for sfex should be on the same logical unit as
+        the data you want to protect.
+       </p></li><li class="listitem"><p>
+        The shared sfex partition must not use host-based RAID or DRBD.
+       </p></li><li class="listitem"><p>
+        Using an LVM logical volume is possible.
+       </p></li></ul></div></div><div class="procedure" id="id-1.4.4.11.12.5.5.4" data-id-title="Creating an sfex partition"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.9: </span><span class="title-name">Creating an sfex partition </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#id-1.4.4.11.12.5.5.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Create a shared partition for use with sfex. Note the name of this
+       partition and use it as a substitute for
+       <code class="filename">/dev/sfex</code> below.
+      </p></li><li class="step"><p>
+       Create the sfex metadata with the following command:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sfex_init</code> -n 1 /dev/sfex</pre></div></li><li class="step"><p>
+       Verify that the metadata has been created correctly:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">sfex_stat</code> -i 1 /dev/sfex ; echo $?</pre></div><p>
+       This should return <code class="literal">2</code>, since the lock is not
+       currently held.
+      </p></li></ol></div></div><div class="procedure" id="id-1.4.4.11.12.5.5.5" data-id-title="Configuring a resource for the sfex lock"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 13.10: </span><span class="title-name">Configuring a resource for the sfex lock </span></span><a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#id-1.4.4.11.12.5.5.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       The sfex lock is represented via a resource in the CIB, configured as
+       follows:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> sfex_1 ocf:heartbeat:sfex \
+#	params device="/dev/sfex" index="1" collision_timeout="1" \
+      lock_timeout="70" monitor_interval="10" \
+#	op monitor interval="10s" timeout="30s" on-fail="fence"</pre></div></li><li class="step"><p>
+       To protect resources via an sfex lock, create mandatory order and
+       placement constraints between the resources to protect the sfex resource. If
+       the resource to be protected has the ID
+       <code class="literal">filesystem1</code>:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> order-sfex-1 Mandatory: sfex_1 filesystem1
+<code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> col-sfex-1 inf: filesystem1 sfex_1</pre></div></li><li class="step"><p>
+       If using group syntax, add the sfex resource as the first resource to
+       the group:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group</code> LAMP sfex_1 filesystem1 apache ipaddr</pre></div></li></ol></div></div></section></section></section><section class="sect1" id="sec-ha-storage-protect-moreinfo" data-id-title="For more information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">13.11 </span><span class="title-name">For more information</span></span> <a title="Permalink" class="permalink" href="cha-ha-storage-protect.html#sec-ha-storage-protect-moreinfo">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_storage_protection.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    For more details, see <code class="command">man sbd</code>.
+   </p></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-fencing.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 12 </span>Fencing and STONITH</span></a> </div><div><a class="pagination-link next" href="cha-ha-qdevice.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 14 </span>QDevice and QNetd</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-overview"><span class="title-number">13.1 </span><span class="title-name">Conceptual overview</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-steps"><span class="title-number">13.2 </span><span class="title-name">Overview of manually setting up SBD</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-req"><span class="title-number">13.3 </span><span class="title-name">Requirements</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-fencing-number"><span class="title-number">13.4 </span><span class="title-name">Number of SBD devices</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog-timings"><span class="title-number">13.5 </span><span class="title-name">Calculation of timeouts</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog"><span class="title-number">13.6 </span><span class="title-name">Setting up the watchdog</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-fencing-setup"><span class="title-number">13.7 </span><span class="title-name">Setting up SBD with devices</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-diskless-sbd"><span class="title-number">13.8 </span><span class="title-name">Setting up diskless SBD</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-test"><span class="title-number">13.9 </span><span class="title-name">Testing SBD and fencing</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-rsc-fencing"><span class="title-number">13.10 </span><span class="title-name">Additional mechanisms for storage protection</span></a></span></li><li><span class="sect1"><a href="cha-ha-storage-protect.html#sec-ha-storage-protect-moreinfo"><span class="title-number">13.11 </span><span class="title-name">For more information</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

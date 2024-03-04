@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP4 | Geo Clustering Guide | Managing Geo clusters</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Managing Geo clusters | SLE HA 15 SP4"/>
+<meta name="description" content="Before booth can manage a certain ticket within the Ge…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP4"/>
+<meta name="book-title" content="Geo Clustering Guide"/>
+<meta name="chapter-title" content="Chapter 8. Managing Geo clusters"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP4"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Managing Geo clusters | SLE HA 15 SP4"/>
+<meta property="og:description" content="Before booth can manage a certain ticket within the Geo cluster, you initially need to grant it to a site manually—either wi…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Managing Geo clusters | SLE HA 15 SP4"/>
+<meta name="twitter:description" content="Before booth can manage a certain ticket within the Geo cluster, you initially need to grant it to a site manually—either wi…"/>
+<link rel="prev" href="cha-ha-geo-ip-relocation.html" title="Chapter 7. Setting up IP relocation via DNS update"/><link rel="next" href="cha-ha-geo-trouble.html" title="Chapter 9. Troubleshooting"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_i.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Geo Clustering Guide</a><span> / </span><a class="crumb" href="cha-ha-geo-manage.html">Managing Geo clusters</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Geo Clustering Guide</div><ol><li><a href="pre-geo.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="cha-ha-geo-challenges.html" class=" "><span class="title-number">1 </span><span class="title-name">Challenges for Geo clusters</span></a></li><li><a href="cha-ha-geo-concept.html" class=" "><span class="title-number">2 </span><span class="title-name">Conceptual overview</span></a></li><li><a href="cha-ha-geo-req.html" class=" "><span class="title-number">3 </span><span class="title-name">Requirements</span></a></li><li><a href="cha-ha-geo-booth.html" class=" "><span class="title-number">4 </span><span class="title-name">Setting up the booth services</span></a></li><li><a href="cha-ha-geo-sync.html" class=" "><span class="title-number">5 </span><span class="title-name">Synchronizing configuration files across all sites and arbitrators</span></a></li><li><a href="cha-ha-geo-rsc.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources and constraints</span></a></li><li><a href="cha-ha-geo-ip-relocation.html" class=" "><span class="title-number">7 </span><span class="title-name">Setting up IP relocation via DNS update</span></a></li><li><a href="cha-ha-geo-manage.html" class=" you-are-here"><span class="title-number">8 </span><span class="title-name">Managing Geo clusters</span></a></li><li><a href="cha-ha-geo-trouble.html" class=" "><span class="title-number">9 </span><span class="title-name">Troubleshooting</span></a></li><li><a href="cha-ha-geo-upgrade.html" class=" "><span class="title-number">10 </span><span class="title-name">Upgrading to the latest product version</span></a></li><li><a href="sec-ha-geo-more.html" class=" "><span class="title-number">11 </span><span class="title-name">For more information</span></a></li><li><a href="bk03apa.html" class=" "><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-geo-manage" data-id-title="Managing Geo clusters"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP4</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">8 </span><span class="title-name">Managing Geo clusters</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Before booth can manage a certain ticket within the Geo cluster, you
+  initially need to grant it to a site manually—either with the booth
+  command line client or with Hawk2.
+ </p><section class="sect1" id="sec-ha-geo-manage-cli" data-id-title="Managing tickets from command line"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.1 </span><span class="title-name">Managing tickets from command line</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#sec-ha-geo-manage-cli">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_i.xml" title="Edit source document"> </a></div></div></div></div></div><p> Use the <code class="command">booth</code> command line tool to grant, list, or
+   revoke tickets as described in <a class="xref" href="cha-ha-geo-manage.html#sec-ha-geo-manage-cli-booth" title="8.1.1. Overview of booth commands">Section 8.1.1, “Overview of <code class="command">booth</code> commands”</a>.
+  </p><div id="id-1.5.11.3.3" data-id-title="crm_ticket and crm site ticket" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: <code class="command">crm_ticket</code> and
+    <code class="command">crm site ticket</code></div><p> If the booth service is not running for any reasons, you can also
+    manage tickets fully manually with <code class="command">crm_ticket</code> or
+    <code class="command">crm site ticket</code>. Both commands are only
+    available on cluster nodes. Use them with great care as they
+     <span class="emphasis"><em>cannot</em></span> verify if the same ticket is already granted
+    elsewhere. For more information, read the man pages. </p><p> As long as booth is up and running, only use the
+    <code class="command">booth</code> for manual intervention. </p></div><section class="sect2" id="sec-ha-geo-manage-cli-booth" data-id-title="Overview of booth commands"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.1.1 </span><span class="title-name">Overview of <code class="command">booth</code> commands</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#sec-ha-geo-manage-cli-booth">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The <code class="command">booth</code> commands can be run on any machine in the cluster,
+   not only the ones having the <code class="systemitem">boothd</code> running. The
+   <code class="command">booth</code> commands try to find the <span class="quote">“<span class="quote">local</span>”</span>
+   cluster by looking at the booth configuration file and the locally defined IP
+   addresses. If you do not specify a site which <code class="command">booth</code> should
+   connect to (using the <code class="option">-s</code> option), it will always connect to
+   the local site.
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.5.11.3.4.3.1"><span class="term">Listing all tickets</span></dt><dd><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth list</code>
+ticket: ticketA, leader: none
+ticket: ticketB, leader: 10.2.12.101, expires: 2014-08-13 10:28:57</pre></div><p> If you do not specify a certain site with <code class="option">-s</code>, the
+      information about the tickets will be requested from the local booth
+      instance. </p></dd><dt id="id-1.5.11.3.4.3.2"><span class="term">Granting a ticket to a site</span></dt><dd><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth grant -s 192.168.201.100 ticketA</code>
+booth[27891]: 2014/08/13_10:21:23 info: grant request sent, waiting for the result ...
+booth[27891]: 2014/08/13_10:21:23 info: grant succeeded!</pre></div><p> In this case, <code class="literal">ticketA</code> will be granted to
+      the site <code class="literal">192.168.201.100</code>. Without the
+       <code class="option">-s</code> option, booth would automatically connect to the
+      current site (the site you are running the booth client on) and would
+      request the <code class="command">grant</code> operation. </p><p> Before granting a ticket, the command executes a sanity check. If
+      the same ticket is already granted to another site, you are warned about
+      that and are prompted to revoke the ticket from the current site first.
+     </p></dd><dt id="id-1.5.11.3.4.3.3"><span class="term">Revoking a ticket from a site</span></dt><dd><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth revoke ticketA</code>
+booth[27900]: 2014/08/13_10:21:23 info: revoke succeeded!</pre></div><p> Booth checks to which site the ticket is currently granted and
+      requests the <code class="command">revoke</code> operation for
+       <code class="literal">ticketA</code>. The revoke operation will be executed
+      immediately. </p><p>The <code class="command">grant</code> and (under certain circumstances),
+      <code class="command">revoke</code> operations may take a while to return a definite
+      operation's outcome. The client waits for the result up to the ticket's
+       <code class="varname">timeout</code> value before it gives up waiting. If the
+       <code class="option">-w</code> option was used, the client will wait indefinitely
+      instead. Find the exact status in the log files or with the
+      <code class="command">crm_ticket -L</code> command.</p></dd><dt id="id-1.5.11.3.4.3.4"><span class="term">Forcing a grant operation</span></dt><dd><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth grant -F ticketA</code></pre></div><p>The result of this command depends on whether you use automatic or
+      manual tickets.</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">Automatic tickets. </span>As long as booth can make sure a ticket is granted to one site,
+         you cannot grant the same ticket to another site, not even by using
+         the <code class="option">-F</code> option. However, in case of a split brain
+         situation, booth might not be able to check if an automatic ticket is
+         granted somewhere else. In that case, the Geo cluster
+         administrator can override the automatic process and manually grant
+         the ticket to the site that is still up and running. In this
+         situation, the <code class="option">-F</code> options tells booth
+          <span class="emphasis"><em>not</em></span> to wait for a response from other,
+         unreachable sites (so ignoring the parameters
+         <em class="parameter">expire</em> and <em class="parameter">acquire-after</em>,
+         if defined for this ticket). Instead, booth will immediately grant the
+         ticket to the specified site.</p></li><li class="listitem"><p><span class="formalpara-title">Manual tickets. </span>When using <span class="emphasis"><em>manual</em></span> tickets, <code class="command">booth
+         grant -F</code> makes booth grant the ticket immediately to the
+         specified site.</p></li></ul></div><div id="id-1.5.11.3.4.3.4.2.4" data-id-title="Potential loss of data" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Potential loss of data</div><p>Before using <code class="command">booth grant -F</code>, make sure that no
+       other site (which is online) owns the same ticket. If the same ticket is
+       granted to multiple sites, resources depending on the ticket might start
+       on several sites in parallel. This results in concurrency violation and
+       potential data corruption.</p><p>As Geo cluster administrator, you need to resolve a conflict
+       between tickets when the other site is reachable again.</p></div></dd></dl></div><p>In the following sections, find some examples for managing tickets in different
+   scenarios.</p></section><section class="sect2" id="sec-ha-geo-manage-cli-booth-auto-ticket-move" data-id-title="Manually moving an automatic ticket"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.1.2 </span><span class="title-name">Manually moving an automatic ticket</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#sec-ha-geo-manage-cli-booth-auto-ticket-move">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Assuming that you want to manually move <code class="literal">ticketA</code> from
+    site <code class="literal">amsterdam</code> (with the virtual IP
+    <code class="literal">192.168.201.100</code>) to site <code class="literal">berlin</code>
+    (with the virtual IP <code class="literal">192.168.202.100</code>), proceed as
+    follows:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p> Log in to <code class="literal">amsterdam</code>.</p></li><li class="step"><p>
+     Set <code class="literal">ticketA</code> to standby:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm_ticket -t ticketA -s</code></pre></div></li><li class="step"><p>
+     Wait for any resources that depend on <code class="literal">ticketA</code> to be
+     stopped or demoted cleanly.
+    </p></li><li class="step"><p>
+     Revoke <code class="literal">ticketA</code> from site
+     <code class="literal">amsterdam</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth revoke -s 192.168.201.100 ticketA</code></pre></div></li><li class="step"><p>
+     After the ticket has been revoked from its original site, grant
+     <code class="literal">ticketA</code> to the site <code class="literal">berlin</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth grant -s 192.168.202.100 ticketA</code></pre></div><p>This enables the resources which depend on this ticket to start on site
+    <code class="literal">berlin</code>.</p></li><li class="step"><p>
+     Remove the standby mode for <code class="literal">ticketA</code> on site <code class="literal">amsterdam</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm_ticket -t ticketA -a</code></pre></div><p>In case <code class="literal">berlin</code> fails, resources depending on
+       <code class="literal">ticketA</code> will automatically fail over to site
+       <code class="literal">amsterdam</code>.
+     </p></li></ol></div></div></section><section class="sect2" id="sec-ha-geo-manage-cli-booth-man-ticket-move" data-id-title="Moving a manual ticket"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.1.3 </span><span class="title-name">Moving a manual ticket</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#sec-ha-geo-manage-cli-booth-man-ticket-move">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Assuming that you want to move the manual ticket <code class="literal">ticket-nfs</code> from
+    site <code class="literal">amsterdam</code> (with the virtual IP
+    <code class="literal">192.168.201.100</code>) to site <code class="literal">berlin</code>
+    (with the virtual IP <code class="literal">192.168.202.100</code>), proceed as
+    follows:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Log in to <code class="literal">amsterdam</code>.</p></li><li class="step"><p>
+     Set <code class="literal">ticket-nfs</code> to standby:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm_ticket -t ticket-nfs -s</code></pre></div></li><li class="step"><p>
+     Wait for any resources that depend on <code class="literal">ticket-nfs</code> to be
+     stopped or demoted cleanly.
+    </p></li><li class="step"><p>
+     Revoke <code class="literal">ticket-nfs</code> from site <code class="literal">amsterdam</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth revoke -s 192.168.201.100 ticket-nfs</code></pre></div></li><li class="step"><p>
+     After the ticket has been revoked from its original site, grant
+     <code class="literal">ticket-nfs</code> to the site <code class="literal">berlin</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth grant -s 192.168.202.100 ticket-nfs</code></pre></div><p>This enables the resources which depend on this ticket to start on site
+     <code class="literal">berlin</code>.</p></li><li class="step"><p>
+     If you want to move the resources back to site <code class="literal">amsterdam</code> at any point in
+     time, remove the standby mode for <code class="literal">ticket-nfs</code> on site <code class="literal">amsterdam</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm_ticket -t ticket-nfs -a</code></pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-geo-manage-cli-booth-man-ticket-failover" data-id-title="Failing over a manual ticket"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.1.4 </span><span class="title-name">Failing over a manual ticket</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#sec-ha-geo-manage-cli-booth-man-ticket-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_i.xml" title="Edit source document"> </a></div></div></div></div></div><p> Let us assume that the (manually managed) ticket
+     <code class="literal">ticket-nfs</code> had been granted to site
+     <code class="literal">amsterdam</code> (with the virtual IP
+     <code class="literal">192.168.201.100</code>. This site cannot be reached at the
+    moment. Site <code class="literal">berlin</code> (with the virtual IP
+     <code class="literal">192.168.202.100</code>) is still available. </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Try to contact a local administrator on site <code class="literal">amsterdam</code> and
+      check if the site is down.
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>If yes, proceed with <a class="xref" href="cha-ha-geo-manage.html#step-login" title="Step 2">Step 2</a>.</p></li><li class="listitem"><p>If <code class="literal">amsterdam</code> cannot be reached because of a
+        connectivity problem, but the nodes are still running, ask the local
+        cluster administrator to put <code class="literal">ticket-nfs</code> into standby
+        mode on site <code class="literal">amsterdam</code>:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm_ticket -t ticket-nfs -s</code></pre></div><p>This will relinquish the resources which depend on <code class="literal">ticket-nfs</code>.
+        Now the ticket can safely be granted to the other site.
+       </p></li></ul></div></li><li class="step" id="step-login"><p> Log in to <code class="literal">berlin</code>.</p></li><li class="step"><p> Grant <code class="literal">ticket-nfs</code>to site
+      <code class="literal">berlin</code> using the <code class="option">-F</code> option: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth grant -F ticket-nfs</code></pre></div><p>You will see a warning that the same ticket might be granted to
+     another site, but the command will be executed.</p></li><li class="step"><p>Check the result with:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth list</code></pre></div><p>It should show <code class="literal">berlin</code> as ticket owner for
+      <code class="literal">ticket-nfs</code> now. All resources that depend on this
+     ticket will be started on <code class="literal">berlin</code>.</p></li><li class="step"><p>Before trying to bring back <code class="literal">amsterdam</code> into the
+     Geo cluster again, make sure to revoke <code class="literal">ticket-nfs</code>
+     on <code class="literal">amsterdam</code>:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">booth revoke -s 192.168.201.100 ticket-nfs</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-geo-manage-hawk2" data-id-title="Managing tickets with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.2 </span><span class="title-name">Managing tickets with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#sec-ha-geo-manage-hawk2">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_hawk2_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Tickets can be viewed in both the <span class="guimenu">Dashboard</span> and the
+  <span class="guimenu">Status</span> view. Hawk2 displays the following ticket
+  statuses:
+ </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    <span class="guimenu">Granted</span>: Tickets that are granted to the current site.
+   </p></li><li class="listitem"><p>
+    <span class="guimenu">Elsewhere</span>: Tickets that are granted to another site.
+   </p></li><li class="listitem"><p>
+    <span class="guimenu">Revoked</span>: Tickets that have been revoked. Additionally,
+    Hawk2 also displays tickets as revoked if they are referenced in a ticket
+    dependency, but have not been granted to any site yet.
+   </p></li></ul></div><div id="id-1.5.11.4.5" data-id-title="Granting tickets to current site and revoking tickets" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Granting tickets to current site and revoking tickets</div><p>
+   Though you can view tickets for all sites with Hawk2, any grant or revoke
+   operations triggered by Hawk2 only apply to the current site (that you are
+   currently connected to with Hawk2). To grant a ticket to another site of
+   your Geo cluster, start Hawk2 on one of the cluster nodes belonging to
+   the respective site.
+  </p><p>
+   You can only grant tickets that are not already given to any site.
+  </p></div><div class="procedure" id="pro-ha-config-hawk2-viewtickets" data-id-title="Viewing, granting and revoking tickets with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.1: </span><span class="title-name">Viewing, granting and revoking tickets with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#pro-ha-config-hawk2-viewtickets">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_hawk2_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Start a Web browser and log in to Hawk2.
+   </p></li><li class="step"><p>
+    In the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>.
+   </p><p>
+    Along with information about cluster nodes and resources, Hawk2 also
+    displays a <span class="guimenu">Tickets</span> category. It lists the ticket status,
+    the ticket name and when the ticket was last granted. From the
+    <span class="guimenu">Granted</span> column you can manage the tickets.
+   </p></li><li class="step"><p>
+    To show further information about the ticket, along with information about
+    the cluster sites and arbitrators, click the <span class="guimenu">Details</span>
+    icon next to the ticket.
+   </p><div class="figure" id="id-1.5.11.4.6.4.2"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-geo-ticket-details.png"><img src="images/hawk2-geo-ticket-details.png" width="80%" alt="Hawk2—ticket details" title="Hawk2—ticket details"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 8.1: </span><span class="title-name">Hawk2—ticket details </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#id-1.5.11.4.6.4.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_hawk2_i.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+    To revoke a granted ticket from the current site or to grant a ticket to
+    the current site, click the switch in the <span class="guimenu">Granted</span> column
+    next to the ticket. On clicking, it shows the available action. Confirm
+    your choice when Hawk2 prompts for a confirmation.
+   </p><p>
+    If the ticket cannot be granted or revoked for any reason, Hawk2 shows an
+    error message. If the ticket has been successfully granted or revoked,
+    Hawk2 will update the ticket <span class="guimenu">Status</span>.
+   </p></li></ol></div></div><div class="procedure" id="pro-ha-config-hawk2-geo-simulator" data-id-title="Simulating granting and revoking tickets"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.2: </span><span class="title-name">Simulating granting and revoking tickets </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#pro-ha-config-hawk2-geo-simulator">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_hawk2_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+   Hawk2's <span class="guimenu">Batch Mode</span> allows you to explore failure
+   scenarios before they happen. To explore whether your resources that depend
+   on a certain ticket behave as expected, you can also test the impact of
+   granting or revoking tickets.
+  </p><ol class="procedure" type="1"><li class="step"><p>
+    Start a Web browser and log in to Hawk2.
+   </p></li><li class="step"><p>
+    From the top-level row, select <span class="guimenu">Batch Mode</span>.
+   </p></li><li class="step"><p>
+    In the batch mode bar, click <span class="guimenu">Show</span> to open the
+    <span class="guimenu">Batch Mode</span> window.
+   </p></li><li class="step"><p>
+    To simulate a status change of a ticket:
+   </p><ol type="a" class="substeps"><li class="step"><p>
+      Click <span class="guimenu">Inject</span> › <span class="guimenu">Ticket
+      Event</span>.
+     </p></li><li class="step"><p>
+      Select the <span class="guimenu">Ticket</span> you want to manipulate and select
+      the <span class="guimenu">Action </span> you want to simulate.
+     </p></li><li class="step"><p>
+      Confirm your changes. Your event is added to the queue of events listed
+      in the <span class="guimenu">Batch Mode</span> dialog. Any event listed here is
+      simulated immediately and is reflected on the <span class="guimenu">Status</span>
+      screen.
+     </p></li><li class="step"><p>
+      Close the <span class="guimenu">Batch Mode</span> dialog and review the simulated
+      changes.
+     </p></li></ol></li><li class="step"><p>
+    To leave the batch mode, either <span class="guimenu">Apply</span> or
+    <span class="guimenu">Discard</span> the simulated changes.
+   </p></li></ol></div></div><div class="figure" id="id-1.5.11.4.8"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-geo-batch-tickets.png"><img src="images/hawk2-geo-batch-tickets.png" width="80%" alt="Hawk2 simulator—tickets" title="Hawk2 simulator—tickets"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 8.2: </span><span class="title-name">Hawk2 simulator—tickets </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-manage.html#id-1.5.11.4.8">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_manage_hawk2_i.xml" title="Edit source document"> </a></div></div></div><p>
+  For more information about Hawk2's <span class="guimenu">Batch Mode</span> (and which
+  other scenarios can be explored with it), refer to <span class="intraxref">Book “Administration Guide”, Chapter 5 “Configuration and administration basics”, Section 5.4.7 “Using the batch mode”</span>.
+ </p></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-geo-ip-relocation.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 7 </span>Setting up IP relocation via DNS update</span></a> </div><div><a class="pagination-link next" href="cha-ha-geo-trouble.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 9 </span>Troubleshooting</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-geo-manage.html#sec-ha-geo-manage-cli"><span class="title-number">8.1 </span><span class="title-name">Managing tickets from command line</span></a></span></li><li><span class="sect1"><a href="cha-ha-geo-manage.html#sec-ha-geo-manage-hawk2"><span class="title-number">8.2 </span><span class="title-name">Managing tickets with Hawk2</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

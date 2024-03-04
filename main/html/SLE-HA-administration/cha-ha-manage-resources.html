@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP6 | Administration Guide | Managing cluster resources</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Managing cluster resources | SLE HA 15 SP6"/>
+<meta name="description" content="After configuring the resources in the cluster, use th…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP6"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 8. Managing cluster resources"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP6"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Managing cluster resources | SLE HA 15 SP6"/>
+<meta property="og:description" content="After configuring the resources in the cluster, use the cluster management tools to start, stop, clean up, remove or migrate…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Managing cluster resources | SLE HA 15 SP6"/>
+<meta name="twitter:description" content="After configuring the resources in the cluster, use the cluster management tools to start, stop, clean up, remove or migrate…"/>
+<link rel="prev" href="sec-ha-config-basics-constraints.html" title="Chapter 7. Configuring resource constraints"/><link rel="next" href="sec-ha-config-basics-remote.html" title="Chapter 9. Managing services on remote hosts"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/script-purejs.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and administration</a><span> / </span><a class="crumb" href="cha-ha-manage-resources.html">Managing cluster resources</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" you-are-here"><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-virtualization.html" class=" "><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="chapter" id="cha-ha-manage-resources" data-id-title="Managing cluster resources"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP6</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    After configuring the resources in the cluster, use the cluster management tools
+    to start, stop, clean up, remove or migrate the resources. This chapter describes
+    how to use Hawk2 or crmsh for resource management tasks.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-resource-show" data-id-title="Showing cluster resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.1 </span><span class="title-name">Showing cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-resource-show">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><section class="sect2" id="sec-ha-manual-config-show" data-id-title="Showing cluster resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.1.1 </span><span class="title-name">Showing cluster resources with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-manual-config-show">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   When administering a cluster the command <code class="command">crm configure show</code>
+   lists the current CIB objects like cluster configuration, global options,
+   primitives, and others:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show</code>
+node 178326192: alice
+node 178326448: bob
+primitive admin_addr IPaddr2 \
+       params ip=192.168.2.1 \
+       op monitor interval=10 timeout=20
+primitive stonith-sbd stonith:external/sbd \
+       params pcmk_delay_max=30
+property cib-bootstrap-options: \
+       have-watchdog=true \
+       dc-version=1.1.15-17.1-e174ec8 \
+       cluster-infrastructure=corosync \
+       cluster-name=hacluster \
+       stonith-enabled=true \
+       placement-strategy=balanced \
+       standby-mode=true
+rsc_defaults rsc-options: \
+       resource-stickiness=1 \
+       migration-threshold=3
+op_defaults op-options: \
+       timeout=600 \
+       record-pending=true</pre></div><p>
+   If you have lots of resources, the output of <code class="command">show</code>
+   is too verbose. To restrict the output, use the name of the resource.
+   For example, to list the properties of the primitive
+   <code class="systemitem">admin_addr</code> only, append the resource name to
+   <code class="command">show</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show admin_addr</code>
+primitive admin_addr IPaddr2 \
+       params ip=192.168.2.1 \
+       op monitor interval=10 timeout=20</pre></div><p>
+   However, in some cases, you want to limit the output of specific resources
+   even more. This can be achieved with <span class="emphasis"><em>filters</em></span>. Filters
+   limit the output to specific components. For example, to list the
+   nodes only, use <code class="literal">type:node</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show type:node</code>
+node 178326192: alice
+node 178326448: bob</pre></div><p>If you are also interested in primitives, use the
+  <code class="literal">or</code> operator:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show type:node or type:primitive</code>
+node 178326192: alice
+node 178326448: bob
+primitive admin_addr IPaddr2 \
+       params ip=192.168.2.1 \
+       op monitor interval=10 timeout=20
+primitive stonith-sbd stonith:external/sbd \
+       params pcmk_delay_max=30</pre></div><p>
+   Furthermore, to search for an object that starts with a certain string,
+   use this notation:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show type:primitive and 'admin*'</code>
+primitive admin_addr IPaddr2 \
+       params ip=192.168.2.1 \
+       op monitor interval=10 timeout=20</pre></div><p>
+   To list all available types, enter <code class="command">crm configure show type:</code>
+   and press the <span class="keycap">→|</span> key. The Bash completion gives
+   you a list of all types.
+  </p></section></section><section class="sect1" id="sec-ha-resource-edit" data-id-title="Editing resources and groups"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.2 </span><span class="title-name">Editing resources and groups</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-resource-edit">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  You can edit resources or groups using either Hawk2 or crmsh.
+ </p><section class="sect2" id="sec-conf-hawk2-manage-edit" data-id-title="Editing resources and groups with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.2.1 </span><span class="title-name">Editing resources and groups with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-edit">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   If you have created a resource, you can edit its configuration at any time
+   by adjusting parameters, operations or meta attributes as needed.
+  </p><div class="procedure" id="pro-conf-hawk2-rsc-modify" data-id-title="Modifying a resource or group"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.1: </span><span class="title-name">Modifying a resource or group </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#pro-conf-hawk2-rsc-modify">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     On the Hawk2 <span class="guimenu">Status</span> screen, go to the
+     <span class="guimenu">Resources</span> list.
+    </p></li><li class="step"><p>
+     In the <span class="guimenu">Operations</span> column, click the arrow down icon
+     next to the resource or group you want to modify and select
+     <span class="guimenu">Edit</span>.
+    </p><p>
+     The resource configuration screen opens.
+    </p><div class="figure" id="id-1.4.4.6.4.3.3.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-primitive-edit.png"><img src="images/hawk2-primitive-edit.png" width="100%" alt="Hawk2—editing a primitive resource" title="Hawk2—editing a primitive resource"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 8.1: </span><span class="title-name">Hawk2—editing a primitive resource </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#id-1.4.4.6.4.3.3.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+      At the top of the configuration screen, you can select operations to perform.
+     </p><p>
+      If you edit a primitive resource, the following operations are available:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        Copying the resource
+       </p></li><li class="listitem"><p>
+        Renaming the resource (changing its ID)
+       </p></li><li class="listitem"><p>
+        Deleting the resource
+       </p></li></ul></div><p>
+      If you edit a group, the following operations are available:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        Creating a new primitive to be added to this group
+       </p></li><li class="listitem"><p>
+        Renaming the group (changing its ID)
+       </p></li><li class="listitem"><p>
+        Dragging and dropping group members into a new order
+       </p></li></ul></div></li><li class="step" id="step-hawk2-rsc-modify-params"><p>
+     To add a new parameter, operation or meta attribute, select an entry from
+     the empty drop-down box.
+    </p></li><li class="step"><p>
+     To edit any values in the <span class="guimenu">Operations</span> category, click
+     the <span class="guimenu">Edit</span> icon of the respective entry, enter a
+     different value for the operation, and click <span class="guimenu">Apply</span>.
+    </p></li><li class="step"><p>
+     When you are finished, click the <span class="guimenu">Apply</span> button in the
+     resource configuration screen to confirm your changes to the parameters,
+     operations or meta attributes.
+    </p><p>
+     A message at the top of the screen shows if the action has been
+     successful.
+    </p></li></ol></div></div></section><section class="sect2" id="sec-conf-crm-manage-edit" data-id-title="Editing groups with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.2.2 </span><span class="title-name">Editing groups with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-conf-crm-manage-edit">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To change the order of a group member, use the <code class="command">modgroup</code> command
+   from the <code class="command">configure</code> subcommand. For example, use the following
+   command to move the primitive <code class="literal">Email</code> before <code class="literal">Public-IP</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">modgroup g-mailsvc add Email before Public-IP</code></pre></div><p>
+   To remove a resource from a group (for example, <code class="literal">Email</code>), use this command:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">modgroup g-mailsvc remove Email</code></pre></div></section></section><section class="sect1" id="sec-ha-resource-start" data-id-title="Starting cluster resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.3 </span><span class="title-name">Starting cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-resource-start">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Before you start a cluster resource, make sure it is set up correctly. For
+   example, if you use an Apache server as a cluster resource, set up the
+   Apache server first. Complete the Apache configuration before starting the
+   respective resource in your cluster.
+  </p><div id="id-1.4.4.6.5.3" data-id-title="Do not touch services managed by the cluster" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Do not touch services managed by the cluster</div><p>
+    When managing a resource via the High Availability software, the resource must not be started
+    or stopped otherwise (outside the cluster, for example manually or on
+    boot or reboot). The High Availability software is responsible for all service start
+    or stop actions.
+   </p><p>
+    However, if you want to check if the service is configured properly, start
+    it manually, but make sure that it is stopped again before the High Availability software takes
+    over.
+   </p><p>
+    For interventions in resources that are currently managed by the cluster,
+    set the resource to <code class="literal">maintenance mode</code> first. For details,
+    see <a class="xref" href="cha-ha-maintenance.html#pro-ha-maint-mode-rsc-hawk2" title="Putting a resource into maintenance mode with Hawk2">Procedure 28.5, “Putting a resource into maintenance mode with Hawk2”</a>.
+   </p></div><p>
+   You can start a cluster resource using either Hawk2 or crmsh.
+  </p><section class="sect2" id="sec-conf-hawk2-manage-start" data-id-title="Starting cluster resources with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.3.1 </span><span class="title-name">Starting cluster resources with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-start">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   When creating a resource with Hawk2, you can set its initial state with
+   the <code class="literal">target-role</code> meta attribute. If you set its value to
+   <code class="literal">stopped</code>, the resource does not start automatically after
+   being created.
+  </p><div class="procedure" id="pro-hawk2-rsc-start" data-id-title="Starting a new resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.2: </span><span class="title-name">Starting a new resource </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#pro-hawk2-rsc-start">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>. The list of
+     <span class="guimenu">Resources</span> also shows the <span class="guimenu">Status</span>.
+    </p></li><li class="step"><p>
+     Select the resource to start. In its <span class="guimenu">Operations</span> column,
+     click the <span class="guimenu">Start</span> icon. To continue, confirm the message
+     that appears.
+    </p></li></ol></div></div><p>
+   When the resource has started, Hawk2 changes the resource's
+   <span class="guimenu">Status</span> to green and shows on which node it is running.
+  </p></section><section class="sect2" id="sec-ha-manual-config-start" data-id-title="Starting cluster resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.3.2 </span><span class="title-name">Starting cluster resources with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-manual-config-start">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To start a new cluster resource, you need the respective identifier.
+   </p><div class="procedure" id="id-1.4.4.6.5.6.3" data-id-title="Starting a cluster resource with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.3: </span><span class="title-name">Starting a cluster resource with crmsh </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#id-1.4.4.6.5.6.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code></pre></div></li><li class="step"><p>
+      Switch to the resource level:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">resource</code></pre></div></li><li class="step"><p>
+      Start the resource with <code class="command">start</code> and press the
+      <span class="keycap">→|</span> key to show all known resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)resource# </code><code class="command">start <em class="replaceable">ID</em></code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-resource-stop" data-id-title="Stopping cluster resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.4 </span><span class="title-name">Stopping cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-resource-stop">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><section class="sect2" id="sec-ha-manual-config-stop" data-id-title="Stopping cluster resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.4.1 </span><span class="title-name">Stopping cluster resources with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-manual-config-stop">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To stop one or more existing cluster resources, you need the respective identifiers.
+  </p><div class="procedure" id="id-1.4.4.6.6.2.3" data-id-title="Stopping cluster resources with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.4: </span><span class="title-name">Stopping cluster resources with crmsh </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#id-1.4.4.6.6.2.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+     interactive shell:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code></pre></div></li><li class="step"><p>
+     Switch to the resource level:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">resource</code></pre></div></li><li class="step"><p>
+     Stop the resource with <code class="command">stop</code> and press the
+     <span class="keycap">→|</span> key to show all known resources:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)resource# </code><code class="command">stop <em class="replaceable">ID</em></code></pre></div><p>
+     You can stop multiple resources at once:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)resource# </code><code class="command">stop <em class="replaceable">ID1</em> <em class="replaceable">ID2</em></code> ...</pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-resource-clean" data-id-title="Cleaning up cluster resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.5 </span><span class="title-name">Cleaning up cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-resource-clean">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   A resource is automatically restarted if it fails, but each failure
+   increases the resource's fail count.
+  </p><p>
+   If a <code class="literal">migration-threshold</code> has been set for the resource,
+   the node will no longer run the resource when the number of failures reaches
+   the migration threshold.
+  </p><p>
+   By default, fail counts are not automatically reset. You can configure a fail count
+   to be reset automatically by setting a <code class="literal">failure-timeout</code> option for the
+   resource, or you can manually reset the fail count using either Hawk2 or crmsh.
+  </p><section class="sect2" id="sec-conf-hawk2-manage-cleanup" data-id-title="Cleaning up cluster resources with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.5.1 </span><span class="title-name">Cleaning up cluster resources with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-cleanup">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-clean" data-id-title="Cleaning up a resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.5: </span><span class="title-name">Cleaning up a resource </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#pro-hawk2-clean">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Status</span>. The list of
+     <span class="guimenu">Resources</span> also shows the <span class="guimenu">Status</span>.
+    </p></li><li class="step"><p>
+     Go to the resource to clean up. In the <span class="guimenu">Operations</span>
+     column, click the arrow down button and select <span class="guimenu">Cleanup</span>.
+     To continue, confirm the message that appears.
+    </p><p>
+     This executes the command <code class="command">crm resource cleanup</code> and
+     cleans up the resource on all nodes.
+    </p></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-cleanup" data-id-title="Cleaning up cluster resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.5.2 </span><span class="title-name">Cleaning up cluster resources with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-manual-config-cleanup">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="id-1.4.4.6.7.6.2" data-id-title="Cleaning up a resource with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.6: </span><span class="title-name">Cleaning up a resource with crmsh </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#id-1.4.4.6.7.6.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Open a shell and log in as user <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Get a list of all your resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource status</code>
+Full List of Resources
+   * admin-ip      (ocf:heartbeat:IPaddr2):    Started
+   * stonith-sbd   (stonith:external/sbd):     Started
+   * Resource Group: dlm-clvm:
+     * dlm:        (ocf:pacemaker:controld)    Started
+     * clvm:       (ocf:heartbeat:lvmlockd)    Started</pre></div></li><li class="step"><p>
+        Show the fail count of a resource:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource failcount <em class="replaceable">RESOURCE</em> show <em class="replaceable">NODE</em></code></pre></div><p>
+        For example, to show the fail count of the resource <code class="literal">dlm</code> on node
+        <code class="literal">alice</code>:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource failcount dlm show alice</code>
+scope=status name=fail-count-dlm value=2</pre></div></li><li class="step"><p>
+      Clean up the resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource cleanup <em class="replaceable">RESOURCE</em></code></pre></div><p>
+        This command cleans up the resource on all nodes. If the resource is part of a group,
+        crmsh also cleans up the other resources in the group.
+      </p></li></ol></div></div></section></section><section class="sect1" id="sec-ha-resource-remove" data-id-title="Removing cluster resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.6 </span><span class="title-name">Removing cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-resource-remove">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To remove a resource from the cluster, follow either the
+   Hawk2 or crmsh procedure below to avoid configuration errors.
+  </p><section class="sect2" id="sec-conf-hawk2-manage-remove" data-id-title="Removing cluster resources with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.6.1 </span><span class="title-name">Removing cluster resources with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-remove">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-rsc-rm" data-id-title="Removing a cluster resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.7: </span><span class="title-name">Removing a cluster resource </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#pro-hawk2-rsc-rm">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     Clean up the resource on all nodes as described in
+     <a class="xref" href="cha-ha-manage-resources.html#pro-hawk2-clean" title="Cleaning up a resource">Procedure 8.5, “Cleaning up a resource”</a>.
+    </p></li><li class="step"><p>
+     Stop the resource:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>. The list
+       of <span class="guimenu">Resources</span> also shows the
+       <span class="guimenu">Status</span>.
+      </p></li><li class="step"><p>
+       In the <span class="guimenu">Operations</span> column, click the
+       <span class="guimenu">Stop</span> button next to the resource.
+      </p></li><li class="step"><p>
+       To continue, confirm the message that appears.
+      </p><p>
+       The <span class="guimenu">Status</span> column will reflect the change when the
+       resource is stopped.
+      </p></li></ol></li><li class="step"><p>
+     Delete the resource:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       From the left navigation bar, select
+       <span class="guimenu">Configuration</span> › <span class="guimenu">Edit
+       Configuration</span>.
+      </p></li><li class="step"><p>
+       In the list of <span class="guimenu">Resources</span>, go to the respective
+       resource. From the <span class="guimenu">Operations</span> column, click the
+       <span class="guimenu">Delete</span> icon next to the resource.
+      </p></li><li class="step"><p>
+       To continue, confirm the message that appears.
+      </p></li></ol></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-remove" data-id-title="Removing cluster resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.6.2 </span><span class="title-name">Removing cluster resources with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-manual-config-remove">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="id-1.4.4.6.8.4.2" data-id-title="Removing a cluster resource with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.8: </span><span class="title-name">Removing a cluster resource with crmsh </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#id-1.4.4.6.8.4.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code></pre></div></li><li class="step"><p>
+      Get a list of your resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">resource status</code>
+Full List of Resources:
+  * admin-ip     (ocf:heartbeat:IPaddr2):     Started
+  * stonith-sbd  (stonith:external/sbd):      Started
+  * nfsserver    (ocf:heartbeat:nfsserver):   Started</pre></div></li><li class="step"><p>
+        Stop the resource you want to remove:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">resource stop <em class="replaceable">RESOURCE</em></code></pre></div></li><li class="step"><p>
+      Delete the resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure delete <em class="replaceable">RESOURCE</em></code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-resource-migrate" data-id-title="Migrating cluster resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.7 </span><span class="title-name">Migrating cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-resource-migrate">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The cluster will fail over (migrate) resources automatically in case of software or hardware
+   failures, according to certain parameters you can define (for example,
+   migration threshold or resource stickiness). You can also manually migrate a
+   resource to another node in the cluster, or move the resource
+   away from the current node and let the cluster decide where to put it.
+  </p><p>
+   You can migrate a cluster resource using either Hawk2 or crmsh.
+  </p><section class="sect2" id="sec-conf-hawk2-manage-migrate" data-id-title="Migrating cluster resources with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.7.1 </span><span class="title-name">Migrating cluster resources with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-migrate">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-rsc-migrate" data-id-title="Manually migrating a resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.9: </span><span class="title-name">Manually migrating a resource </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#pro-hawk2-rsc-migrate">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>. The list of
+     <span class="guimenu">Resources</span> also shows the <span class="guimenu">Status</span>.
+    </p></li><li class="step"><p>
+     In the list of <span class="guimenu">Resources</span>, select the respective
+     resource.
+    </p></li><li class="step"><p>
+     In the <span class="guimenu">Operations</span> column, click the arrow down button
+     and select <span class="guimenu">Migrate</span>.
+    </p></li><li class="step"><p>
+     In the window that opens, you have the following choices:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+       <span class="guimenu">Away from current node</span>: This creates a location
+       constraint with a <code class="literal">-INFINITY</code> score for the current
+       node.
+      </p></li><li class="listitem"><p>
+       Alternatively, you can move the resource to another node. This creates a
+       location constraint with an <code class="literal">INFINITY</code> score for the
+       destination node.
+      </p></li></ul></div></li><li class="step"><p>
+     Confirm your choice.
+    </p></li></ol></div></div><p>
+   To allow a resource to move back again, proceed as follows:
+  </p><div class="procedure" id="pro-hawk2-rsc-migrate-back" data-id-title="Unmigrating a resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.10: </span><span class="title-name">Unmigrating a resource </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#pro-hawk2-rsc-migrate-back">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>. The list of
+     <span class="guimenu">Resources</span> also shows the <span class="guimenu">Status</span>.
+    </p></li><li class="step"><p>
+     In the list of <span class="guimenu">Resources</span>, go to the respective
+     resource.
+    </p></li><li class="step"><p>
+     In the <span class="guimenu">Operations</span> column, click the arrow down button
+     and select <span class="guimenu">Clear</span>. To continue, confirm the message
+     that appears.
+    </p><p>
+     Hawk2 uses the <code class="command">crm_resource </code> <code class="option">--clear</code>
+     command. The resource can move back to its original location or it may
+     stay where it is (depending on resource stickiness).
+    </p></li></ol></div></div><p>
+   For more information, see  <em class="citetitle">Pacemaker Explained</em>, available from
+   <a class="link" href="https://www.clusterlabs.org/pacemaker/doc/" target="_blank">https://www.clusterlabs.org/pacemaker/doc/</a>. Refer to section
+   <em class="citetitle">Resource Migration</em>.
+  </p></section><section class="sect2" id="sec-ha-manual-config-migrate" data-id-title="Migrating cluster resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.7.2 </span><span class="title-name">Migrating cluster resources with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-manual-config-migrate">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Use the <code class="command">move</code> command for this task. For example,
+    to migrate the resource <code class="literal">ipaddress1</code> to a cluster node
+    named <code class="systemitem">bob</code>, use these
+    commands:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource</code>
+ <code class="prompt custom">crm(live)resource# </code><code class="command">move ipaddress1 bob</code></pre></div></section></section><section class="sect1" id="sec-ha-config-basics-tags" data-id-title="Grouping resources by using tags"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8.8 </span><span class="title-name">Grouping resources by using tags</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-config-basics-tags">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Tags are a way to refer to multiple resources at once, without creating any
+   colocation or ordering relationship between them. This can be useful for
+   grouping conceptually related resources. For example, if you have
+   several resources related to a database, create a tag called
+   <code class="literal">databases</code> and add all resources related to the
+   database to this tag. This allows you to stop or start them all with a
+   single command.
+  </p><p>
+   Tags can also be used in constraints. For example, the following
+   location constraint <code class="literal">loc-db-prefer</code> applies to the set
+   of resources tagged with <code class="literal">databases</code>:
+  </p><div class="verbatim-wrap"><pre class="screen">location loc-db-prefer databases 100: alice</pre></div><p>
+   You can create tags using either Hawk2 or crmsh.
+  </p><section class="sect2" id="sec-conf-hawk2-rsc-tag" data-id-title="Grouping resources by using tags with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.8.1 </span><span class="title-name">Grouping resources by using tags with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-conf-hawk2-rsc-tag">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-conf-hawk2-tag" data-id-title="Adding a tag"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 8.11: </span><span class="title-name">Adding a tag </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#pro-conf-hawk2-tag">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add
+      Resource</span> › <span class="guimenu">Tag</span>.
+     </p></li><li class="step"><p>
+      Enter a unique <span class="guimenu">Tag ID</span>.
+     </p></li><li class="step"><p>
+      From the <span class="guimenu">Objects</span> list, select the resources you want to
+      refer to with the tag.
+     </p></li><li class="step"><p>
+      Click <span class="guimenu">Create</span> to finish the configuration. A message at
+      the top of the screen shows if the action has been successful.
+     </p></li></ol></div></div><div class="figure" id="id-1.4.4.6.10.6.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-tag.png"><img src="images/hawk2-tag.png" width="100%" alt="Hawk2—tag" title="Hawk2—tag"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 8.2: </span><span class="title-name">Hawk2—tag </span></span><a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#id-1.4.4.6.10.6.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-tag" data-id-title="Grouping resources by using tags with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.8.2 </span><span class="title-name">Grouping resources by using tags with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-manage-resources.html#sec-ha-manual-config-tag">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_managing_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    For example, if you have
+    several resources related to a database, create a tag called
+    <code class="literal">databases</code> and add all resources related to the
+    database to this tag:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure tag databases: db1 db2 db3</code></pre></div><p>
+    This allows you to start them all with a single command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource start databases</code></pre></div><p>
+    Similarly, you can stop them all too:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource stop databases</code></pre></div></section></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="sec-ha-config-basics-constraints.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 7 </span>Configuring resource constraints</span></a> </div><div><a class="pagination-link next" href="sec-ha-config-basics-remote.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 9 </span>Managing services on remote hosts</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-resource-show"><span class="title-number">8.1 </span><span class="title-name">Showing cluster resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-resource-edit"><span class="title-number">8.2 </span><span class="title-name">Editing resources and groups</span></a></span></li><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-resource-start"><span class="title-number">8.3 </span><span class="title-name">Starting cluster resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-resource-stop"><span class="title-number">8.4 </span><span class="title-name">Stopping cluster resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-resource-clean"><span class="title-number">8.5 </span><span class="title-name">Cleaning up cluster resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-resource-remove"><span class="title-number">8.6 </span><span class="title-name">Removing cluster resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-resource-migrate"><span class="title-number">8.7 </span><span class="title-name">Migrating cluster resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manage-resources.html#sec-ha-config-basics-tags"><span class="title-number">8.8 </span><span class="title-name">Grouping resources by using tags</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

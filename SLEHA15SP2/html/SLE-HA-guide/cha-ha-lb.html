@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP2 | Administration Guide | Load Balancing</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Load Balancing | SLE HA 15 SP2"/>
+<meta name="description" content="Load Balancing makes a cluster of servers appear as on…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP2"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 17. Load Balancing"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15 SP2"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Load Balancing | SLE HA 15 SP2"/>
+<meta property="og:description" content="Load Balancing makes a cluster of servers appear as one large, fast server to outside clients. This apparent single server i…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Load Balancing | SLE HA 15 SP2"/>
+<meta name="twitter:description" content="Load Balancing makes a cluster of servers appear as one large, fast server to outside clients. This apparent single server i…"/>
+<link rel="prev" href="cha-ha-netbonding.html" title="Chapter 16. Network Device Bonding"/><link rel="next" href="cha-ha-geo.html" title="Chapter 18. Geo Clusters (Multi-Site Clusters)"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_loadbalancing.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and Administration</a><span> / </span><a class="crumb" href="cha-ha-lb.html">Load Balancing</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">About This Guide</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and Setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product Overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System Requirements and Recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST Cluster Module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and Administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and Administration Basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring Cluster Resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring Resource Constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing Cluster Resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing Services on Remote Hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or Modifying Resource Agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring Clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage Protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access Control Lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network Device Bonding</span></a></li><li><a href="cha-ha-lb.html" class=" you-are-here"><span class="title-number">17 </span><span class="title-name">Load Balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">18 </span><span class="title-name">Geo Clusters (Multi-Site Clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and Data Replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">19 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">20 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">22 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">23 </span><span class="title-name">Cluster Logical Volume Manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster Multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">25 </span><span class="title-name">Samba Clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">26 </span><span class="title-name">Disaster Recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and Upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">27 </span><span class="title-name">Executing Maintenance Tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">28 </span><span class="title-name">Upgrading Your Cluster and Updating Software Packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming Conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster Management Tools (Command Line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running Cluster Reports Without <code class="systemitem">root</code> Access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-lb" data-id-title="Load Balancing"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP2</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">17 </span><span class="title-name">Load Balancing</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_loadbalancing.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+  <span class="emphasis"><em>Load Balancing</em></span> makes a cluster of servers appear as
+  one large, fast server to outside clients. This apparent single server is
+  called a <span class="emphasis"><em>virtual server</em></span>. It consists of one or more
+  load balancers dispatching incoming requests and several real servers
+  running the actual services. With a load balancing setup of SUSE Linux Enterprise High Availability, you
+  can build highly scalable and highly available network services, such as
+  Web, cache, mail, FTP, media and VoIP services.
+ </p></div></div></div></div><section class="sect1" id="sec-ha-lb-overview" data-id-title="Conceptual Overview"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">17.1 </span><span class="title-name">Conceptual Overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lb-overview">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_loadbalancing.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   SUSE Linux Enterprise High Availability supports two technologies for load balancing: Linux Virtual Server (LVS) and
+   HAProxy. The key difference is Linux Virtual Server operates at OSI layer 4
+   (Transport), configuring the network layer of kernel, while HAProxy
+   operates at layer 7 (Application), running in user space. Thus Linux Virtual Server
+   needs fewer resources and can handle higher loads, while HAProxy can
+   inspect the traffic, do SSL termination and make dispatching decisions
+   based on the content of the traffic.
+  </p><p>
+   On the other hand, Linux Virtual Server includes two different software:
+   IPVS (IP Virtual Server) and KTCPVS (Kernel TCP Virtual Server).
+   IPVS provides layer 4 load balancing whereas KTCPVS provides layer 7
+   load balancing.
+  </p><p>
+   This section gives you a conceptual overview of load balancing
+   in combination with high availability, then briefly introduces you
+   to Linux Virtual Server and HAProxy. Finally, it points you to further reading.
+  </p><p>
+   The real servers and the load balancers may be interconnected by either
+   high-speed LAN or by geographically dispersed WAN. The load balancers
+   dispatch requests to the different servers. They make parallel services
+   of the cluster appear as one virtual service on a single IP address (the
+   virtual IP address or VIP). Request dispatching can use IP load balancing
+   technologies or application-level load balancing technologies.
+   Scalability of the system is achieved by transparently adding or removing
+   nodes in the cluster.
+  </p><p>
+   High availability is provided by detecting node or service failures and
+   reconfiguring the whole virtual server system appropriately, as usual.
+  </p><p>
+   There are several load balancing strategies. Here are some Layer 4
+   strategies, suitable for Linux Virtual Server:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">Round Robin. </span>
+      The simplest strategy is to direct each connection to a different
+      address, taking turns. For example, a DNS server can have several
+      entries for a given host name. With DNS round robin, the DNS server
+      will return all of them in a rotating order. Thus different clients
+      will see different addresses.
+     </p></li><li class="listitem"><p><span class="formalpara-title">Selecting the <span class="quote">“<span class="quote">best</span>”</span> server. </span>
+      Although this has several drawbacks, balancing could be implemented
+      with an <span class="quote">“<span class="quote">the first server who responds</span>”</span> or <span class="quote">“<span class="quote">the
+      least loaded server</span>”</span> approach.
+     </p></li><li class="listitem"><p><span class="formalpara-title">Balancing the number of connections per server. </span>
+      A load balancer between users and servers can divide the number of
+      users across multiple servers.
+     </p></li><li class="listitem"><p><span class="formalpara-title">Geographical location. </span>
+      It is possible to direct clients to a server nearby.
+     </p></li></ul></div><p>
+   Here are some Layer 7 strategies, suitable for HAProxy:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">URI. </span>
+      Inspect the HTTP content and dispatch to a server most suitable for
+      this specific URI.
+     </p></li><li class="listitem"><p><span class="formalpara-title">URL parameter, RDP cookie. </span>
+      Inspect the HTTP content for a session parameter, possibly in post
+      parameters, or the RDP (remote desktop protocol) session cookie, and
+      dispatch to the server serving this session.
+     </p></li></ul></div><p>
+   Although there is some overlap, HAProxy can be used in scenarios
+   where LVS/<code class="command">ipvsadm</code> is not adequate and vice versa:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">SSL termination. </span>
+      The front-end load balancers can handle the SSL layer. Thus the cloud
+      nodes do not need to have access to the SSL keys, or could take
+      advantage of SSL accelerators in the load balancers.
+     </p></li><li class="listitem"><p><span class="formalpara-title">Application level. </span>
+      HAProxy operates at the application level, allowing the load
+      balancing decisions to be influenced by the content stream. This
+      allows for persistence based on cookies and other such filters.
+     </p></li></ul></div><p>
+   On the other hand, LVS/<code class="command">ipvsadm</code> cannot be fully
+   replaced by HAProxy:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     LVS supports <span class="quote">“<span class="quote">direct routing</span>”</span>, where the load balancer is
+     only in the inbound stream, whereas the outbound traffic is routed to
+     the clients directly. This allows for potentially much higher
+     throughput in asymmetric environments.
+    </p></li><li class="listitem"><p>
+     LVS supports stateful connection table replication (via
+     <code class="systemitem">conntrackd</code>). This allows for
+     load balancer failover that is transparent to the client and server.
+    </p></li></ul></div></section><section class="sect1" id="sec-ha-lb-lvs" data-id-title="Configuring Load Balancing with Linux Virtual Server"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">17.2 </span><span class="title-name">Configuring Load Balancing with Linux Virtual Server</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lb-lvs">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The following sections give an overview of the main LVS components and
+   concepts. Then we explain how to set up Linux Virtual Server on SUSE Linux Enterprise High Availability.
+  </p><section class="sect2" id="sec-ha-lvs-overview-director" data-id-title="Director"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">17.2.1 </span><span class="title-name">Director</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-overview-director">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The main component of LVS is the ip_vs (or IPVS) Kernel code. It is part of
+    the default Kernel and
+    implements transport-layer load balancing inside the Linux Kernel
+    (layer-4 switching). The node that runs a Linux Kernel including the
+    IPVS code is called <span class="emphasis"><em>director</em></span>. The IPVS code running
+    on the director is the essential feature of LVS.
+   </p><p>
+    When clients connect to the director, the incoming requests are
+    load-balanced across all cluster nodes: The director forwards packets to
+    the real servers, using a modified set of routing rules that make the
+    LVS work. For example, connections do not originate or terminate on the
+    director, it does not send acknowledgments. The director acts as a
+    specialized router that forwards packets from end users to real servers
+    (the hosts that run the applications that process the requests).
+   </p></section><section class="sect2" id="sec-ha-lvs-overview-userspace" data-id-title="User Space Controller and Daemons"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">17.2.2 </span><span class="title-name">User Space Controller and Daemons</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-overview-userspace">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The <code class="systemitem">ldirectord</code> daemon is a
+    user space daemon for managing Linux Virtual Server and monitoring the real servers
+    in an LVS cluster of load balanced virtual servers. A configuration
+    file (see below) specifies the virtual services and their associated real servers and tells
+    <code class="systemitem">ldirectord</code> how to configure the
+    server as an LVS redirector. When the daemon is initialized, it creates
+    the virtual services for the cluster.
+   </p><p>
+    By periodically requesting a known URL and checking the responses, the
+    <code class="systemitem">ldirectord</code> daemon monitors the
+    health of the real servers. If a real server fails, it will be removed
+    from the list of available servers at the load balancer. When the
+    service monitor detects that the dead server has recovered and is
+    working again, it will add the server back to the list of available
+    servers. In case that all real servers should be down, a fall-back
+    server can be specified to which to redirect a Web service. Typically
+    the fall-back server is localhost, presenting an emergency page about
+    the Web service being temporarily unavailable.
+   </p><p>
+    The <code class="systemitem">ldirectord</code> uses the
+    <code class="systemitem">ipvsadm</code> tool (package
+    <span class="package">ipvsadm</span>) to manipulate the
+    virtual server table in the Linux Kernel.
+   </p></section><section class="sect2" id="sec-ha-lvs-overview-forwarding" data-id-title="Packet Forwarding"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">17.2.3 </span><span class="title-name">Packet Forwarding</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-overview-forwarding">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    There are three different methods of how the director can send packets
+    from the client to the real servers:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.15.4.6.3.1"><span class="term">Network Address Translation (NAT)</span></dt><dd><p>
+       Incoming requests arrive at the virtual IP. They are forwarded to the
+       real servers by changing the destination IP address and port to that
+       of the chosen real server. The real server sends the response to the
+       load balancer which in turn changes the destination IP address and
+       forwards the response back to the client. Thus, the end user receives
+       the replies from the expected source. As all traffic goes through the
+       load balancer, it usually becomes a bottleneck for the cluster.
+      </p></dd><dt id="id-1.4.4.15.4.6.3.2"><span class="term">IP Tunneling (IP-IP Encapsulation)</span></dt><dd><p>
+       IP tunneling enables packets addressed to an IP address to be
+       redirected to another address, possibly on a different network. The
+       LVS sends requests to real servers through an IP tunnel (redirecting
+       to a different IP address) and the real servers reply directly to the
+       client using their own routing tables. Cluster members can be in
+       different subnets.
+      </p></dd><dt id="id-1.4.4.15.4.6.3.3"><span class="term">Direct Routing</span></dt><dd><p>
+       Packets from end users are forwarded directly to the real server. The
+       IP packet is not modified, so the real servers must be configured to
+       accept traffic for the virtual server's IP address. The response from
+       the real server is sent directly to the client. The real servers and
+       load balancers need to be in the same physical network segment.
+      </p></dd></dl></div></section><section class="sect2" id="sec-ha-lvs-overview-schedulers" data-id-title="Scheduling Algorithms"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">17.2.4 </span><span class="title-name">Scheduling Algorithms</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-overview-schedulers">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Deciding which real server to use for a new connection requested by a
+    client is implemented using different algorithms. They are available as
+    modules and can be adapted to specific needs. For an overview of
+    available modules, refer to the <code class="command">ipvsadm(8)</code> man page.
+    Upon receiving a connect request from a client, the director assigns a
+    real server to the client based on a <span class="emphasis"><em>schedule</em></span>. The
+    scheduler is the part of the IPVS Kernel code which decides which real
+    server will get the next new connection.
+   </p><p>More detailed description about Linux Virtual Server scheduling algorithms can be
+      found at <a class="link" href="http://kb.linuxvirtualserver.org/wiki/IPVS" target="_blank">http://kb.linuxvirtualserver.org/wiki/IPVS</a>.
+      Furthermore, search for <code class="option">--scheduler</code> in the
+      <code class="command">ipvsadm</code> man page.
+    </p><p>Related load balancing strategies for HAProxy can be found at
+      <a class="link" href="http://www.haproxy.org/download/1.6/doc/configuration.txt" target="_blank">http://www.haproxy.org/download/1.6/doc/configuration.txt</a>.
+    </p></section><section class="sect2" id="sec-ha-lvs-ldirectord" data-id-title="Setting Up IP Load Balancing with YaST"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">17.2.5 </span><span class="title-name">Setting Up IP Load Balancing with YaST</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-ldirectord">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    You can configure Kernel-based IP load balancing with the YaST IP
+    Load Balancing module. It is a front-end for
+    <code class="systemitem">ldirectord</code>.
+   </p><p>
+    To access the IP Load Balancing dialog, start YaST as <code class="systemitem">root</code>
+    and select <span class="guimenu">High Availability</span> › <span class="guimenu">IP Load
+    Balancing</span>. Alternatively, start the YaST
+    cluster module as <code class="systemitem">root</code> on a command line with
+    <code class="command">yast2 iplb</code>.
+   </p><p>
+    The default installation does not include the configuration file
+    <code class="filename">/etc/ha.d/ldirectord.cf</code>.
+    This file is created by the YaST module. The tabs available in the
+    YaST module correspond to the structure of the
+    <code class="filename">/etc/ha.d/ldirectord.cf</code> configuration file,
+    defining global options and defining the options for the virtual
+    services.
+   </p><p>
+    For an example configuration and the resulting processes between load
+    balancers and real servers, refer to
+    <a class="xref" href="cha-ha-lb.html#ex-ha-lvs-ldirectord" title="Simple ldirectord Configuration">Example 17.1, “Simple ldirectord Configuration”</a>.
+   </p><div id="id-1.4.4.15.4.8.6" data-id-title="Global Parameters and Virtual Server Parameters" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Global Parameters and Virtual Server Parameters</div><p>
+     If a certain parameter is specified in both the virtual server section
+     and in the global section, the value defined in the virtual server
+     section overrides the value defined in the global section.
+    </p></div><div class="procedure" id="sec-ha-lvs-ldirectord-global" data-id-title="Configuring Global Parameters"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 17.1: </span><span class="title-name">Configuring Global Parameters </span></span><a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-ldirectord-global">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+     The following procedure describes how to configure the most important
+     global parameters. For more details about the individual parameters
+     (and the parameters not covered here), click <span class="guimenu">Help</span> or
+     refer to the <code class="systemitem">ldirectord</code> man
+     page.
+    </p><ol class="procedure" type="1"><li class="step"><p>
+      With <span class="guimenu">Check Interval</span>, define the interval in which
+      <code class="systemitem">ldirectord</code> will connect to
+      each of the real servers to check if they are still online.
+     </p></li><li class="step"><p>
+      With <span class="guimenu">Check Timeout</span>, set the time in which the real
+      server should have responded after the last check.
+     </p></li><li class="step"><p>
+      With <span class="guimenu">Failure Count </span> you can define how many times
+      <code class="systemitem">ldirectord</code> will attempt to
+      request the real servers until the check is considered failed.
+     </p></li><li class="step"><p>
+      With <span class="guimenu">Negotiate Timeout</span> define a timeout in seconds
+      for negotiate checks.
+     </p></li><li class="step"><p>
+      In <span class="guimenu">Fallback</span>, enter the host name or IP address of
+      the Web server onto which to redirect a Web service in case all real
+      servers are down.
+     </p></li><li class="step"><p>
+      If you want the system to send alerts in case the connection status to
+      any real server changes, enter a valid e-mail address in
+      <span class="guimenu">Email Alert</span>.
+     </p></li><li class="step"><p>
+      With <span class="guimenu">Email Alert Frequency</span>, define after how many
+      seconds the e-mail alert should be repeated if any of the real servers
+      remains inaccessible.
+     </p></li><li class="step"><p>
+      In <span class="guimenu">Email Alert Status</span> specify the server states for
+      which e-mail alerts should be sent. If you want to define more than
+      one state, use a comma-separated list.
+     </p></li><li class="step"><p>
+      With <span class="guimenu">Auto Reload</span> define, if
+      <code class="systemitem">ldirectord</code> should continuously
+      monitor the configuration file for modification. If set to
+      <code class="literal">yes</code>, the configuration is automatically reloaded
+      upon changes.
+     </p></li><li class="step"><p>
+      With the <span class="guimenu">Quiescent</span> switch, define whether to remove
+      failed real servers from the Kernel's LVS table or not. If set to
+      <span class="guimenu">Yes</span>, failed servers are not removed. Instead their
+      weight is set to <code class="literal">0</code> which means that no new
+      connections will be accepted. Already established connections will
+      persist until they time out.
+     </p></li><li class="step"><p>
+      If you want to use an alternative path for logging, specify a path for
+      the log files in <span class="guimenu">Log File</span>. By default,
+      <code class="systemitem">ldirectord</code> writes its log
+      files to <code class="filename">/var/log/ldirectord.log</code>.
+     </p></li></ol></div></div><div class="figure" id="fig-ha-lvs-yast-global"><div class="figure-contents"><div class="mediaobject"><a href="images/yast_iplb_global.png"><img src="images/yast_iplb_global.png" width="65%" alt="YaST IP Load Balancing—Global Parameters" title="YaST IP Load Balancing—Global Parameters"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 17.1: </span><span class="title-name">YaST IP Load Balancing—Global Parameters </span></span><a title="Permalink" class="permalink" href="cha-ha-lb.html#fig-ha-lvs-yast-global">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div><div class="procedure" id="sec-ha-lvs-ldirectord-virtual" data-id-title="Configuring Virtual Services"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 17.2: </span><span class="title-name">Configuring Virtual Services </span></span><a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-ldirectord-virtual">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+     You can configure one or more virtual services by defining a couple of
+     parameters for each. The following procedure describes how to configure
+     the most important parameters for a virtual service. For more details
+     about the individual parameters (and the parameters not covered here),
+     click <span class="guimenu">Help</span> or refer to the
+     <code class="systemitem">ldirectord</code> man page.
+    </p><ol class="procedure" type="1"><li class="step"><p>
+      In the YaST IP Load Balancing module, switch to the
+      <span class="guimenu">Virtual Server Configuration</span> tab.
+     </p></li><li class="step"><p>
+      <span class="guimenu">Add</span> a new virtual server or <span class="guimenu">Edit</span>
+      an existing virtual server. A new dialog shows the available options.
+     </p></li><li class="step"><p>
+      In <span class="guimenu">Virtual Server</span> enter the shared virtual IP
+      address (IPv4 or IPv6) and port under which the load balancers and the
+      real servers are accessible as LVS. Instead of IP address and port
+      number you can also specify a host name and a service. Alternatively,
+      you can also use a firewall mark. A firewall mark is a way of
+      aggregating an arbitrary collection of <code class="literal">VIP:port</code>
+      services into one virtual service.
+     </p></li><li class="step"><p>
+      To specify the <span class="guimenu">Real Servers</span>, you need to enter the
+      IP addresses (IPv4, IPv6, or host names) of the servers, the ports (or
+      service names) and the forwarding method. The forwarding method must
+      either be <code class="literal">gate</code>, <code class="literal">ipip</code> or
+      <code class="literal">masq</code>, see
+      <a class="xref" href="cha-ha-lb.html#sec-ha-lvs-overview-forwarding" title="17.2.3. Packet Forwarding">Section 17.2.3, “Packet Forwarding”</a>.
+     </p><p>
+      Click the <span class="guimenu">Add</span> button and enter the required
+      arguments for each real server.
+     </p></li><li class="step"><p>
+      As <span class="guimenu">Check Type</span>, select the type of check that should
+      be performed to test if the real servers are still alive. For example,
+      to send a request and check if the response contains an expected
+      string, select <code class="literal">Negotiate</code>.
+     </p></li><li class="step" id="step-ha-lvs-ldirectord-service"><p>
+      If you have set the <span class="guimenu">Check Type</span> to
+      <code class="literal">Negotiate</code>, you also need to define the type of
+      service to monitor. Select it from the <span class="guimenu">Service</span>
+      drop-down box.
+     </p></li><li class="step"><p>
+      In <span class="guimenu">Request</span>, enter the URI to the object that is
+      requested on each real server during the check intervals.
+     </p></li><li class="step"><p>
+      If you want to check if the response from the real servers contains a
+      certain string (<span class="quote">“<span class="quote">I'm alive</span>”</span> message), define a regular
+      expression that needs to be matched. Enter the regular expression into
+      <span class="guimenu">Receive</span>. If the response from a real server
+      contains this expression, the real server is considered to be alive.
+     </p></li><li class="step"><p>
+      Depending on the type of <span class="guimenu">Service</span> you have selected
+      in <a class="xref" href="cha-ha-lb.html#step-ha-lvs-ldirectord-service" title="Step 6">Step 6</a>, you also need to
+      specify further parameters for authentication. Switch to the
+      <span class="guimenu">Auth type</span> tab and enter the details like
+      <span class="guimenu">Login</span>, <span class="guimenu">Password</span>,
+      <span class="guimenu">Database</span>, or <span class="guimenu">Secret</span>. For more
+      information, refer to the YaST help text or to the
+      <code class="systemitem">ldirectord</code> man page.
+     </p></li><li class="step"><p>
+      Switch to the <span class="guimenu">Others</span> tab.
+     </p></li><li class="step"><p>
+      Select the <span class="guimenu">Scheduler</span> to be used for load balancing.
+      For information on the available schedulers, refer to the
+      <code class="command">ipvsadm(8)</code> man page.
+     </p></li><li class="step"><p>
+      Select the <span class="guimenu">Protocol</span> to be used.
+
+      If the virtual service is specified as an IP address and port, it must
+      be either <code class="literal">tcp</code> or <code class="literal">udp</code>. If the
+      virtual service is specified as a firewall mark, the protocol must be
+      <code class="literal">fwm</code>.
+     </p></li><li class="step"><p>
+      Define further parameters, if needed. Confirm your configuration with
+      <span class="guimenu">OK</span>. YaST writes the configuration to
+      <code class="filename">/etc/ha.d/ldirectord.cf</code>.
+     </p></li></ol></div></div><div class="figure" id="fig-ha-lvs-yast-virtual"><div class="figure-contents"><div class="mediaobject"><a href="images/yast_iplb_virtual.png"><img src="images/yast_iplb_virtual.png" width="65%" alt="YaST IP Load Balancing—Virtual Services" title="YaST IP Load Balancing—Virtual Services"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 17.2: </span><span class="title-name">YaST IP Load Balancing—Virtual Services </span></span><a title="Permalink" class="permalink" href="cha-ha-lb.html#fig-ha-lvs-yast-virtual">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div><div class="complex-example"><div class="example" id="ex-ha-lvs-ldirectord" data-id-title="Simple ldirectord Configuration"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 17.1: </span><span class="title-name">Simple ldirectord Configuration </span></span><a title="Permalink" class="permalink" href="cha-ha-lb.html#ex-ha-lvs-ldirectord">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div><div class="example-contents"><p>
+     The values shown in <a class="xref" href="cha-ha-lb.html#fig-ha-lvs-yast-global" title="YaST IP Load Balancing—Global Parameters">Figure 17.1, “YaST IP Load Balancing—Global Parameters”</a> and
+     <a class="xref" href="cha-ha-lb.html#fig-ha-lvs-yast-virtual" title="YaST IP Load Balancing—Virtual Services">Figure 17.2, “YaST IP Load Balancing—Virtual Services”</a>, would lead to the following
+     configuration, defined in <code class="filename">/etc/ha.d/ldirectord.cf</code>:
+    </p><div class="verbatim-wrap"><pre class="screen">autoreload = yes <span class="callout" id="co-ha-ldirectord-autoreload">1</span>
+    checkinterval = 5 <span class="callout" id="co-ha-ldirectord-checkintervall">2</span>
+    checktimeout = 3 <span class="callout" id="co-ha-ldirectord-checktimeout">3</span>
+    quiescent = yes <span class="callout" id="co-ha-ldirectord-quiescent">4</span>
+    virtual = 192.168.0.200:80 <span class="callout" id="co-ha-ldirectord-virtual">5</span>
+    checktype = negotiate <span class="callout" id="co-ha-ldirectord-checktype">6</span>
+    fallback = 127.0.0.1:80 <span class="callout" id="co-ha-ldirectord-fallback">7</span>
+    protocol = tcp <span class="callout" id="co-ha-ldirectord-protocol">8</span>
+    real = 192.168.0.110:80 gate <span class="callout" id="co-ha-ldirectord-real">9</span>
+    real = 192.168.0.120:80 gate <a class="xref" href="cha-ha-lb.html#co-ha-ldirectord-real"><span class="callout">9</span></a>
+    receive = "still alive" <span class="callout" id="co-ha-ldirectord-receive">10</span>
+    request = "test.html" <span class="callout" id="co-ha-ldirectord-request">11</span>
+    scheduler = wlc <span class="callout" id="co-ha-ldirectord-scheduler">12</span>
+    service = http <span class="callout" id="co-ha-ldirectord-service">13</span></pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-autoreload"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Defines that <code class="systemitem">ldirectord</code>
+       should continuously check the configuration file for modification.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-checkintervall"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Interval in which <code class="systemitem">ldirectord</code>
+       will connect to each of the real servers to check if they are still
+       online.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-checktimeout"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Time in which the real server should have responded after the last
+       check.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-quiescent"><span class="callout">4</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Defines not to remove failed real servers from the Kernel's LVS
+       table, but to set their weight to <code class="literal">0</code> instead.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-virtual"><span class="callout">5</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Virtual IP address (VIP) of the LVS. The LVS is available at port
+       <code class="literal">80</code>.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-checktype"><span class="callout">6</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Type of check that should be performed to test if the real servers
+       are still alive.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-fallback"><span class="callout">7</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Server onto which to redirect a Web service all real servers for this
+       service are down.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-protocol"><span class="callout">8</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Protocol to be used.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-real"><span class="callout">9</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Two real servers defined, both available at port
+       <code class="literal">80</code>. The packet forwarding method is
+       <code class="literal">gate</code>, meaning that direct routing is used.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-receive"><span class="callout">10</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Regular expression that needs to be matched in the response string
+       from the real server.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-request"><span class="callout">11</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       URI to the object that is requested on each real server during the
+       check intervals.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-scheduler"><span class="callout">12</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Selected scheduler to be used for load balancing.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-ldirectord-service"><span class="callout">13</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Type of service to monitor.
+      </p></td></tr></table></div><p>
+     This configuration would lead to the following process flow: The
+     <code class="systemitem">ldirectord</code> will connect to each
+     real server once every 5 seconds
+     (<a class="xref" href="cha-ha-lb.html#co-ha-ldirectord-checkintervall"><span class="callout">2</span></a>)
+     and request <code class="literal">192.168.0.110:80/test.html</code> or
+     <code class="literal">192.168.0.120:80/test.html</code> as specified in
+     <a class="xref" href="cha-ha-lb.html#co-ha-ldirectord-real"><span class="callout">9</span></a>
+     and
+     <a class="xref" href="cha-ha-lb.html#co-ha-ldirectord-request"><span class="callout">11</span></a>.
+     If it does not receive the expected <code class="literal">still alive</code>
+     string
+     (<a class="xref" href="cha-ha-lb.html#co-ha-ldirectord-receive"><span class="callout">10</span></a>)
+     from a real server within 3 seconds
+     (<a class="xref" href="cha-ha-lb.html#co-ha-ldirectord-checktimeout"><span class="callout">3</span></a>)
+     of the last check, it will remove the real server from the available
+     pool. However, because of the <code class="literal">quiescent=yes</code> setting
+     (<a class="xref" href="cha-ha-lb.html#co-ha-ldirectord-quiescent"><span class="callout">4</span></a>),
+     the real server will not be removed from the LVS table. Instead its
+     weight will be set to <code class="literal">0</code> so that no new connections
+     to this real server will be accepted. Already established connections
+     will be persistent until they time out.
+    </p></div></div></div></section><section class="sect2" id="sec-ha-lvs-further" data-id-title="Further Setup"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">17.2.6 </span><span class="title-name">Further Setup</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lvs-further">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_lvs.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Apart from the configuration of
+    <code class="systemitem">ldirectord</code> with YaST, you
+    need to make sure the following conditions are fulfilled to complete the
+    LVS setup:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      The real servers are set up correctly to provide the needed services.
+     </p></li><li class="listitem"><p>
+      The load balancing server (or servers) must be able to route traffic
+      to the real servers using IP forwarding. The network configuration of
+      the real servers depends on which packet forwarding method you have
+      chosen.
+     </p></li><li class="listitem"><p>
+      To prevent the load balancing server (or servers) from becoming a
+      single point of failure for the whole system, you need to set up one
+      or several backups of the load balancer. In the cluster configuration,
+      configure a primitive resource for
+      <code class="systemitem">ldirectord</code>, so that
+      <code class="systemitem">ldirectord</code> can fail over to
+      other servers in case of hardware failure.
+     </p></li><li class="listitem"><p>
+      As the backup of the load balancer also needs the
+      <code class="systemitem">ldirectord</code> configuration file
+      to fulfill its task, make sure the
+      <code class="filename">/etc/ha.d/ldirectord.cf</code> is available on all
+      servers that you want to use as backup for the load balancer. You can
+      synchronize the configuration file with Csync2 as described in
+      <a class="xref" href="cha-ha-ycluster.html#sec-ha-installation-setup-csync2" title="4.7. Transferring the configuration to all nodes">Section 4.7, “Transferring the configuration to all nodes”</a>.
+     </p></li></ul></div></section></section><section class="sect1" id="sec-ha-lb-haproxy" data-id-title="Configuring Load Balancing with HAProxy"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">17.3 </span><span class="title-name">Configuring Load Balancing with HAProxy</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lb-haproxy">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_lb_haproxy.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  The following section gives an overview of the HAProxy and how to
+  set up on High Availability. The load balancer distributes all requests to its
+  back-end servers. It is configured as active/passive, meaning if one
+  server fails, the passive server becomes active. In such a scenario, the user
+  will not notice any interruption.
+ </p><p>
+  In this section, we will use the following setup:
+ </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    A load balancer, with the IP address
+    <code class="systemitem">192.168.1.99</code>.
+   </p></li><li class="listitem"><p>
+    A virtual, floating IP address
+    <code class="systemitem">192.168.1.99</code>.
+   </p></li><li class="listitem"><p>
+    Our servers (usually for Web content)
+    <code class="systemitem">www.example1.com</code> (IP:
+    <code class="systemitem">192.168.1.200</code>) and
+    <code class="systemitem">www.example2.com</code> (IP:
+    <code class="systemitem">192.168.1.201</code>)
+   </p></li></ul></div><p>
+  To configure HAProxy, use the following procedure:
+ </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Install the <span class="package">haproxy</span> package.
+   </p></li><li class="step"><p>
+    Create the file <code class="filename">/etc/haproxy/haproxy.cfg</code> with the
+    following contents:
+   </p><div class="verbatim-wrap"><pre class="screen">global <span class="callout" id="co-ha-lb-global">1</span>
+  maxconn 256
+  daemon
+
+defaults <span class="callout" id="co-ha-lb-defaults">2</span>
+  log     global
+  mode    http
+  option  httplog
+  option  dontlognull
+  retries 3
+  option redispatch
+  maxconn 2000
+  timeout connect   5000  <span class="callout" id="co-ha-lb-timeout-connect">3</span>
+  timeout client    50s   <span class="callout" id="co-ha-lb-timeout-client">4</span>
+  timeout server    50000 <span class="callout" id="co-ha-lb-timeout-server">5</span>
+
+frontend LB
+  bind 192.168.1.99:80 <span class="callout" id="co-ha-lb-listen">6</span>
+  reqadd X-Forwarded-Proto:\ http
+  default_backend LB
+
+backend LB
+  mode http
+  stats enable
+  stats hide-version
+  stats uri /stats
+  stats realm Haproxy\ Statistics
+  stats auth haproxy:password	<span class="callout" id="co-ha-lb-stats-auth">7</span>
+  balance roundrobin	<span class="callout" id="co-ha-lb-balance">8</span>
+  option  httpclose
+  option forwardfor
+  cookie LB insert
+  option httpchk GET /robots.txt HTTP/1.0
+  server web1-srv 192.168.1.200:80 cookie web1-srv check
+  server web2-srv 192.168.1.201:80 cookie web2-srv check</pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-global"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Section which contains process-wide and OS-specific options.
+     </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.15.5.8.2.4.1.2.1"><span class="term"><code class="option">maxconn</code>
+       </span></dt><dd><p>
+         Maximum per-process number of concurrent connections.
+        </p></dd><dt id="id-1.4.4.15.5.8.2.4.1.2.2"><span class="term"><code class="option">daemon</code>
+       </span></dt><dd><p>
+         Recommended mode, HAProxy runs in the background.
+        </p></dd></dl></div></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-defaults"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Section which sets default parameters for all other sections
+      following its declaration. Some important lines:
+     </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.15.5.8.2.4.2.2.1"><span class="term"><code class="option">redispatch</code>
+       </span></dt><dd><p>
+         Enables or disables session redistribution in case of connection
+         failure.
+        </p></dd><dt id="id-1.4.4.15.5.8.2.4.2.2.2"><span class="term"><code class="option">log</code>
+       </span></dt><dd><p>
+         Enables logging of events and traffic.
+        </p></dd><dt id="id-1.4.4.15.5.8.2.4.2.2.3"><span class="term"><code class="literal">mode http</code>
+       </span></dt><dd><p>
+         Operates in HTTP mode (recommended mode for HAProxy). In this
+         mode, a request will be analyzed before a connection to any server
+         is performed. Request that are not RFC-compliant will be rejected.
+        </p></dd><dt id="id-1.4.4.15.5.8.2.4.2.2.4"><span class="term"><code class="literal">option forwardfor</code>
+       </span></dt><dd><p>
+         Adds the HTTP <code class="option">X-Forwarded-For</code> header into the
+         request. You need this option if you want to preserve the client's
+         IP address.
+        </p></dd></dl></div></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-timeout-connect"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>The maximum time to wait for a connection attempt to a server
+      to succeed.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-timeout-client"><span class="callout">4</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>The maximum time of inactivity on the client side.</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-timeout-server"><span class="callout">5</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>The maximum time of inactivity on the server side.</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-listen"><span class="callout">6</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Section which combines front-end and back-end sections in one.
+     </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.15.5.8.2.4.6.2.1"><span class="term"><code class="literal">balance leastconn</code>
+       </span></dt><dd><p>
+         Defines the load balancing algorithm, see
+         <a class="link" href="http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#4-balance" target="_blank">http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#4-balance</a>.
+        </p></dd><dt id="id-1.4.4.15.5.8.2.4.6.2.2"><span class="term"><code class="literal">stats enable</code>
+       , </span><span class="term"><code class="literal">stats auth</code>
+       </span></dt><dd><p>
+         Enables statistics reporting (by <code class="literal">stats enable</code>).
+         The <code class="option">auth</code> option logs statistics with
+         authentication to a specific account.
+        </p></dd></dl></div></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-stats-auth"><span class="callout">7</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Credentials for HAProxy Statistic report page.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-lb-balance"><span class="callout">8</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Load balancing will work in a round-robin process.
+      </p></td></tr></table></div></li><li class="step"><p>
+    Test your configuration file:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">haproxy</code> -f /etc/haproxy/haproxy.cfg -c</pre></div></li><li class="step"><p>
+    Add the following line to Csync2's configuration file
+    <code class="filename">/etc/csync2/csync2.cfg</code> to make sure the
+    HAProxy configuration file is included:
+   </p><div class="verbatim-wrap"><pre class="screen">include /etc/haproxy/haproxy.cfg</pre></div></li><li class="step"><p>
+    Synchronize it:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">csync2</code> -f /etc/haproxy/haproxy.cfg
+<code class="prompt root"># </code><code class="command">csync2</code> -xv</pre></div><div id="id-1.4.4.15.5.8.5.3" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note</div><p>
+     The Csync2 configuration part assumes that the HA nodes were
+     configured using the bootstrap scripts provided by the crm shell. For details,
+     see the Installation and Setup Quick Start.
+    </p></div></li><li class="step"><p>
+    Make sure HAProxy is disabled on both load balancers
+    (<code class="systemitem">alice</code> and
+    <code class="systemitem">bob</code>) as it is started by
+    Pacemaker:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> disable haproxy</pre></div></li><li class="step"><p>
+    Configure a new CIB:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code>
+<code class="prompt custom">crm(live)# </code><code class="command">cib new haproxy-config</code>
+<code class="prompt custom">crm(haproxy-config)# </code><code class="command">primitive haproxy systemd:haproxy \
+    op start timeout=120 interval=0 \
+    op stop timeout=120 interval=0 \
+    op monitor timeout=100 interval=5s \
+    meta target-role=Started</code>
+<code class="prompt custom">crm(haproxy-config)# </code><code class="command">primitive</code> vip IPaddr2 \
+    params ip=192.168.1.99 nic=eth0 cidr_netmask=23 broadcast=192.168.1.255 \
+    op monitor interval=5s timeout=120 on-fail=restart
+<code class="prompt custom">crm(haproxy-config)# </code><code class="command">group</code> g-haproxy vip haproxy</pre></div></li><li class="step"><p>
+    Verify the new CIB and correct any errors:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(haproxy-config)# </code><code class="command">verify</code></pre></div></li><li class="step"><p>
+    Commit the new CIB:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(haproxy-config)# </code><code class="command">cib</code> use live
+<code class="prompt custom">crm(live)# </code><code class="command">cib</code> commit haproxy-config</pre></div></li></ol></div></div></section><section class="sect1" id="sec-ha-lb-more" data-id-title="For More Information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">17.4 </span><span class="title-name">For More Information</span></span> <a title="Permalink" class="permalink" href="cha-ha-lb.html#sec-ha-lb-more">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_loadbalancing.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><a class="link" href="http://www.haproxy.org" target="_blank">http://www.haproxy.org</a></p></li><li class="listitem"><p>Project home page at <a class="link" href="http://www.linuxvirtualserver.org/" target="_blank">http://www.linuxvirtualserver.org/</a>.
+  </p></li><li class="listitem"><p>For more information about <code class="systemitem">ldirectord</code>, refer to its
+        comprehensive man page.</p></li><li class="listitem"><p>LVS Knowledge Base: <a class="link" href="http://kb.linuxvirtualserver.org/wiki/Main_Page" target="_blank">http://kb.linuxvirtualserver.org/wiki/Main_Page</a></p></li></ul></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-netbonding.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 16 </span>Network Device Bonding</span></a> </div><div><a class="pagination-link next" href="cha-ha-geo.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 18 </span>Geo Clusters (Multi-Site Clusters)</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-lb.html#sec-ha-lb-overview"><span class="title-number">17.1 </span><span class="title-name">Conceptual Overview</span></a></span></li><li><span class="sect1"><a href="cha-ha-lb.html#sec-ha-lb-lvs"><span class="title-number">17.2 </span><span class="title-name">Configuring Load Balancing with Linux Virtual Server</span></a></span></li><li><span class="sect1"><a href="cha-ha-lb.html#sec-ha-lb-haproxy"><span class="title-number">17.3 </span><span class="title-name">Configuring Load Balancing with HAProxy</span></a></span></li><li><span class="sect1"><a href="cha-ha-lb.html#sec-ha-lb-more"><span class="title-number">17.4 </span><span class="title-name">For More Information</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

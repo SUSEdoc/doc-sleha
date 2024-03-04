@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP6 | Administration Guide | Product overview</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Product overview | SLE HA 15 SP6"/>
+<meta name="description" content="SUSE® Linux Enterprise High Availability is an integra…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP6"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 1. Product overview"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP6"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Product overview | SLE HA 15 SP6"/>
+<meta property="og:description" content="SUSE® Linux Enterprise High Availability is an integrated suite of open source clustering technologies. It enables you to im…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Product overview | SLE HA 15 SP6"/>
+<meta name="twitter:description" content="SUSE® Linux Enterprise High Availability is an integrated suite of open source clustering technologies. It enables you to im…"/>
+<link rel="prev" href="part-install.html" title="Part I. Installation and setup"/><link rel="next" href="cha-ha-requirements.html" title="Chapter 2. System requirements and recommendations"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/script-purejs.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-install.html">Installation and setup</a><span> / </span><a class="crumb" href="cha-ha-concepts.html">Product overview</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li class="active"><a href="part-install.html" class="has-children you-are-here"><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" you-are-here"><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li><a href="part-config.html" class="has-children "><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-virtualization.html" class=" "><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-concepts" data-id-title="Product overview"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP6</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">1 </span><span class="title-name">Product overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    SUSE® Linux Enterprise High Availability is an integrated suite of open source clustering
+    technologies. It enables you to implement highly available physical and
+    virtual Linux clusters, and to eliminate single points of failure. It
+    ensures the high availability and manageability of critical network
+    resources including data, applications, and services. Thus, it helps you
+    maintain business continuity, protect data integrity, and reduce
+    unplanned downtime for your mission-critical Linux workloads.
+   </p><p>
+    It ships with essential monitoring, messaging, and cluster resource
+    management functionality (supporting failover, failback, and migration
+    (load balancing) of individually managed cluster resources).
+   </p><p>
+    This chapter introduces the main product features and benefits of SUSE Linux Enterprise High Availability.
+    Inside you will find several example clusters and learn about
+    the components making up a cluster. The last section provides an
+    overview of the architecture, describing the individual architecture
+    layers and processes within the cluster.
+   </p><p>
+    For explanations of some common terms used in the context of High Availability
+    clusters, refer to <a class="xref" href="gl-heartb.html" title="Glossary">Glossary</a>.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-availability" data-id-title="Availability as a module or extension"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1.1 </span><span class="title-name">Availability as a module or extension</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-availability">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   High Availability is available as a module or extension for several products. For details, see
+   <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/article-modules.html#art-modules-high-availability" target="_blank">https://documentation.suse.com/sles/html/SLES-all/article-modules.html#art-modules-high-availability</a>.
+  </p></section><section class="sect1" id="sec-ha-features" data-id-title="Key features"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1.2 </span><span class="title-name">Key features</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   SUSE® Linux Enterprise High Availability helps you ensure and manage the availability of your
+   network resources. The following sections highlight some key features:
+  </p><section class="sect2" id="sec-ha-features-scenarios" data-id-title="Wide range of clustering scenarios"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.2.1 </span><span class="title-name">Wide range of clustering scenarios</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features-scenarios">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    SUSE Linux Enterprise High Availability supports the following scenarios:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Active/active configurations
+     </p></li><li class="listitem"><p>
+      
+      Active/passive configurations: N+1, N+M, N to 1, N to M
+     </p></li><li class="listitem"><p>
+      Hybrid physical and virtual clusters, allowing virtual servers to be
+      clustered with physical servers. This improves service availability
+      and resource usage.
+     </p></li><li class="listitem"><p>
+      Local clusters
+     </p></li><li class="listitem"><p>
+      Metro clusters (<span class="quote">“<span class="quote">stretched</span>”</span> local clusters)
+     </p></li><li class="listitem"><p>
+      Geo clusters (geographically dispersed clusters)
+     </p></li></ul></div><div id="id-1.4.3.3.4.3.4" data-id-title="No support for mixed architectures" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: No support for mixed architectures</div><p>
+     All nodes belonging to a cluster should have the same processor platform:
+     x86, IBM Z, or POWER. Clusters of mixed architectures are
+     <span class="emphasis"><em>not</em></span> supported.
+    </p></div><p>
+    Your cluster can contain up to 32 Linux servers. Using
+    pacemaker_remote, the cluster can be extended to include
+    additional Linux servers beyond this limit.
+    Any server in the cluster can restart resources (applications, services, IP
+    addresses, and file systems) from a failed server in the cluster.
+   </p></section><section class="sect2" id="sec-ha-features-flexibility" data-id-title="Flexibility"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.2.2 </span><span class="title-name">Flexibility</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features-flexibility">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    SUSE Linux Enterprise High Availability ships with Corosync messaging and membership layer
+    and Pacemaker Cluster Resource Manager. Using Pacemaker, administrators
+    can continually monitor the health and status of their resources, and manage
+    dependencies. They can automatically stop and start services based on highly
+    configurable rules and policies. SUSE Linux Enterprise High Availability allows you to tailor a
+    cluster to the specific applications and hardware infrastructure that
+    fit your organization. Time-dependent configuration enables services to
+    automatically migrate back to repaired nodes at specified times.
+   </p></section><section class="sect2" id="sec-ha-features-storage" data-id-title="Storage and data replication"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.2.3 </span><span class="title-name">Storage and data replication</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features-storage">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    With SUSE Linux Enterprise High Availability you can dynamically assign and reassign server
+    storage as needed. It supports Fibre Channel or iSCSI storage area
+    networks (SANs). Shared disk systems are also supported, but they are
+    not a requirement. SUSE Linux Enterprise High Availability also comes with a cluster-aware file
+    system (OCFS2) and the cluster Logical Volume Manager (Cluster LVM).
+    For replication of your data, use DRBD* to mirror the data of
+    a High Availability service from the active node of a cluster to its standby node.
+    Furthermore, SUSE Linux Enterprise High Availability also supports CTDB (Cluster Trivial Database),
+    a technology for Samba clustering.
+   </p></section><section class="sect2" id="sec-ha-features-virtualized" data-id-title="Support for virtualized environments"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.2.4 </span><span class="title-name">Support for virtualized environments</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features-virtualized">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    SUSE Linux Enterprise High Availability supports the mixed clustering of both physical and
+    virtual Linux servers. SUSE Linux Enterprise Server 15 SP6 ships with Xen,
+    an open source virtualization hypervisor, and with KVM (Kernel-based
+    Virtual Machine). KVM is a virtualization software for Linux which is based on
+    hardware virtualization extensions. The cluster resource manager in SUSE Linux Enterprise High Availability
+    can recognize, monitor, and manage services running within
+    virtual servers and services running in physical servers. Guest
+    systems can be managed as services by the cluster.
+   </p><div id="id-1.4.3.3.4.6.3" data-id-title="Live migration in High Availability clusters" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Live migration in High Availability clusters</div><p>
+     Use caution when performing live migration of nodes in an active cluster.
+     The cluster stack might not tolerate an operating system freeze caused by the
+     live migration process, which could lead to the node being fenced.
+    </p><p>
+     We recommend either of the following actions to help avoid node fencing during live migration:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+       Increase the Corosync token timeout and the SBD watchdog timeout, along with
+       any other related settings. The appropriate values depend on your specific setup.
+       For more information, see <a class="xref" href="cha-ha-storage-protect.html#sec-ha-storage-protect-watchdog-timings" title="13.5. Calculation of timeouts">Section 13.5, “Calculation of timeouts”</a>.
+      </p></li><li class="listitem"><p>
+       Before performing live migration, stop the cluster services on either the node or
+       the whole cluster. For more information, see <a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-overview" title="28.2. Different options for maintenance tasks">Section 28.2, “Different options for maintenance tasks”</a>.
+      </p></li></ul></div><p>
+     You <span class="bold"><strong>must</strong></span> thoroughly test this setup before attempting
+     live migration in a production environment.
+    </p></div></section><section class="sect2" id="sec-ha-features-geo" data-id-title="Support of local, metro, and Geo clusters"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.2.5 </span><span class="title-name">Support of local, metro, and Geo clusters</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features-geo">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    SUSE Linux Enterprise High Availability supports different geographical scenarios,
+    including geographically dispersed clusters (Geo clusters).
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.3.3.4.7.3.1"><span class="term">Local clusters</span></dt><dd><p>
+       A single cluster in one location (for example, all nodes are located
+       in one data center). The cluster uses multicast or unicast for
+       communication between the nodes and manages failover internally.
+       Network latency can be neglected. Storage is typically accessed
+       synchronously by all nodes.
+      </p></dd><dt id="id-1.4.3.3.4.7.3.2"><span class="term">Metro clusters</span></dt><dd><p>
+       A single cluster that can stretch over multiple buildings or data
+       centers, with all sites connected by fibre channel. The cluster uses
+       multicast or unicast for communication between the nodes and manages
+       failover internally. Network latency is usually low (&lt;5 ms for
+       distances of approximately 20 miles). Storage is frequently
+       replicated (mirroring or synchronous replication).
+      </p></dd><dt id="id-1.4.3.3.4.7.3.3"><span class="term">Geo clusters (multi-site clusters)</span></dt><dd><p>
+       Multiple, geographically dispersed sites with a local cluster each. The
+       sites communicate via IP. Failover across the sites is coordinated by
+       a higher-level entity. Geo clusters need to cope with limited
+       network bandwidth and high latency. Storage is replicated
+       asynchronously.
+      </p><div id="id-1.4.3.3.4.7.3.3.2.2" data-id-title="Geo clustering and SAP workloads" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Geo clustering and SAP workloads</div><p>
+        Currently Geo clusters support neither SAP HANA system replication
+        nor SAP S/4HANA and SAP NetWeaver enqueue replication setups.
+       </p></div></dd></dl></div><p>
+    The greater the geographical distance between individual cluster nodes,
+    the more factors may potentially disturb the high availability of
+    services the cluster provides. Network latency, limited bandwidth and
+    access to storage are the main challenges for long-distance clusters.
+   </p></section><section class="sect2" id="sec-ha-features-ra" data-id-title="Resource agents"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.2.6 </span><span class="title-name">Resource agents</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features-ra">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    SUSE Linux Enterprise High Availability includes many resource agents to manage
+    resources such as Apache, IPv4, IPv6 and many more. It also ships with
+    resource agents for popular third party applications such as IBM
+    WebSphere Application Server. For an overview of Open Cluster Framework
+    (OCF) resource agents included with your product, use the <code class="command">crm
+    ra</code> command as described in
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-manual-config-ocf" title="5.5.3. Displaying information about OCF resource agents">Section 5.5.3, “Displaying information about OCF resource agents”</a>.
+   </p></section><section class="sect2" id="sec-ha-features-tools" data-id-title="User-friendly administration tools"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.2.7 </span><span class="title-name">User-friendly administration tools</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-features-tools">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    SUSE Linux Enterprise High Availability ships with a set of powerful tools. Use them for basic installation
+    and setup of your cluster and for effective configuration and
+    administration:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.3.3.4.9.3.1"><span class="term">YaST </span></dt><dd><p>
+       A graphical user interface for general system installation and
+       administration. Use it to install SUSE Linux Enterprise High Availability on top of SUSE Linux Enterprise Server as
+       described in the Installation and Setup Quick Start. YaST
+       also provides the following modules in the High Availability category to help
+       configure your cluster or individual components:
+      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         Cluster: Basic cluster setup. For details, refer to
+         <a class="xref" href="cha-ha-ycluster.html" title="Chapter 4. Using the YaST cluster module">Chapter 4, <em>Using the YaST cluster module</em></a>.
+        </p></li><li class="listitem"><p>
+         DRBD: Configuration of a Distributed Replicated Block Device.
+        </p></li><li class="listitem"><p>
+         IP Load Balancing: Configuration of load balancing with Linux Virtual Server or
+         HAProxy. For details, refer to <a class="xref" href="cha-ha-lb.html" title="Chapter 17. Load balancing">Chapter 17, <em>Load balancing</em></a>.
+        </p></li></ul></div></dd><dt id="id-1.4.3.3.4.9.3.2"><span class="term">Hawk2</span></dt><dd><p>
+       A user-friendly Web-based interface with which you can monitor and
+       administer your High Availability clusters from Linux or non-Linux machines alike.
+       Hawk2 can be accessed from any machine inside or outside of the cluster
+       by using a (graphical) Web browser. Therefore it is the ideal solution
+       even if the system on which you are working only provides a minimal graphical
+       user interface. For details, <a class="xref" href="cha-ha-config-basics.html#cha-conf-hawk2" title="5.4. Introduction to Hawk2">Section 5.4, “Introduction to Hawk2”</a>.
+      </p></dd><dt id="id-1.4.3.3.4.9.3.3"><span class="term"><code class="command">crm</code> Shell
+     </span></dt><dd><p>
+       A powerful unified command line interface to configure resources and
+       execute all monitoring or administration tasks. For details, refer to
+       <a class="xref" href="cha-ha-config-basics.html#cha-ha-manual-config" title="5.5. Introduction to crmsh">Section 5.5, “Introduction to crmsh”</a>.
+      </p></dd></dl></div></section></section><section class="sect1" id="sec-ha-benefits" data-id-title="Benefits"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1.3 </span><span class="title-name">Benefits</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-benefits">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   SUSE Linux Enterprise High Availability allows you to configure up to 32 Linux servers into a
+   high-availability cluster (HA cluster). Resources can be
+   dynamically switched or moved to any node in the cluster. Resources can
+   be configured to automatically migrate if a node fails, or they can be
+   moved manually to troubleshoot hardware or balance the workload.
+  </p><p>
+   SUSE Linux Enterprise High Availability provides high availability from commodity components. Lower
+   costs are obtained through the consolidation of applications and
+   operations onto a cluster. SUSE Linux Enterprise High Availability also allows you to centrally
+   manage the complete cluster. You can adjust resources to meet changing
+   workload requirements (thus, manually <span class="quote">“<span class="quote">load balance</span>”</span> the
+   cluster). Allowing clusters of more than two nodes also provides savings
+   by allowing several nodes to share a <span class="quote">“<span class="quote">hot spare</span>”</span>.
+  </p><p>
+   An equally important benefit is the potential reduction of unplanned
+   service outages and planned outages for software and hardware
+   maintenance and upgrades.
+  </p><p>
+   Reasons that you would want to implement a cluster include:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     Increased availability
+    </p></li><li class="listitem"><p>
+     Improved performance
+    </p></li><li class="listitem"><p>
+     Low cost of operation
+    </p></li><li class="listitem"><p>
+     Scalability
+    </p></li><li class="listitem"><p>
+     Disaster recovery
+    </p></li><li class="listitem"><p>
+     Data protection
+    </p></li><li class="listitem"><p>
+     Server consolidation
+    </p></li><li class="listitem"><p>
+     Storage consolidation
+    </p></li></ul></div><p>
+   Shared disk fault tolerance can be obtained by implementing RAID on the
+   shared disk subsystem.
+  </p><p>
+   The following scenario illustrates some benefits SUSE Linux Enterprise High Availability can
+   provide.
+  </p><div class="sect1 bridgehead"><h2 class="title" id="id-1.4.3.3.5.9"><span class="name">Example cluster scenario</span><a title="Permalink" class="permalink" href="cha-ha-concepts.html#id-1.4.3.3.5.9">#</a></h2></div><p>
+   Suppose you have configured a three-node cluster, with a Web server
+   installed on each of the three nodes in the cluster. Each of the
+   nodes in the cluster hosts two Web sites. All the data, graphics, and
+   Web page content for each Web site are stored on a shared disk subsystem
+   connected to each of the nodes in the cluster. The following figure
+   depicts how this setup might look.
+  </p><div class="figure" id="id-1.4.3.3.5.11"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_cluster_example1.png"><img src="images/ha_cluster_example1.png" width="85%" alt="Three-server cluster" title="Three-server cluster"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1.1: </span><span class="title-name">Three-server cluster </span></span><a title="Permalink" class="permalink" href="cha-ha-concepts.html#id-1.4.3.3.5.11">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div><p>
+   During normal cluster operation, each node is in constant communication
+   with the other nodes in the cluster and performs periodic polling of
+   all registered resources to detect failure.
+  </p><p>
+   Suppose Web Server 1 experiences hardware or software problems and the
+   users depending on Web Server 1 for Internet access, e-mail, and
+   information lose their connections. The following figure shows how
+   resources are moved when Web Server 1 fails.
+  </p><div class="figure" id="id-1.4.3.3.5.14"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_cluster_example2.png"><img src="images/ha_cluster_example2.png" width="75%" alt="Three-server cluster after one server fails" title="Three-server cluster after one server fails"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1.2: </span><span class="title-name">Three-server cluster after one server fails </span></span><a title="Permalink" class="permalink" href="cha-ha-concepts.html#id-1.4.3.3.5.14">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div><p>
+   Web Site A moves to Web Server 2 and Web Site B moves to Web Server 3. IP
+   addresses and certificates also move to Web Server 2 and Web Server 3.
+  </p><p>
+   When you configured the cluster, you decided where the Web sites hosted
+   on each Web server would go should a failure occur. In the previous
+   example, you configured Web Site A to move to Web Server 2 and Web Site B
+   to move to Web Server 3. This way, the workload formerly handled by Web
+   Server 1 continues to be available and is evenly distributed between any
+   surviving cluster members.
+  </p><p>
+   When Web Server 1 failed, the High Availability software did the following:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     Detected a failure and verified with STONITH that Web Server 1 was
+     really dead. STONITH is an acronym for <span class="quote">“<span class="quote">Shoot The Other Node
+     In The Head</span>”</span>. It is a means of bringing down misbehaving nodes
+     to prevent them from causing trouble in the cluster.
+    </p></li><li class="listitem"><p>
+     Remounted the shared data directories that were formerly mounted on Web
+     server 1 on Web Server 2 and Web Server 3.
+    </p></li><li class="listitem"><p>
+     Restarted applications that were running on Web Server 1 on Web Server
+     2 and Web Server 3.
+    </p></li><li class="listitem"><p>
+     Transferred IP addresses to Web Server 2 and Web Server 3.
+    </p></li></ul></div><p>
+   In this example, the failover process happened quickly and users regained
+   access to Web site information within seconds, usually without needing to
+   log in again.
+  </p><p>
+   Now suppose the problems with Web Server 1 are resolved, and Web Server 1
+   is returned to a normal operating state. Web Site A and Web Site B can
+   either automatically fail back (move back) to Web Server 1, or they can
+   stay where they are. This depends on how you configured the resources for
+   them. Migrating the services back to Web Server 1 will incur some
+   down-time. Therefore SUSE Linux Enterprise High Availability also allows you to defer the migration until
+   a period when it will cause little or no service interruption. There are
+   advantages and disadvantages to both alternatives.
+  </p><p>
+   SUSE Linux Enterprise High Availability also provides resource migration capabilities. You can move
+   applications, Web sites, etc. to other servers in your cluster as
+   required for system management.
+  </p><p>
+   For example, you could have manually moved Web Site A or Web Site B from
+   Web Server 1 to either of the other servers in the cluster. Use cases for
+   this are upgrading or performing scheduled maintenance on Web Server 1,
+   or increasing performance or accessibility of the Web sites.
+  </p></section><section class="sect1" id="sec-ha-clusterconfig" data-id-title="Cluster configurations: storage"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1.4 </span><span class="title-name">Cluster configurations: storage</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-clusterconfig">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Cluster configurations with SUSE Linux Enterprise High Availability might or might not include a
+   shared disk subsystem. The shared disk subsystem can be connected via
+   high-speed Fibre Channel cards, cables, and switches, or it can be
+   configured to use iSCSI. If a node fails, another designated node in
+   the cluster automatically mounts the shared disk directories that were
+   previously mounted on the failed node. This gives network users
+   continuous access to the directories on the shared disk subsystem.
+  </p><div id="id-1.4.3.3.6.3" data-id-title="Shared disk subsystem with LVM" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Shared disk subsystem with LVM</div><p>
+    When using a shared disk subsystem with LVM, that subsystem must be
+    connected to all servers in the cluster from which it needs to be
+    accessed.
+   </p></div><p>
+   Typical resources might include data, applications, and services. The
+   following figures show how a typical Fibre Channel cluster configuration
+   might look.
+   The green lines depict connections to an Ethernet power switch. Such
+   a device can be controlled over a network and can reboot
+   a node when a ping request fails.
+  </p><div class="figure" id="id-1.4.3.3.6.5"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_cluster_example3.png"><img src="images/ha_cluster_example3.png" width="85%" alt="Typical Fibre Channel cluster configuration" title="Typical Fibre Channel cluster configuration"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1.3: </span><span class="title-name">Typical Fibre Channel cluster configuration </span></span><a title="Permalink" class="permalink" href="cha-ha-concepts.html#id-1.4.3.3.6.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div><p>
+   Although Fibre Channel provides the best performance, you can also
+   configure your cluster to use iSCSI. iSCSI is an alternative to Fibre
+   Channel that can be used to create a low-cost Storage Area Network (SAN).
+   The following figure shows how a typical iSCSI cluster configuration
+   might look.
+  </p><div class="figure" id="id-1.4.3.3.6.7"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_cluster_example4.png"><img src="images/ha_cluster_example4.png" width="100%" alt="Typical iSCSI cluster configuration" title="Typical iSCSI cluster configuration"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1.4: </span><span class="title-name">Typical iSCSI cluster configuration </span></span><a title="Permalink" class="permalink" href="cha-ha-concepts.html#id-1.4.3.3.6.7">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div><p>
+   Although most clusters include a shared disk subsystem, it is also
+   possible to create a cluster without a shared disk subsystem. The
+   following figure shows how a cluster without a shared disk subsystem
+   might look.
+  </p><div class="figure" id="id-1.4.3.3.6.9"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_cluster_example5.png"><img src="images/ha_cluster_example5.png" width="100%" alt="Typical cluster configuration without shared storage" title="Typical cluster configuration without shared storage"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1.5: </span><span class="title-name">Typical cluster configuration without shared storage </span></span><a title="Permalink" class="permalink" href="cha-ha-concepts.html#id-1.4.3.3.6.9">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></section><section class="sect1" id="sec-ha-architecture" data-id-title="Architecture"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1.5 </span><span class="title-name">Architecture</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-architecture">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   This section provides a brief overview of SUSE Linux Enterprise High Availability architecture. It
+   identifies and provides information on the architectural components, and
+   describes how those components interoperate.
+  </p><section class="sect2" id="sec-ha-architecture-layers" data-id-title="Architecture layers"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.5.1 </span><span class="title-name">Architecture layers</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-architecture-layers">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    SUSE Linux Enterprise High Availability has a layered architecture.
+    <a class="xref" href="cha-ha-concepts.html#fig-ha-architecture" title="Architecture">Figure 1.6, “Architecture”</a> illustrates
+    the different layers and their associated components.
+   </p><div class="figure" id="fig-ha-architecture"><div class="figure-contents"><div class="mediaobject"><a href="images/cluster_stack_arch.png"><img src="images/cluster_stack_arch.png" width="100%" alt="Architecture" title="Architecture"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1.6: </span><span class="title-name">Architecture </span></span><a title="Permalink" class="permalink" href="cha-ha-concepts.html#fig-ha-architecture">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div><section class="sect3" id="sec-ha-architecture-layers-coro" data-id-title="Membership and messaging layer (Corosync)"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">1.5.1.1 </span><span class="title-name">Membership and messaging layer (Corosync)</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-architecture-layers-coro">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     This component provides reliable messaging, membership, and quorum information
+     about the cluster. This is handled by the Corosync cluster engine, a group
+     communication system.
+    </p></section><section class="sect3" id="sec-ha-architecture-layers-crm" data-id-title="Cluster resource manager (Pacemaker)"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">1.5.1.2 </span><span class="title-name">Cluster resource manager (Pacemaker)</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-architecture-layers-crm">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      Pacemaker as cluster resource manager is the <span class="quote">“<span class="quote">brain</span>”</span>
+      which reacts to events occurring in the cluster. It is implemented as
+      <code class="systemitem">pacemaker-controld</code>, the cluster
+      controller, which coordinates all actions. Events can be nodes that join
+      or leave the cluster, failure of resources, or scheduled activities such
+      as maintenance, for example.
+     </p><div class="variablelist"><dl class="variablelist"><dt id="vle-lrm"><span class="term">Local resource manager</span></dt><dd><p>
+        The local resource manager is located between the Pacemaker layer and the
+        resources layer on each node. It is implemented as <code class="systemitem">pacemaker-execd</code> daemon. Through this daemon,
+        Pacemaker can start, stop, and monitor resources.
+      </p></dd><dt id="vle-cib"><span class="term">Cluster Information Database (CIB)</span></dt><dd><p>
+         On every node, Pacemaker maintains the cluster information database
+         (CIB). It is an XML representation of the cluster configuration
+         (including cluster options, nodes, resources, constraints and the
+         relationship to each other). The CIB also reflects the current cluster
+         status. Each cluster node contains a CIB replica, which is synchronized
+         across the whole cluster. The <code class="systemitem">pacemaker-based</code>
+         daemon takes care of reading and writing cluster configuration and
+         status.</p></dd><dt id="vle-dc"><span class="term">Designated Coordinator (DC)</span></dt><dd><p>
+        The DC is elected from all nodes in the cluster. This happens if there
+        is no DC yet or if the current DC leaves the cluster for any reason.
+        The DC is the only entity in the cluster that can decide that a
+        cluster-wide change needs to be performed, such as fencing a node or
+        moving resources around. All other nodes get their configuration and
+        resource allocation information from the current DC.
+       </p></dd><dt id="vle-pe"><span class="term">Policy Engine</span></dt><dd><p>
+        The policy engine runs on every node, but the one on the DC is the active
+        one. The engine is implemented as
+        <code class="systemitem">pacemaker-schedulerd</code> daemon.
+        When a cluster transition is needed, based on the current state and
+        configuration, <code class="systemitem">pacemaker-schedulerd</code>
+        calculates the expected next state of the cluster. It determines what
+        actions need to be scheduled to achieve the next state.
+       </p></dd></dl></div></section><section class="sect3" id="sec-ha-architecture-layers-rsc" data-id-title="Resources and resource agents"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">1.5.1.3 </span><span class="title-name">Resources and resource agents</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-architecture-layers-rsc">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     In a High Availability cluster, the services that need to be highly available are
+     called resources. Resource agents (RAs) are scripts that start, stop, and
+     monitor cluster resources.
+    </p></section></section><section class="sect2" id="sec-ha-architecture-processflow" data-id-title="Process flow"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">1.5.2 </span><span class="title-name">Process flow</span></span> <a title="Permalink" class="permalink" href="cha-ha-concepts.html#sec-ha-architecture-processflow">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_concepts.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The <code class="systemitem">pacemakerd</code> daemon launches and
+    monitors all other related daemons. The daemon that coordinates all actions,
+    <code class="systemitem">pacemaker-controld</code>, has an instance on
+    each cluster node. Pacemaker centralizes all cluster decision-making by
+    electing one of those instances as a primary. Should the elected <code class="systemitem">pacemaker-controld</code> daemon fail, a new primary is
+    established.
+   </p><p>
+    Many actions performed in the cluster will cause a cluster-wide change.
+    These actions can include things like adding or removing a cluster
+    resource or changing resource constraints. It is important to understand
+    what happens in the cluster when you perform such an action.
+   </p><p>
+    For example, suppose you want to add a cluster IP address resource. To
+    do this, you can use the crm shell or the Web interface to modify the CIB.
+    It is not required to perform the actions on the DC.
+    You can use either tool on any node in the cluster and they will be
+    relayed to the DC. The DC will then replicate the CIB change to all
+    cluster nodes.
+   </p><p>
+    Based on the information in the CIB, the <code class="systemitem">pacemaker-schedulerd</code> then computes the ideal
+    state of the cluster and how it should be achieved. It feeds a list of
+    instructions to the DC. The DC sends commands via the messaging/infrastructure
+    layer which are received by the <code class="systemitem">pacemaker-controld</code> peers on
+    other nodes. Each of them uses its local resource agent executor (implemented
+    as <code class="systemitem">pacemaker-execd</code>) to perform
+    resource modifications. The <code class="systemitem">pacemaker-execd</code> is not cluster-aware and interacts
+    directly with resource agents.
+   </p><p>
+    All peer nodes report the results of their operations back to the DC.
+    After the DC concludes that all necessary operations are successfully
+    performed in the cluster, the cluster will go back to the idle state and
+    wait for further events. If any operation was not carried out as
+    planned, the <code class="systemitem">pacemaker-schedulerd</code>
+    is invoked again with the new information recorded in
+    the CIB.
+   </p><p>
+    In some cases, it might be necessary to power off nodes to protect shared
+    data or complete resource recovery. In a Pacemaker cluster, the implementation
+    of node level fencing is STONITH. For this, Pacemaker comes with a
+    fencing subsystem, <code class="systemitem">pacemaker-fenced</code>.
+    STONITH devices must be configured as cluster resources (that use
+    specific fencing agents), because this allows monitoring of the fencing devices.
+    When clients detect a failure, they send a request to <code class="systemitem">pacemaker-fenced</code>,
+    which then executes the fencing agent to bring down the node.
+   </p></section></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="part-install.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Part I </span>Installation and setup</span></a> </div><div><a class="pagination-link next" href="cha-ha-requirements.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 2 </span>System requirements and recommendations</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-concepts.html#sec-ha-availability"><span class="title-number">1.1 </span><span class="title-name">Availability as a module or extension</span></a></span></li><li><span class="sect1"><a href="cha-ha-concepts.html#sec-ha-features"><span class="title-number">1.2 </span><span class="title-name">Key features</span></a></span></li><li><span class="sect1"><a href="cha-ha-concepts.html#sec-ha-benefits"><span class="title-number">1.3 </span><span class="title-name">Benefits</span></a></span></li><li><span class="sect1"><a href="cha-ha-concepts.html#sec-ha-clusterconfig"><span class="title-number">1.4 </span><span class="title-name">Cluster configurations: storage</span></a></span></li><li><span class="sect1"><a href="cha-ha-concepts.html#sec-ha-architecture"><span class="title-number">1.5 </span><span class="title-name">Architecture</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

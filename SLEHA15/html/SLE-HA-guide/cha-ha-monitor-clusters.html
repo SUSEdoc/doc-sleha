@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><title>SLEHA 15 | Administration Guide | Monitoring Clusters</title><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<meta name="title" content="Monitoring Clusters | SLEHA 15"/>
+<meta name="description" content="This chapter describes how to monitor a cluster's health and view its history."/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability Extension"/>
+<meta name="product-number" content="15"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 10. Monitoring Clusters"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15"/>
+<meta property="og:title" content="Monitoring Clusters | SLEHA 15"/>
+<meta property="og:description" content="This chapter describes how to monitor a cluster's health and view its history."/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Monitoring Clusters | SLEHA 15"/>
+<meta name="twitter:description" content="This chapter describes how to monitor a cluster's health and view its history."/>
+<link rel="prev" href="cha-ha-agents.html" title="Chapter 9. Adding or Modifying Resource Agents"/><link rel="next" href="cha-ha-fencing.html" title="Chapter 11. Fencing and STONITH"/>
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_monitoring_clusters.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and Administration</a><span> / </span><a class="crumb" href="cha-ha-monitor-clusters.html">Monitoring Clusters</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title"><em class="citetitle">Administration Guide</em></div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">About This Guide</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and Setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product Overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System Requirements and Recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing the High Availability Extension</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST Cluster Module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and Administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and Administration Basics</span></a></li><li><a href="cha-conf-hawk2.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring and Managing Cluster Resources with Hawk2</span></a></li><li><a href="cha-ha-manual-config.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring and Managing Cluster Resources (Command Line)</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing Services on Remote Hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">9 </span><span class="title-name">Adding or Modifying Resource Agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" you-are-here"><span class="title-number">10 </span><span class="title-name">Monitoring Clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">11 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">12 </span><span class="title-name">Storage Protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">13 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">14 </span><span class="title-name">Access Control Lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">15 </span><span class="title-name">Network Device Bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">16 </span><span class="title-name">Load Balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">17 </span><span class="title-name">Geo Clusters (Multi-Site Clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and Data Replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">18 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">19 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">20 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">21 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">22 </span><span class="title-name">Cluster Logical Volume Manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">23 </span><span class="title-name">Cluster Multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">24 </span><span class="title-name">Samba Clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">25 </span><span class="title-name">Disaster Recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and Upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">26 </span><span class="title-name">Executing Maintenance Tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">27 </span><span class="title-name">Upgrading Your Cluster and Updating Software Packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming Conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster Management Tools (Command Line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running Cluster Reports Without <code class="systemitem">root</code> Access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU Licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="chapter" id="cha-ha-monitor-clusters" data-id-title="Monitoring Clusters"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability Extension</span> <span class="productnumber">15</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">10 </span><span class="title-name">Monitoring Clusters</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_monitoring_clusters.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    This chapter describes how to monitor a cluster's health and view its history.
+   </p></div></div></div></div><section class="sect1" id="sec-conf-hawk2-monitor" data-id-title="Monitoring Cluster Status"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10.1 </span><span class="title-name">Monitoring Cluster Status</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-monitor">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_monitor_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Hawk2 has different screens for monitoring single clusters and multiple
+  clusters: the <span class="guimenu">Status</span> and the <span class="guimenu">Dashboard</span>
+  screen.
+ </p><section class="sect2" id="sec-conf-hawk2-manage-monitor-status" data-id-title="Monitoring a Single Cluster"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.1.1 </span><span class="title-name">Monitoring a Single Cluster</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-manage-monitor-status">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_monitor_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To monitor a single cluster, use the <span class="guimenu">Status</span> screen. After
+   you have logged in to Hawk2, the <span class="guimenu">Status</span> screen is
+   displayed by default. An icon in the upper right corner shows the cluster
+   status at a glance. For further details, have a look at the following
+   categories:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.8.3.4.3.1"><span class="term">Errors</span></dt><dd><p>
+      If errors have occurred, they are shown at the top of the page.
+     </p></dd><dt id="id-1.4.4.8.3.4.3.2"><span class="term">Resources</span></dt><dd><p>
+      Shows the configured resources including their <span class="guimenu">Status</span>,
+      <span class="guimenu">Name</span> (ID), <span class="guimenu">Location</span> (node on which
+      they are running), and resource agent <span class="guimenu">Type</span>. From the
+      <span class="guimenu">Operations</span> column, you can start or stop a resource,
+      trigger several actions, or view details. Actions that can be triggered
+      include setting the resource to maintenance mode (or removing maintenance
+      mode), migrating it to a different node, cleaning up the resource,
+      showing any recent events, or editing the resource.
+     </p></dd><dt id="id-1.4.4.8.3.4.3.3"><span class="term">Nodes</span></dt><dd><p>
+      Shows the nodes belonging to the cluster site you are logged in to,
+      including the nodes' <span class="guimenu">Status</span> and
+      <span class="guimenu">Name</span>. In the <span class="guimenu">Maintenance</span> and
+      <span class="guimenu">Standby</span> columns, you can set or remove the
+      <code class="literal">maintenance</code> or <code class="literal">standby</code> flag for a
+      node. The <span class="guimenu">Operations</span> column allows you to view recent
+      events for the node or further
+      details: for example, if a <code class="literal">utilization</code>,
+      <code class="literal">standby</code> or <code class="literal">maintenance</code> attribute is
+      set for the respective node.
+     </p></dd><dt id="id-1.4.4.8.3.4.3.4"><span class="term">Tickets</span></dt><dd><p>
+      Only shown if tickets have been configured (for use with Geo
+      clustering).
+     </p></dd></dl></div><div class="figure" id="id-1.4.4.8.3.4.4"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-cluster-status-main.png"><img src="images/hawk2-cluster-status-main.png" width="100%" alt="Hawk2—Cluster Status" title="Hawk2—Cluster Status"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 10.1: </span><span class="title-name">Hawk2—Cluster Status </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#id-1.4.4.8.3.4.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_monitor_i.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-conf-hawk2-manage-monitor-dash" data-id-title="Monitoring Multiple Clusters"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.1.2 </span><span class="title-name">Monitoring Multiple Clusters</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-manage-monitor-dash">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_monitor_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To monitor multiple clusters, use the Hawk2 <span class="guimenu">Dashboard</span>.
+   The cluster information displayed in the <span class="guimenu">Dashboard</span> screen
+   is stored on the server side. It is synchronized between the cluster nodes (if
+   passwordless SSH access between the cluster nodes has been configured). For
+   details, see <a class="xref" href="app-crmreport-nonroot.html#sec-crmreport-nonroot-ssh" title="D.2. Configuring a Passwordless SSH Account">Section D.2, “Configuring a Passwordless SSH Account”</a>. However, the
+   machine running Hawk2 does not even need to be part of any
+   cluster for that purpose—it can be a separate, unrelated system.
+  </p><p>
+   In addition to the general
+   <a class="xref" href="cha-conf-hawk2.html#sec-conf-hawk2-req" title="6.1. Hawk2 Requirements">Hawk2 Requirements</a>, the following
+   prerequisites need to be fulfilled to monitor multiple clusters with
+   Hawk2:
+  </p><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Prerequisites </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#id-1.4.4.8.3.5.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_monitor_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+     All clusters to be monitored from Hawk2's <span class="guimenu">Dashboard</span>
+     must be running SUSE Linux Enterprise High Availability Extension 15.
+    </p></li><li class="listitem"><p>
+     If you did not replace the self-signed certificate for Hawk2 on every
+     cluster node with your own certificate (or a certificate signed by an
+     official Certificate Authority) yet, do the following: Log in to Hawk2 on
+     <span class="emphasis"><em>every</em></span> node in <span class="emphasis"><em>every</em></span> cluster
+     at least once. Verify the certificate (or add an exception in the
+     browser to bypass the warning). Otherwise Hawk2 cannot connect to the
+     cluster.
+    </p></li></ul></div><div class="procedure" id="pro-conf-hawk2-dashboard" data-id-title="Monitoring Multiple Clusters with the Dashboard"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 10.1: </span><span class="title-name">Monitoring Multiple Clusters with the Dashboard </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#pro-conf-hawk2-dashboard">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_monitor_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Dashboard</span>.
+    </p><p>
+    Hawk2 shows an overview of the resources and nodes on the current
+    cluster site. In addition, it shows any <span class="guimenu">Tickets</span> that
+    have been configured for use with a Geo cluster. If you need information
+    about the icons used in this view, click <span class="guimenu">Legend</span>. To
+    search for a resource ID, enter the name (ID) into the <span class="guimenu">Search</span>
+    text box. To only show specific nodes, click the filter icon and select a
+    filtering option.
+   </p><div class="figure" id="id-1.4.4.8.3.5.5.3.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-dashboard-site1.png"><img src="images/hawk2-dashboard-site1.png" width="95%" alt="Hawk2 Dashboard with One Cluster Site (amsterdam)" title="Hawk2 Dashboard with One Cluster Site (amsterdam)"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 10.2: </span><span class="title-name">Hawk2 Dashboard with One Cluster Site (<code class="literal">amsterdam</code>) </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#id-1.4.4.8.3.5.5.3.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_monitor_i.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+     To add dashboards for multiple clusters:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       Click <span class="guimenu">Add Cluster</span>.
+      </p></li><li class="step"><p>
+       Enter the <span class="guimenu">Cluster name</span> with which to identify the
+       cluster in the <span class="guimenu">Dashboard</span>. For example,
+       <code class="literal">berlin</code>.
+      </p></li><li class="step"><p>
+       Enter the fully qualified host name of one of the nodes in the second
+       cluster. For example, <code class="literal">charlie</code>.
+      </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-dashboard-add-cluster.png"><img src="images/hawk2-dashboard-add-cluster.png" width="100%" alt="Image" title="Image"/></a></div></div></li><li class="step"><p>
+       Click <span class="guimenu">Add</span>. Hawk2 will display a second tab for the
+       newly added cluster site with an overview of its nodes and resources.
+      </p><div id="id-1.4.4.8.3.5.5.4.2.4.2" data-id-title="Connection Error" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Connection Error</div><p>If instead you are prompted to log in to this node by entering a
+        password, you probably did not connect to this node yet and have not
+        replaced the self-signed certificate. In that case, even after entering
+        the password, the connection will fail with the following message:
+        <code class="literal">Error connecting to server. Retrying every 5 seconds... '</code>.
+       </p><p>
+        To proceed, see <a class="xref" href="app-ha-troubleshooting.html#vle-trouble-hawk2-cert">Replacing the Self-Signed Certificate</a>.
+       </p></div></li></ol></li><li class="step"><p>
+     To view more details for a cluster site or to manage it, switch to the
+     site's tab and click the chain icon.
+    </p><p>
+     Hawk2 opens the <span class="guimenu">Status</span> view for this site in a new
+     browser window or tab. From there, you can administer this part of the
+     Geo cluster.
+    </p></li><li class="step"><p>
+     To remove a cluster from the dashboard, click the <code class="literal">x</code>
+     icon on the right-hand side of the cluster's details.
+    </p></li></ol></div></div></section></section><section class="sect1" id="sec-conf-health" data-id-title="Verifying Cluster Health"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10.2 </span><span class="title-name">Verifying Cluster Health</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-health">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_health_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  You can check the health of a cluster using either Hawk2 or crmsh.
+ </p><section class="sect2" id="sec-conf-hawk2-health" data-id-title="Verifying Cluster Health with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.2.1 </span><span class="title-name">Verifying Cluster Health with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-health">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_health_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Hawk2 provides a wizard which checks and detects issues with your cluster.
+  After the analysis is complete, Hawk2 creates a cluster report with further
+  details. To verify cluster health and generate the report, Hawk2 requires
+  passwordless SSH access between the nodes. Otherwise it can only collect data
+  from the current node. If you have set up your cluster with the bootstrap scripts,
+  provided by the
+  <code class="systemitem">ha-cluster-bootstrap</code>
+  package, passwordless SSH access is already configured. In case you need to
+  configure it manually, see <a class="xref" href="app-crmreport-nonroot.html#sec-crmreport-nonroot-ssh" title="D.2. Configuring a Passwordless SSH Account">Section D.2, “Configuring a Passwordless SSH Account”</a>.
+ </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Log in to Hawk2:
+   </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+    From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Wizards</span>.
+   </p></li><li class="step"><p>
+    Expand the <span class="guimenu">Basic</span> category.
+   </p></li><li class="step"><p>
+    Select the <span class="guimenu">Verify health and configuration</span> wizard.
+   </p></li><li class="step"><p>
+    Confirm with <span class="guimenu">Verify</span>.
+   </p></li><li class="step"><p>
+    Enter the root password for your cluster and click
+    <span class="guimenu">Apply</span>. Hawk2 will generate the report.
+   </p></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-cli-health" data-id-title="Getting Health Status with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.2.2 </span><span class="title-name">Getting Health Status with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-ha-manual-config-cli-health">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_health_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The <span class="quote">“<span class="quote">health</span>”</span> status of a cluster or node can be displayed
+   with so called <span class="emphasis"><em>scripts</em></span>. A script can perform
+   different tasks—they are not targeted to health. However, for
+   this subsection, we focus on how to get the health status.
+  </p><p>
+   To get all the details about the <code class="command">health</code> command, use
+   <code class="command">describe</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm script describe health</code></pre></div><p>
+   It shows a description and a list of all parameters and their default
+   values. To execute a script, use <code class="command">run</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm script run health</code></pre></div><p>
+   If you prefer to run only one step from the suite, the
+   <code class="command">describe</code> command lists all available steps in the
+   <em class="citetitle">Steps</em> category.
+  </p><p>
+   For example, the following command executes the first step of the
+   <code class="command">health</code> command. The output is stored in the
+   <code class="filename">health.json</code> file for further investigation:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm script run health statefile='health.json'</code></pre></div><p>It is also possible to run the above commands with
+   <code class="command">crm cluster health</code>.</p><p>
+   For additional information regarding scripts, see
+   <a class="link" href="http://crmsh.github.io/scripts/" target="_blank">http://crmsh.github.io/scripts/</a>.
+  </p></section></section><section class="sect1" id="sec-conf-hawk2-history" data-id-title="Viewing the Cluster History"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10.3 </span><span class="title-name">Viewing the Cluster History</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Hawk2 provides the following possibilities to view past events on the
+  cluster (on different levels and in varying detail):
+ </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    <a class="xref" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history-recent" title="10.3.1. Viewing Recent Events of Nodes or Resources">Section 10.3.1, “Viewing Recent Events of Nodes or Resources”</a>
+   </p></li><li class="listitem"><p>
+    <a class="xref" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history-explorer" title="10.3.2. Using the History Explorer for Cluster Reports">Section 10.3.2, “Using the History Explorer for Cluster Reports”</a>
+   </p></li><li class="listitem"><p>
+    <a class="xref" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history-transitions" title="10.3.3. Viewing Transition Details in the History Explorer">Section 10.3.3, “Viewing Transition Details in the History Explorer”</a>
+   </p></li></ul></div><p>
+  You can also view cluster history information using crmsh:
+ </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    <a class="xref" href="cha-ha-monitor-clusters.html#sec-ha-config-crm-history" title="10.3.4. Retrieving History Information with crmsh">Section 10.3.4, “Retrieving History Information with crmsh”</a>
+   </p></li></ul></div><section class="sect2" id="sec-conf-hawk2-history-recent" data-id-title="Viewing Recent Events of Nodes or Resources"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.3.1 </span><span class="title-name">Viewing Recent Events of Nodes or Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history-recent">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>. It lists
+     <span class="guimenu">Resources</span> and <span class="guimenu">Nodes</span>.
+    </p></li><li class="step"><p>
+     To view recent events of a resource:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       Click <span class="guimenu">Resources</span> and select the respective resource.
+      </p></li><li class="step"><p>
+       In the <span class="guimenu">Operations</span> column for the resource, click the
+       arrow down button and select <span class="guimenu">Recent events</span>.
+      </p><p>
+       Hawk2 opens a new window and displays a table view of the latest
+       events.
+      </p></li></ol></li><li class="step"><p>
+     To view recent events of a node:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       Click <span class="guimenu">Nodes</span> and select the respective node.
+      </p></li><li class="step"><p>
+       In the <span class="guimenu">Operations</span> column for the node, select
+       <span class="guimenu">Recent events</span>.
+      </p><p>
+       Hawk2 opens a new window and displays a table view of the latest
+       events.
+      </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-node-events.png"><img src="images/hawk2-node-events.png" width="90%" alt="Image" title="Image"/></a></div></div></li></ol></li></ol></div></div></section><section class="sect2" id="sec-conf-hawk2-history-explorer" data-id-title="Using the History Explorer for Cluster Reports"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.3.2 </span><span class="title-name">Using the History Explorer for Cluster Reports</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history-explorer">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   From the left navigation bar, select <span class="guimenu">Troubleshooting</span> › <span class="guimenu">History</span> to access the
+   <span class="guimenu">History Explorer</span>.
+   The <span class="guimenu">History Explorer</span> allows you to create detailed
+   cluster reports and view transition information. It provides the following
+   options:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.8.5.8.3.1"><span class="term"><span class="guimenu">Generate</span>
+    </span></dt><dd><p>
+      Create a cluster report for a certain time. Hawk2 calls the
+      <code class="command">crm report</code> command to generate the report.
+     </p></dd><dt id="id-1.4.4.8.5.8.3.2"><span class="term"><span class="guimenu">Upload</span>
+    </span></dt><dd><p>
+      Allows you to upload <code class="literal">crm report</code> archives that have
+      either been created with the crm shell directly or even on a different
+      cluster.
+     </p></dd></dl></div><p>
+   After reports have been generated or uploaded, they are shown below
+   <span class="guimenu">Reports</span>. From the list of reports, you can show a
+   report's details, download or delete the report.
+  </p><div class="figure" id="id-1.4.4.8.5.8.5"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-history-explorer-main.png"><img src="images/hawk2-history-explorer-main.png" width="90%" alt="Hawk2—History Explorer Main View" title="Hawk2—History Explorer Main View"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 10.3: </span><span class="title-name">Hawk2—History Explorer Main View </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#id-1.4.4.8.5.8.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div></div><div class="procedure" id="pro-hawk2-history-report" data-id-title="Generating or Uploading a Cluster Report"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 10.2: </span><span class="title-name">Generating or Uploading a Cluster Report </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#pro-hawk2-history-report">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Troubleshooting</span> › <span class="guimenu">History</span>.
+    </p><p>
+     The <span class="guimenu">History Explorer</span> screen opens in the
+     <span class="guimenu">Generate</span> view. By default, the suggested time frame for
+     a report is the last hour.
+    </p></li><li class="step"><p>
+     To create a cluster report:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       To immediately start a report, click <span class="guimenu">Generate</span>.
+      </p></li><li class="step"><p>
+       To modify the time frame for the report, click anywhere on the suggested
+       time frame and select another option from the drop-down box. You can
+       also enter a <span class="guimenu">Custom</span> start date, end date and hour,
+       respectively. To start the report, click <span class="guimenu">Generate</span>.
+      </p><p>
+       After the report has finished, it is shown below
+       <span class="guimenu">Reports</span>.
+      </p></li></ol></li><li class="step"><p>
+     To upload a cluster report, the <code class="command">crm report</code> archive must
+     be located on a file system that you can access with Hawk2. Proceed as
+     follows:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       Switch to the <span class="guimenu">Upload</span> tab.
+      </p></li><li class="step"><p>
+       <span class="guimenu">Browse</span> for the cluster report archive and click
+       <span class="guimenu">Upload</span>.
+      </p><p>
+       After the report is uploaded, it is shown below
+       <span class="guimenu">Reports</span>.
+      </p></li></ol></li><li class="step"><p>
+     To download or delete a report, click the respective icon next to the
+     report in the <span class="guimenu">Operations</span> column.
+    </p></li><li class="step"><p>
+     To view
+     <a class="xref" href="cha-ha-monitor-clusters.html#il-hawk2-history-report-details" title="Report Details in History Explorer">Report Details in History Explorer</a>,
+     click the report's name or select <span class="guimenu">Show</span> from the
+     <span class="guimenu">Operations</span> column.
+    </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-history-report-details.png"><img src="images/hawk2-history-report-details.png" width="90%" alt="Image" title="Image"/></a></div></div></li><li class="step"><p>
+     Return to the list of reports by clicking the <span class="guimenu">Reports</span>
+     button.
+    </p></li></ol></div></div><div class="itemizedlist" id="il-hawk2-history-report-details" data-id-title="Report Details in History Explorer"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Report Details in History Explorer </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#il-hawk2-history-report-details">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+     Name of the report.
+    </p></li><li class="listitem"><p>
+     Start time of the report.
+    </p></li><li class="listitem"><p>
+     End time of the report.
+    </p></li><li class="listitem"><p>
+     Number of transitions plus time line of all transitions in the cluster
+     that are covered by the report. To learn how to view more details for a
+     transition, see
+     <a class="xref" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history-transitions" title="10.3.3. Viewing Transition Details in the History Explorer">Section 10.3.3</a>.
+    </p></li><li class="listitem"><p>
+     Node events.
+    </p></li><li class="listitem"><p>
+     Resource events.
+    </p></li></ul></div></section><section class="sect2" id="sec-conf-hawk2-history-transitions" data-id-title="Viewing Transition Details in the History Explorer"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.3.3 </span><span class="title-name">Viewing Transition Details in the History Explorer</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history-transitions">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   For each transition, the cluster saves a copy of the state which it provides
+   as input to the policy engine (PE). The path to this archive is logged. All
+   <code class="filename">pe-input*</code> files are generated on the Designated
+   Coordinator (DC). As the DC can change in a cluster, there may be
+   <code class="filename">pe-input*</code> files from several nodes. Any
+   <code class="filename">pe-input*</code> files show what the PE
+   <span class="emphasis"><em>planned</em></span> to do.
+  </p><p>
+   In Hawk2, you can display the name of each <code class="filename">pe-input*</code>
+   file plus the time and node on which it was created. In addition, the
+   <span class="guimenu">History Explorer</span> can visualize the following details,
+   based on the respective <code class="filename">pe-input*</code> file:
+  </p><div class="variablelist" id="vl-hawk2-history-transition-details" data-id-title="Transition Details in the History Explorer"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Transition Details in the History Explorer </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#vl-hawk2-history-transition-details">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.4.8.5.9.4.2"><span class="term"><span class="guimenu">Details</span>
+    </span></dt><dd><p>
+      Shows snippets of logging data that belongs to the transition. Displays
+      the output of the following command (including the resource agents' log
+      messages):
+     </p><div class="verbatim-wrap"><pre class="screen">crm history transition <em class="replaceable">peinput</em></pre></div></dd><dt id="id-1.4.4.8.5.9.4.3"><span class="term"><span class="guimenu">Configuration</span>
+    </span></dt><dd><p>
+      Shows the cluster configuration at the time that the
+      <code class="filename">pe-input*</code> file was created.
+     </p></dd><dt id="id-1.4.4.8.5.9.4.4"><span class="term"><span class="guimenu">Diff</span>
+    </span></dt><dd><p>
+      Shows the differences of configuration and status between the selected
+      <code class="filename">pe-input*</code> file and the following one.
+     </p></dd><dt id="id-1.4.4.8.5.9.4.5"><span class="term"><span class="guimenu">Log</span>
+    </span></dt><dd><p>
+      Shows snippets of logging data that belongs to the transition. Displays
+      the output of the following command:
+     </p><div class="verbatim-wrap"><pre class="screen">crm history transition log <em class="replaceable">peinput</em></pre></div><p>
+      This includes details from the <code class="systemitem">pengine</code>,
+      <code class="systemitem">crmd</code>, and <code class="systemitem">lrmd</code>.
+     </p></dd><dt id="id-1.4.4.8.5.9.4.6"><span class="term"><span class="guimenu">Graph</span>
+    </span></dt><dd><p>
+      Shows a graphical representation of the transition. If you click
+      <span class="guimenu">Graph</span>, the PE is re-invoked (using the
+      <code class="filename">pe-input*</code> files), and generates a graphical
+      visualization of the transition.
+     </p></dd></dl></div><div class="procedure" id="pro-hawk2-history-transitions" data-id-title="Viewing Transition Details"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 10.3: </span><span class="title-name">Viewing Transition Details </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#pro-hawk2-history-transitions">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Troubleshooting</span> › <span class="guimenu">History</span>.
+    </p><p>
+     If reports have already been generated or uploaded, they are shown in the
+     list of <span class="guimenu">Reports</span>. Otherwise generate or upload a report
+     as described in
+     <a class="xref" href="cha-ha-monitor-clusters.html#pro-hawk2-history-report" title="Generating or Uploading a Cluster Report">Procedure 10.2</a>.
+    </p></li><li class="step"><p>
+     Click the report's name or select <span class="guimenu">Show</span> from the
+     <span class="guimenu">Operations</span> column to open the
+     <a class="xref" href="cha-ha-monitor-clusters.html#il-hawk2-history-report-details" title="Report Details in History Explorer">Report Details in History Explorer</a>.
+    </p></li><li class="step"><p>
+     To access the transition details, you need to select a transition point in
+     the transition time line that is shown below. Use the
+     <span class="guimenu">Previous</span> and <span class="guimenu">Next</span> icons and the
+     <span class="guimenu">Zoom In</span> and <span class="guimenu">Zoom Out</span> icons to find
+     the transition that you are interested in.
+    </p></li><li class="step"><p>
+     To display the name of a <code class="filename">pe-input*</code> file plus the time
+     and node on which it was created, hover the mouse pointer over a
+     transition point in the time line.
+    </p></li><li class="step"><p>
+     To view the <a class="xref" href="cha-ha-monitor-clusters.html#vl-hawk2-history-transition-details" title="Transition Details in the History Explorer">Transition Details in the History Explorer</a>, click
+     the transition point for which you want to know more.
+    </p></li><li class="step"><p>
+     To show <span class="guimenu">Details</span>, <span class="guimenu">Configuration</span>,
+     <span class="guimenu">Diff</span>, <span class="guimenu">Logs</span> or
+     <span class="guimenu">Graph</span>, click the respective buttons to show the content
+     described in <a class="xref" href="cha-ha-monitor-clusters.html#vl-hawk2-history-transition-details" title="Transition Details in the History Explorer">Transition Details in the History Explorer</a>.
+    </p></li><li class="step"><p>
+     To return to the list of reports, click the <span class="guimenu">Reports</span>
+     button.
+    </p></li></ol></div></div></section><section class="sect2" id="sec-ha-config-crm-history" data-id-title="Retrieving History Information with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.3.4 </span><span class="title-name">Retrieving History Information with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-ha-config-crm-history">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_hawk2_history_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Investigating the cluster history is a complex task. To simplify this
+   task, crmsh contains the <code class="command">history</code> command with its
+   subcommands. It is assumed SSH is configured correctly.
+  </p><p>
+   Each cluster moves states, migrates resources, or starts important
+   processes. All these actions can be retrieved by subcommands of
+   <code class="command">history</code>.
+  </p><p>
+   By default, all <code class="command">history</code> commands look at the events of
+   the last hour. To change this time frame, use the
+   <code class="command">limit</code> subcommand. The syntax is:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm history</code>
+<code class="prompt custom">crm(live)history# </code><code class="command">limit <em class="replaceable">FROM_TIME</em> [<em class="replaceable">TO_TIME</em>]</code></pre></div><p>
+   Some valid examples include:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.8.5.10.7.1"><span class="term"><code class="command">limit</code><code class="literal">4:00pm</code>
+    , </span><span class="term"><code class="command">limit</code><code class="literal">16:00</code>
+    </span></dt><dd><p>
+      Both commands mean the same, today at 4pm.
+     </p></dd><dt id="id-1.4.4.8.5.10.7.2"><span class="term"><code class="command">limit</code><code class="literal">2012/01/12 6pm</code>
+    </span></dt><dd><p>
+      January 12th 2012 at 6pm
+     </p></dd><dt id="id-1.4.4.8.5.10.7.3"><span class="term"><code class="command">limit</code><code class="literal">"Sun 5 20:46"</code>
+    </span></dt><dd><p>
+      In the current year of the current month at Sunday the 5th at 8:46pm
+     </p></dd></dl></div><p>
+   Find more examples and how to create time frames at
+   <a class="link" href="http://labix.org/python-dateutil" target="_blank">http://labix.org/python-dateutil</a>.
+  </p><p>
+   The <code class="command">info</code> subcommand shows all the parameters which are
+   covered by the <code class="command">crm report</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">info</code>
+Source: live
+Period: 2012-01-12 14:10:56 - end
+Nodes: alice
+Groups:
+Resources:</pre></div><p>
+   To limit <code class="command">crm report</code> to certain parameters view the
+   available options with the subcommand <code class="command">help</code>.
+  </p><p>
+   To narrow down the level of detail, use the subcommand
+   <code class="command">detail</code> with a level:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">detail 1</code></pre></div><p>
+   The higher the number, the more detailed your report will be. Default is
+   <code class="literal">0</code> (zero).
+  </p><p>
+   After you have set above parameters, use <code class="command">log</code> to show
+   the log messages.
+  </p><p>
+   To display the last transition, use the following command:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">transition -1</code>
+INFO: fetching new logs, please wait ...</pre></div><p>
+   This command fetches the logs and runs <code class="command">dotty</code> (from the
+   <span class="package">graphviz</span> package) to show the
+   transition graph. The shell opens the log file which you can browse with
+   the <span class="keycap">↓</span> and <span class="keycap">↑</span> cursor keys.
+  </p><p>
+   If you do not want to open the transition graph, use the
+   <code class="option">nograph</code> option:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">transition -1 nograph</code></pre></div></section></section><section class="sect1" id="sec-ha-config-basics-monitor-health" data-id-title="Monitoring System Health"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10.4 </span><span class="title-name">Monitoring System Health</span></span> <a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#sec-ha-config-basics-monitor-health">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_monitoring_clusters.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To prevent a node from running out of disk space and thus being unable to
+   manage any resources that have been assigned to it, the High Availability Extension
+   provides a resource agent,
+   <code class="systemitem">ocf:pacemaker:SysInfo</code>. Use it to monitor a
+   node's health with regard to disk partitions.
+   The SysInfo RA creates a node attribute named
+   <code class="literal">#health_disk</code> which will be set to
+   <code class="literal">red</code> if any of the monitored disks' free space is below
+   a specified limit.
+  </p><p>
+   To define how the CRM should react in case a node's health reaches a
+   critical state, use the global cluster option
+   <code class="systemitem">node-health-strategy</code>.
+  </p><div class="procedure" id="pro-ha-health-monitor" data-id-title="Configuring System Health Monitoring"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 10.4: </span><span class="title-name">Configuring System Health Monitoring </span></span><a title="Permalink" class="permalink" href="cha-ha-monitor-clusters.html#pro-ha-health-monitor">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_monitoring_clusters.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+    To automatically move resources away from a node in case the node runs
+    out of disk space, proceed as follows:
+   </p><ol class="procedure" type="1"><li class="step"><p>
+     Configure an <code class="systemitem">ocf:pacemaker:SysInfo</code> resource:
+    </p><div class="verbatim-wrap"><pre class="screen">primitive sysinfo ocf:pacemaker:SysInfo \
+     params disks="/tmp /var"<span class="callout" id="co-disks">1</span> min_disk_free="100M"<span class="callout" id="co-min-disk-free">2</span> disk_unit="M"<span class="callout" id="co-disk-unit">3</span> \
+     op monitor interval="15s"</pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-disks"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Which disk partitions to monitor. For example,
+       <code class="filename">/tmp</code>, <code class="filename">/usr</code>,
+       <code class="filename">/var</code>, and <code class="filename">/dev</code>. To specify
+       multiple partitions as attribute values, separate them with a blank.
+      </p><div id="id-1.4.4.8.6.4.3.3.1.2" data-id-title="/ File System Always Monitored" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: <code class="filename">/</code> File System Always Monitored</div><p>
+        You do not need to specify the root partition
+        (<code class="filename">/</code>) in <code class="literal">disks</code>. It is always
+        monitored by default.
+       </p></div></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-min-disk-free"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       The minimum free disk space required for those partitions.
+       Optionally, you can specify the unit to use for measurement (in the
+       example above, <code class="literal">M</code> for megabytes is used). If not
+       specified, <code class="systemitem">min_disk_free</code> defaults to the
+       unit defined in the <code class="systemitem">disk_unit</code> parameter.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-disk-unit"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       The unit in which to report the disk space.
+      </p></td></tr></table></div></li><li class="step"><p>
+     To complete the resource configuration, create a clone of
+     <code class="systemitem">ocf:pacemaker:SysInfo</code> and start it on each
+     cluster node.
+    </p></li><li class="step"><p>
+     Set the <code class="systemitem">node-health-strategy</code> to
+     <code class="literal">migrate-on-red</code>:
+    </p><div class="verbatim-wrap"><pre class="screen">property node-health-strategy="migrate-on-red"</pre></div><p>
+     In case of a <code class="systemitem">#health_disk</code> attribute set to
+     <code class="literal">red</code>, the policy engine adds <code class="literal">-INF</code>
+     to the resources' score for that node. This will cause any resources to
+     move away from this node. The STONITH resource will be the last
+     one to be stopped but even if the STONITH resource is not running
+     anymore, the node can still be fenced. Fencing has direct access to the
+     CIB and will continue to work.
+    </p></li></ol></div></div><p>
+   After a node's health status has turned to <code class="literal">red</code>, solve
+   the issue that led to the problem. Then clear the <code class="literal">red</code>
+   status to make the node eligible again for running resources. Log in to
+   the cluster node and use one of the following methods:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     Execute the following command:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node status-attr <em class="replaceable">NODE</em> delete #health_disk</code></pre></div></li><li class="listitem"><p>
+     Restart Pacemaker on that node.
+    </p></li><li class="listitem"><p>
+     Reboot the node.
+    </p></li></ul></div><p>
+   The node will be returned to service and can run resources again.
+  </p></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-agents.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 9 </span>Adding or Modifying Resource Agents</span></a> </div><div><a class="pagination-link next" href="cha-ha-fencing.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 11 </span>Fencing and STONITH</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-monitor-clusters.html#sec-conf-hawk2-monitor"><span class="title-number">10.1 </span><span class="title-name">Monitoring Cluster Status</span></a></span></li><li><span class="sect1"><a href="cha-ha-monitor-clusters.html#sec-conf-health"><span class="title-number">10.2 </span><span class="title-name">Verifying Cluster Health</span></a></span></li><li><span class="sect1"><a href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history"><span class="title-number">10.3 </span><span class="title-name">Viewing the Cluster History</span></a></span></li><li><span class="sect1"><a href="cha-ha-monitor-clusters.html#sec-ha-config-basics-monitor-health"><span class="title-number">10.4 </span><span class="title-name">Monitoring System Health</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2023</span></div></div></footer></body></html>

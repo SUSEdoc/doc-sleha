@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP5 | Administration Guide | Executing maintenance tasks</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Executing maintenance tasks | SLE HA 15 SP5"/>
+<meta name="description" content="To perform maintenance tasks on the cluster nodes, you…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP5"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 28. Executing maintenance tasks"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP5"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Executing maintenance tasks | SLE HA 15 SP5"/>
+<meta property="og:description" content="To perform maintenance tasks on the cluster nodes, you might need to stop the resources running on that node, to move them, …"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Executing maintenance tasks | SLE HA 15 SP5"/>
+<meta name="twitter:description" content="To perform maintenance tasks on the cluster nodes, you might need to stop the resources running on that node, to move them, …"/>
+<link rel="prev" href="part-maintenance.html" title="Part IV. Maintenance and upgrade"/><link rel="next" href="cha-ha-migration.html" title="Chapter 29. Upgrading your cluster and updating software packages"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-maintenance.html">Maintenance and upgrade</a><span> / </span><a class="crumb" href="cha-ha-maintenance.html">Executing maintenance tasks</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li><a href="part-config.html" class="has-children "><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-virtualization.html" class=" "><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li class="active"><a href="part-maintenance.html" class="has-children you-are-here"><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" you-are-here"><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-maintenance" data-id-title="Executing maintenance tasks"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP5</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    To perform maintenance tasks on the cluster nodes, you might need to stop
+    the resources running on that node, to move them, or to shut down or reboot
+    the node. It might also be necessary to temporarily take over the control of
+    resources from the cluster, or even to stop the cluster service while resources
+    remain running.
+   </p><p>
+    This chapter explains how to manually take down a cluster node without
+    negative side-effects. It also gives an overview of different options the
+    cluster stack provides for executing maintenance tasks.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-maint-outline" data-id-title="Preparing and finishing maintenance work"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.1 </span><span class="title-name">Preparing and finishing maintenance work</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-outline">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Use the following commands to start, stop, or view the status of the cluster:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.6.3.3.3.1"><span class="term"><code class="command">crm cluster start [--all]</code></span></dt><dd><p>Start the cluster services on one node or all nodes</p></dd><dt id="id-1.4.6.3.3.3.2"><span class="term"><code class="command">crm cluster stop [--all]</code></span></dt><dd><p>Stop the cluster services on one node or all nodes</p></dd><dt id="id-1.4.6.3.3.3.3"><span class="term"><code class="command">crm cluster restart [--all]</code></span></dt><dd><p>Restart the cluster services on one node or all nodes</p></dd><dt id="id-1.4.6.3.3.3.4"><span class="term"><code class="command">crm cluster status</code></span></dt><dd><p>View the status of the cluster stack</p></dd></dl></div><p>
+   Execute the above commands as user <code class="systemitem">root</code>, or as a user with the required privileges.
+  </p><p>
+   When you shut down or reboot a cluster node (or stop the cluster services on a
+   node), the following processes are triggered:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     The resources that are running on the node are stopped or moved off
+     the node.
+    </p></li><li class="listitem"><p>
+     If stopping a resource fails or times out, the STONITH mechanism
+     fences the node and shuts it down.
+    </p></li></ul></div><div id="id-1.4.6.3.3.7" data-id-title="Risk of data loss" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Risk of data loss</div><p>
+    If you need to do testing or maintenance work, follow the general steps
+    below.
+   </p><p>
+    Otherwise, you risk unwanted side effects, like resources not starting in an
+    orderly fashion, unsynchronized CIBs across the cluster nodes, or even data loss.
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Before you start, choose the appropriate option from <a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-overview" title="28.2. Different options for maintenance tasks">Section 28.2, “Different options for maintenance tasks”</a>.
+    </p></li><li class="step"><p>
+     Apply this option with Hawk2 or crmsh.
+    </p></li><li class="step"><p>
+     Execute your maintenance task or tests.
+    </p></li><li class="step"><p>
+     After you have finished, put the resource, node or cluster back to
+     <span class="quote">“<span class="quote">normal</span>”</span> operation.
+    </p></li></ol></div></div></div></section><section class="sect1" id="sec-ha-maint-overview" data-id-title="Different options for maintenance tasks"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.2 </span><span class="title-name">Different options for maintenance tasks</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-overview">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Pacemaker offers the following options for performing system maintenance:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="vle-ha-maint-mode-cluster"><span class="term"><a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-mode-cluster" title="28.3. Putting the cluster into maintenance mode">Putting the cluster into maintenance mode</a></span></dt><dd><p>
+      The global cluster property <code class="literal">maintenance-mode</code> puts all
+      resources into maintenance state at once. The cluster stops monitoring them
+      and becomes oblivious to their status. <span class="emphasis"><em>Only</em></span> the resource management
+      by Pacemaker is disabled. Corosync and SBD are still functional. Use maintenance
+      mode for any tasks involving cluster resources. For any tasks involving
+      infrastructure, such as storage or networking, the safest method is to stop
+      the cluster services completely. See <a class="xref" href="cha-ha-maintenance.html#vle-ha-maint-cluster-stop">Stopping the cluster services for the whole cluster</a>.
+     </p></dd><dt id="vle-ha-maint-cluster-stop"><span class="term"><a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-cluster-stop" title="28.4. Stopping the cluster services for the whole cluster">Stopping the cluster services for the whole cluster</a></span></dt><dd><p>
+      Stopping the cluster services on all nodes at once allows you to shut down
+      a cluster while avoiding the mass migration of resources that would happen
+      if you shut down each node one by one. Because there are no nodes to migrate
+      to, all resources will be stopped.
+     </p></dd><dt id="vle-ha-maint-mode-node"><span class="term"><a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-mode-node" title="28.5. Putting a node into maintenance mode">Putting a node into maintenance mode</a></span></dt><dd><p>
+      This option allows you to put all resources running on a specific node into
+      maintenance state at once. The cluster will cease monitoring them and thus
+      become oblivious to their status.
+     </p></dd><dt id="vle-ha-maint-node-standby"><span class="term"><a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-node-standby" title="28.6. Putting a node into standby mode">Putting a node into standby mode</a></span></dt><dd><p>
+      A node that is in standby mode can no longer run resources. Any resources
+      running on the node are moved away or stopped (if no other node
+      is eligible to run the resource). Also, all monitoring operations are
+      stopped on the node (except for those with
+      <code class="literal">role="Stopped"</code>).
+     </p><p>
+      You can use this option if you need to stop a node in a cluster while
+      continuing to provide the services running on another node.
+     </p></dd><dt id="vle-ha-maint-shutdown-node"><span class="term"><a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-shutdown-node" title="28.7. Stopping the cluster services on a node">Stopping the cluster services on a node</a></span></dt><dd><p>
+      This option stops all the cluster services on a single node. Any resources
+      running on the node are moved away or stopped (if no other node is
+      eligible to run the resource). If stopping a resource fails or times out,
+      the node is fenced.
+     </p></dd><dt id="vle-ha-maint-mode-rsc"><span class="term"><a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-mode-rsc" title="28.8. Putting a resource into maintenance mode">Putting a resource into maintenance mode</a></span></dt><dd><p>
+      When this mode is enabled for a resource, no monitoring operations will be
+      triggered for the resource.
+     </p><p>
+      Use this option if you need to manually touch the service that is managed
+      by this resource and do not want the cluster to run any monitoring
+      operations for the resource during that time.
+     </p></dd><dt id="vle-ha-maint-rsc-unmanaged"><span class="term"><a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-rsc-unmanaged" title="28.9. Putting a resource into unmanaged mode">Putting a resource into unmanaged mode</a></span></dt><dd><p>
+      The <code class="option">is-managed</code> meta attribute allows you to temporarily
+      <span class="quote">“<span class="quote">release</span>”</span> a resource from being managed by the cluster
+      stack. This means you can manually touch the service that is managed by
+      this resource (for example, to adjust any components). However, the
+      cluster will continue to <span class="emphasis"><em>monitor</em></span> the resource and to
+      report any failures.
+     </p><p>
+      If you want the cluster to also cease <span class="emphasis"><em>monitoring</em></span> the
+      resource, use the per-resource maintenance mode instead (see
+      <a class="xref" href="cha-ha-maintenance.html#vle-ha-maint-mode-rsc">Putting a resource into maintenance mode</a>).
+     </p></dd></dl></div></section><section class="sect1" id="sec-ha-maint-mode-cluster" data-id-title="Putting the cluster into maintenance mode"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.3 </span><span class="title-name">Putting the cluster into maintenance mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-mode-cluster">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.6.3.5.2" data-id-title="Maintenance mode only disables Pacemaker" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Maintenance mode only disables Pacemaker</div><p>
+    When putting a cluster into maintenance mode, only the resource management
+    by Pacemaker is disabled. Corosync and SBD are still functional. Depending
+    on your maintenance tasks, this might lead to fence operations.
+   </p><p>
+    Use maintenance mode for any tasks involving cluster resources. For any tasks
+    involving infrastructure, such as storage or networking, the safest method is to stop
+    the cluster services completely. See <a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-cluster-stop" title="28.4. Stopping the cluster services for the whole cluster">Section 28.4, “Stopping the cluster services for the whole cluster”</a>.
+   </p></div><p>
+    To put the cluster into maintenance mode on the crm shell, use the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure property maintenance-mode=true</code></pre></div><p>
+    To put the cluster back to normal mode after your maintenance work is done, use
+    the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure property maintenance-mode=false</code></pre></div><div class="procedure" id="pro-ha-maint-mode-cluster-hawk2" data-id-title="Putting the cluster into maintenance mode with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 28.1: </span><span class="title-name">Putting the cluster into maintenance mode with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-maintenance.html#pro-ha-maint-mode-cluster-hawk2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Start a Web browser and log in to the cluster as described in
+     <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-login" title="5.4.2. Logging in">Section 5.4.2, “Logging in”</a>.
+    </p></li><li class="step"><p>
+     In the left navigation bar, select <span class="guimenu">Cluster
+     Configuration</span>.
+    </p></li><li class="step"><p>
+     In the <span class="guimenu">CRM Configuration</span> group, select the
+     <span class="guimenu">maintenance-mode</span> attribute from the empty drop-down box
+     and click the plus icon to add it.
+    </p></li><li class="step"><p>
+     To set <code class="literal">maintenance-mode=true</code>, activate the check box
+     next to <code class="literal">maintenance-mode</code> and confirm your changes.
+    </p></li><li class="step"><p>
+     After you have finished the maintenance task for the whole cluster,
+     deactivate the check box next to the <code class="literal">maintenance-mode</code>
+     attribute.
+    </p><p>
+     From this point on, High Availability will take over cluster management again.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-cluster-stop" data-id-title="Stopping the cluster services for the whole cluster"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.4 </span><span class="title-name">Stopping the cluster services for the whole cluster</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-cluster-stop">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  To stop the cluster services on all nodes at once, use the following command:
+ </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop --all</code></pre></div><p>
+  To start the cluster services again after your maintenance work is done, use
+  the following command:
+ </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start --all</code></pre></div><div id="id-1.4.6.3.6.6" data-id-title="Graceful shutdown not guaranteed" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Graceful shutdown not guaranteed</div><p>
+   The <code class="option">--all</code> option alone does not guarantee graceful shutdown
+   of the cluster, because of the unexpected fencing that might be triggered by
+   resource stop-failure at the application level. If applications are critical,
+   consider stopping them before stopping the cluster services for the whole cluster.
+  </p></div></section><section class="sect1" id="sec-ha-maint-mode-node" data-id-title="Putting a node into maintenance mode"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.5 </span><span class="title-name">Putting a node into maintenance mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-mode-node">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To put a node into maintenance mode on the crm shell, use the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node maintenance <em class="replaceable">NODENAME</em></code></pre></div><p>
+    To put the node back to normal mode after your maintenance work is done, use
+    the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node ready <em class="replaceable">NODENAME</em></code></pre></div><div class="procedure" id="pro-ha-maint-mode-nodes-hawk2" data-id-title="Putting a node into maintenance mode with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 28.2: </span><span class="title-name">Putting a node into maintenance mode with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-maintenance.html#pro-ha-maint-mode-nodes-hawk2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Start a Web browser and log in to the cluster as described in
+     <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-login" title="5.4.2. Logging in">Section 5.4.2, “Logging in”</a>.
+    </p></li><li class="step"><p>
+     In the left navigation bar, select <span class="guimenu">Cluster Status</span>.
+    </p></li><li class="step"><p>
+     In one of the individual nodes' views, click the wrench icon next to the
+     node and select <span class="guimenu">Maintenance</span>.
+    </p></li><li class="step"><p>
+      After you have finished your maintenance task, click the wrench icon next to the node
+     and select <span class="guimenu">Ready</span>.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-node-standby" data-id-title="Putting a node into standby mode"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.6 </span><span class="title-name">Putting a node into standby mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-node-standby">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To put a node into standby mode on the crm shell, use the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node standby <em class="replaceable">NODENAME</em></code></pre></div><p>
+    To bring the node back online after your maintenance work is done, use the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node online <em class="replaceable">NODENAME</em></code></pre></div><div class="procedure" id="pro-ha-maint-node-standby-hawk2" data-id-title="Putting a node into standby mode with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 28.3: </span><span class="title-name">Putting a node into standby mode with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-maintenance.html#pro-ha-maint-node-standby-hawk2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Start a Web browser and log in to the cluster as described in
+     <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-login" title="5.4.2. Logging in">Section 5.4.2, “Logging in”</a>.
+    </p></li><li class="step"><p>
+     In the left navigation bar, select <span class="guimenu">Cluster Status</span>.
+    </p></li><li class="step"><p>
+     In one of the individual nodes' views, click the wrench icon next to the
+     node and select <span class="guimenu">Standby</span>.
+    </p></li><li class="step"><p>
+     Finish the maintenance task for the node.
+    </p></li><li class="step"><p>
+     To deactivate the standby mode, click the wrench icon next to the node
+     and select <span class="guimenu">Ready</span>.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-shutdown-node" data-id-title="Stopping the cluster services on a node"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.7 </span><span class="title-name">Stopping the cluster services on a node</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-shutdown-node">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  To move the services off the node in an orderly fashion
+  before shutting down or rebooting the node, proceed as follows:
+ </p><div class="procedure" id="pro-ha-maint-shutdown-node" data-id-title="Manually rebooting a cluster node"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 28.4: </span><span class="title-name">Manually rebooting a cluster node </span></span><a title="Permalink" class="permalink" href="cha-ha-maintenance.html#pro-ha-maint-shutdown-node">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    On the node you want to reboot or shut down, log in as <code class="systemitem">root</code> or
+    equivalent.
+   </p></li><li class="step"><p>
+    Put the node into <code class="literal">standby</code> mode:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm -w node standby</code></pre></div><p>
+    That way, services can migrate off the node without being limited by the
+    shutdown timeout of the cluster services.
+   </p></li><li class="step"><p>
+    Check the cluster status:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div><p>
+    It shows the respective node in <code class="literal">standby</code> mode:
+   </p><div class="verbatim-wrap"><pre class="screen">[...]
+Node <em class="replaceable">bob</em>: standby
+[...]</pre></div></li><li class="step"><p>
+    Stop the cluster services on that node:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop</code></pre></div></li><li class="step"><p>
+    Reboot the node.
+   </p></li></ol></div></div><p>
+  To check if the node joins the cluster again:
+ </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Log in to the node as <code class="systemitem">root</code> or equivalent.
+   </p></li><li class="step"><p>
+    Check if the cluster services have started:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster status</code></pre></div><p>
+    If not, start them:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start</code></pre></div></li><li class="step"><p>
+    Check the cluster status:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div><p>
+    It should show the node coming online again.
+   </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-mode-rsc" data-id-title="Putting a resource into maintenance mode"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.8 </span><span class="title-name">Putting a resource into maintenance mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-mode-rsc">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To put a resource into maintenance mode on the crm shell, use the following command:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource maintenance <em class="replaceable">RESOURCE_ID</em> true</code></pre></div><p>
+    To put the resource back into normal mode after your maintenance work is done, use
+    the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource maintenance <em class="replaceable">RESOURCE_ID</em> false</code></pre></div><div class="procedure" id="pro-ha-maint-mode-rsc-hawk2" data-id-title="Putting a resource into maintenance mode with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 28.5: </span><span class="title-name">Putting a resource into maintenance mode with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-maintenance.html#pro-ha-maint-mode-rsc-hawk2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Start a Web browser and log in to the cluster as described in
+     <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-login" title="5.4.2. Logging in">Section 5.4.2, “Logging in”</a>.
+    </p></li><li class="step"><p>
+     In the left navigation bar, select <span class="guimenu">Resources</span>.
+    </p></li><li class="step"><p>
+     Select the resource you want to put in maintenance mode or unmanaged mode,
+     click the wrench icon next to the resource and select <span class="guimenu">Edit
+     Resource</span>.
+    </p></li><li class="step"><p>
+     Open the <span class="guimenu">Meta Attributes</span> category.
+    </p></li><li class="step"><p>
+     From the empty drop-down list, select the <span class="guimenu">maintenance</span>
+     attribute and click the plus icon to add it.
+    </p></li><li class="step"><p>
+     Activate the check box next to <code class="literal">maintenance</code> to set the
+     maintenance attribute to <code class="literal">yes</code>.
+    </p></li><li class="step"><p>
+     Confirm your changes.
+    </p></li><li class="step"><p>
+     After you have finished the maintenance task for that resource, deactivate
+     the check box next to the <code class="literal">maintenance</code> attribute for
+     that resource.
+    </p><p>
+     From this point on, the resource will be managed by the High Availability software
+     again.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-rsc-unmanaged" data-id-title="Putting a resource into unmanaged mode"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.9 </span><span class="title-name">Putting a resource into unmanaged mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-rsc-unmanaged">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To put a resource into unmanaged mode on the crm shell, use the following command:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource unmanage <em class="replaceable">RESOURCE_ID</em></code></pre></div><p>
+    To put it into managed mode again after your maintenance work is done, use the
+    following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm resource manage <em class="replaceable">RESOURCE_ID</em></code></pre></div><div class="procedure" id="pro-ha-maint-rsc-unmanaged-hawk2" data-id-title="Putting a resource into unmanaged mode with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 28.6: </span><span class="title-name">Putting a resource into unmanaged mode with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-maintenance.html#pro-ha-maint-rsc-unmanaged-hawk2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Start a Web browser and log in to the cluster as described in
+     <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-login" title="5.4.2. Logging in">Section 5.4.2, “Logging in”</a>.
+    </p></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Status</span> and go to
+     the <span class="guimenu">Resources</span> list.
+    </p></li><li class="step"><p>
+     In the <span class="guimenu">Operations</span> column, click the arrow down icon
+     next to the resource you want to modify and select
+     <span class="guimenu">Edit</span>.
+    </p><p>
+     The resource configuration screen opens.
+    </p></li><li class="step"><p>
+     Below <span class="guimenu">Meta Attributes</span>, select the
+     <span class="guimenu">is-managed</span> entry from the empty drop-down box.
+    </p></li><li class="step"><p>
+     Set its value to <code class="literal">No</code> and click <span class="guimenu">Apply</span>.
+    </p></li><li class="step"><p>
+     After you have finished your maintenance task, set
+     <span class="guimenu">is-managed</span> to <code class="literal">Yes</code> (which is the
+     default value) and apply your changes.
+    </p><p>
+     From this point on, the resource will be managed by the High Availability software
+     again.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-shutdown-node-maint-mode" data-id-title="Rebooting a cluster node while in maintenance mode"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.10 </span><span class="title-name">Rebooting a cluster node while in maintenance mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-shutdown-node-maint-mode">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.6.3.12.2" data-id-title="Implications" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Implications</div><p>
+       If the cluster or a node is in maintenance mode, you can use tools external
+       to the cluster stack (for example, <code class="command">systemctl</code>) to manually
+       operate the components that are managed by the cluster as resources.
+       The High Availability software will not monitor them or attempt to restart them.
+      </p><p>
+       If you stop the cluster services on a node, all daemons and processes
+       (originally started as Pacemaker-managed cluster resources) will continue
+       to run.
+      </p><p>
+       If you attempt to start cluster services on a node while the cluster or
+       node is in maintenance mode, Pacemaker will initiate a single one-shot monitor
+       operation (a <span class="quote">“<span class="quote">probe</span>”</span>) for every resource to evaluate which
+       resources are currently running on that node. However, it will take no
+       further action other than determining the resources' status.
+      </p></div><div class="procedure" id="pro-ha-maint-reboot-node" data-id-title="Rebooting a cluster node while the cluster or node is in maintenance mode"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 28.7: </span><span class="title-name">Rebooting a cluster node while the cluster or node is in maintenance mode </span></span><a title="Permalink" class="permalink" href="cha-ha-maintenance.html#pro-ha-maint-reboot-node">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     On the node you want to reboot or shut down, log in as <code class="systemitem">root</code> or
+     equivalent.
+    </p></li><li class="step"><p>
+     If you have a DLM resource (or other resources depending on DLM), make
+     sure to explicitly stop those resources before stopping the cluster services:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)resource# </code><code class="command">stop <em class="replaceable">RESOURCE_ID</em></code></pre></div><p>
+     The reason is that stopping Pacemaker also stops the Corosync service on
+     whose membership and messaging services DLM depends. If Corosync stops,
+     the DLM resource will assume a split-brain scenario and trigger a fencing
+     operation.
+    </p></li><li class="step"><p>
+     Stop the cluster services on that node:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop</code></pre></div></li><li class="step"><p>
+     Shut down or reboot the node.
+    </p></li></ol></div></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="part-maintenance.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Part IV </span>Maintenance and upgrade</span></a> </div><div><a class="pagination-link next" href="cha-ha-migration.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 29 </span>Upgrading your cluster and updating software packages</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-outline"><span class="title-number">28.1 </span><span class="title-name">Preparing and finishing maintenance work</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-overview"><span class="title-number">28.2 </span><span class="title-name">Different options for maintenance tasks</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-mode-cluster"><span class="title-number">28.3 </span><span class="title-name">Putting the cluster into maintenance mode</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-cluster-stop"><span class="title-number">28.4 </span><span class="title-name">Stopping the cluster services for the whole cluster</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-mode-node"><span class="title-number">28.5 </span><span class="title-name">Putting a node into maintenance mode</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-node-standby"><span class="title-number">28.6 </span><span class="title-name">Putting a node into standby mode</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-shutdown-node"><span class="title-number">28.7 </span><span class="title-name">Stopping the cluster services on a node</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-mode-rsc"><span class="title-number">28.8 </span><span class="title-name">Putting a resource into maintenance mode</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-rsc-unmanaged"><span class="title-number">28.9 </span><span class="title-name">Putting a resource into unmanaged mode</span></a></span></li><li><span class="sect1"><a href="cha-ha-maintenance.html#sec-ha-maint-shutdown-node-maint-mode"><span class="title-number">28.10 </span><span class="title-name">Rebooting a cluster node while in maintenance mode</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

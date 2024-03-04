@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>SLE HA 15 SP2 | Installation and Setup Quick Start</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Installation and Setup Quick Start | SLE HA 15 SP2"/>
+<meta name="description" content="This document guides you through the setup of a very b…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP2"/>
+<meta name="book-title" content="Installation and Setup Quick Start"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15 SP2"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Installation and Setup Quick Start | SLE HA 15 SP2"/>
+<meta property="og:description" content="This document guides you through the setup of a very basic two-node cluster, using the bootstrap scripts provided by the ha-…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Installation and Setup Quick Start | SLE HA 15 SP2"/>
+<meta name="twitter:description" content="This document guides you through the setup of a very basic two-node cluster, using the bootstrap scripts provided by the ha-…"/>
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml"/></head><body class="draft single normal offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="#art-sleha-install-quick">Installation and Setup Quick Start</a></div></div><main id="_content"><nav class="side-toc placebo" id="_side-toc-overall"> </nav><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="article" id="art-sleha-install-quick" data-id-title="Installation and Setup Quick Start"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP2</span></div><div><div class="title-container"><h1 class="title">Installation and Setup Quick Start <a title="Permalink" class="permalink" href="#art-sleha-install-quick">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div><div class="date"><span class="imprint-label">Publication Date: </span>January 15, 2024
+</div><div><div class="abstract"><p>
+     This document guides you through the setup of a very basic two-node cluster,
+    using the bootstrap scripts provided by the
+    <code class="systemitem">ha-cluster-bootstrap</code> package.
+    This includes the configuration of a virtual IP address as a cluster
+    resource and the use of SBD on shared storage as a node fencing mechanism.
+   </p></div></div></div></div><div><div xml:lang="en" class="legalnotice" id="id-1.3.2.2.4"><p>
+  Copyright © 2006–2024
+
+  SUSE LLC and contributors. All rights reserved.
+ </p><p>
+  Permission is granted to copy, distribute and/or modify this document under
+  the terms of the GNU Free Documentation License, Version 1.2 or (at your
+  option) version 1.3; with the Invariant Section being this copyright notice
+  and license. A copy of the license version 1.2 is included in the section
+  entitled <span class="quote">“<span class="quote">GNU Free Documentation License</span>”</span>.
+ </p><p>
+  For SUSE trademarks, see
+  <a class="link" href="https://www.suse.com/company/legal/" target="_blank">https://www.suse.com/company/legal/</a>. All
+  third-party trademarks are the property of their respective owners. Trademark
+  symbols (®, ™ etc.) denote trademarks of SUSE and its affiliates.
+  Asterisks (*) denote third-party trademarks.
+ </p><p>
+  All information found in this book has been compiled with utmost attention to
+  detail. However, this does not guarantee complete accuracy. Neither
+  SUSE LLC, its affiliates, the authors nor the translators shall be
+  held liable for possible errors or the consequences thereof.
+ </p></div></div><section class="sect1" id="sec-ha-inst-quick-usage-scenario" data-id-title="Usage Scenario"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1 </span><span class="title-name">Usage Scenario</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-usage-scenario">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The procedures in this document will lead to a minimal setup of a two-node
+    cluster with the following properties:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Two nodes: <code class="systemitem">alice</code> (IP: <code class="systemitem">192.168.1.1</code>)
+      and <code class="systemitem">bob</code> (IP: <code class="systemitem">192.168.1.2</code>),
+      connected to each other via network.
+     </p></li><li class="listitem"><p>
+      A floating, virtual IP address (<code class="systemitem">192.168.2.1</code>)
+      that allows clients to connect to the service no matter which node it is running on.
+      This IP address is used to connect to the graphical management tool Hawk2.
+     </p></li><li class="listitem"><p>A shared storage device, used as SBD fencing mechanism.
+      This avoids split-brain scenarios.
+     </p></li><li class="listitem"><p>
+      Failover of resources from one node to the other if the active host breaks
+      down (<span class="emphasis"><em>active/passive</em></span> setup).
+     </p></li></ul></div><p>
+    You can use the two-node cluster for testing purposes or as a minimal
+    cluster configuration that you can extend later on. Before using the
+    cluster in a production environment, see <span class="intraxref">Book “Administration Guide”</span>
+    to modify the cluster according to your requirements.
+   </p></section><section class="sect1" id="sec-ha-inst-quick-req" data-id-title="System Requirements"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">2 </span><span class="title-name">System Requirements</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-req">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    This section informs you about the key system requirements for the
+    scenario described in <a class="xref" href="#sec-ha-inst-quick-usage-scenario" title="1. Usage Scenario">Section 1</a>.
+    To adjust the cluster for use in a production environment,
+    refer to the full list in <span class="intraxref">Book “Administration Guide”, Chapter 2 “System Requirements and Recommendations”</span>.
+   </p><section class="sect2" id="vl-ha-inst-quick-req-hw" data-id-title="Hardware Requirements"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">2.1 </span><span class="title-name">Hardware Requirements</span></span> <a title="Permalink" class="permalink" href="#vl-ha-inst-quick-req-hw">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.3.2.4.3.2.1"><span class="term">Servers</span></dt><dd><p>
+       Two servers with software as specified in <a class="xref" href="#il-ha-inst-quick-req-sw" title="2.2. Software Requirements">Section 2.2, “Software Requirements”</a>.
+      </p><p>
+      The servers can be bare metal or virtual machines. They do not require
+      identical hardware (memory, disk space, etc.), but they must have the
+      same architecture. Cross-platform clusters are not supported.
+     </p></dd><dt id="id-1.3.2.4.3.2.2"><span class="term">Communication Channels</span></dt><dd><p>
+       At least two TCP/IP communication media per cluster node.
+       The network equipment must support the communication means you want to use
+       for cluster communication: multicast or unicast. The communication
+       media should support a data rate of 100 Mbit/s or higher.
+       For a supported cluster setup two or more redundant communication paths
+       are required. This can be done via:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+          Network Device Bonding (preferred).
+         </p></li><li class="listitem"><p>
+          A second communication channel in Corosync.
+         </p></li></ul></div></dd><dt id="id-1.3.2.4.3.2.3"><span class="term">Node fencing/STONITH</span></dt><dd><p>
+       A node fencing (STONITH) device to avoid split-brain scenarios. This can
+       be either a physical device (a power switch) or a mechanism like SBD
+       (STONITH by disk) in combination with a watchdog. SBD can be used either
+       with shared storage or in diskless mode. This document describes using SBD
+       with shared storage. The following requirements must be met:
+      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         A shared storage device. For information on setting up shared storage, see
+         <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/book-storage.html" target="_blank">
+         Storage Administration Guide for SUSE Linux Enterprise Server</a>. If you only need basic shared storage for testing
+         purposes, see <a class="xref" href="#ha-iscsi-for-sbd" title="A. Basic iSCSI Storage for SBD">Appendix A, <em>Basic iSCSI Storage for SBD</em></a>.
+        </p></li><li class="listitem"><p>The path to the shared storage device must be persistent and
+         consistent across all nodes in the cluster. Use stable device names
+         such as <code class="filename">/dev/disk/by-id/dm-uuid-part1-mpath-abcedf12345</code>.
+        </p></li><li class="listitem"><p> The SBD device <span class="emphasis"><em>must not</em></span>
+         use host-based RAID, LVM, or DRBD*.
+        </p></li></ul></div><p>
+       For more information on STONITH, see <span class="intraxref">Book “Administration Guide”, Chapter 12 “Fencing and STONITH”</span>.
+       For more information on SBD, see <span class="intraxref">Book “Administration Guide”, Chapter 13 “Storage Protection and SBD”</span>.
+      </p></dd></dl></div></section><section class="sect2" id="il-ha-inst-quick-req-sw" data-id-title="Software Requirements"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">2.2 </span><span class="title-name">Software Requirements</span></span> <a title="Permalink" class="permalink" href="#il-ha-inst-quick-req-sw">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   All nodes that will be part of the cluster need at least the following modules
+   and extensions:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Base System Module 15 SP2</p></li><li class="listitem"><p>Server Applications Module 15 SP2</p></li><li class="listitem"><p>SUSE Linux Enterprise High Availability 15 SP2</p></li></ul></div></section><section class="sect2" id="vl-ha-inst-quick-req-other" data-id-title="Other Requirements and Recommendations"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">2.3 </span><span class="title-name">Other Requirements and Recommendations</span></span> <a title="Permalink" class="permalink" href="#vl-ha-inst-quick-req-other">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.3.2.4.5.2.1"><span class="term">Time Synchronization</span></dt><dd><p>
+     Cluster nodes must synchronize to an NTP server outside the cluster.
+     Since SUSE Linux Enterprise High Availability 15, chrony is the default implementation of NTP.
+     For more information, see the
+     <a class="link" href="https://documentation.suse.com/sles/15-SP2/html/SLES-all/cha-ntp.html" target="_blank">
+     Administration Guide for SUSE Linux Enterprise Server 15 SP2</a>.
+    </p><p>
+     The cluster might not work properly if the nodes are not synchronized,
+     or even if they are synchronized but have different timezones configured.
+     In addition, log files and cluster reports are very hard to analyze
+     without synchronization.
+     If you use the bootstrap scripts, you will be
+     warned if NTP is not configured yet.
+    </p></dd><dt id="id-1.3.2.4.5.2.2"><span class="term">Host Name and IP Address</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p> Use static IP addresses. </p></li><li class="listitem"><p>
+         Only the primary IP address is supported.
+        </p></li><li class="listitem"><p>
+     List all cluster nodes in the <code class="filename">/etc/hosts</code> file
+     with their fully qualified host name and short host name. It is essential that
+     members of the cluster can find each other by name. If the names are not
+     available, internal cluster communication will fail.
+   </p></li></ul></div></dd><dt id="id-1.3.2.4.5.2.3"><span class="term">SSH</span></dt><dd><p>
+    All cluster nodes must be able to access each other via SSH. Tools
+    like <code class="command">crm report</code> (for troubleshooting) and
+    Hawk2's <span class="guimenu">History Explorer</span> require passwordless
+    SSH access between the nodes,
+    otherwise they can only collect data from the current node.
+  </p><p> If you use the bootstrap scripts for setting up the
+       cluster, the SSH keys will automatically be created and copied. </p></dd></dl></div></section></section><section class="sect1" id="sec-ha-inst-quick-bootstrap" data-id-title="Overview of the Bootstrap Scripts"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">3 </span><span class="title-name">Overview of the Bootstrap Scripts</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-bootstrap">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   All commands from the <span class="package">ha-cluster-bootstrap</span> package
+   execute bootstrap scripts that require only a minimum of time and manual
+   intervention.
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     With <code class="command">ha-cluster-init</code>, define the basic parameters needed
+     for cluster communication. This leaves you with a running one-node cluster.
+    </p></li><li class="listitem"><p>
+     With <code class="command">ha-cluster-join</code>, add more nodes to your cluster.
+    </p></li><li class="listitem"><p>
+     With <code class="command">ha-cluster-remove</code>, remove nodes from your cluster.
+    </p></li></ul></div><p>
+   The options set by the bootstrap scripts might not be the same as the Pacemaker
+   default settings. You can check which settings the bootstrap scripts changed
+   in <code class="filename">/var/log/ha-cluster-bootstrap.log</code>. Any options set
+   during the bootstrap process can be modified later with the
+   YaST cluster module. See <span class="intraxref">Book “Administration Guide”, Chapter 4 “Using the YaST Cluster Module”</span>
+   for details.
+  </p><p>Each script comes with a man page covering the range of functions, the
+   script's options, and an overview of the files the script can create and modify.
+  </p><p>
+   The bootstrap script <code class="command">ha-cluster-init</code> checks and
+   configures the following components:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.3.2.5.7.1"><span class="term">NTP</span></dt><dd><p>
+      Checks if NTP is configured to start at boot time. If not, a message appears.
+     </p></dd><dt id="id-1.3.2.5.7.2"><span class="term">SSH</span></dt><dd><p>Creates SSH keys for passwordless login between cluster nodes.
+     </p></dd><dt id="id-1.3.2.5.7.3"><span class="term">Csync2</span></dt><dd><p>
+      Configures Csync2 to replicate configuration files across all nodes
+      in a cluster.
+     </p></dd><dt id="id-1.3.2.5.7.4"><span class="term">Corosync</span></dt><dd><p>Configures the cluster communication system.</p></dd><dt id="id-1.3.2.5.7.5"><span class="term">SBD/Watchdog</span></dt><dd><p>Checks if a watchdog exists and asks you whether to configure SBD
+      as node fencing mechanism.</p></dd><dt id="id-1.3.2.5.7.6"><span class="term">Virtual Floating IP</span></dt><dd><p>Asks you whether to configure a virtual IP address for cluster
+      administration with Hawk2.</p></dd><dt id="id-1.3.2.5.7.7"><span class="term">Firewall</span></dt><dd><p>Opens the ports in the firewall that are needed for cluster communication.</p></dd><dt id="id-1.3.2.5.7.8"><span class="term">Cluster Name</span></dt><dd><p>Defines a name for the cluster, by default
+        <code class="systemitem">hacluster</code>. This
+      is optional and mostly useful for Geo clusters. Usually, the cluster
+      name reflects the geographical location and makes it easier to distinguish a site
+      inside a Geo cluster.</p></dd><dt id="id-1.3.2.5.7.9"><span class="term">QDevice/QNetd</span></dt><dd><p>
+      Asks you whether to configure QDevice/QNetd to participate in
+      quorum decisions. We recommend using QDevice and QNetd for clusters
+      with an even number of nodes, and especially for two-node clusters.
+     </p><p>
+      This configuration is not covered here, but you can set it up later as
+      described in <span class="intraxref">Book “Administration Guide”, Chapter 14 “QDevice and QNetd”</span>.
+     </p></dd></dl></div></section><section class="sect1" id="sec-ha-inst-quick-installation" data-id-title="Installing the High Availability Packages"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4 </span><span class="title-name">Installing the High Availability Packages</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-installation">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      The packages for configuring and managing a cluster
+      are included in the <code class="literal">High Availability</code> installation pattern.
+      This pattern is only available after the SUSE Linux Enterprise High Availability is installed.
+    </p><p>
+      You can register to the SUSE Customer Center and install SUSE Linux Enterprise High Availability while installing SUSE Linux Enterprise Server,
+      or after installation. For more information, see the
+     <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/cha-register-sle.html" target="_blank">
+     Deployment Guide</a> for SUSE Linux Enterprise Server.
+    </p><div class="procedure" id="pro-ha-inst-quick-pattern" data-id-title="Installing the High Availability Pattern"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 1: </span><span class="title-name">Installing the High Availability Pattern </span></span><a title="Permalink" class="permalink" href="#pro-ha-inst-quick-pattern">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+        Install the High Availability pattern from the command line:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">zypper install -t pattern ha_sles</code></pre></div></li><li class="step"><p>
+          Install the High Availability pattern on <span class="emphasis"><em>all</em></span> machines that
+          will be part of your cluster.
+       </p><div id="id-1.3.2.6.4.3.2" data-id-title="Installing software packages on all nodes" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Installing software packages on all nodes</div><p>
+          For an automated installation of SUSE Linux Enterprise Server 15 SP2 and SUSE Linux Enterprise High Availability 15 SP2,
+          use AutoYaST to clone existing nodes. For more
+         information, see <span class="intraxref">Book “Administration Guide”, Chapter 3 “Installing SUSE Linux Enterprise High Availability”, Section 3.2 “Mass Installation and Deployment with AutoYaST”</span>.
+        </p></div></li></ol></div></div></section><section class="sect1" id="sec-ha-inst-quick-sbd" data-id-title="Using SBD for Node Fencing"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5 </span><span class="title-name">Using SBD for Node Fencing</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-sbd">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Before you can configure SBD with the bootstrap script, you must enable a watchdog
+    on each node. SUSE Linux Enterprise Server ships with several kernel modules that provide hardware-specific
+    watchdog drivers. SUSE Linux Enterprise High Availability uses the SBD daemon as the software component
+    that <span class="quote">“<span class="quote">feeds</span>”</span> the watchdog.
+   </p><p>
+    The following procedure uses the <code class="systemitem">softdog</code>
+    watchdog.
+   </p><div id="id-1.3.2.7.4" data-id-title="Softdog Limitations" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Softdog Limitations</div><p>
+     The softdog driver assumes that at least one CPU is still running. If
+     all CPUs are stuck, the code in the softdog driver that should reboot the
+     system will never be executed. In contrast, hardware watchdogs keep
+     working even if all CPUs are stuck.
+    </p><p>Before using the cluster in a production environment, we highly
+     recommend replacing the <code class="systemitem">softdog</code> module with the
+     hardware module that best fits your hardware.
+    </p><p>However, if no watchdog matches your hardware,
+     <code class="systemitem">softdog</code> can be used as kernel
+     watchdog module.</p></div><div class="procedure" id="pro-ha-inst-quick-sbd-setup" data-id-title="Enabling the softdog watchdog for SBD"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 2: </span><span class="title-name">Enabling the softdog watchdog for SBD </span></span><a title="Permalink" class="permalink" href="#pro-ha-inst-quick-sbd-setup">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      On each node, enable the softdog watchdog:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">echo softdog &gt; /etc/modules-load.d/watchdog.conf</code>
+<code class="prompt root"># </code><code class="command">systemctl restart systemd-modules-load</code></pre></div></li><li class="step"><p>Test if the softdog module is loaded correctly:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lsmod | grep dog</code>
+softdog           16384  1</pre></div></li></ol></div></div></section><section class="sect1" id="sec-ha-inst-quick-setup-1st-node" data-id-title="Setting Up the First Node"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6 </span><span class="title-name">Setting Up the First Node</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-setup-1st-node">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Set up the first node with the <code class="command">ha-cluster-init</code> script.
+   This requires only a minimum of time and manual intervention.
+  </p><div class="procedure" id="pro-ha-inst-quick-setup-ha-cluster-init" data-id-title="Setting Up the First Node (alice) with ha-cluster-init"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 3: </span><span class="title-name">Setting Up the First Node (<code class="systemitem">alice</code>) with
+    <code class="command">ha-cluster-init</code> </span></span><a title="Permalink" class="permalink" href="#pro-ha-inst-quick-setup-ha-cluster-init">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in as <code class="systemitem">root</code> to the physical or virtual machine to
+     use as cluster node.
+    </p></li><li class="step"><p>
+     Start the bootstrap script:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ha-cluster-init --name <em class="replaceable">CLUSTERNAME</em></code></pre></div><p>Replace the <em class="replaceable">CLUSTERNAME</em>
+     placeholder with a meaningful name, like the geographical location of your
+     cluster (for example, <code class="literal">amsterdam</code>).
+     This is especially helpful to create a Geo cluster later on,
+     as it simplifies the identification of a site.
+    </p><p>
+     If you need to use multicast instead of unicast (the default) for your cluster
+     communication, use the option <code class="option">--multicast</code> (or <code class="option">-U</code>).
+    </p><p>
+     The script checks for NTP configuration and a hardware watchdog service.
+     It generates the public and private SSH keys used for SSH access and
+     Csync2 synchronization and starts the respective services.
+    </p></li><li class="step"><p>
+     Configure the cluster communication layer (Corosync):
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       Enter a network address to bind to. By default, the script will
+       propose the network address of <code class="systemitem">eth0</code>.
+       Alternatively, enter a different network address, for example the
+       address of <code class="literal">bond0</code>.
+      </p></li><li class="step"><p>
+       Accept the proposed port (<code class="literal">5405</code>) or enter a different one.
+      </p></li></ol></li><li class="step"><p>
+    Set up SBD as the node fencing mechanism:</p><ol type="a" class="substeps"><li class="step"><p>Confirm with <code class="literal">y</code> that you want to use SBD.</p></li><li class="step"><p>Enter a persistent path to the partition of your block device that
+       you want to use for SBD.
+       The path must be consistent across all nodes in the cluster.</p><p>The script creates a small partition on the device to be used for SBD.</p></li></ol></li><li class="step" id="st-ha-cluster-init-ip"><p>Configure a virtual IP address for cluster administration with Hawk2:</p><ol type="a" class="substeps"><li class="step"><p>Confirm with <code class="literal">y</code> that you want to configure a
+      virtual IP address.</p></li><li class="step"><p>Enter an unused IP address that you want to use as administration IP
+       for Hawk2: <code class="literal">192.168.2.1</code>
+      </p><p>Instead of logging in to an individual cluster node with Hawk2,
+       you can connect to the virtual IP address.</p></li></ol></li><li class="step"><p>
+     Choose whether to configure QDevice and QNetd. For the minimal setup
+     described in this document, decline with <code class="literal">n</code> for now.
+     You can set up QDevice and QNetd later, as described in
+     <span class="intraxref">Book “Administration Guide”, Chapter 14 “QDevice and QNetd”</span>.
+    </p></li></ol></div></div><p>
+   Finally, the script will start the cluster services to bring the
+   cluster online and enable Hawk2. The URL to use for Hawk2 is
+   displayed on the screen.
+  </p><p>
+   You now have a running one-node cluster. To view its status, proceed as follows:
+  </p><div class="procedure" id="pro-ha-inst-quick-hawk2-login" data-id-title="Logging In to the Hawk2 Web Interface"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 4: </span><span class="title-name">Logging In to the Hawk2 Web Interface </span></span><a title="Permalink" class="permalink" href="#pro-ha-inst-quick-hawk2-login">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p> On any machine, start a Web browser and make sure that JavaScript and
+     cookies are enabled. </p></li><li class="step"><p>As URL, enter the virtual IP address that you configured with the bootstrap script:</p><div class="verbatim-wrap"><pre class="screen">https://192.168.2.1:7630/</pre></div><div id="id-1.3.2.8.6.3.3" data-id-title="Certificate Warning" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Certificate Warning</div><p> If a certificate warning appears when you try to access the URL for
+      the first time, a self-signed certificate is in use. Self-signed
+      certificates are not considered trustworthy by default. </p><p> Ask your cluster operator for the certificate details to verify the
+      certificate. </p><p> To proceed anyway, you can add an exception in the browser to bypass
+      the warning. </p></div></li><li class="step"><p> On the Hawk2 login screen, enter the
+      <span class="guimenu">Username</span> and <span class="guimenu">Password</span> of the
+       user that was created by the bootstrap script (user <code class="systemitem">hacluster</code>, password
+      <code class="literal">linux</code>).</p><div id="id-1.3.2.8.6.4.2" data-id-title="Secure Password" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Secure Password</div><p>Replace the default password with a secure one as soon as possible:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">passwd hacluster</code></pre></div></div></li><li class="step"><p>
+     Click <span class="guimenu">Log In</span>. The Hawk2 Web interface
+     shows the Status screen by default:
+    </p><div class="figure" id="fig-ha-inst-quick-one-node-status"><div class="figure-contents"><div class="mediaobject"><a href="images/installquick-one-nodecluster.png"><img src="images/installquick-one-nodecluster.png" width="80%" alt="Status of the One-Node Cluster in Hawk2" title="Status of the One-Node Cluster in Hawk2"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1: </span><span class="title-name">Status of the One-Node Cluster in Hawk2 </span></span><a title="Permalink" class="permalink" href="#fig-ha-inst-quick-one-node-status">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></li></ol></div></div></section><section class="sect1" id="sec-ha-inst-quick-setup-2nd-node" data-id-title="Adding the Second Node"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7 </span><span class="title-name">Adding the Second Node</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-setup-2nd-node">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Add a second node to the cluster with the <code class="command">ha-cluster-join</code>
+    bootstrap script.
+    The script only needs access to an existing cluster node and
+    will complete the basic setup on the current machine automatically.
+  </p><p>
+   For more information, see the <code class="command">ha-cluster-join</code> man page.
+  </p><div class="procedure" id="pro-ha-inst-quick-setup-ha-cluster-join" data-id-title="Adding the Second Node (bob) with ha-cluster-join"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5: </span><span class="title-name">Adding the Second Node (<code class="systemitem">bob</code>) with
+    <code class="command">ha-cluster-join</code> </span></span><a title="Permalink" class="permalink" href="#pro-ha-inst-quick-setup-ha-cluster-join">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in as <code class="systemitem">root</code> to the physical or virtual machine you want to add to the cluster.
+    </p></li><li class="step"><p>
+     Start the bootstrap script:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ha-cluster-join</code></pre></div><p>
+     If NTP has not been configured to start at boot time, a message
+     appears. The script also checks for a hardware watchdog device.
+     You are warned if none is present.
+    </p></li><li class="step"><p>
+     If you decide to continue anyway, you will be prompted for the IP
+     address of an existing node. Enter the IP address of the first node
+     (<code class="systemitem">alice</code>, <code class="systemitem">192.168.1.1</code>).
+    </p></li><li class="step"><p>
+     If you have not already configured passwordless SSH access between
+     both machines, you will be prompted for the <code class="systemitem">root</code> password
+     of the existing node.
+    </p><p>
+     After logging in to the specified node, the script will copy the
+     Corosync configuration, configure SSH and Csync2,
+     bring the current machine online as new cluster node, and
+     start the service needed for Hawk2. 
+    </p></li></ol></div></div><p>
+   Check the cluster status in Hawk2. Under <span class="guimenu">Status</span> › <span class="guimenu">Nodes</span> you should see two nodes with a green status:
+  </p><div class="figure" id="fig-ha-inst-quick-two-node-cluster"><div class="figure-contents"><div class="mediaobject"><a href="images/installquick-two-nodecluster-status.png"><img src="images/installquick-two-nodecluster-status.png" width="80%" alt="Status of the Two-Node Cluster" title="Status of the Two-Node Cluster"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 2: </span><span class="title-name">Status of the Two-Node Cluster </span></span><a title="Permalink" class="permalink" href="#fig-ha-inst-quick-two-node-cluster">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></section><section class="sect1" id="sec-ha-inst-quick-test" data-id-title="Testing the Cluster"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8 </span><span class="title-name">Testing the Cluster</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-test">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following tests can help you identify issues with the cluster setup.
+    However, a realistic test involves specific use cases and scenarios.
+    Before using the cluster in a production environment, test it thoroughly
+    according to your use cases.
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      The command <code class="command">sbd -d <em class="replaceable">DEVICE_NAME</em> list</code>
+      lists all of the nodes that are visible to SBD. For the setup described in
+      this document, the output should show both <code class="systemitem">alice</code>
+      and <code class="systemitem">bob</code>.
+     </p></li><li class="listitem"><p>
+      <a class="xref" href="#sec-ha-inst-quick-test-resource-failover" title="8.1. Testing Resource Failover">Section 8.1, “Testing Resource Failover”</a> is a simple test
+      to check if the cluster moves the virtual IP address to the other node if
+      the node that currently runs the resource is set to <code class="literal">standby</code>.
+     </p></li><li class="listitem"><p>
+      <a class="xref" href="#sec-ha-inst-quick-test-with-cluster-script" title="8.2. Testing with the crm cluster crash_test command">Section 8.2, “Testing with the <code class="command">crm cluster crash_test</code> command”</a> simulates cluster
+      failures and reports the results.
+     </p></li></ul></div><section class="sect2" id="sec-ha-inst-quick-test-resource-failover" data-id-title="Testing Resource Failover"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.1 </span><span class="title-name">Testing Resource Failover</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-test-resource-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     As a quick test, the following procedure checks on resource failovers:
+    </p><div class="procedure" id="pro-ha-inst-quick-test" data-id-title="Testing Resource Failover"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6: </span><span class="title-name">Testing Resource Failover </span></span><a title="Permalink" class="permalink" href="#pro-ha-inst-quick-test">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Open a terminal and ping <code class="systemitem">192.168.2.1</code>,
+      your virtual IP address:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ping 192.168.2.1</code></pre></div></li><li class="step"><p>
+      Log in to Hawk2.
+     </p></li><li class="step"><p>
+      Under <span class="guimenu">Status</span> › <span class="guimenu">Resources</span>,
+      check which node the virtual IP address (resource
+      <code class="systemitem">admin_addr</code>) is running on.
+      This procedure assumes the resource is running on <code class="systemitem">alice</code>.
+      </p></li><li class="step"><p>
+      Put <code class="systemitem">alice</code> into
+      <span class="guimenu">Standby</span> mode:
+     </p><div class="figure" id="fig-ha-inst-quick-standby"><div class="figure-contents"><div class="mediaobject"><a href="images/installquick-standby-node.png"><img src="images/installquick-standby-node.png" width="60%" alt="Node alice in Standby Mode" title="Node alice in Standby Mode"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 3: </span><span class="title-name">Node <code class="systemitem">alice</code> in Standby Mode </span></span><a title="Permalink" class="permalink" href="#fig-ha-inst-quick-standby">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+      Click <span class="guimenu">Status</span> › <span class="guimenu">Resources</span>. The resource <code class="systemitem">admin_addr</code>
+      has been migrated to <code class="systemitem">bob</code>.
+     </p></li></ol></div></div><p>
+    During the migration, you should see an uninterrupted flow of pings to
+    the virtual IP address. This shows that the cluster setup and the floating
+    IP work correctly. Cancel the <code class="command">ping</code> command with
+    <span class="keycap">Ctrl</span><span class="key-connector">–</span><span class="keycap">C</span>.
+   </p></section><section class="sect2" id="sec-ha-inst-quick-test-with-cluster-script" data-id-title="Testing with the crm cluster crash_test command"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.2 </span><span class="title-name">Testing with the <code class="command">crm cluster crash_test</code> command</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-test-with-cluster-script">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     The command <code class="command">crm cluster crash_test</code> triggers cluster failures to find
+     problems. Before you use your cluster in production, it is
+     recommended to use this command to make sure everything works as expected.
+    </p><p>
+     The command supports the following checks:
+    </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.3.2.10.5.4.1"><span class="term"><code class="option">--split-brain-iptables</code></span></dt><dd><p>
+        Simulates a split-brain scenario by blocking the Corosync port.
+        Checks whether one node can be fenced as expected.
+       </p></dd><dt id="id-1.3.2.10.5.4.2"><span class="term"><code class="option">--kill-sbd</code>/<code class="option">--kill-corosync</code>/
+       <code class="option">--kill-pacemakerd</code></span></dt><dd><p>
+        Kills the daemons for SBD, Corosync, and Pacemaker.
+        After running one of these tests, you can find a report in the
+        directory <code class="filename">/var/lib/crmsh/crash_test/</code>.
+        The report includes a test case description, action logging,
+        and an explanation of possible results.
+       </p></dd><dt id="id-1.3.2.10.5.4.3"><span class="term"><code class="option">--fence-node <em class="replaceable">NODE</em></code></span></dt><dd><p>
+        Fences a specific node passed from the command line.
+       </p></dd></dl></div><p>
+     For more information, see <code class="command">crm cluster crash_test --help</code>.
+    </p><div class="example" id="ex-test-with-cluster-script" data-id-title="Testing the cluster: node fencing"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 1: </span><span class="title-name">Testing the cluster: node fencing </span></span><a title="Permalink" class="permalink" href="#ex-test-with-cluster-script">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm_mon -1</code>
+Stack: corosync
+Current DC: alice (version ...) - partition with quorum
+Last updated: Fri Mar 03 14:40:21 2020
+Last change: Fri Mar 03 14:35:07 2020 by root via cibadmin on alice
+
+2 nodes configured
+1 resource configured
+
+Online: [ alice bob ]
+Active resources:
+
+ stonith-sbd    (stonith:external/sbd): Started alice
+
+<code class="prompt root"># </code><code class="command">crm cluster crash_test</code><code class="command"> --fence-node bob</code>
+
+==============================================
+Testcase:          Fence node bob
+Fence action:      reboot
+Fence timeout:     60
+
+!!! WARNING WARNING WARNING !!!
+THIS CASE MAY LEAD TO NODE BE FENCED.
+TYPE Yes TO CONTINUE, OTHER INPUTS WILL CANCEL THIS CASE [Yes/No](No): <code class="command">Yes</code>
+INFO: Trying to fence node "bob"
+INFO: Waiting 60s for node "bob" reboot...
+INFO: Node "bob" will be fenced by "alice"!
+INFO: Node "bob" was successfully fenced by "alice"</pre></div></div></div><p>
+      To watch <code class="systemitem">bob</code> change status during
+      the test, log in to Hawk2 and navigate to <span class="guimenu">Status</span> › <span class="guimenu">Nodes</span>.
+     </p></section></section><section class="sect1" id="sec-ha-inst-quick-next" data-id-title="Next Steps"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">9 </span><span class="title-name">Next Steps</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-next">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The bootstrap scripts provide a quick way to set up a basic High Availability cluster that
+    can be used for testing purposes. However, to expand this cluster into a functioning
+    High Availability cluster that can be used in production environments, more steps are recommended.
+   </p><div class="variablelist" id="vl-ha-inst-quick-next-rec" data-id-title="Recommended steps to complete the High Availability cluster setup"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Recommended steps to complete the High Availability cluster setup </span></span><a title="Permalink" class="permalink" href="#vl-ha-inst-quick-next-rec">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.3.2.11.3.2"><span class="term">Adding more nodes</span></dt><dd><p>
+       Add more nodes to the cluster using one of the following methods:
+      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         For individual nodes, use the <code class="command">crm cluster join</code> script
+         as described in <a class="xref" href="#sec-ha-inst-quick-setup-2nd-node" title="7. Adding the Second Node">Section 7, “Adding the Second Node”</a>.
+        </p></li><li class="listitem"><p>
+         For mass installation of multiple nodes, use AutoYaST as described in
+         <span class="intraxref">Book “Administration Guide”, Chapter 3 “Installing SUSE Linux Enterprise High Availability”, Section 3.2 “Mass Installation and Deployment with AutoYaST”</span>.
+        </p></li></ul></div><p>
+       A regular cluster can contain up to 32 nodes. With the <code class="systemitem">pacemaker_remote</code> service,
+       High Availability clusters can be extended to include additional nodes beyond this limit.
+       See <span class="intraxref">Article “Pacemaker Remote Quick Start”</span> for more details.
+      </p></dd><dt id="id-1.3.2.11.3.3"><span class="term">Configuring QDevice</span></dt><dd><p>
+       If the cluster has an even number of nodes, configure QDevice and QNetd to
+       participate in quorum decisions. QDevice provides a configurable number of votes,
+       allowing a cluster to sustain more node failures than the standard quorum rules allow.
+       For details, see <span class="intraxref">Book “Administration Guide”, Chapter 14 “QDevice and QNetd”</span>.
+      </p></dd><dt id="id-1.3.2.11.3.4"><span class="term">Enabling a hardware watchdog</span></dt><dd><p>
+       Before using the cluster in a production environment, replace the
+       <code class="literal">softdog</code> module with the hardware module that best fits your
+       hardware. For details, see <span class="intraxref">Book “Administration Guide”, Chapter 13 “Storage Protection and SBD”, Section 13.6 “Setting Up the Watchdog”</span>.
+      </p></dd></dl></div></section><section class="sect1" id="sec-ha-inst-quick-moreinfo" data-id-title="For More Information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10 </span><span class="title-name">For More Information</span></span> <a title="Permalink" class="permalink" href="#sec-ha-inst-quick-moreinfo">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_install_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     More documentation for this product is available at
+     <a class="link" href="https://documentation.suse.com/sle-ha/15-SP2" target="_blank">https://documentation.suse.com/sle-ha/15-SP2</a>.
+     For further configuration and administration tasks, see the comprehensive
+     <a class="link" href="https://documentation.suse.com/sle-ha/15-SP2/html/SLE-HA-all/book-sleha-guide.html" target="_blank">
+      Administration Guide</a>.
+    </p></section><section xml:lang="en" class="appendix" id="ha-iscsi-for-sbd" data-id-title="Basic iSCSI Storage for SBD"><div class="titlepage"><div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">A </span><span class="title-name">Basic iSCSI Storage for SBD</span></span> <a title="Permalink" class="permalink" href="#ha-iscsi-for-sbd">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    Use the following procedures to configure basic iSCSI storage to use with SBD.
+    These procedures are only recommended for testing purposes. Before using iSCSI in a
+    production environment, see
+    <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/cha-iscsi.html" target="_blank">
+    Storage Administration Guide for SUSE Linux Enterprise Server</a>.
+   </p></div></div></div></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Requirements </span></span><a title="Permalink" class="permalink" href="#id-1.3.2.13.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+    A SUSE Linux Enterprise Server virtual machine to act as the iSCSI target. This VM is not
+    part of the cluster.
+   </p></li><li class="listitem"><p>
+    Two virtual storage devices on the VM: a 20 GB device for the system,
+    and a 1 GB device for SBD.
+   </p></li><li class="listitem"><p>
+    Two SUSE Linux Enterprise Server nodes that have not been added to a High Availability cluster yet.
+   </p></li></ul></div><p>
+  First, set up an iSCSI target on the virtual machine:
+ </p><div class="procedure" id="pro-iscsi-for-sbd-target" data-id-title="Configuring an iSCSI Target"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure A..1: </span><span class="title-name">Configuring an iSCSI Target </span></span><a title="Permalink" class="permalink" href="#pro-iscsi-for-sbd-target">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Install the package <span class="package">yast2-iscsi-lio-server</span>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">zypper install yast2-iscsi-lio-server</code></pre></div></li><li class="step"><p>
+    Start the <code class="literal">iscsi-lio-server</code> module in YaST:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">yast2 iscsi-lio-server</code></pre></div></li><li class="step"><p>
+    In the <span class="guimenu">Service</span> tab, under <span class="guimenu">After reboot</span>, select
+    <span class="guimenu">Start on boot</span>.
+   </p></li><li class="step"><p>
+    Activate <span class="guimenu">Open Port in Firewall</span>.
+   </p></li><li class="step"><p>
+    In the <span class="guimenu">Discovery</span> tab, activate <span class="guimenu">Discovery Authentication</span>.
+    </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Targets</span>, enter a <span class="guimenu">Username</span>
+    and <span class="guimenu">Password</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Initiators</span>, enter a
+    <span class="guimenu">Mutual Username</span> and <span class="guimenu">Mutual Password</span>.
+    This password must be different from the <span class="guimenu">Authentication by Targets</span> password.
+   </p></li><li class="step"><p>
+    In the <span class="guimenu">Target</span> tab, select <span class="guimenu">Add</span>.
+   </p></li><li class="step"><p>
+    Change the <span class="guimenu">Target</span> name by replacing <code class="literal">.com.example</code>.
+   </p></li><li class="step"><p>
+    Add the <span class="guimenu">IP Address</span> of the server.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Add</span>.
+   </p></li><li class="step"><p>
+    In the <span class="guimenu">LUN Details</span> window, enter the <span class="guimenu">LUN Path</span> to the 1 GB storage device (for example, <code class="filename">/dev/vbd</code>).
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Ok</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Next</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Finish</span> to close YaST.
+   </p></li><li class="step"><p>
+    To check the target setup, switch to the target CLI:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">targetcli</code></pre></div><p>
+    Show the configuration:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">/&gt; </code><code class="command">ls</code></pre></div></li></ol></div></div><p>
+  Next, set up iSCSI initiators on the nodes. Repeat this procedure on both nodes:
+ </p><div class="procedure" id="pro-iscsi-for-sbd-clients" data-id-title="Configuring an iSCSI Initiator"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure A..2: </span><span class="title-name">Configuring an iSCSI Initiator </span></span><a title="Permalink" class="permalink" href="#pro-iscsi-for-sbd-clients">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Install the package <span class="package">yast2-iscsi-client</span>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">zypper install yast2-iscsi-client</code></pre></div></li><li class="step"><p>
+    Start the <code class="literal">iscsid</code> service:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl start iscsid</code></pre></div></li><li class="step"><p>
+    Open the <code class="literal">iscsi-client</code> module in YaST:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">yast2 iscsi-client</code></pre></div></li><li class="step"><p>
+    In the <span class="guimenu">Discovered Targets</span> tab, select <span class="guimenu">Discovery</span>.
+   </p></li><li class="step"><p>
+    Enter the IP address of the iSCSI target.
+   </p></li><li class="step"><p>
+    Clear <span class="guimenu">No Discovery Authentication</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Initiator</span>, enter the initiator
+    <span class="guimenu">Username</span> and <span class="guimenu">Password</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Targets</span>, enter the target
+    <span class="guimenu">Username</span> and <span class="guimenu">Password</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Next</span>.
+   </p></li><li class="step"><p>
+    After YaST discovers the iSCSI target, select <span class="guimenu">Connect</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Startup</span>, select <span class="guimenu">onboot</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Next</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Ok</span> to close YaST.
+   </p></li><li class="step"><p>
+    Check the iSCSI initiator:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lsscsi</code>
+[0:0:1:0] cd/dvd QEMU QEMU DVD-ROM 2.5+ /dev/sr0
+[2:0:0:0] disk LIO-ORG IBLOCK 4.0 /dev/sda</pre></div><p>
+    Look for a line with <code class="literal">IBLOCK</code>. In this example,
+    the iSCSI device is <code class="literal">/dev/sda</code>.
+   </p></li><li class="step"><p>
+    Check the status of the <code class="literal">iscsid</code> service:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl status iscsid</code></pre></div></li></ol></div></div><p>
+  You can find the stable device name in <code class="filename">/dev/disk/by-id/</code>.
+  Usually, an iSCSI device starts with <code class="literal">scsi-SLIO-ORG_IBLOCK</code>.
+ </p><p>
+  If you have multiple disks, you can run the command <code class="command">lsblk -o name,serial</code>
+   to confirm which stable device name corresponds to which short name (for example,
+   <code class="filename">/dev/sda</code>).
+ </p><p>
+  When you configure the cluster, specify the stable device name using one of these methods:
+ </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    When you run <code class="command">crm cluster init</code>, enter the stable device name when prompted.
+   </p></li><li class="listitem"><p>
+    Before running <code class="command">crm cluster init</code>, add the stable device name
+    to <code class="filename">/etc/sysconfig/sbd</code>:
+   </p><div class="verbatim-wrap"><pre class="screen">SBD_DEVICE=/dev/disk/by-id/scsi-SLIO-ORG_IBLOCK_<em class="replaceable">DEVICE_ID_STRING</em></pre></div><p>
+    When you run <code class="command">crm cluster init</code>, answer <code class="literal">n</code>
+    for this question:
+   </p><div class="verbatim-wrap"><pre class="screen">SBD is already configured to use /dev/disk/by-id/scsi-SLIO-ORG_IBLOCK_... - overwrite (y/n)?</pre></div></li></ul></div></section><div class="legal-section"><section class="appendix" id="id-1.3.2.14" data-id-title="GNU licenses"><div class="titlepage"><div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">B </span><span class="title-name">GNU licenses</span></span> <a title="Permalink" class="permalink" href="#id-1.3.2.14">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_legal.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  This appendix contains the GNU Free Documentation License version 1.2.
+ </p><section class="sect1" id="id-1.3.2.14.4" data-id-title="GNU Free Documentation License"><div class="titlepage"><div><div><div class="title-container"><h2 class="title legal"><span class="title-number-name"><span class="title-name">GNU Free Documentation License</span></span> <a title="Permalink" class="permalink" href="#id-1.3.2.14.4">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_license_gfdl1.2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Copyright (C) 2000, 2001, 2002 Free Software Foundation, Inc. 51 Franklin St,
+  Fifth Floor, Boston, MA 02110-1301 USA. Everyone is permitted to copy and
+  distribute verbatim copies of this license document, but changing it is not
+  allowed.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.4"><span class="name">
+    0. PREAMBLE
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.4">#</a></h5></div><p>
+  The purpose of this License is to make a manual, textbook, or other
+  functional and useful document "free" in the sense of freedom: to assure
+  everyone the effective freedom to copy and redistribute it, with or without
+  modifying it, either commercially or non-commercially. Secondarily, this
+  License preserves for the author and publisher a way to get credit for their
+  work, while not being considered responsible for modifications made by
+  others.
+ </p><p>
+  This License is a kind of "copyleft", which means that derivative works of
+  the document must themselves be free in the same sense. It complements the
+  GNU General Public License, which is a copyleft license designed for free
+  software.
+ </p><p>
+  We have designed this License to use it for manuals for free software,
+  because free software needs free documentation: a free program should come
+  with manuals providing the same freedoms that the software does. But this
+  License is not limited to software manuals; it can be used for any textual
+  work, regardless of subject matter or whether it is published as a printed
+  book. We recommend this License principally for works whose purpose is
+  instruction or reference.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.8"><span class="name">
+    1. APPLICABILITY AND DEFINITIONS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.8">#</a></h5></div><p>
+  This License applies to any manual or other work, in any medium, that
+  contains a notice placed by the copyright holder saying it can be distributed
+  under the terms of this License. Such a notice grants a world-wide,
+  royalty-free license, unlimited in duration, to use that work under the
+  conditions stated herein. The "Document", below, refers to any such manual or
+  work. Any member of the public is a licensee, and is addressed as "you". You
+  accept the license if you copy, modify or distribute the work in a way
+  requiring permission under copyright law.
+ </p><p>
+  A "Modified Version" of the Document means any work containing the Document
+  or a portion of it, either copied verbatim, or with modifications and/or
+  translated into another language.
+ </p><p>
+  A "Secondary Section" is a named appendix or a front-matter section of the
+  Document that deals exclusively with the relationship of the publishers or
+  authors of the Document to the Document's overall subject (or to related
+  matters) and contains nothing that could fall directly within that overall
+  subject. (Thus, if the Document is in part a textbook of mathematics, a
+  Secondary Section may not explain any mathematics.) The relationship could be
+  a matter of historical connection with the subject or with related matters,
+  or of legal, commercial, philosophical, ethical or political position
+  regarding them.
+ </p><p>
+  The "Invariant Sections" are certain Secondary Sections whose titles are
+  designated, as being those of Invariant Sections, in the notice that says
+  that the Document is released under this License. If a section does not fit
+  the above definition of Secondary then it is not allowed to be designated as
+  Invariant. The Document may contain zero Invariant Sections. If the Document
+  does not identify any Invariant Sections then there are none.
+ </p><p>
+  The "Cover Texts" are certain short passages of text that are listed, as
+  Front-Cover Texts or Back-Cover Texts, in the notice that says that the
+  Document is released under this License. A Front-Cover Text may be at most 5
+  words, and a Back-Cover Text may be at most 25 words.
+ </p><p>
+  A "Transparent" copy of the Document means a machine-readable copy,
+  represented in a format whose specification is available to the general
+  public, that is suitable for revising the document straightforwardly with
+  generic text editors or (for images composed of pixels) generic paint
+  programs or (for drawings) some widely available drawing editor, and that is
+  suitable for input to text formatters or for automatic translation to a
+  variety of formats suitable for input to text formatters. A copy made in an
+  otherwise Transparent file format whose markup, or absence of markup, has
+  been arranged to thwart or discourage subsequent modification by readers is
+  not Transparent. An image format is not Transparent if used for any
+  substantial amount of text. A copy that is not "Transparent" is called
+  "Opaque".
+ </p><p>
+  Examples of suitable formats for Transparent copies include plain ASCII
+  without markup, Texinfo input format, LaTeX input format, SGML or XML using a
+  publicly available DTD, and standard-conforming simple HTML, PostScript or
+  PDF designed for human modification. Examples of transparent image formats
+  include PNG, XCF and JPG. Opaque formats include proprietary formats that can
+  be read and edited only by proprietary word processors, SGML or XML for which
+  the DTD and/or processing tools are not generally available, and the
+  machine-generated HTML, PostScript or PDF produced by some word processors
+  for output purposes only.
+ </p><p>
+  The "Title Page" means, for a printed book, the title page itself, plus such
+  following pages as are needed to hold, legibly, the material this License
+  requires to appear in the title page. For works in formats which do not have
+  any title page as such, "Title Page" means the text near the most prominent
+  appearance of the work's title, preceding the beginning of the body of the
+  text.
+ </p><p>
+  A section "Entitled XYZ" means a named subunit of the Document whose title
+  either is precisely XYZ or contains XYZ in parentheses following text that
+  translates XYZ in another language. (Here XYZ stands for a specific section
+  name mentioned below, such as "Acknowledgements", "Dedications",
+  "Endorsements", or "History".) To "Preserve the Title" of such a section when
+  you modify the Document means that it remains a section "Entitled XYZ"
+  according to this definition.
+ </p><p>
+  The Document may include Warranty Disclaimers next to the notice which states
+  that this License applies to the Document. These Warranty Disclaimers are
+  considered to be included by reference in this License, but only as regards
+  disclaiming warranties: any other implication that these Warranty Disclaimers
+  may have is void and has no effect on the meaning of this License.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.19"><span class="name">
+    2. VERBATIM COPYING
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.19">#</a></h5></div><p>
+  You may copy and distribute the Document in any medium, either commercially
+  or non-commercially, provided that this License, the copyright notices, and
+  the license notice saying this License applies to the Document are reproduced
+  in all copies, and that you add no other conditions whatsoever to those of
+  this License. You may not use technical measures to obstruct or control the
+  reading or further copying of the copies you make or distribute. However, you
+  may accept compensation in exchange for copies. If you distribute a large
+  enough number of copies you must also follow the conditions in section 3.
+ </p><p>
+  You may also lend copies, under the same conditions stated above, and you may
+  publicly display copies.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.22"><span class="name">
+    3. COPYING IN QUANTITY
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.22">#</a></h5></div><p>
+  If you publish printed copies (or copies in media that commonly have printed
+  covers) of the Document, numbering more than 100, and the Document's license
+  notice requires Cover Texts, you must enclose the copies in covers that
+  carry, clearly and legibly, all these Cover Texts: Front-Cover Texts on the
+  front cover, and Back-Cover Texts on the back cover. Both covers must also
+  clearly and legibly identify you as the publisher of these copies. The front
+  cover must present the full title with all words of the title equally
+  prominent and visible. You may add other material on the covers in addition.
+  Copying with changes limited to the covers, as long as they preserve the
+  title of the Document and satisfy these conditions, can be treated as
+  verbatim copying in other respects.
+ </p><p>
+  If the required texts for either cover are too voluminous to fit legibly, you
+  should put the first ones listed (as many as fit reasonably) on the actual
+  cover, and continue the rest onto adjacent pages.
+ </p><p>
+  If you publish or distribute Opaque copies of the Document numbering more
+  than 100, you must either include a machine-readable Transparent copy along
+  with each Opaque copy, or state in or with each Opaque copy a
+  computer-network location from which the general network-using public has
+  access to download using public-standard network protocols a complete
+  Transparent copy of the Document, free of added material. If you use the
+  latter option, you must take reasonably prudent steps, when you begin
+  distribution of Opaque copies in quantity, to ensure that this Transparent
+  copy will remain thus accessible at the stated location until at least one
+  year after the last time you distribute an Opaque copy (directly or through
+  your agents or retailers) of that edition to the public.
+ </p><p>
+  It is requested, but not required, that you contact the authors of the
+  Document well before redistributing any large number of copies, to give them
+  a chance to provide you with an updated version of the Document.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.27"><span class="name">
+    4. MODIFICATIONS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.27">#</a></h5></div><p>
+  You may copy and distribute a Modified Version of the Document under the
+  conditions of sections 2 and 3 above, provided that you release the Modified
+  Version under precisely this License, with the Modified Version filling the
+  role of the Document, thus licensing distribution and modification of the
+  Modified Version to whoever possesses a copy of it. In addition, you must do
+  these things in the Modified Version:
+ </p><div class="orderedlist"><ol class="orderedlist" type="A"><li class="listitem"><p>
+    Use in the Title Page (and on the covers, if any) a title distinct from
+    that of the Document, and from those of previous versions (which should, if
+    there were any, be listed in the History section of the Document). You may
+    use the same title as a previous version if the original publisher of that
+    version gives permission.
+   </p></li><li class="listitem"><p>
+    List on the Title Page, as authors, one or more persons or entities
+    responsible for authorship of the modifications in the Modified Version,
+    together with at least five of the principal authors of the Document (all
+    of its principal authors, if it has fewer than five), unless they release
+    you from this requirement.
+   </p></li><li class="listitem"><p>
+    State on the Title page the name of the publisher of the Modified Version,
+    as the publisher.
+   </p></li><li class="listitem"><p>
+    Preserve all the copyright notices of the Document.
+   </p></li><li class="listitem"><p>
+    Add an appropriate copyright notice for your modifications adjacent to the
+    other copyright notices.
+   </p></li><li class="listitem"><p>
+    Include, immediately after the copyright notices, a license notice giving
+    the public permission to use the Modified Version under the terms of this
+    License, in the form shown in the Addendum below.
+   </p></li><li class="listitem"><p>
+    Preserve in that license notice the full lists of Invariant Sections and
+    required Cover Texts given in the Document's license notice.
+   </p></li><li class="listitem"><p>
+    Include an unaltered copy of this License.
+   </p></li><li class="listitem"><p>
+    Preserve the section Entitled "History", Preserve its Title, and add to it
+    an item stating at least the title, year, new authors, and publisher of the
+    Modified Version as given on the Title Page. If there is no section
+    Entitled "History" in the Document, create one stating the title, year,
+    authors, and publisher of the Document as given on its Title Page, then add
+    an item describing the Modified Version as stated in the previous sentence.
+   </p></li><li class="listitem"><p>
+    Preserve the network location, if any, given in the Document for public
+    access to a Transparent copy of the Document, and likewise the network
+    locations given in the Document for previous versions it was based on.
+    These may be placed in the "History" section. You may omit a network
+    location for a work that was published at least four years before the
+    Document itself, or if the original publisher of the version it refers to
+    gives permission.
+   </p></li><li class="listitem"><p>
+    For any section Entitled "Acknowledgements" or "Dedications", Preserve the
+    Title of the section, and preserve in the section all the substance and
+    tone of each of the contributor acknowledgements and/or dedications given
+    therein.
+   </p></li><li class="listitem"><p>
+    Preserve all the Invariant Sections of the Document, unaltered in their
+    text and in their titles. Section numbers or the equivalent are not
+    considered part of the section titles.
+   </p></li><li class="listitem"><p>
+    Delete any section Entitled "Endorsements". Such a section may not be
+    included in the Modified Version.
+   </p></li><li class="listitem"><p>
+    Do not retitle any existing section to be Entitled "Endorsements" or to
+    conflict in title with any Invariant Section.
+   </p></li><li class="listitem"><p>
+    Preserve any Warranty Disclaimers.
+   </p></li></ol></div><p>
+  If the Modified Version includes new front-matter sections or appendices that
+  qualify as Secondary Sections and contain no material copied from the
+  Document, you may at your option designate some or all of these sections as
+  invariant. To do this, add their titles to the list of Invariant Sections in
+  the Modified Version's license notice. These titles must be distinct from any
+  other section titles.
+ </p><p>
+  You may add a section Entitled "Endorsements", provided it contains nothing
+  but endorsements of your Modified Version by various parties--for example,
+  statements of peer review or that the text has been approved by an
+  organization as the authoritative definition of a standard.
+ </p><p>
+  You may add a passage of up to five words as a Front-Cover Text, and a
+  passage of up to 25 words as a Back-Cover Text, to the end of the list of
+  Cover Texts in the Modified Version. Only one passage of Front-Cover Text and
+  one of Back-Cover Text may be added by (or through arrangements made by) any
+  one entity. If the Document already includes a cover text for the same cover,
+  previously added by you or by arrangement made by the same entity you are
+  acting on behalf of, you may not add another; but you may replace the old
+  one, on explicit permission from the previous publisher that added the old
+  one.
+ </p><p>
+  The author(s) and publisher(s) of the Document do not by this License give
+  permission to use their names for publicity for or to assert or imply
+  endorsement of any Modified Version.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.34"><span class="name">
+    5. COMBINING DOCUMENTS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.34">#</a></h5></div><p>
+  You may combine the Document with other documents released under this
+  License, under the terms defined in section 4 above for modified versions,
+  provided that you include in the combination all of the Invariant Sections of
+  all of the original documents, unmodified, and list them all as Invariant
+  Sections of your combined work in its license notice, and that you preserve
+  all their Warranty Disclaimers.
+ </p><p>
+  The combined work need only contain one copy of this License, and multiple
+  identical Invariant Sections may be replaced with a single copy. If there are
+  multiple Invariant Sections with the same name but different contents, make
+  the title of each such section unique by adding at the end of it, in
+  parentheses, the name of the original author or publisher of that section if
+  known, or else a unique number. Make the same adjustment to the section
+  titles in the list of Invariant Sections in the license notice of the
+  combined work.
+ </p><p>
+  In the combination, you must combine any sections Entitled "History" in the
+  various original documents, forming one section Entitled "History"; likewise
+  combine any sections Entitled "Acknowledgements", and any sections Entitled
+  "Dedications". You must delete all sections Entitled "Endorsements".
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.38"><span class="name">
+    6. COLLECTIONS OF DOCUMENTS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.38">#</a></h5></div><p>
+  You may make a collection consisting of the Document and other documents
+  released under this License, and replace the individual copies of this
+  License in the various documents with a single copy that is included in the
+  collection, provided that you follow the rules of this License for verbatim
+  copying of each of the documents in all other respects.
+ </p><p>
+  You may extract a single document from such a collection, and distribute it
+  individually under this License, provided you insert a copy of this License
+  into the extracted document, and follow this License in all other respects
+  regarding verbatim copying of that document.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.41"><span class="name">
+    7. AGGREGATION WITH INDEPENDENT WORKS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.41">#</a></h5></div><p>
+  A compilation of the Document or its derivatives with other separate and
+  independent documents or works, in or on a volume of a storage or
+  distribution medium, is called an "aggregate" if the copyright resulting from
+  the compilation is not used to limit the legal rights of the compilation's
+  users beyond what the individual works permit. When the Document is included
+  in an aggregate, this License does not apply to the other works in the
+  aggregate which are not themselves derivative works of the Document.
+ </p><p>
+  If the Cover Text requirement of section 3 is applicable to these copies of
+  the Document, then if the Document is less than one half of the entire
+  aggregate, the Document's Cover Texts may be placed on covers that bracket
+  the Document within the aggregate, or the electronic equivalent of covers if
+  the Document is in electronic form. Otherwise they must appear on printed
+  covers that bracket the whole aggregate.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.44"><span class="name">
+    8. TRANSLATION
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.44">#</a></h5></div><p>
+  Translation is considered a kind of modification, so you may distribute
+  translations of the Document under the terms of section 4. Replacing
+  Invariant Sections with translations requires special permission from their
+  copyright holders, but you may include translations of some or all Invariant
+  Sections in addition to the original versions of these Invariant Sections.
+  You may include a translation of this License, and all the license notices in
+  the Document, and any Warranty Disclaimers, provided that you also include
+  the original English version of this License and the original versions of
+  those notices and disclaimers. In case of a disagreement between the
+  translation and the original version of this License or a notice or
+  disclaimer, the original version will prevail.
+ </p><p>
+  If a section in the Document is Entitled "Acknowledgements", "Dedications",
+  or "History", the requirement (section 4) to Preserve its Title (section 1)
+  will typically require changing the actual title.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.47"><span class="name">
+    9. TERMINATION
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.47">#</a></h5></div><p>
+  You may not copy, modify, sublicense, or distribute the Document except as
+  expressly provided for under this License. Any other attempt to copy, modify,
+  sublicense or distribute the Document is void, and will automatically
+  terminate your rights under this License. However, parties who have received
+  copies, or rights, from you under this License will not have their licenses
+  terminated so long as such parties remain in full compliance.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.49"><span class="name">
+    10. FUTURE REVISIONS OF THIS LICENSE
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.49">#</a></h5></div><p>
+  The Free Software Foundation may publish new, revised versions of the GNU
+  Free Documentation License from time to time. Such new versions will be
+  similar in spirit to the present version, but may differ in detail to address
+  new problems or concerns. See
+  <a class="link" href="https://www.gnu.org/copyleft/" target="_blank">https://www.gnu.org/copyleft/</a>.
+ </p><p>
+  Each version of the License is given a distinguishing version number. If the
+  Document specifies that a particular numbered version of this License "or any
+  later version" applies to it, you have the option of following the terms and
+  conditions either of that specified version or of any later version that has
+  been published (not as a draft) by the Free Software Foundation. If the
+  Document does not specify a version number of this License, you may choose
+  any version ever published (not as a draft) by the Free Software Foundation.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.2.14.4.52"><span class="name">
+    ADDENDUM: How to use this License for your documents
+  </span><a title="Permalink" class="permalink" href="#id-1.3.2.14.4.52">#</a></h5></div><div class="verbatim-wrap"><pre class="screen">Copyright (c) YEAR YOUR NAME.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled “GNU
+Free Documentation License”.</pre></div><p>
+  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+  replace the “with...Texts.” line with this:
+ </p><div class="verbatim-wrap"><pre class="screen">with the Invariant Sections being LIST THEIR TITLES, with the
+Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.</pre></div><p>
+  If you have Invariant Sections without Cover Texts, or some other combination
+  of the three, merge those two alternatives to suit the situation.
+ </p><p>
+  If your document contains nontrivial examples of program code, we recommend
+  releasing these examples in parallel under your choice of free software
+  license, such as the GNU General Public License, to permit their use in free
+  software.
+ </p></section></section></div></section></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="#sec-ha-inst-quick-usage-scenario"><span class="title-number">1 </span><span class="title-name">Usage Scenario</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-req"><span class="title-number">2 </span><span class="title-name">System Requirements</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-bootstrap"><span class="title-number">3 </span><span class="title-name">Overview of the Bootstrap Scripts</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-installation"><span class="title-number">4 </span><span class="title-name">Installing the High Availability Packages</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-sbd"><span class="title-number">5 </span><span class="title-name">Using SBD for Node Fencing</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-setup-1st-node"><span class="title-number">6 </span><span class="title-name">Setting Up the First Node</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-setup-2nd-node"><span class="title-number">7 </span><span class="title-name">Adding the Second Node</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-test"><span class="title-number">8 </span><span class="title-name">Testing the Cluster</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-next"><span class="title-number">9 </span><span class="title-name">Next Steps</span></a></span></li><li><span class="sect1"><a href="#sec-ha-inst-quick-moreinfo"><span class="title-number">10 </span><span class="title-name">For More Information</span></a></span></li><li><span class="appendix"><a href="#ha-iscsi-for-sbd"><span class="title-number">A </span><span class="title-name">Basic iSCSI Storage for SBD</span></a></span></li><li><span class="appendix"><a href="#id-1.3.2.14"><span class="title-number">B </span><span class="title-name">GNU licenses</span></a></span><ul><li><span class="sect1"><a href="#id-1.3.2.14.4"><span class="title-number">B.1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

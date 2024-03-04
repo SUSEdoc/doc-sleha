@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>SLE HA 15 SP2 | Geo Clustering Quick Start</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Geo Clustering Quick Start | SLE HA 15 SP2"/>
+<meta name="description" content="Geo clustering protects workloads across globally dist…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP2"/>
+<meta name="book-title" content="Geo Clustering Quick Start"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15 SP2"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Geo Clustering Quick Start | SLE HA 15 SP2"/>
+<meta property="og:description" content="Geo clustering protects workloads across globally distributed data centers. This document guides you through the basic setup…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Geo Clustering Quick Start | SLE HA 15 SP2"/>
+<meta name="twitter:description" content="Geo clustering protects workloads across globally distributed data centers. This document guides you through the basic setup…"/>
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml"/></head><body class="draft single normal offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="#art-sleha-geo-quick">Geo Clustering Quick Start</a></div></div><main id="_content"><nav class="side-toc placebo" id="_side-toc-overall"> </nav><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="article" id="art-sleha-geo-quick" data-id-title="Geo Clustering Quick Start"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP2</span></div><div><div class="title-container"><h1 class="title">Geo Clustering Quick Start <a title="Permalink" class="permalink" href="#art-sleha-geo-quick">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div><div class="date"><span class="imprint-label">Publication Date: </span>January 15, 2024
+</div><div><div class="abstract"><p>
+     Geo clustering protects workloads across globally distributed data
+   centers. This document guides you through the basic setup of a
+   Geo cluster, using the Geo bootstrap scripts provided by the
+   <code class="systemitem">ha-cluster-bootstrap</code>
+   package.
+   </p></div></div></div></div><div><div xml:lang="en" class="legalnotice" id="id-1.3.3.2.4"><p>
+  Copyright © 2006–2024
+
+  SUSE LLC and contributors. All rights reserved.
+ </p><p>
+  Permission is granted to copy, distribute and/or modify this document under
+  the terms of the GNU Free Documentation License, Version 1.2 or (at your
+  option) version 1.3; with the Invariant Section being this copyright notice
+  and license. A copy of the license version 1.2 is included in the section
+  entitled <span class="quote">“<span class="quote">GNU Free Documentation License</span>”</span>.
+ </p><p>
+  For SUSE trademarks, see
+  <a class="link" href="https://www.suse.com/company/legal/" target="_blank">https://www.suse.com/company/legal/</a>. All
+  third-party trademarks are the property of their respective owners. Trademark
+  symbols (®, ™ etc.) denote trademarks of SUSE and its affiliates.
+  Asterisks (*) denote third-party trademarks.
+ </p><p>
+  All information found in this book has been compiled with utmost attention to
+  detail. However, this does not guarantee complete accuracy. Neither
+  SUSE LLC, its affiliates, the authors nor the translators shall be
+  held liable for possible errors or the consequences thereof.
+ </p></div></div><section class="sect1" id="sec-ha-geo-quick-concept" data-id-title="Conceptual Overview"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1 </span><span class="title-name">Conceptual Overview</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-concept">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Geo clusters based on SUSE® Linux Enterprise High Availability can be considered
+   <span class="quote">“<span class="quote">overlay</span>”</span> clusters where each cluster site corresponds to a
+   cluster node in a traditional cluster. The overlay cluster is managed by the
+   booth cluster ticket manager (in the following called booth). Each of the
+   parties involved in a Geo cluster runs a service, the <code class="systemitem">boothd</code>. It
+   connects to the booth daemons running on the other sites and exchanges
+   connectivity details. For making cluster resources highly available across
+   sites, booth relies on cluster objects called tickets. A ticket grants the
+   right to run certain resources on a specific cluster site. Booth guarantees
+   that every ticket is granted to no more than one site at a time.
+  </p><p>
+   If the communication between two booth instances breaks down, it might be
+   because of a network breakdown between the cluster sites <span class="emphasis"><em>or</em></span>
+   because of an outage of one cluster site. In this case, you need an additional
+   instance (a third cluster site or an <code class="literal">arbitrator</code>) to reach
+   consensus about decisions (such as failover of resources across sites).
+   Arbitrators are single machines (outside of the clusters) that run a booth
+   instance in a special mode. Each Geo cluster can have one or multiple
+   arbitrators.
+  </p><p>
+   
+   
+  </p><div class="figure" id="fig-ha-geo-quick-example-geosetup"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_geocluster.png"><img src="images/ha_geocluster.png" width="85%" alt="Two-Site Cluster—2x2 Nodes + Arbitrator (Optional)" title="Two-Site Cluster—2x2 Nodes + Arbitrator (Optional)"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1: </span><span class="title-name">Two-Site Cluster—2x2 Nodes + Arbitrator (Optional) </span></span><a title="Permalink" class="permalink" href="#fig-ha-geo-quick-example-geosetup">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div><p>
+   It is also possible to run a two-site Geo cluster <span class="emphasis"><em>without</em></span>
+   an arbitrator. In this case, a Geo cluster administrator needs to manually manage
+   the tickets. If a ticket should be granted to more than one site at the same time,
+   booth displays a warning.
+  </p><p>
+   For more details on the concept, components and ticket management used for
+   Geo clusters, see the <span class="intraxref">Book “Geo Clustering Guide”</span>.
+  </p></section><section class="sect1" id="sec-ha-geo-quick-scenario" data-id-title="Usage Scenario"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">2 </span><span class="title-name">Usage Scenario</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-scenario">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   In the following, we will set up a basic Geo cluster with two cluster
+   sites and one arbitrator:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     We assume the cluster sites are named <code class="literal">amsterdam</code> and
+     <code class="literal">berlin</code>.
+    </p></li><li class="listitem"><p>
+     We assume that each site consists of two nodes. The nodes
+     <code class="literal">alice</code> and <code class="literal">bob</code> belong to the
+     cluster <code class="literal">amsterdam</code>. The nodes
+     <code class="literal">charlie</code> and <code class="literal">doro</code> belong to the
+     cluster <code class="literal">berlin</code>.
+    </p></li><li class="listitem"><p>
+     Site <code class="literal">amsterdam</code> will get the following virtual IP
+     address: <code class="literal">192.168.201.100</code>.
+    </p></li><li class="listitem"><p>
+     Site <code class="literal">berlin</code> will get the following virtual IP
+     address: <code class="literal">192.168.202.100</code>.
+    </p></li><li class="listitem"><p>
+     
+     We assume that the arbitrator has the following IP address:
+     <code class="literal">192.168.203.100</code>.
+    </p></li></ul></div><p>
+   Before you proceed, make sure the following requirements are fulfilled:
+  </p><div class="variablelist"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Requirements </span></span><a title="Permalink" class="permalink" href="#id-1.3.3.4.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.3.3.4.5.2"><span class="term">Two Existing Clusters</span></dt><dd><p>
+      You have at least two existing clusters that you want to combine into a
+      Geo cluster (if you need to set up two clusters first, follow the
+      instructions in the <span class="intraxref">Article “Installation and Setup Quick Start”</span>).
+      </p></dd><dt id="id-1.3.3.4.5.3"><span class="term">Meaningful Cluster Names</span></dt><dd><p>
+      Each cluster has a meaningful name that reflects its location,
+      for example: <code class="literal">amsterdam</code> and <code class="literal">berlin</code>.
+      Cluster names are defined in <code class="filename">/etc/corosync/corosync.conf</code>.
+     </p></dd><dt id="id-1.3.3.4.5.4"><span class="term">Arbitrator</span></dt><dd><p>
+      You have installed a third machine that is not part of any existing
+      clusters and is to be used as arbitrator.
+     </p></dd></dl></div><p>
+   For detailed requirements on each item, see also
+   <a class="xref" href="#sec-ha-geo-quick-req" title="3. Requirements">Section 3, “Requirements”</a>.
+  </p></section><section class="sect1" id="sec-ha-geo-quick-req" data-id-title="Requirements"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">3 </span><span class="title-name">Requirements</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-req">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    All machines (cluster nodes and arbitrators) that will be part of the cluster
+    need at least the following modules and extensions:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Base System Module 15 SP2</p></li><li class="listitem"><p>Server Applications Module 15 SP2</p></li><li class="listitem"><p>SUSE Linux Enterprise High Availability 15 SP2</p></li></ul></div><p>
+   When installing the machines, select <code class="literal">HA GEO Node</code> as
+   <code class="systemitem">system role</code>. This leads to the installation of a
+   minimal system where the packages from the pattern <code class="literal">Geo Clustering
+   for High Availability (ha_geo)</code> are installed by default.
+  </p><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Network Requirements </span></span><a title="Permalink" class="permalink" href="#id-1.3.3.5.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+    The virtual IPs to be used for each cluster site must be accessible across
+    the Geo cluster.
+   </p></li><li class="listitem"><p>
+     The sites must be reachable on one UDP and TCP port per booth instance.
+     That means any firewalls or IPsec tunnels in between must be configured
+     accordingly.
+    </p></li><li class="listitem"><p>
+     Other setup decisions may require to open more ports (for example, for DRBD
+     or database replication).
+    </p></li></ul></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Other Requirements and Recommendations </span></span><a title="Permalink" class="permalink" href="#id-1.3.3.5.6">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+    All cluster nodes on all sites should synchronize to an NTP server outside
+    the cluster. For more information, see the
+    <a class="link" href="https://documentation.suse.com/sles/15-SP2/html/SLES-all/cha-ntp.html" target="_blank">
+     Administration Guide
+     for SUSE Linux Enterprise Server 15 SP2</a>.
+   </p><p>
+    If nodes are not synchronized, log files and cluster reports are very hard
+    to analyze.
+   </p></li><li class="listitem"><p>
+    Use an <span class="emphasis"><em>uneven</em></span> number of sites in your Geo
+    cluster. In case the network connection breaks down, this makes sure that
+    there still is a majority of sites (to avoid a split brain scenario). In
+    case you have an even number of cluster sites, use an arbitrator for
+    handling automatic failover of tickets. If you do not use an arbitrator,
+    you need to handle ticket failover manually.
+   </p></li><li class="listitem"><p>
+    The cluster on each site has a meaningful name, for example:
+    <code class="literal">amsterdam</code> and <code class="literal">berlin</code>.
+   </p><p>
+    The cluster names for each site are defined in the respective
+    <code class="filename">/etc/corosync/corosync.conf</code> files:
+   </p><div class="verbatim-wrap"><pre class="screen">totem {
+    [...]
+    cluster_name: amsterdam
+    }</pre></div><p>
+    Change the name with following crmsh command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> cluster rename <em class="replaceable">NEW_NAME</em></pre></div><p>
+    Stop and start the cluster services for the changes to take effect:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> cluster restart</pre></div></li><li class="listitem"><p>
+     Mixed architectures within one cluster are not supported. However, for
+     Geo clusters, each member of the Geo cluster can have a different
+     architecture—be it a cluster site or an arbitrator. For example,
+     you can run a Geo cluster with three members (two cluster sites and an
+     arbitrator), where one cluster site runs on IBM Z, the other
+     cluster site runs on x86, and the arbitrator runs on POWER.
+   </p></li></ul></div></section><section class="sect1" id="sec-ha-geo-scripts" data-id-title="Overview of the Geo Bootstrap Scripts"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4 </span><span class="title-name">Overview of the Geo Bootstrap Scripts</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-scripts">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     With <code class="command">ha-cluster-geo-init</code>, turn a cluster into the first
+     site of a Geo cluster. The script takes some parameters like the names of
+     the clusters, the arbitrator, and one or multiple tickets and creates
+     <code class="filename">/etc/booth/booth.conf</code> from them. It copies the booth configuration to all nodes on the
+     current cluster site. It also configures the cluster resources needed for
+     booth on the current cluster site.
+    </p><p>
+     For details, see <a class="xref" href="#sec-ha-geo-quick-ha-cluster-geo-init" title="6. Setting Up the First Site of a Geo Cluster">Section 6, “Setting Up the First Site of a Geo Cluster”</a>.
+    </p></li><li class="listitem"><p>
+     With <code class="command">ha-cluster-geo-join</code>, add the current cluster to an
+     existing Geo cluster. The script copies the booth configuration from an
+     existing cluster site and writes it to <code class="filename">/etc/booth/booth.conf</code> on all nodes on the
+     current cluster site. It also configures the cluster resources needed for
+     booth on the current cluster site.
+    </p><p>
+     For details, see <a class="xref" href="#sec-ha-geo-quick-ha-cluster-geo-join" title="7. Adding Another Site to a Geo Cluster">Section 7, “Adding Another Site to a Geo Cluster”</a>.
+    </p></li><li class="listitem"><p>
+     With <code class="command">ha-cluster-geo-init-arbitrator</code>, turn the current
+     machine into an arbitrator for the Geo cluster. The script copies the
+     booth configuration from an existing cluster site and writes it to
+     <code class="filename">/etc/booth/booth.conf</code>.
+    </p><p>
+     For details, see
+     <a class="xref" href="#sec-ha-geo-quick-ha-cluster-geo-init-arbitrator" title="8. Adding the Arbitrator">Section 8, “Adding the Arbitrator”</a>.
+    </p></li></ul></div><p>
+   All bootstrap scripts log to
+   <code class="filename">/var/log/ha-cluster-bootstrap.log</code>. Check the log file
+   for any details of the bootstrap process. Any options set during the
+   bootstrap process can be modified later (by modifying booth settings,
+   modifying resources etc.). For details, see the <span class="intraxref">Book “Geo Clustering Guide”</span>.
+  </p></section><section class="sect1" id="sec-ha-geo-quick-inst" data-id-title="Installing the High Availability and Geo Clustering Packages"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5 </span><span class="title-name">Installing the High Availability and Geo Clustering Packages</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-inst">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The packages for configuring and managing a Geo cluster are included in the
+   <code class="literal">High Availability</code> and <code class="literal">Geo Clustering for High Availability</code> installation
+   patterns. These patterns are only available after the SUSE Linux Enterprise High Availability is installed.
+  </p><p>
+   You can register to the SUSE Customer Center and install SUSE Linux Enterprise High Availability while installing SUSE Linux Enterprise Server,
+   or after installation. For more information, see
+   <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/cha-register-sle.html" target="_blank">
+   Deployment Guide</a> for SUSE Linux Enterprise Server.
+  </p><div class="procedure" id="pro-ha-geo-quick-inst-pattern" data-id-title="Installing the High Availability and Geo Clustering Patterns"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 1: </span><span class="title-name">Installing the High Availability and Geo Clustering Patterns </span></span><a title="Permalink" class="permalink" href="#pro-ha-geo-quick-inst-pattern">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Install the High Availability and Geo clustering patterns from the command line:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">zypper install -t pattern ha_sles ha_geo</code></pre></div></li><li class="step"><p>
+       Install the High Availability and Geo clustering patterns on <span class="emphasis"><em>all</em></span> machines that
+       will be part of your cluster.
+    </p><div id="id-1.3.3.7.4.3.2" data-id-title="Installing software packages on all nodes" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Installing software packages on all nodes</div><p>
+      For an automated installation of SUSE Linux Enterprise Server 15 SP2 and SUSE Linux Enterprise High Availability 15 SP2,
+      use AutoYaST to clone existing nodes. For more
+      information, see <span class="intraxref">Book “Administration Guide”, Chapter 3 “Installing SUSE Linux Enterprise High Availability”, Section 3.2 “Mass Installation and Deployment with AutoYaST”</span>.
+     </p></div></li></ol></div></div></section><section class="sect1" id="sec-ha-geo-quick-ha-cluster-geo-init" data-id-title="Setting Up the First Site of a Geo Cluster"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6 </span><span class="title-name">Setting Up the First Site of a Geo Cluster</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-ha-cluster-geo-init">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Use the <code class="command">ha-cluster-geo-init</code> script to turn an existing
+   cluster into the first site of a Geo cluster.
+  </p><div class="procedure" id="pro-ha-geo-quick-ha-cluster-geo-init" data-id-title="Setting Up the First Site (amsterdam) with ha-cluster-geo-init"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 2: </span><span class="title-name">Setting Up the First Site (<code class="systemitem">amsterdam</code>) with <code class="command">ha-cluster-geo-init</code> </span></span><a title="Permalink" class="permalink" href="#pro-ha-geo-quick-ha-cluster-geo-init">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Define a virtual IP per cluster site that can be used to access the site.
+     We assume using <code class="literal">192.168.201.100</code> and
+     <code class="literal">192.168.202.100</code> for this purpose. You do not need to
+     configure the virtual IPs as cluster resources yet. This will be done by
+     the bootstrap scripts.
+    </p></li><li class="step"><p>
+     Define the name of at least one ticket that will grant the right to run
+     certain resources on a cluster site. Use a meaningful name that reflects
+     the resources that will depend on the ticket (for example,
+     <code class="literal">ticket-nfs</code>). The bootstrap scripts only need the ticket
+     name—you can define the remaining details (ticket dependencies of
+     the resources) later on, as described in
+     <a class="xref" href="#sec-ha-geo-quick-next" title="10. Next Steps">Section 10, “Next Steps”</a>.
+    </p></li><li class="step"><p>
+     Log in to a node of an existing cluster (for example, on node
+     <code class="literal">alice</code> of the cluster <code class="literal">amsterdam</code>).
+    </p></li><li class="step" id="st-ha-cluster-geo-init"><p>
+     Run <code class="command">ha-cluster-geo-init</code>. For example, use the following
+     options:
+     
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ha-cluster-geo-init</code> \
+  --clusters<span class="callout" id="co-geo-init-clusters">1</span> "amsterdam=192.168.201.100 berlin=192.168.202.100" \
+  --tickets<span class="callout" id="co-geo-init-ticket">2</span> ticket-nfs \
+  --arbitrator<span class="callout" id="co-geo-init-arbitrator">3</span> 192.168.203.100</pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-init-clusters"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+    The names of the cluster sites (as defined in <code class="filename">/etc/corosync/corosync.conf</code>) and the virtual
+    IP addresses you want to use for each cluster site. In this case, we have
+    two cluster sites (<code class="literal">amsterdam</code> and
+    <code class="literal">berlin</code>) with a virtual IP address each.
+   </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-init-ticket"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       The name of one or multiple tickets.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-init-arbitrator"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       The host name or IP address of a machine outside of the clusters.
+      </p></td></tr></table></div></li></ol></div></div><p>
+   The bootstrap script creates the booth configuration file and synchronizes
+   it across the cluster sites. It also creates the basic cluster resources
+   needed for booth. <a class="xref" href="#st-ha-cluster-geo-init" title="Step 4">Step 4</a> of
+   <a class="xref" href="#pro-ha-geo-quick-ha-cluster-geo-init" title="Setting Up the First Site (amsterdam) with ha-cluster-geo-init">Procedure 2</a>
+   would result in the following booth configuration and cluster resources:
+   
+  </p><div class="example" id="ex-geo-init-booth-conf" data-id-title="Booth Configuration Created By ha-cluster-geo-init"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 1: </span><span class="title-name">Booth Configuration Created By <code class="command">ha-cluster-geo-init</code> </span></span><a title="Permalink" class="permalink" href="#ex-geo-init-booth-conf">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen"># The booth configuration file is "/etc/booth/booth.conf". You need to
+# prepare the same booth configuration file on each arbitrator and
+# each node in the cluster sites where the booth daemon can be launched.
+
+# "transport" means which transport layer booth daemon will use.
+# Currently only "UDP" is supported.
+transport="UDP"
+port="9929"
+
+arbitrator="192.168.203.100"
+site="192.168.201.100"
+site="192.168.202.100"
+authfile="/etc/booth/authkey"
+ticket="ticket-nfs"
+expire="600"</pre></div></div></div><div class="example" id="ex-geo-init-rsc-conf" data-id-title="Cluster Resources Created by ha-cluster-geo-init"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 2: </span><span class="title-name">Cluster Resources Created by <code class="command">ha-cluster-geo-init</code> </span></span><a title="Permalink" class="permalink" href="#ex-geo-init-rsc-conf">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">primitive<span class="callout" id="co-geo-quick-rsc-booth-ip">1</span> booth-ip IPaddr2 \
+  params rule #cluster-name eq amsterdam ip=192.168.201.100 \
+  params rule #cluster-name eq berlin ip=192.168.202.100 \
+primitive<span class="callout" id="co-geo-quick-rsc-booth-site">2</span> booth-site ocf:pacemaker:booth-site \
+  meta resource-stickiness=INFINITY \
+  params config=booth \
+  op monitor interval=10s
+group<span class="callout" id="co-geo-quick-rsc-g-booth">3</span> g-booth booth-ip booth-site \
+meta target-role=Stopped<span class="callout" id="co-geo-quick-rsc-stopped">4</span></pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-quick-rsc-booth-ip"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      A virtual IP address for each cluster site. It is required by the booth
+      daemons who need a persistent IP address on each cluster site.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-quick-rsc-booth-site"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      A primitive resource for the booth daemon. It communicates with the booth
+      daemons on the other cluster sites. The daemon can be started on any
+      node of the site. To make the resource stay on the same node, if possible,
+      resource-stickiness is set to <code class="literal">INFINITY</code>.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-quick-rsc-g-booth"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      A cluster resource group for both primitives. With this configuration, each
+      booth daemon will be available at its individual IP address, independent of
+      the node the daemon is running on.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-quick-rsc-stopped"><span class="callout">4</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The cluster resource group is not started by default. After verifying the
+      configuration of your cluster resources (and adding the resources you
+      need to complete your setup), you need to start the resource group. See
+      <a class="xref" href="#vl-ha-geo-quick-next-req" title="Required Steps to Complete the Geo Cluster Setup">Required Steps to Complete the Geo Cluster Setup</a> for details.
+     </p></td></tr></table></div></div></div></section><section class="sect1" id="sec-ha-geo-quick-ha-cluster-geo-join" data-id-title="Adding Another Site to a Geo Cluster"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7 </span><span class="title-name">Adding Another Site to a Geo Cluster</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-ha-cluster-geo-join">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   After you have initialized the first site of your Geo cluster, add the
+   second cluster with <code class="literal">ha-cluster-geo-join</code>, as described in
+   <a class="xref" href="#pro-ha-geo-quick-ha-cluster-geo-join" title="Adding the Second Site (berlin) with ha-cluster-geo-join">Procedure 3</a>.
+   The script needs SSH access to an already configured cluster site and will
+   add the current cluster to the Geo cluster.
+  </p><div class="procedure" id="pro-ha-geo-quick-ha-cluster-geo-join" data-id-title="Adding the Second Site (berlin) with ha-cluster-geo-join"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 3: </span><span class="title-name">Adding the Second Site (<code class="literal">berlin</code>) with <code class="command">ha-cluster-geo-join</code> </span></span><a title="Permalink" class="permalink" href="#pro-ha-geo-quick-ha-cluster-geo-join">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to a node of the cluster site you want to add (for example, on node
+     <code class="literal">charlie</code> of the cluster <code class="literal">berlin</code>).
+    </p></li><li class="step" id="st-ha-cluster-geo-join"><p>
+     Run the <code class="command">ha-cluster-geo-join</code> command. For example:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ha-cluster-geo-join</code> \
+  --cluster-node<span class="callout" id="co-geo-join-cluster-node">1</span> 192.168.201.100\
+  --clusters<span class="callout" id="co-geo-join-clusters">2</span> "amsterdam=192.168.201.100 berlin=192.168.202.100"</pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-join-cluster-node"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Specifies where to copy the booth configuration from. Use the IP address
+       or host name of a node in an already configured Geo cluster site.
+       You can also use the virtual IP address of an already existing cluster
+       site (like in this example). Alternatively, use the IP address or host
+       name of an already configured arbitrator for your Geo cluster.
+      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-join-clusters"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+    The names of the cluster sites (as defined in <code class="filename">/etc/corosync/corosync.conf</code>) and the virtual
+    IP addresses you want to use for each cluster site. In this case, we have
+    two cluster sites (<code class="literal">amsterdam</code> and
+    <code class="literal">berlin</code>) with a virtual IP address each.
+   </p></td></tr></table></div></li></ol></div></div><p>
+   The <code class="command">ha-cluster-geo-join</code> script copies the booth
+   configuration from
+   <a class="xref" href="#co-geo-join-cluster-node"><span class="callout">1</span></a>, see
+   <a class="xref" href="#ex-geo-init-booth-conf" title="Booth Configuration Created By ha-cluster-geo-init">Example 1</a>. In
+   addition, it creates the cluster resources needed for booth (see
+   <a class="xref" href="#ex-geo-init-rsc-conf" title="Cluster Resources Created by ha-cluster-geo-init">Example 2</a>).
+  </p></section><section class="sect1" id="sec-ha-geo-quick-ha-cluster-geo-init-arbitrator" data-id-title="Adding the Arbitrator"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">8 </span><span class="title-name">Adding the Arbitrator</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-ha-cluster-geo-init-arbitrator">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   
+   After you have set up all sites of your Geo cluster with
+   <code class="command">ha-cluster-geo-init</code> and
+   <code class="command">ha-cluster-geo-join</code>, set up the arbitrator with
+   <code class="command">ha-cluster-geo-init-arbitrator</code>.
+  </p><div class="procedure" id="pro-ha-geo-quick-ha-cluster-geo-init-arbitrator" data-id-title="Setting Up the Arbitrator with ha-cluster-geo-init-arbitrator"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 4: </span><span class="title-name">Setting Up the Arbitrator with <code class="command">ha-cluster-geo-init-arbitrator</code> </span></span><a title="Permalink" class="permalink" href="#pro-ha-geo-quick-ha-cluster-geo-init-arbitrator">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to the machine you want to use as arbitrator.
+    </p></li><li class="step"><p>
+     Run the following command. For example:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ha-cluster-geo-init-arbitrator</code> --cluster-node<span class="callout" id="co-geo-init-arbitrator-cluster-node">1</span> 192.168.201.100</pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-geo-init-arbitrator-cluster-node"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Specifies where to copy the booth configuration from. Use the IP address
+       or host name of a node in an already configured Geo
+       cluster site. Alternatively, use the virtual IP address of an already
+       existing cluster site (like in this example).
+      </p></td></tr></table></div></li></ol></div></div><p>
+   The <code class="command">ha-cluster-geo-init-arbitrator</code> script copies the
+   booth configuration from
+   <a class="xref" href="#co-geo-init-arbitrator-cluster-node"><span class="callout">1</span></a>, see
+   <a class="xref" href="#ex-geo-init-booth-conf" title="Booth Configuration Created By ha-cluster-geo-init">Example 1</a>. It also
+   enables and starts the booth service on the arbitrator. Thus, the arbitrator
+   is ready to communicate with the booth instances on the cluster sites when
+   the booth services are running there too.
+  </p></section><section class="sect1" id="sec-ha-geo-quick-monitor" data-id-title="Monitoring the Cluster Sites"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">9 </span><span class="title-name">Monitoring the Cluster Sites</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-monitor">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To view both cluster sites with the resources and the ticket that you have
+   created during the bootstrapping process, use Hawk2. The Hawk2 Web
+   interface allows you to monitor and manage multiple (unrelated) clusters and
+   Geo clusters.
+  </p><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Prerequisites </span></span><a title="Permalink" class="permalink" href="#id-1.3.3.11.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+     All clusters to be monitored from Hawk2's <span class="guimenu">Dashboard</span>
+     must be running SUSE Linux Enterprise High Availability 15 SP2.
+    </p></li><li class="listitem"><p>
+     If you did not replace the self-signed certificate for Hawk2 on every
+     cluster node with your own certificate (or a certificate signed by an
+     official Certificate Authority) yet, do the following: Log in to Hawk2 on
+     <span class="emphasis"><em>every</em></span> node in <span class="emphasis"><em>every</em></span> cluster
+     at least once. Verify the certificate (or add an exception in the
+     browser to bypass the warning). Otherwise Hawk2 cannot connect to the
+     cluster.
+    </p></li></ul></div><div class="procedure" id="pro-ha-geo-quick-hawk2-dashboard" data-id-title="Using the Hawk2 Dashboard"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5: </span><span class="title-name">Using the Hawk2 Dashboard </span></span><a title="Permalink" class="permalink" href="#pro-ha-geo-quick-hawk2-dashboard">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Start a Web browser and enter the virtual IP of your first cluster site,
+     <code class="literal">amsterdam</code>:
+    </p><div class="verbatim-wrap"><pre class="screen">https://192.168.201.100:7630/</pre></div><p>
+     Alternatively, use the IP address or host name of
+     <code class="literal">alice</code> or <code class="literal">bob</code>. If you have set
+     up both nodes with the bootstrap scripts, the <code class="literal">hawk</code>
+     service should run on both nodes.
+    </p></li><li class="step"><p>
+     Log in to the Hawk2 Web interface.
+    </p></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Dashboard</span>.
+    </p><p>
+     Hawk2 shows an overview of the resources and nodes on the current
+     cluster site. In addition, it shows any <span class="guimenu">Tickets</span> that
+     have been configured for the Geo cluster. If you need information about
+     the icons used in this view, click <span class="guimenu">Legend</span>.
+    </p><div class="figure" id="id-1.3.3.11.4.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-dashboard-site1.png"><img src="images/hawk2-dashboard-site1.png" width="95%" alt="Hawk2 Dashboard with One Cluster Site (amsterdam)" title="Hawk2 Dashboard with One Cluster Site (amsterdam)"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 2: </span><span class="title-name">Hawk2 Dashboard with One Cluster Site (<code class="literal">amsterdam</code>) </span></span><a title="Permalink" class="permalink" href="#id-1.3.3.11.4.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+     To add a dashboard for the second cluster site, click <span class="guimenu">Add
+     Cluster</span>.
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       Enter the <span class="guimenu">Cluster name</span> with which to identify the
+       cluster in the <span class="guimenu">Dashboard</span>. In this case,
+       <code class="literal">berlin</code>.
+      </p></li><li class="step"><p>
+       Enter the fully qualified host name of one of the cluster nodes (in this
+       case, <code class="literal">charlie</code> or <code class="literal">doro</code>).
+      </p></li><li class="step"><p>
+       Click <span class="guimenu">Add</span>. Hawk2 will display a second tab for the
+       newly added cluster site with an overview of its nodes and resources.
+      </p><div class="figure" id="id-1.3.3.11.4.5.2.3.2"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-dashboard-two-sites.png"><img src="images/hawk2-dashboard-two-sites.png" width="95%" alt="Hawk2 Dashboard with Both Cluster Sites" title="Hawk2 Dashboard with Both Cluster Sites"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 3: </span><span class="title-name">Hawk2 Dashboard with Both Cluster Sites </span></span><a title="Permalink" class="permalink" href="#id-1.3.3.11.4.5.2.3.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></li></ol></li><li class="step"><p>
+     To view more details for a cluster site or to manage it, switch to the
+     site's tab and click the chain icon.
+    </p><p>
+     Hawk2 opens the <span class="guimenu">Status</span> view for this site in a new
+     browser window or tab. From there, you can administer this part of the
+     Geo cluster.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-geo-quick-next" data-id-title="Next Steps"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10 </span><span class="title-name">Next Steps</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-next">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The Geo clustering bootstrap scripts provide a quick way to set up a basic
+   Geo cluster that can be used for testing purposes. However, to move the
+   resulting Geo cluster into a functioning Geo cluster that can be used in
+   production environments, more steps are required.
+  </p><div class="variablelist" id="vl-ha-geo-quick-next-req" data-id-title="Required Steps to Complete the Geo Cluster Setup"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Required Steps to Complete the Geo Cluster Setup </span></span><a title="Permalink" class="permalink" href="#vl-ha-geo-quick-next-req">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="vle-ha-geo-quick-booth-service-sites"><span class="term">Starting the Booth Services on Cluster Sites</span></dt><dd><p>
+      After the bootstrap process, the arbitrator booth service cannot communicate
+      with the booth services on the cluster sites yet, because they are not
+      started by default.
+     </p><p>
+      The booth service for each cluster site is managed by the booth resource
+      group <code class="literal">g-booth</code> (see
+      <a class="xref" href="#ex-geo-init-rsc-conf" title="Cluster Resources Created by ha-cluster-geo-init">Example 2, “Cluster Resources Created by <code class="command">ha-cluster-geo-init</code>”</a>). To start one instance of the
+      booth service per site, start the respective booth resource group on each
+      cluster site. This enables all booth instances to communicate with each
+      other.
+     </p></dd><dt id="id-1.3.3.12.3.3"><span class="term">Configuring Ticket Dependencies and Order Constraints</span></dt><dd><p>
+      To make resources depend on the ticket that you have created during the
+      Geo cluster bootstrap process, configure constraints. For each
+      constraint, set a <code class="literal">loss-policy</code> that defines what should
+      happen to the respective resources if the ticket is revoked from a cluster
+      site.
+     </p><p>
+      For details, see <span class="intraxref">Book “Geo Clustering Guide”, Chapter 6 “Configuring Cluster Resources and Constraints”</span>.
+     </p></dd><dt id="id-1.3.3.12.3.4"><span class="term">Initially Granting a Ticket to a Site</span></dt><dd><p>
+      Before booth can manage a certain ticket within the Geo cluster, you
+      initially need to <span class="emphasis"><em>grant</em></span> it to a site manually. You
+      can use either the booth client command line tool or Hawk2 to grant a
+      ticket.
+     </p><p>
+      For details, see <span class="intraxref">Book “Geo Clustering Guide”, Chapter 8 “Managing Geo Clusters”</span>.</p></dd></dl></div><p>
+   The bootstrap scripts create the same booth resources on both cluster sites,
+   and the same booth configuration files on all sites, including the
+   arbitrator. If you extend the Geo cluster setup (to move to a production
+   environment), you will probably fine-tune the booth configuration and
+   change the configuration of the booth-related cluster resources. Afterward,
+   you need to synchronize the changes to the other sites of your Geo cluster
+   to take effect.
+  </p><div id="id-1.3.3.12.5" data-id-title="Synchronizing Changes Across Cluster Sites" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Synchronizing Changes Across Cluster Sites</div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      To synchronize changes in the booth configuration to all cluster sites
+      (including the arbitrator), use Csync2. Find more information at <span class="intraxref">Book “Geo Clustering Guide”, Chapter 5 “Synchronizing Configuration Files Across All Sites and Arbitrators”</span>.
+     </p></li><li class="listitem"><p>
+      The CIB (Cluster Information Database) is not automatically synchronized
+      across cluster sites of a Geo cluster. That means any changes in
+      resource configuration that are required on all cluster sites need to be
+      transferred to the other sites manually. Do so by tagging the
+      respective resources, exporting them from the current CIB, and importing
+      them to the CIB on the other cluster sites. For details, see
+      <span class="intraxref">Book “Geo Clustering Guide”, Chapter 6 “Configuring Cluster Resources and Constraints”, Section 6.4 “Transferring the Resource Configuration to Other Cluster Sites”</span>.
+      </p></li></ul></div></div></section><section class="sect1" id="sec-ha-geo-quick-more" data-id-title="For More Information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">11 </span><span class="title-name">For More Information</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-quick-more">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     More documentation for this product is available at
+     <a class="link" href="https://documentation.suse.com/sle-ha/15-SP2" target="_blank">https://documentation.suse.com/sle-ha/15-SP2</a>.
+     For further configuration and administration tasks, see the comprehensive
+     <a class="link" href="https://documentation.suse.com/sle-ha/15-SP2/html/SLE-HA-all/book-sleha-geo.html" target="_blank">
+     Geo Clustering Guide</a>.
+    </p></li><li class="listitem"><p>
+     Find information about data replication across Geo clusters via DRBD in the following
+     <a class="link" href="https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html" target="_blank"><em class="citetitle">SUSE Best Practices</em>
+     document</a>.
+    </p></li></ul></div></section><div class="legal-section"><section class="appendix" id="id-1.3.3.14" data-id-title="GNU licenses"><div class="titlepage"><div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">A </span><span class="title-name">GNU licenses</span></span> <a title="Permalink" class="permalink" href="#id-1.3.3.14">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_legal.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  This appendix contains the GNU Free Documentation License version 1.2.
+ </p><section class="sect1" id="id-1.3.3.14.4" data-id-title="GNU Free Documentation License"><div class="titlepage"><div><div><div class="title-container"><h2 class="title legal"><span class="title-number-name"><span class="title-name">GNU Free Documentation License</span></span> <a title="Permalink" class="permalink" href="#id-1.3.3.14.4">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/common_license_gfdl1.2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Copyright (C) 2000, 2001, 2002 Free Software Foundation, Inc. 51 Franklin St,
+  Fifth Floor, Boston, MA 02110-1301 USA. Everyone is permitted to copy and
+  distribute verbatim copies of this license document, but changing it is not
+  allowed.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.4"><span class="name">
+    0. PREAMBLE
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.4">#</a></h5></div><p>
+  The purpose of this License is to make a manual, textbook, or other
+  functional and useful document "free" in the sense of freedom: to assure
+  everyone the effective freedom to copy and redistribute it, with or without
+  modifying it, either commercially or non-commercially. Secondarily, this
+  License preserves for the author and publisher a way to get credit for their
+  work, while not being considered responsible for modifications made by
+  others.
+ </p><p>
+  This License is a kind of "copyleft", which means that derivative works of
+  the document must themselves be free in the same sense. It complements the
+  GNU General Public License, which is a copyleft license designed for free
+  software.
+ </p><p>
+  We have designed this License to use it for manuals for free software,
+  because free software needs free documentation: a free program should come
+  with manuals providing the same freedoms that the software does. But this
+  License is not limited to software manuals; it can be used for any textual
+  work, regardless of subject matter or whether it is published as a printed
+  book. We recommend this License principally for works whose purpose is
+  instruction or reference.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.8"><span class="name">
+    1. APPLICABILITY AND DEFINITIONS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.8">#</a></h5></div><p>
+  This License applies to any manual or other work, in any medium, that
+  contains a notice placed by the copyright holder saying it can be distributed
+  under the terms of this License. Such a notice grants a world-wide,
+  royalty-free license, unlimited in duration, to use that work under the
+  conditions stated herein. The "Document", below, refers to any such manual or
+  work. Any member of the public is a licensee, and is addressed as "you". You
+  accept the license if you copy, modify or distribute the work in a way
+  requiring permission under copyright law.
+ </p><p>
+  A "Modified Version" of the Document means any work containing the Document
+  or a portion of it, either copied verbatim, or with modifications and/or
+  translated into another language.
+ </p><p>
+  A "Secondary Section" is a named appendix or a front-matter section of the
+  Document that deals exclusively with the relationship of the publishers or
+  authors of the Document to the Document's overall subject (or to related
+  matters) and contains nothing that could fall directly within that overall
+  subject. (Thus, if the Document is in part a textbook of mathematics, a
+  Secondary Section may not explain any mathematics.) The relationship could be
+  a matter of historical connection with the subject or with related matters,
+  or of legal, commercial, philosophical, ethical or political position
+  regarding them.
+ </p><p>
+  The "Invariant Sections" are certain Secondary Sections whose titles are
+  designated, as being those of Invariant Sections, in the notice that says
+  that the Document is released under this License. If a section does not fit
+  the above definition of Secondary then it is not allowed to be designated as
+  Invariant. The Document may contain zero Invariant Sections. If the Document
+  does not identify any Invariant Sections then there are none.
+ </p><p>
+  The "Cover Texts" are certain short passages of text that are listed, as
+  Front-Cover Texts or Back-Cover Texts, in the notice that says that the
+  Document is released under this License. A Front-Cover Text may be at most 5
+  words, and a Back-Cover Text may be at most 25 words.
+ </p><p>
+  A "Transparent" copy of the Document means a machine-readable copy,
+  represented in a format whose specification is available to the general
+  public, that is suitable for revising the document straightforwardly with
+  generic text editors or (for images composed of pixels) generic paint
+  programs or (for drawings) some widely available drawing editor, and that is
+  suitable for input to text formatters or for automatic translation to a
+  variety of formats suitable for input to text formatters. A copy made in an
+  otherwise Transparent file format whose markup, or absence of markup, has
+  been arranged to thwart or discourage subsequent modification by readers is
+  not Transparent. An image format is not Transparent if used for any
+  substantial amount of text. A copy that is not "Transparent" is called
+  "Opaque".
+ </p><p>
+  Examples of suitable formats for Transparent copies include plain ASCII
+  without markup, Texinfo input format, LaTeX input format, SGML or XML using a
+  publicly available DTD, and standard-conforming simple HTML, PostScript or
+  PDF designed for human modification. Examples of transparent image formats
+  include PNG, XCF and JPG. Opaque formats include proprietary formats that can
+  be read and edited only by proprietary word processors, SGML or XML for which
+  the DTD and/or processing tools are not generally available, and the
+  machine-generated HTML, PostScript or PDF produced by some word processors
+  for output purposes only.
+ </p><p>
+  The "Title Page" means, for a printed book, the title page itself, plus such
+  following pages as are needed to hold, legibly, the material this License
+  requires to appear in the title page. For works in formats which do not have
+  any title page as such, "Title Page" means the text near the most prominent
+  appearance of the work's title, preceding the beginning of the body of the
+  text.
+ </p><p>
+  A section "Entitled XYZ" means a named subunit of the Document whose title
+  either is precisely XYZ or contains XYZ in parentheses following text that
+  translates XYZ in another language. (Here XYZ stands for a specific section
+  name mentioned below, such as "Acknowledgements", "Dedications",
+  "Endorsements", or "History".) To "Preserve the Title" of such a section when
+  you modify the Document means that it remains a section "Entitled XYZ"
+  according to this definition.
+ </p><p>
+  The Document may include Warranty Disclaimers next to the notice which states
+  that this License applies to the Document. These Warranty Disclaimers are
+  considered to be included by reference in this License, but only as regards
+  disclaiming warranties: any other implication that these Warranty Disclaimers
+  may have is void and has no effect on the meaning of this License.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.19"><span class="name">
+    2. VERBATIM COPYING
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.19">#</a></h5></div><p>
+  You may copy and distribute the Document in any medium, either commercially
+  or non-commercially, provided that this License, the copyright notices, and
+  the license notice saying this License applies to the Document are reproduced
+  in all copies, and that you add no other conditions whatsoever to those of
+  this License. You may not use technical measures to obstruct or control the
+  reading or further copying of the copies you make or distribute. However, you
+  may accept compensation in exchange for copies. If you distribute a large
+  enough number of copies you must also follow the conditions in section 3.
+ </p><p>
+  You may also lend copies, under the same conditions stated above, and you may
+  publicly display copies.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.22"><span class="name">
+    3. COPYING IN QUANTITY
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.22">#</a></h5></div><p>
+  If you publish printed copies (or copies in media that commonly have printed
+  covers) of the Document, numbering more than 100, and the Document's license
+  notice requires Cover Texts, you must enclose the copies in covers that
+  carry, clearly and legibly, all these Cover Texts: Front-Cover Texts on the
+  front cover, and Back-Cover Texts on the back cover. Both covers must also
+  clearly and legibly identify you as the publisher of these copies. The front
+  cover must present the full title with all words of the title equally
+  prominent and visible. You may add other material on the covers in addition.
+  Copying with changes limited to the covers, as long as they preserve the
+  title of the Document and satisfy these conditions, can be treated as
+  verbatim copying in other respects.
+ </p><p>
+  If the required texts for either cover are too voluminous to fit legibly, you
+  should put the first ones listed (as many as fit reasonably) on the actual
+  cover, and continue the rest onto adjacent pages.
+ </p><p>
+  If you publish or distribute Opaque copies of the Document numbering more
+  than 100, you must either include a machine-readable Transparent copy along
+  with each Opaque copy, or state in or with each Opaque copy a
+  computer-network location from which the general network-using public has
+  access to download using public-standard network protocols a complete
+  Transparent copy of the Document, free of added material. If you use the
+  latter option, you must take reasonably prudent steps, when you begin
+  distribution of Opaque copies in quantity, to ensure that this Transparent
+  copy will remain thus accessible at the stated location until at least one
+  year after the last time you distribute an Opaque copy (directly or through
+  your agents or retailers) of that edition to the public.
+ </p><p>
+  It is requested, but not required, that you contact the authors of the
+  Document well before redistributing any large number of copies, to give them
+  a chance to provide you with an updated version of the Document.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.27"><span class="name">
+    4. MODIFICATIONS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.27">#</a></h5></div><p>
+  You may copy and distribute a Modified Version of the Document under the
+  conditions of sections 2 and 3 above, provided that you release the Modified
+  Version under precisely this License, with the Modified Version filling the
+  role of the Document, thus licensing distribution and modification of the
+  Modified Version to whoever possesses a copy of it. In addition, you must do
+  these things in the Modified Version:
+ </p><div class="orderedlist"><ol class="orderedlist" type="A"><li class="listitem"><p>
+    Use in the Title Page (and on the covers, if any) a title distinct from
+    that of the Document, and from those of previous versions (which should, if
+    there were any, be listed in the History section of the Document). You may
+    use the same title as a previous version if the original publisher of that
+    version gives permission.
+   </p></li><li class="listitem"><p>
+    List on the Title Page, as authors, one or more persons or entities
+    responsible for authorship of the modifications in the Modified Version,
+    together with at least five of the principal authors of the Document (all
+    of its principal authors, if it has fewer than five), unless they release
+    you from this requirement.
+   </p></li><li class="listitem"><p>
+    State on the Title page the name of the publisher of the Modified Version,
+    as the publisher.
+   </p></li><li class="listitem"><p>
+    Preserve all the copyright notices of the Document.
+   </p></li><li class="listitem"><p>
+    Add an appropriate copyright notice for your modifications adjacent to the
+    other copyright notices.
+   </p></li><li class="listitem"><p>
+    Include, immediately after the copyright notices, a license notice giving
+    the public permission to use the Modified Version under the terms of this
+    License, in the form shown in the Addendum below.
+   </p></li><li class="listitem"><p>
+    Preserve in that license notice the full lists of Invariant Sections and
+    required Cover Texts given in the Document's license notice.
+   </p></li><li class="listitem"><p>
+    Include an unaltered copy of this License.
+   </p></li><li class="listitem"><p>
+    Preserve the section Entitled "History", Preserve its Title, and add to it
+    an item stating at least the title, year, new authors, and publisher of the
+    Modified Version as given on the Title Page. If there is no section
+    Entitled "History" in the Document, create one stating the title, year,
+    authors, and publisher of the Document as given on its Title Page, then add
+    an item describing the Modified Version as stated in the previous sentence.
+   </p></li><li class="listitem"><p>
+    Preserve the network location, if any, given in the Document for public
+    access to a Transparent copy of the Document, and likewise the network
+    locations given in the Document for previous versions it was based on.
+    These may be placed in the "History" section. You may omit a network
+    location for a work that was published at least four years before the
+    Document itself, or if the original publisher of the version it refers to
+    gives permission.
+   </p></li><li class="listitem"><p>
+    For any section Entitled "Acknowledgements" or "Dedications", Preserve the
+    Title of the section, and preserve in the section all the substance and
+    tone of each of the contributor acknowledgements and/or dedications given
+    therein.
+   </p></li><li class="listitem"><p>
+    Preserve all the Invariant Sections of the Document, unaltered in their
+    text and in their titles. Section numbers or the equivalent are not
+    considered part of the section titles.
+   </p></li><li class="listitem"><p>
+    Delete any section Entitled "Endorsements". Such a section may not be
+    included in the Modified Version.
+   </p></li><li class="listitem"><p>
+    Do not retitle any existing section to be Entitled "Endorsements" or to
+    conflict in title with any Invariant Section.
+   </p></li><li class="listitem"><p>
+    Preserve any Warranty Disclaimers.
+   </p></li></ol></div><p>
+  If the Modified Version includes new front-matter sections or appendices that
+  qualify as Secondary Sections and contain no material copied from the
+  Document, you may at your option designate some or all of these sections as
+  invariant. To do this, add their titles to the list of Invariant Sections in
+  the Modified Version's license notice. These titles must be distinct from any
+  other section titles.
+ </p><p>
+  You may add a section Entitled "Endorsements", provided it contains nothing
+  but endorsements of your Modified Version by various parties--for example,
+  statements of peer review or that the text has been approved by an
+  organization as the authoritative definition of a standard.
+ </p><p>
+  You may add a passage of up to five words as a Front-Cover Text, and a
+  passage of up to 25 words as a Back-Cover Text, to the end of the list of
+  Cover Texts in the Modified Version. Only one passage of Front-Cover Text and
+  one of Back-Cover Text may be added by (or through arrangements made by) any
+  one entity. If the Document already includes a cover text for the same cover,
+  previously added by you or by arrangement made by the same entity you are
+  acting on behalf of, you may not add another; but you may replace the old
+  one, on explicit permission from the previous publisher that added the old
+  one.
+ </p><p>
+  The author(s) and publisher(s) of the Document do not by this License give
+  permission to use their names for publicity for or to assert or imply
+  endorsement of any Modified Version.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.34"><span class="name">
+    5. COMBINING DOCUMENTS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.34">#</a></h5></div><p>
+  You may combine the Document with other documents released under this
+  License, under the terms defined in section 4 above for modified versions,
+  provided that you include in the combination all of the Invariant Sections of
+  all of the original documents, unmodified, and list them all as Invariant
+  Sections of your combined work in its license notice, and that you preserve
+  all their Warranty Disclaimers.
+ </p><p>
+  The combined work need only contain one copy of this License, and multiple
+  identical Invariant Sections may be replaced with a single copy. If there are
+  multiple Invariant Sections with the same name but different contents, make
+  the title of each such section unique by adding at the end of it, in
+  parentheses, the name of the original author or publisher of that section if
+  known, or else a unique number. Make the same adjustment to the section
+  titles in the list of Invariant Sections in the license notice of the
+  combined work.
+ </p><p>
+  In the combination, you must combine any sections Entitled "History" in the
+  various original documents, forming one section Entitled "History"; likewise
+  combine any sections Entitled "Acknowledgements", and any sections Entitled
+  "Dedications". You must delete all sections Entitled "Endorsements".
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.38"><span class="name">
+    6. COLLECTIONS OF DOCUMENTS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.38">#</a></h5></div><p>
+  You may make a collection consisting of the Document and other documents
+  released under this License, and replace the individual copies of this
+  License in the various documents with a single copy that is included in the
+  collection, provided that you follow the rules of this License for verbatim
+  copying of each of the documents in all other respects.
+ </p><p>
+  You may extract a single document from such a collection, and distribute it
+  individually under this License, provided you insert a copy of this License
+  into the extracted document, and follow this License in all other respects
+  regarding verbatim copying of that document.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.41"><span class="name">
+    7. AGGREGATION WITH INDEPENDENT WORKS
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.41">#</a></h5></div><p>
+  A compilation of the Document or its derivatives with other separate and
+  independent documents or works, in or on a volume of a storage or
+  distribution medium, is called an "aggregate" if the copyright resulting from
+  the compilation is not used to limit the legal rights of the compilation's
+  users beyond what the individual works permit. When the Document is included
+  in an aggregate, this License does not apply to the other works in the
+  aggregate which are not themselves derivative works of the Document.
+ </p><p>
+  If the Cover Text requirement of section 3 is applicable to these copies of
+  the Document, then if the Document is less than one half of the entire
+  aggregate, the Document's Cover Texts may be placed on covers that bracket
+  the Document within the aggregate, or the electronic equivalent of covers if
+  the Document is in electronic form. Otherwise they must appear on printed
+  covers that bracket the whole aggregate.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.44"><span class="name">
+    8. TRANSLATION
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.44">#</a></h5></div><p>
+  Translation is considered a kind of modification, so you may distribute
+  translations of the Document under the terms of section 4. Replacing
+  Invariant Sections with translations requires special permission from their
+  copyright holders, but you may include translations of some or all Invariant
+  Sections in addition to the original versions of these Invariant Sections.
+  You may include a translation of this License, and all the license notices in
+  the Document, and any Warranty Disclaimers, provided that you also include
+  the original English version of this License and the original versions of
+  those notices and disclaimers. In case of a disagreement between the
+  translation and the original version of this License or a notice or
+  disclaimer, the original version will prevail.
+ </p><p>
+  If a section in the Document is Entitled "Acknowledgements", "Dedications",
+  or "History", the requirement (section 4) to Preserve its Title (section 1)
+  will typically require changing the actual title.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.47"><span class="name">
+    9. TERMINATION
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.47">#</a></h5></div><p>
+  You may not copy, modify, sublicense, or distribute the Document except as
+  expressly provided for under this License. Any other attempt to copy, modify,
+  sublicense or distribute the Document is void, and will automatically
+  terminate your rights under this License. However, parties who have received
+  copies, or rights, from you under this License will not have their licenses
+  terminated so long as such parties remain in full compliance.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.49"><span class="name">
+    10. FUTURE REVISIONS OF THIS LICENSE
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.49">#</a></h5></div><p>
+  The Free Software Foundation may publish new, revised versions of the GNU
+  Free Documentation License from time to time. Such new versions will be
+  similar in spirit to the present version, but may differ in detail to address
+  new problems or concerns. See
+  <a class="link" href="https://www.gnu.org/copyleft/" target="_blank">https://www.gnu.org/copyleft/</a>.
+ </p><p>
+  Each version of the License is given a distinguishing version number. If the
+  Document specifies that a particular numbered version of this License "or any
+  later version" applies to it, you have the option of following the terms and
+  conditions either of that specified version or of any later version that has
+  been published (not as a draft) by the Free Software Foundation. If the
+  Document does not specify a version number of this License, you may choose
+  any version ever published (not as a draft) by the Free Software Foundation.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.3.3.14.4.52"><span class="name">
+    ADDENDUM: How to use this License for your documents
+  </span><a title="Permalink" class="permalink" href="#id-1.3.3.14.4.52">#</a></h5></div><div class="verbatim-wrap"><pre class="screen">Copyright (c) YEAR YOUR NAME.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled “GNU
+Free Documentation License”.</pre></div><p>
+  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+  replace the “with...Texts.” line with this:
+ </p><div class="verbatim-wrap"><pre class="screen">with the Invariant Sections being LIST THEIR TITLES, with the
+Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.</pre></div><p>
+  If you have Invariant Sections without Cover Texts, or some other combination
+  of the three, merge those two alternatives to suit the situation.
+ </p><p>
+  If your document contains nontrivial examples of program code, we recommend
+  releasing these examples in parallel under your choice of free software
+  license, such as the GNU General Public License, to permit their use in free
+  software.
+ </p></section></section></div></section></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="#sec-ha-geo-quick-concept"><span class="title-number">1 </span><span class="title-name">Conceptual Overview</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-scenario"><span class="title-number">2 </span><span class="title-name">Usage Scenario</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-req"><span class="title-number">3 </span><span class="title-name">Requirements</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-scripts"><span class="title-number">4 </span><span class="title-name">Overview of the Geo Bootstrap Scripts</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-inst"><span class="title-number">5 </span><span class="title-name">Installing the High Availability and Geo Clustering Packages</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-ha-cluster-geo-init"><span class="title-number">6 </span><span class="title-name">Setting Up the First Site of a Geo Cluster</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-ha-cluster-geo-join"><span class="title-number">7 </span><span class="title-name">Adding Another Site to a Geo Cluster</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-ha-cluster-geo-init-arbitrator"><span class="title-number">8 </span><span class="title-name">Adding the Arbitrator</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-monitor"><span class="title-number">9 </span><span class="title-name">Monitoring the Cluster Sites</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-next"><span class="title-number">10 </span><span class="title-name">Next Steps</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-quick-more"><span class="title-number">11 </span><span class="title-name">For More Information</span></a></span></li><li><span class="appendix"><a href="#id-1.3.3.14"><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></span><ul><li><span class="sect1"><a href="#id-1.3.3.14.4"><span class="title-number">A.1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

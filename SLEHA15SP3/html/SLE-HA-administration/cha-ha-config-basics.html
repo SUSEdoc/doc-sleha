@@ -1,0 +1,1148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP3 | Administration Guide | Configuration and administration basics</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Configuration and administration basics | SLE HA 15 SP3"/>
+<meta name="description" content="The main purpose of an HA cluster is to manage user se…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP3"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 5. Configuration and administration basics"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability 15 SP3"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Configuration and administration basics | SLE HA 15 SP3"/>
+<meta property="og:description" content="The main purpose of an HA cluster is to manage user services. Typical examples of user services are an Apache Web server or …"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Configuration and administration basics | SLE HA 15 SP3"/>
+<meta name="twitter:description" content="The main purpose of an HA cluster is to manage user services. Typical examples of user services are an Apache Web server or …"/>
+<link rel="prev" href="part-config.html" title="Part II. Configuration and administration"/><link rel="next" href="sec-ha-config-basics-resources.html" title="Chapter 6. Configuring cluster resources"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and administration</a><span> / </span><a class="crumb" href="cha-ha-config-basics.html">Configuration and administration basics</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" you-are-here"><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">18 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">19 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">20 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">22 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">23 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">25 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">26 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">27 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">28 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-config-basics" data-id-title="Configuration and administration basics"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP3</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    The main purpose of an HA cluster is to manage user services. Typical
+    examples of user services are an Apache Web server or a database. From
+    the user's point of view, the services do something specific when
+    ordered to do so. To the cluster, however, they are only resources which
+    may be started or stopped—the nature of the service is
+    irrelevant to the cluster.
+   </p><p>
+    This chapter introduces some basic concepts you need to know
+    when administering your cluster. The following
+    chapters show you how to execute the main configuration and
+    administration tasks with each of the management tools SUSE Linux Enterprise High Availability
+    provides.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-config-basics-scenarios" data-id-title="Use case scenarios"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5.1 </span><span class="title-name">Use case scenarios</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-scenarios">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><p>In general, clusters fall into one of two categories:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Two-node clusters</p></li><li class="listitem"><p>Clusters with more than two nodes. This usually means an odd number of nodes.</p></li></ul></div><p>
+    Adding also different topologies, different use cases can be derived.
+    The following use cases are the most common:
+   </p><div class="variablelist"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name"> </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#id-1.4.4.3.3.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.4.3.3.5.2"><span class="term">Two-node cluster in one location</span></dt><dd><p><span class="formalpara-title">Configuration:</span>FC SAN or similar shared storage, layer 2 network.</p><p><span class="formalpara-title">Usage scenario:</span>Embedded clusters that focus on service high
+       availability and not data redundancy for data replication.
+       Such a setup is used for radio stations or assembly line controllers,
+       for example.
+       </p></dd><dt id="vl-2x2node-2locs"><span class="term">Two-node clusters in two locations (most widely used)</span></dt><dd><p><span class="formalpara-title">Configuration:</span>Symmetrical stretched cluster, FC SAN, and layer 2 network
+        all across two locations.</p><p><span class="formalpara-title">Usage scenario:</span>Classic stretched clusters, focus on high availability of services
+        and local data redundancy. For databases and enterprise
+        resource planning. One of the most popular setups.
+       </p></dd><dt id="vl-n-nodes-3locs"><span class="term">Odd number of nodes in three locations</span></dt><dd><p><span class="formalpara-title">Configuration:</span>2×N+1 nodes, FC SAN across two main locations. Auxiliary
+        third site with no FC SAN, but acts as a majority maker.
+        Layer 2 network at least across two main locations.
+       </p><p><span class="formalpara-title">Usage scenario:</span>Classic stretched cluster, focus on high availability of services
+        and data redundancy. For example, databases, enterprise resource planning.
+       </p></dd></dl></div></section><section class="sect1" id="sec-ha-config-basics-global" data-id-title="Quorum determination"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5.2 </span><span class="title-name">Quorum determination</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-global">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Whenever communication fails between one or more nodes and the rest of the
+   cluster, a cluster partition occurs. The nodes can only communicate with
+   other nodes in the same partition and are unaware of the separated nodes.
+   A cluster partition is defined as having quorum (being <span class="quote">“<span class="quote">quorate</span>”</span>)
+   if it has the majority of nodes (or votes).
+   How this is achieved is done by <span class="emphasis"><em>quorum calculation</em></span>.
+   Quorum is a requirement for fencing.
+   </p><p>
+   Quorum is not calculated or determined by Pacemaker. Corosync can handle quorum for
+   two-node clusters directly without changing the Pacemaker configuration.
+  </p><p>How quorum is calculated is influenced by the following factors:</p><div class="variablelist"><dl class="variablelist"><dt id="vl-ha-config-basics-global-number-of-cluster-nodes"><span class="term">Number of cluster nodes</span></dt><dd><p>To keep services running, a cluster with more than two nodes
+       relies on quorum (majority vote) to resolve cluster partitions.
+       Based on the following formula, you can calculate the minimum
+       number of operational nodes required for the cluster to function:</p><div class="verbatim-wrap"><pre class="screen">N ≥ C/2 + 1
+
+N = minimum number of operational nodes
+C = number of cluster nodes</pre></div><p>For example, a five-node cluster needs a minimum of three operational
+       nodes (or two nodes which can fail). </p><p>
+       We strongly recommend to use either a two-node cluster or an odd number
+       of cluster nodes.
+       Two-node clusters make sense for stretched setups across two sites.
+       Clusters with an odd number of nodes can either be built on one single
+       site or might be spread across three sites.
+      </p></dd><dt id="id-1.4.4.3.4.5.2"><span class="term">Corosync configuration</span></dt><dd><p>Corosync is a messaging and membership layer, see
+      <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-corosync-2-node" title="5.2.1. Corosync configuration for two-node clusters">Section 5.2.1, “Corosync configuration for two-node clusters”</a> and
+       <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-corosync-n-node" title="5.2.2. Corosync configuration for n-node clusters">Section 5.2.2, “Corosync configuration for n-node clusters”</a>.
+      </p></dd></dl></div><section class="sect2" id="sec-ha-config-basics-corosync-2-node" data-id-title="Corosync configuration for two-node clusters"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.2.1 </span><span class="title-name">Corosync configuration for two-node clusters</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-corosync-2-node">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    When using the bootstrap scripts, the Corosync configuration contains
+    a <code class="literal">quorum</code> section with the following options:
+   </p><div class="example" id="ex-ha-config-basics-corosync-quorum" data-id-title="Excerpt of Corosync configuration for a two-node cluster"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 5.1: </span><span class="title-name">Excerpt of Corosync configuration for a two-node cluster </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#ex-ha-config-basics-corosync-quorum">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">quorum {
+   # Enable and configure quorum subsystem (default: off)
+   # see also corosync.conf.5 and votequorum.5
+   provider: corosync_votequorum
+   expected_votes: 2
+   two_node: 1
+}</pre></div></div></div><p>
+    By default, when <code class="literal">two_node: 1</code> is set, the
+    <code class="literal">wait_for_all</code> option is automatically enabled.
+    If <code class="literal">wait_for_all</code> is not enabled, the cluster should be
+    started on both nodes in parallel. Otherwise the first node will perform
+    a startup-fencing on the missing second node.
+   </p></section><section class="sect2" id="sec-ha-config-basics-corosync-n-node" data-id-title="Corosync configuration for n-node clusters"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.2.2 </span><span class="title-name">Corosync configuration for n-node clusters</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-corosync-n-node">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><p> When not using a two-node cluster, we strongly recommend an odd
+    number of nodes for your N-node cluster. With regards to quorum
+    configuration, you have the following options: </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Adding additional nodes with the <code class="command">ha-cluster-join</code>
+     command, or</p></li><li class="listitem"><p>Adapting the Corosync configuration manually.</p></li></ul></div><p>
+    If you adjust <code class="filename">/etc/corosync/corosync.conf</code> manually,
+    use the following settings:
+   </p><div class="example" id="id-1.4.4.3.4.7.5" data-id-title="Excerpt of Corosync configuration for an n-node cluster"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 5.2: </span><span class="title-name">Excerpt of Corosync configuration for an n-node cluster </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#id-1.4.4.3.4.7.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">quorum {
+   provider: corosync_votequorum <span class="callout" id="co-corosync-quorum-n-node-corosync-votequorum">1</span>
+   expected_votes: <em class="replaceable">N</em> <span class="callout" id="co-corosync-quorum-n-node-expected-votes">2</span>
+   wait_for_all: 1 <span class="callout" id="co-corosync-quorum-n-node-wait-for-all">3</span>
+}</pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-corosync-quorum-n-node-corosync-votequorum"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>Use the quorum service from Corosync</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-corosync-quorum-n-node-expected-votes"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>The number of votes to expect. This parameter can either be
+       provided inside the <code class="literal">quorum</code> section, or is
+       automatically calculated when the <code class="literal">nodelist</code>
+       section is available.</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-corosync-quorum-n-node-wait-for-all"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Enables the wait for all (WFA) feature.
+       When WFA is enabled, the cluster will be quorate for the first time
+       only after all nodes have become visible.
+       To avoid some startup race conditions, setting <code class="option">wait_for_all</code>
+       to <code class="literal">1</code> may help.
+       For example, in a five-node cluster every node has one vote and thus,
+       <code class="option">expected_votes</code> is set to <code class="literal">5</code>.
+       As soon as three or more nodes are visible to each other, the cluster
+       partition becomes quorate and can start operating.
+      </p></td></tr></table></div></div></div></section></section><section class="sect1" id="sec-ha-config-basics-global-options" data-id-title="Global cluster options"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5.3 </span><span class="title-name">Global cluster options</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-global-options">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><p> Global cluster options control how the cluster behaves when
+   confronted with certain situations. They are grouped into sets and can be
+   viewed and modified with the cluster management tools like Hawk2 and
+   the <code class="command">crm</code> shell. </p><p> The predefined values can usually be kept. However, to make key
+   functions of your cluster work as expected, you might need to adjust the
+   following parameters after basic cluster setup:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-global-quorum" title="5.3.1. Global option no-quorum-policy">Global option <code class="literal">no-quorum-policy</code></a>
+    </p></li><li class="listitem"><p>
+     <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-global-stonith" title="5.3.2. Global option stonith-enabled">Global option <code class="literal">stonith-enabled</code></a>
+    </p></li></ul></div><section class="sect2" id="sec-ha-config-basics-global-quorum" data-id-title="Global option no-quorum-policy"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.3.1 </span><span class="title-name">Global option <code class="literal">no-quorum-policy</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-global-quorum">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   This global option defines what to do when a cluster partition does not
+   have quorum (no majority of nodes is part of the partition).
+  </p><p>
+   The following values are available:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.3.5.5.4.1"><span class="term"><code class="literal">ignore</code>
+    </span></dt><dd><p>
+      Setting <code class="literal">no-quorum-policy</code> to <code class="literal">ignore</code> makes
+      a cluster partition behave like it has quorum, even if it does not. The cluster
+      partition is allowed to issue fencing and continue resource management.
+     </p><p>
+      On SLES 11 this was the recommended setting for a two-node cluster.
+      Starting with SLES 12, the value <code class="literal">ignore</code> is obsolete
+      and must not be used.
+      Based on configuration and conditions, Corosync gives cluster nodes
+      or a single node <span class="quote">“<span class="quote">quorum</span>”</span>—or not.
+     </p><p>
+     For two-node clusters the only meaningful behavior is to always
+     react in case of node loss. The first step should always be
+     to try to fence the lost node.
+     </p></dd><dt id="id-1.4.4.3.5.5.4.2"><span class="term"><code class="literal">freeze</code>
+    </span></dt><dd><p>
+      If quorum is lost, the cluster partition freezes. Resource management
+      is continued: running resources are not stopped (but possibly
+      restarted in response to monitor events), but no further resources
+      are started within the affected partition.
+     </p><p>
+      This setting is recommended for clusters where certain resources
+      depend on communication with other nodes (for example, OCFS2 mounts).
+      In this case, the default setting
+      <code class="literal">no-quorum-policy=stop</code> is not useful, as it would
+      lead to the following scenario: Stopping those resources would not be
+      possible while the peer nodes are unreachable. Instead, an attempt to
+      stop them would eventually time out and cause a <code class="literal">stop
+      failure</code>, triggering escalated recovery and fencing.
+     </p></dd><dt id="id-1.4.4.3.5.5.4.3"><span class="term"><code class="literal">stop</code> (default value)</span></dt><dd><p>
+      If quorum is lost, all resources in the affected cluster partition
+      are stopped in an orderly fashion.
+     </p></dd><dt id="id-1.4.4.3.5.5.4.4"><span class="term"><code class="literal">suicide</code>
+    </span></dt><dd><p>
+      If quorum is lost, all nodes in the affected cluster partition are
+      fenced. This option works only in combination with SBD, see
+      <a class="xref" href="cha-ha-storage-protect.html" title="Chapter 13. Storage protection and SBD">Chapter 13, <em>Storage protection and SBD</em></a>.
+     </p></dd></dl></div></section><section class="sect2" id="sec-ha-config-basics-global-stonith" data-id-title="Global option stonith-enabled"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.3.2 </span><span class="title-name">Global option <code class="literal">stonith-enabled</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-global-stonith">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   This global option defines whether to apply fencing, allowing STONITH
+   devices to shoot failed nodes and nodes with resources that cannot be
+   stopped. By default, this global option is set to
+   <code class="literal">true</code>, because for normal cluster operation it is
+   necessary to use STONITH devices. According to the default value,
+   the cluster will refuse to start any resources if no STONITH
+   resources have been defined.
+  </p><p>
+   If you need to disable fencing for any reasons, set
+   <code class="literal">stonith-enabled</code> to <code class="literal">false</code>, but be
+   aware that this has impact on the support status for your product.
+   Furthermore, with <code class="literal">stonith-enabled="false"</code>, resources
+   like the Distributed Lock Manager (DLM) and all services depending on
+   DLM (such as lvmlockd, GFS2, and OCFS2) will fail to start.
+  </p><div id="id-1.4.4.3.5.6.4" data-id-title="No support without STONITH" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: No support without STONITH</div><p>
+    A cluster without STONITH is not supported.
+   </p></div></section></section><section class="sect1" id="cha-conf-hawk2" data-id-title="Introduction to Hawk2"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5.4 </span><span class="title-name">Introduction to Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#cha-conf-hawk2">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To configure and manage cluster resources, either use Hawk2, or
+    the crm shell (crmsh) command line utility.
+   </p><p>
+    Hawk2's user-friendly Web interface allows you to monitor and administer
+    your High Availability clusters from Linux or non-Linux machines alike. Hawk2 can be
+    accessed from any machine inside or outside of the cluster by using a
+    (graphical) Web browser.
+   </p><section class="sect2" id="sec-conf-hawk2-req" data-id-title="Hawk2 requirements"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.4.1 </span><span class="title-name">Hawk2 requirements</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-req">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Before users can log in to Hawk2, the following requirements need to be
+   fulfilled:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.3.6.5.3.1"><span class="term"><span class="package">hawk2</span> Package</span></dt><dd><p>
+      The <span class="package">hawk2</span> package must be installed on all
+      cluster nodes you want to connect to with Hawk2.
+     </p></dd><dt id="id-1.4.4.3.6.5.3.2"><span class="term">Web browser</span></dt><dd><p>
+      On the machine from which to access a cluster node using
+      Hawk2, you need a (graphical) Web browser (with JavaScript and
+      cookies enabled) to establish the connection.
+     </p></dd><dt id="id-1.4.4.3.6.5.3.3"><span class="term">Hawk2 service</span></dt><dd><p>
+      To use Hawk2, the respective Web service must be started on
+      the node that you want to connect to via the Web interface. See <a class="xref" href="cha-ha-config-basics.html#pro-ha-hawk2-service" title="Starting Hawk2 services">Procedure 5.1, “Starting Hawk2 services”</a>.
+     </p><p>
+      If you have set up your cluster with the scripts from the
+       <code class="systemitem">ha-cluster-bootstrap</code> package,
+      the Hawk2 service is already enabled.
+     </p></dd><dt id="id-1.4.4.3.6.5.3.4"><span class="term">Username, group and password on each cluster node</span></dt><dd><p>
+      Hawk2 users must be members of the <code class="systemitem">haclient</code> group. The installation creates a
+      Linux user named <code class="systemitem">hacluster</code>, who
+      is added to the <code class="systemitem">haclient</code> group.
+     </p><p>
+      When using the <code class="command">ha-cluster-init</code> script for setup,
+      a default password is set for the <code class="systemitem">hacluster</code> user. Before starting Hawk2, change it to a
+      secure password. If you did not use the <code class="command">ha-cluster-init</code>
+      script, either set a password for the <code class="systemitem">hacluster</code> first or create a new user which is a member of
+      the <code class="systemitem">haclient</code> group. Do this on
+      every node you will connect to with Hawk2.
+     </p></dd><dt id="id-1.4.4.3.6.5.3.5"><span class="term">Wildcard certificate handling</span></dt><dd><p>
+      A wildcard certificate is a public key certificate that is valid for
+      multiple sub-domains. For example, a wildcard certificate for
+      <code class="systemitem">*.example.com</code> secures the domains
+      <code class="systemitem">www.example.com</code>,
+      <code class="systemitem">login.example.com</code>,
+      and possibly more.
+     </p><p>
+      Hawk2 supports wildcard certificates as well as conventional certificates.
+      A self-signed default private key and certificate is generated by
+      <code class="filename">/srv/www/hawk/bin/generate-ssl-cert</code>.
+     </p><p>
+      To use your own certificate (conventional or wildcard), replace the
+      generated certificate at <code class="filename">/etc/ssl/certs/hawk.pem</code>
+      with your own.
+     </p></dd></dl></div><div class="procedure" id="pro-ha-hawk2-service" data-id-title="Starting Hawk2 services"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5.1: </span><span class="title-name">Starting Hawk2 services </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#pro-ha-hawk2-service">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     On the node you want to connect to, open a shell and log in as <code class="systemitem">root</code>.
+    </p></li><li class="step"><p>
+     Check the status of the service by entering
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> status hawk</pre></div></li><li class="step"><p>
+     If the service is not running, start it with
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> start hawk</pre></div><p>
+     If you want Hawk2 to start automatically at boot time, execute the
+     following command:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> enable hawk</pre></div></li></ol></div></div></section><section class="sect2" id="sec-conf-hawk2-login" data-id-title="Logging in"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.4.2 </span><span class="title-name">Logging in</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-login">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The Hawk2 Web interface uses the HTTPS protocol and port
+   <code class="literal">7630</code>.
+  </p><p>
+   Instead of logging in to an individual cluster node with Hawk2, you can
+   configure a floating, virtual IP address (<code class="literal">IPaddr</code> or
+   <code class="literal">IPaddr2</code>) as a cluster resource. It does not need any
+   special configuration. It allows clients to connect to the Hawk service no
+   matter which physical node the service is running on.
+  </p><p>
+   When setting up the cluster with the
+   <code class="systemitem">ha-cluster-bootstrap</code> scripts,
+   you will be asked whether to configure a virtual IP for cluster
+   administration.
+  </p><div class="procedure" id="pro-ha-hawk2-login" data-id-title="Logging in to the Hawk2 web interface"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5.2: </span><span class="title-name">Logging in to the Hawk2 web interface </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#pro-ha-hawk2-login">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     On any machine, start a Web browser and enter the following URL:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div><p>
+     Replace <em class="replaceable">HAWKSERVER</em> with the IP address or host
+     name of any cluster node running the Hawk Web service. If a virtual IP
+     address has been configured for cluster administration with Hawk2,
+     replace <em class="replaceable">HAWKSERVER</em> with the virtual IP address.
+    </p><div id="id-1.4.4.3.6.6.5.2.4" data-id-title="Certificate warning" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Certificate warning</div><p>
+      If a certificate warning appears when you try to access the URL for the
+      first time, a self-signed certificate is in use. Self-signed certificates
+      are not considered trustworthy by default.
+     </p><p>
+      To verify the certificate, ask your cluster operator for the certificate
+      details.
+     </p><p>
+      To proceed anyway, you can add an exception in the browser to bypass the
+      warning.
+     </p><p>
+      For information on how to replace the self-signed certificate with a
+      certificate signed by an official Certificate Authority, refer to
+      <a class="xref" href="app-ha-troubleshooting.html#vle-trouble-hawk2-cert">Replacing the self-signed certificate</a>.
+     </p></div></li><li class="step"><p>
+     On the Hawk2 login screen, enter the <span class="guimenu">Username</span> and
+     <span class="guimenu">Password</span> of the
+     <code class="systemitem">hacluster</code> user (or of any other
+     user that is a member of the
+     <code class="systemitem">haclient</code> group).
+    </p></li><li class="step"><p>
+     Click <span class="guimenu">Log In</span>.
+    </p></li></ol></div></div></section><section class="sect2" id="sec-conf-hawk2-overview" data-id-title="Hawk2 overview: main elements"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.4.3 </span><span class="title-name">Hawk2 overview: main elements</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-overview">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   After logging in to Hawk2, you will see a navigation bar on the left-hand
+   side and a top-level row with several links on the right-hand side.
+  </p><div id="id-1.4.4.3.6.7.3" data-id-title="Available functions in Hawk2" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Available functions in Hawk2</div><p>
+    By default, users logged in as <code class="systemitem">root</code> or
+    <code class="systemitem">hacluster</code> have full
+    read-write access to all cluster configuration tasks. However,
+    <a class="xref" href="cha-ha-acl.html" title="Chapter 15. Access control lists"><em>Access control lists</em></a> (ACLs) can be used to
+    define fine-grained access permissions.
+   </p><p>
+    If ACLs are enabled in the CRM, the available functions in Hawk2 depend
+    on the user role and their assigned access permissions. The
+    <span class="guimenu">History Explorer</span> in Hawk2 can only be executed by the
+    user <code class="systemitem">hacluster</code>.
+   </p></div><section class="sect3" id="sec-conf-hawk2-overview-leftnav" data-id-title="Left navigation bar"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">5.4.3.1 </span><span class="title-name">Left navigation bar</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-overview-leftnav">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.3.6.7.4.2.1"><span class="term"><span class="guimenu">Monitoring</span>
+     </span></dt><dd><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         <span class="guimenu">Status</span>: Displays the current cluster status at a
+         glance (similar to <code class="command">crm status</code> on the crmsh). For
+         details, see <a class="xref" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-manage-monitor-status" title="11.1.1. Monitoring a single cluster">Section 11.1.1, “Monitoring a single cluster”</a>. If
+         your cluster includes <code class="literal">guest nodes</code> (nodes that run
+         the <code class="literal">pacemaker_remote</code> daemon), they are displayed, too.
+         
+         The screen refreshes in near real-time: any status changes for nodes
+         or resources are visible almost immediately.
+        </p></li><li class="listitem"><p>
+         <span class="guimenu">Dashboard</span>: Allows you to monitor multiple clusters
+         (also located on different sites, in case you have a Geo cluster
+         setup). For details, see
+         <a class="xref" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-manage-monitor-dash" title="11.1.2. Monitoring multiple clusters">Section 11.1.2, “Monitoring multiple clusters”</a>. If your cluster
+         includes <code class="literal">guest nodes</code> (nodes that run
+         the <code class="literal">pacemaker_remote</code> daemon), they are displayed, too.
+         The screen
+         refreshes in near real-time: any status changes for nodes or resources
+         are visible almost immediately.
+        </p></li></ul></div></dd><dt id="id-1.4.4.3.6.7.4.2.2"><span class="term"><span class="guimenu">Troubleshooting</span>
+     </span></dt><dd><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         <span class="guimenu">History</span>: Opens the <span class="guimenu">History
+         Explorer</span> from which you can generate cluster reports. For
+         details, see <a class="xref" href="cha-ha-monitor-clusters.html#sec-conf-hawk2-history" title="11.3. Viewing the cluster history">Section 11.3, “Viewing the cluster history”</a>.
+        </p></li><li class="listitem"><p>
+         <span class="guimenu">Command Log</span>: Lists the crmsh commands recently
+         executed by Hawk2.
+        </p></li></ul></div></dd><dt id="id-1.4.4.3.6.7.4.2.3"><span class="term">Configuration</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         <span class="guimenu">Add Resource</span>: Opens the resource configuration
+         screen. For details, see <a class="xref" href="sec-ha-config-basics-resources.html" title="Chapter 6. Configuring cluster resources">Chapter 6, <em>Configuring cluster resources</em></a>. </p></li><li class="listitem"><p>
+         <span class="guimenu">Add Constraint</span>: Opens the constraint configuration
+         screen. For details, see <a class="xref" href="sec-ha-config-basics-constraints.html" title="Chapter 7. Configuring resource constraints">Chapter 7, <em>Configuring resource constraints</em></a>. </p></li><li class="listitem"><p>
+         <span class="guimenu">Wizards</span>: Allows you to select from several wizards
+         that guide you through the creation of resources for a certain
+         workload, for example, a DRBD block device. For details, see <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-rsc-wizard" title="5.4.6. Adding resources with the wizard">Section 5.4.6, “Adding resources with the wizard”</a>. </p></li><li class="listitem"><p>
+         <span class="guimenu">Edit Configuration</span>: Allows you to edit resources,
+         constraints, node names and attributes, tags, <a class="link" href="http://crmsh.github.io/man/#cmdhelp_configure_alert" target="_blank">alerts</a>,
+         and <a class="link" href="http://crmsh.github.io/man/#cmdhelp_configure_fencing_topology" target="_blank">fencing
+         topologies</a>.
+         </p></li><li class="listitem"><p>
+         <span class="guimenu">Cluster Configuration</span>: Allows you to modify global
+         cluster options and resource and operation defaults. For details, see
+          <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-cluster-config" title="5.4.4. Configuring global cluster options">Section 5.4.4, “Configuring global cluster options”</a>. </p></li><li class="listitem"><p>
+         <span class="guimenu">Access Control</span> › <span class="guimenu">Roles</span>: Opens a screen where you can create roles for access
+         control lists (sets of rules describing access rights to the CIB). For
+         details, see <a class="xref" href="cha-ha-acl.html#pro-ha-acl-hawk2-role" title="Adding a monitor role with Hawk2">Procedure 15.2, “Adding a monitor role with Hawk2”</a>. </p></li><li class="listitem"><p>
+         <span class="guimenu">Access Control</span> › <span class="guimenu">Targets</span>: Opens a screen where you can create targets (system
+         users) for access control lists and assign roles to them. For details,
+         see <a class="xref" href="cha-ha-acl.html#pro-ha-acl-hawk2-target" title="Assigning a role to a target with Hawk2">Procedure 15.3, “Assigning a role to a target with Hawk2”</a>. </p></li></ul></div></dd></dl></div></section><section class="sect3" id="sec-conf-hawk2-overview-toprow" data-id-title="Top-level row"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">5.4.3.2 </span><span class="title-name">Top-level row</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-overview-toprow">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Hawk2's top-level row shows the following entries:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      <span class="guimenu">Batch</span>: Click to switch to batch mode. This allows you
+      to simulate and stage changes and to apply them as a single transaction.
+      For details, see <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-batch" title="5.4.7. Using the batch mode">Section 5.4.7, “Using the batch mode”</a>.
+     </p></li><li class="listitem"><p>
+      <span class="guimenu"><em class="replaceable">USERNAME</em></span>: Allows you to set
+      preferences for Hawk2 (for example, the language for the Web interface,
+      or whether to display a warning if STONITH is disabled).
+     </p></li><li class="listitem"><p>
+      <span class="guimenu">Help</span>: Access the SUSE Linux Enterprise High Availability documentation, read the
+      release notes or report a bug.
+     </p></li><li class="listitem"><p>
+      <span class="guimenu">Logout</span>: Click to log out.
+     </p></li></ul></div></section></section><section class="sect2" id="sec-conf-hawk2-cluster-config" data-id-title="Configuring global cluster options"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.4.4 </span><span class="title-name">Configuring global cluster options</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-cluster-config">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Global cluster options control how the cluster behaves when confronted with
+   certain situations. They are grouped into sets and can be viewed and
+   modified with cluster management tools like Hawk2 and crmsh. The
+   predefined values can usually be kept. However, to ensure the key functions
+   of your cluster work correctly, you need to adjust the following parameters
+   after basic cluster setup:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-global-quorum" title="5.3.1. Global option no-quorum-policy">Global option <code class="literal">no-quorum-policy</code></a>
+    </p></li><li class="listitem"><p>
+     <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-global-stonith" title="5.3.2. Global option stonith-enabled">Global option <code class="literal">stonith-enabled</code></a>
+    </p></li></ul></div><div class="procedure" id="pro-conf-hawk2-global" data-id-title="Modifying global cluster options"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5.3: </span><span class="title-name">Modifying global cluster options </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#pro-conf-hawk2-global">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Cluster Configuration</span>.
+    </p><p>
+     The <span class="guimenu">Cluster Configuration</span> screen opens. It displays the
+     global cluster options and their current values.
+    </p><p>
+     To display a short description of the parameter on the right-hand side of
+     the screen, hover your mouse over a parameter.
+     
+    </p><div class="figure" id="id-1.4.4.3.6.8.4.3.4"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-cluster-config.png"><img src="images/hawk2-cluster-config.png" width="100%" alt="Hawk2—cluster configuration" title="Hawk2—cluster configuration"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 5.1: </span><span class="title-name">Hawk2—cluster configuration </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#id-1.4.4.3.6.8.4.3.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+     Check the values for <span class="guimenu">no-quorum-policy</span> and
+     <span class="guimenu">stonith-enabled</span> and adjust them, if necessary:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       Set <span class="guimenu">no-quorum-policy</span> to the appropriate value. See
+       <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-global-quorum" title="5.3.1. Global option no-quorum-policy">Section 5.3.1, “Global option <code class="literal">no-quorum-policy</code>”</a> for more details.
+      </p></li><li class="step"><p>
+       If you need to disable fencing for any reason, set
+       <span class="guimenu">stonith-enabled</span> to <code class="literal">no</code>. By default,
+       it is set to <code class="literal">true</code>, because using STONITH devices is
+       necessary for normal cluster operation. According to the
+       default value, the cluster will refuse to start any resources if no
+       STONITH resources have been configured.
+      </p><div id="id-1.4.4.3.6.8.4.4.2.2.2" data-id-title="No Support Without STONITH" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: No Support Without STONITH</div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>You must have a node fencing
+        mechanism for your cluster.</p></li><li class="listitem"><p>The global cluster options
+          <code class="systemitem">stonith-enabled</code> and
+          <code class="systemitem">startup-fencing</code> must be set to
+          <code class="literal">true</code>.
+          When you change them, you lose support.</p></li></ul></div></div></li><li class="step"><p>
+       To remove a parameter from the cluster configuration, click the
+       <span class="guimenu">Minus</span> icon next to the parameter. If a parameter is
+       deleted, the cluster will behave as if that parameter had the default
+       value.
+      </p></li><li class="step"><p>
+       To add a new parameter to the cluster configuration, choose one from the
+       drop-down box.
+      </p></li></ol></li><li class="step"><p>
+     If you need to change <span class="guimenu">Resource Defaults</span> or
+     <span class="guimenu">Operation Defaults</span>, proceed as follows:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+       To adjust a value, either select a different value from the drop-down
+       box or edit the value directly.
+      </p></li><li class="step"><p>
+       To add a new resource default or operation default, choose one from the
+       empty drop-down box and enter a
+       value. If there are default values, Hawk2 proposes them automatically.
+      </p></li><li class="step"><p>
+       To remove a parameter, click the <span class="guimenu">Minus</span> icon next to
+       it. If no values are specified for <span class="guimenu">Resource Defaults</span>
+       and <span class="guimenu">Operation Defaults</span>, the cluster uses the default
+       values that are documented in
+       <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-meta-attr" title="6.12. Resource options (meta attributes)">Section 6.12, “Resource options (meta attributes)”</a> and
+       <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-operations" title="6.14. Resource operations">Section 6.14, “Resource operations”</a>.
+      </p></li></ol></li><li class="step"><p>
+     Confirm your changes.
+    </p></li></ol></div></div></section><section class="sect2" id="sec-conf-hawk2-rsc-show" data-id-title="Showing the current cluster configuration (CIB)"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.4.5 </span><span class="title-name">Showing the current cluster configuration (CIB)</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-rsc-show">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Sometimes a cluster administrator needs to know the cluster configuration.
+   Hawk2 can show the current configuration in crm shell syntax, as XML and
+   as a graph. To view the cluster configuration in crm shell syntax, from the
+   left navigation bar select <span class="guimenu">Configuration</span> › <span class="guimenu">Edit Configuration</span> and click
+   <span class="guimenu">Show</span>. To show the configuration in raw XML instead, click
+   <span class="guimenu">XML</span>. Click <span class="guimenu">Graph</span> for a graphical
+   representation of the nodes and resources configured in the CIB. It also
+   shows the relationships between resources.
+  </p></section><section class="sect2" id="sec-conf-hawk2-rsc-wizard" data-id-title="Adding resources with the wizard"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.4.6 </span><span class="title-name">Adding resources with the wizard</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-rsc-wizard">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The Hawk2 wizard is a convenient way of setting up simple resources like a
+   virtual IP address or an SBD STONITH resource, for example. It is
+   also useful for complex configurations that include multiple resources,
+   like the resource configuration for a DRBD block device or an Apache Web
+   server. The wizard guides you through the configuration steps and provides
+   information about the parameters you need to enter.
+  </p><div class="procedure" id="pro-conf-hawk2-wizard" data-id-title="Using the resource wizard"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5.4: </span><span class="title-name">Using the resource wizard </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#pro-conf-hawk2-wizard">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Wizards</span>.
+    </p></li><li class="step"><p>
+     Expand the individual categories by clicking the arrow down icon next to
+     them and select the desired wizard.
+    </p></li><li class="step"><p>
+     Follow the instructions on the screen. After the last configuration step,
+     <span class="guimenu">Verify</span> the values you have entered.
+    </p><p>
+     Hawk2 shows which actions it is going to perform and what the
+     configuration looks like. Depending on the configuration, you might be
+     prompted for the <code class="systemitem">root</code> password before you can
+     <span class="guimenu">Apply</span> the configuration.
+    </p></li></ol></div></div><div class="figure" id="id-1.4.4.3.6.10.4"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-wizard-apache.png"><img src="images/hawk2-wizard-apache.png" width="100%" alt="Hawk2—wizard for Apache web server" title="Hawk2—wizard for Apache web server"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 5.2: </span><span class="title-name">Hawk2—wizard for Apache web server </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#id-1.4.4.3.6.10.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_hawk2.xml" title="Edit source document"> </a></div></div></div><p>
+   For more information, see <a class="xref" href="sec-ha-config-basics-resources.html" title="Chapter 6. Configuring cluster resources">Chapter 6, <em>Configuring cluster resources</em></a>.
+  </p></section><section class="sect2" id="sec-conf-hawk2-batch" data-id-title="Using the batch mode"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.4.7 </span><span class="title-name">Using the batch mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-conf-hawk2-batch">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_hawk2_batch_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Hawk2 provides a <span class="guimenu">Batch Mode</span>, including a
+  <span class="emphasis"><em>cluster simulator</em></span>. It can be used for the following:
+ </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    Staging changes to the cluster and applying them as a single transaction,
+    instead of having each change take effect immediately.
+   </p></li><li class="listitem"><p>
+    Simulating changes and cluster events, for example, to explore potential
+    failure scenarios.
+   </p></li></ul></div><p>
+  For example, batch mode can be used when creating groups of resources that
+  depend on each other. Using batch mode, you can avoid applying intermediate
+  or incomplete configurations to the cluster.
+ </p><p>
+  While batch mode is enabled, you can add or edit resources and constraints or
+  change the cluster configuration. It is also possible to simulate events in
+  the cluster, including nodes going online or offline, resource operations and
+  tickets being granted or revoked. See
+  <a class="xref" href="cha-ha-config-basics.html#pro-hawk2-batch-inject" title="Injecting node, resource or ticket events">Procedure 5.6, “Injecting node, resource or ticket events”</a> for details.
+ </p><p>
+  The <span class="emphasis"><em>cluster simulator</em></span> runs automatically after every
+  change and shows the expected outcome in the user interface. For example,
+  this also means: If you stop a resource while in batch mode, the user
+  interface shows the resource as stopped—while actually, the resource is
+  still running.
+ </p><div id="id-1.4.4.3.6.11.8" data-id-title="Wizards and changes to the live system" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Wizards and changes to the live system</div><p>
+   Some wizards include actions beyond mere cluster configuration. When using
+   those wizards in batch mode, any changes that go beyond cluster
+   configuration would be applied to the live system immediately.
+  </p><p>
+   Therefore wizards that require <code class="systemitem">root</code> permission cannot be executed in
+   batch mode.
+  </p></div><div class="procedure" id="pro-conf-hawk2-manage-monitor-batch" data-id-title="Working with the batch mode"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5.5: </span><span class="title-name">Working with the batch mode </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#pro-conf-hawk2-manage-monitor-batch">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_hawk2_batch_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Log in to Hawk2:
+   </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+    To activate the batch mode, select <span class="guimenu">Batch</span> from the
+    top-level row.
+   </p><p>
+    An additional bar appears below the top-level row. It indicates that batch
+    mode is active and contains links to actions that you can execute in batch
+    mode.
+   </p><div class="figure" id="fig-hawk2-batch"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-batchmode-active.png"><img src="images/hawk2-batchmode-active.png" width="100%" alt="Hawk2 batch mode activated" title="Hawk2 batch mode activated"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 5.3: </span><span class="title-name">Hawk2 batch mode activated </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#fig-hawk2-batch">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_hawk2_batch_i.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+    While batch mode is active, perform any changes to your cluster, like
+    adding or editing resources and constraints or editing the cluster
+    configuration.
+   </p><p>
+    The changes will be simulated and shown in all screens.
+   </p></li><li class="step"><p>
+    To view details of the changes you have made, select
+    <span class="guimenu">Show</span> from the batch mode bar. The <span class="guimenu">Batch
+    Mode</span> window opens.
+   </p><p>
+    For any configuration changes it shows the difference between the live
+    state and the simulated changes in crmsh syntax: Lines starting with a
+    <code class="literal">-</code> character represent the current state whereas lines
+    starting with <code class="literal">+</code> show the proposed state.
+   </p></li><li class="step"><p>
+    To inject events or view even more details, see
+    <a class="xref" href="cha-ha-config-basics.html#pro-hawk2-batch-inject" title="Injecting node, resource or ticket events">Procedure 5.6</a>.
+    Otherwise <span class="guimenu">Close</span> the window.
+   </p></li><li class="step"><p>
+    Choose to either <span class="guimenu">Discard</span> or <span class="guimenu">Apply</span> the
+    simulated changes and confirm your choice. This also deactivates batch mode
+    and takes you back to normal mode.
+   </p></li></ol></div></div><p>
+  When running in batch mode, Hawk2 also allows you to inject <span class="guimenu">Node
+  Events</span> and <span class="guimenu">Resource Events</span>.
+ </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.3.6.11.11.1"><span class="term"><span class="guimenu">Node events</span>
+   </span></dt><dd><p>
+     Let you change the state of a node. Available states are
+     <span class="guimenu">online</span>, <span class="guimenu">offline</span>, and
+     <span class="guimenu">unclean</span>.
+    </p></dd><dt id="id-1.4.4.3.6.11.11.2"><span class="term"><span class="guimenu">Resource events</span>
+   </span></dt><dd><p>
+     Let you change some properties of a resource. For example, you can set an
+     operation (like <code class="literal">start</code>, <code class="literal">stop</code>,
+     <code class="literal">monitor</code>), the node it applies to, and the expected
+     result to be simulated.
+    </p></dd><dt id="id-1.4.4.3.6.11.11.3"><span class="term"><span class="guimenu">Ticket events</span>
+   </span></dt><dd><p>
+     Let you test the impact of granting and revoking tickets (used for Geo
+     clusters).
+    </p></dd></dl></div><div class="procedure" id="pro-hawk2-batch-inject" data-id-title="Injecting node, resource or ticket events"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5.6: </span><span class="title-name">Injecting node, resource or ticket events </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#pro-hawk2-batch-inject">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_hawk2_batch_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Log in to Hawk2:
+   </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+    If batch mode is not active yet, click <span class="guimenu">Batch</span> at the
+    top-level row to switch to batch mode.
+   </p></li><li class="step"><p>
+    In the batch mode bar, click <span class="guimenu">Show</span> to open the
+    <span class="guimenu">Batch Mode</span> window.
+   </p></li><li class="step"><p>
+    To simulate a status change of a node:
+   </p><ol type="a" class="substeps"><li class="step"><p>
+      Click <span class="guimenu">Inject</span> › <span class="guimenu">Node
+      Event</span>.
+     </p></li><li class="step"><p>
+      Select the <span class="guimenu">Node</span> you want to manipulate and select its
+      target <span class="guimenu">State</span>.
+     </p></li><li class="step"><p>
+      Confirm your changes. Your event is added to the queue of events listed
+      in the <span class="guimenu">Batch Mode</span> dialog.
+     </p></li></ol></li><li class="step"><p>
+    To simulate a resource operation:
+   </p><ol type="a" class="substeps"><li class="step"><p>
+      Click <span class="guimenu">Inject</span> › <span class="guimenu">Resource
+      Event</span>.
+     </p></li><li class="step"><p>
+      Select the <span class="guimenu">Resource</span> you want to manipulate and select
+      the <span class="guimenu">Operation</span> to simulate.
+     </p></li><li class="step"><p>
+      If necessary, define an <span class="guimenu">Interval</span>.
+     </p></li><li class="step"><p>
+      Select the <span class="guimenu">Node</span> on which to run the operation and the
+      targeted <span class="guimenu">Result</span>. Your event is added to the queue of
+      events listed in the <span class="guimenu">Batch Mode</span> dialog.
+     </p></li><li class="step"><p>
+      Confirm your changes.
+     </p></li></ol></li><li class="step"><p>
+    To simulate a ticket action:
+   </p><ol type="a" class="substeps"><li class="step"><p>
+      Click <span class="guimenu">Inject</span> › <span class="guimenu">Ticket
+       Event</span>.
+     </p></li><li class="step"><p>
+      Select the <span class="guimenu">Ticket</span> you want to manipulate and select
+      the <span class="guimenu">Action</span> to simulate.
+     </p></li><li class="step"><p>
+      Confirm your changes. Your event is added to the queue of events listed
+      in the <span class="guimenu">Batch Mode</span> dialog.
+     </p></li></ol></li><li class="step"><p>
+    The <span class="guimenu">Batch Mode</span> dialog
+    (<a class="xref" href="cha-ha-config-basics.html#fig-hawk2-batch-show" title="Hawk2 batch mode—injected invents and configuration changes">Figure 5.4</a>)
+    shows a new line per injected event. Any event listed here is simulated
+    immediately and is reflected on the <span class="guimenu">Status</span> screen.
+   </p><p>
+    If you have made any configuration changes, too, the difference between the
+    live state and the simulated changes is shown below the injected events.
+   </p><div class="figure" id="fig-hawk2-batch-show"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-batchmode-show.png"><img src="images/hawk2-batchmode-show.png" width="100%" alt="Hawk2 batch mode—injected invents and configuration changes" title="Hawk2 batch mode—injected invents and configuration changes"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 5.4: </span><span class="title-name">Hawk2 batch mode—injected invents and configuration changes </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#fig-hawk2-batch-show">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_hawk2_batch_i.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+    To remove an injected event, click the <span class="guimenu">Remove</span> icon next
+    to it. Hawk2 updates the <span class="guimenu">Status</span> screen accordingly.
+   </p></li><li class="step"><p>
+    To view more details about the simulation run, click
+    <span class="guimenu">Simulator</span> and choose one of the following:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.3.6.11.12.10.2.1"><span class="term"><span class="guimenu">Summary</span>
+     </span></dt><dd><p>
+       Shows a detailed summary.
+      </p></dd><dt id="id-1.4.4.3.6.11.12.10.2.2"><span class="term"><span class="guimenu">CIB (in)</span>/<span class="guimenu">CIB (out)</span>
+     </span></dt><dd><p>
+       <span class="guimenu">CIB (in)</span> shows the initial CIB state. <span class="guimenu">CIB
+       (out)</span> shows what the CIB would look like after the transition.
+      </p></dd><dt id="id-1.4.4.3.6.11.12.10.2.3"><span class="term"><span class="guimenu">Transition graph</span>
+     </span></dt><dd><p>
+       Shows a graphical representation of the transition.
+      </p></dd><dt id="id-1.4.4.3.6.11.12.10.2.4"><span class="term"><span class="guimenu">Transition</span>
+     </span></dt><dd><p>
+       Shows an XML representation of the transition.
+      </p></dd></dl></div></li><li class="step"><p>
+    If you have reviewed the simulated changes, close the <span class="guimenu">Batch
+    Mode</span> window.
+   </p></li><li class="step"><p>
+    To leave the batch mode, either <span class="guimenu">Apply</span> or
+    <span class="guimenu">Discard</span> the simulated changes.
+   </p></li></ol></div></div></section></section><section class="sect1" id="cha-ha-manual-config" data-id-title="Introduction to crmsh"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5.5 </span><span class="title-name">Introduction to crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#cha-ha-manual-config">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To configure and manage cluster resources, either use the crm shell
+    (crmsh) command line utility or Hawk2, a Web-based
+    user interface.
+   </p><p>
+    This section introduces the command line tool <code class="command">crm</code>.
+    The <code class="command">crm</code> command has several subcommands which manage
+   resources, CIBs, nodes, resource agents, and others. It offers a thorough
+   help system with embedded examples. All examples follow a naming
+   convention described in
+   <a class="xref" href="app-naming.html" title="Appendix B. Naming conventions">Appendix B</a>.
+   </p><p>
+   Events are logged to <code class="filename">/var/log/crmsh/crmsh.log</code>.
+  </p><div id="id-1.4.4.3.7.6" data-id-title="User privileges" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: User privileges</div><p>
+   Sufficient privileges are necessary to manage a cluster. The
+   <code class="command">crm</code> command and its subcommands need to be run either
+   as <code class="systemitem">root</code> user or as the CRM owner user (typically the user
+   <code class="systemitem">hacluster</code>).
+  </p><p>
+   However, the <code class="option">user</code> option allows you to run
+   <code class="command">crm</code> and its subcommands as a regular (unprivileged)
+   user and to change its ID using <code class="command">sudo</code> whenever
+   necessary. For example, with the following command <code class="command">crm</code>
+   will use <code class="systemitem">hacluster</code> as the
+   privileged user ID:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> options user hacluster</pre></div><p>
+   Note that you need to set up <code class="filename">/etc/sudoers</code> so that
+   <code class="command">sudo</code> does not ask for a password.
+  </p></div><div id="id-1.4.4.3.7.7" data-id-title="Interactive crm prompt" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Interactive crm prompt</div><p>By using crm without arguments (or with only one sublevel as
+    argument), the crm shell enters the interactive mode. This mode is
+    indicated by the following prompt:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">crm(live/HOSTNAME)</code></pre></div><p>
+    For readability reasons, we omit the host name in the interactive crm
+    prompts in our documentation. We only include the host name if you need
+    to run the interactive shell on a specific node, like alice for example:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">crm(live/alice)</code></pre></div></div><section class="sect2" id="sec-ha-manual-config-crm-help" data-id-title="Getting help"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.1 </span><span class="title-name">Getting help</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-crm-help">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Help can be accessed in several ways:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      To output the usage of <code class="command">crm</code> and its command line
+      options:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> --help</pre></div></li><li class="listitem"><p>
+      To give a list of all available commands:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> help</pre></div></li><li class="listitem"><p>
+      To access other help sections, not just the command reference:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> help topics</pre></div></li><li class="listitem"><p>
+      To view the extensive help text of the <code class="command">configure</code>
+      subcommand:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure help</pre></div></li><li class="listitem"><p>
+      To print the syntax, its usage, and examples of the <code class="command">group</code>
+      subcommand of <code class="command">configure</code>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure help group</pre></div><p>
+      This is the same:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> help configure group</pre></div></li></ul></div><p>
+    Almost all output of the <code class="command">help</code> subcommand (do not mix
+    it up with the <code class="option">--help</code> option) opens a text viewer. This
+    text viewer allows you to scroll up or down and read the help text more
+    comfortably. To leave the text viewer, press the <span class="keycap">Q</span> key.
+   </p><div id="tip-crm-tabcompletion" data-id-title="Use tab completion in Bash and interactive shell" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Use tab completion in Bash and interactive shell</div><p>
+     The crmsh supports full tab completion in Bash directly, not only
+     for the interactive shell. For example, typing <code class="literal">crm help
+     config</code><span class="keycap">→|</span> will complete the word
+     like in the interactive shell.
+    </p></div></section><section class="sect2" id="sec-ha-manual-config-crm-run" data-id-title="Executing crmshs subcommands"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.2 </span><span class="title-name">Executing crmsh's subcommands</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-crm-run">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The <code class="command">crm</code> command itself can be used in the following
+    ways:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">Directly:</span>
+       Concatenate all subcommands to <code class="command">crm</code>, press
+       <span class="keycap">Enter</span> and you see the output immediately. For
+       example, enter <code class="command">crm</code> <code class="option">help ra</code> to get
+       information about the <code class="command">ra</code> subcommand (resource
+       agents).
+      </p><p>It is possible to abbreviate subcommands as long as they are
+        unique. For example, you can shorten <code class="command">status</code> as
+      <code class="command">st</code> and crmsh will know what you have meant.
+      </p><p>Another feature is to shorten parameters. Usually, you add
+        parameters through the <code class="command">params</code> keyword.
+        You can leave out the <code class="literal">params</code> section if it is the first and only section.
+        For example, this line:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> primitive ipaddr IPaddr2 params ip=192.168.0.55</pre></div><p>is equivalent to this line:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> primitive ipaddr IPaddr2 ip=192.168.0.55</pre></div></li><li class="listitem"><p><span class="formalpara-title">As crm shell script:</span>
+       Crm shell scripts contain subcommands of <code class="command">crm</code>.
+       For more information, see <a class="xref" href="cha-ha-config-basics.html#sec-ha-manual-config-crmshellscripts" title="5.5.4. Using crmsh's shell scripts">Section 5.5.4, “Using crmsh's shell scripts”</a>.
+      </p></li><li class="listitem"><p><span class="formalpara-title">As crmsh cluster scripts:</span>These are a collection of metadata, references to RPM packages,
+          configuration files, and crmsh subcommands bundled under a single,
+          yet descriptive name. They are managed through the
+          <code class="command">crm script</code> command.
+        </p><p>Do not confuse them with crmsh shell scripts: although both share
+        some common objectives, the crm shell scripts only contain subcommands
+        whereas cluster scripts incorporate much more than a simple
+        enumeration of commands. For more information, see <a class="xref" href="cha-ha-config-basics.html#sec-ha-manual-config-clusterscripts" title="5.5.5. Using crmsh's cluster scripts">Section 5.5.5, “Using crmsh's cluster scripts”</a>.
+      </p></li><li class="listitem"><p><span class="formalpara-title">Interactive as internal shell:</span>
+       Type <code class="command">crm</code> to enter the internal shell. The prompt
+       changes to <code class="literal">crm(live)</code>. With
+       <code class="command">help</code> you can get an overview of the available
+       subcommands. As the internal shell has different levels of
+       subcommands, you can <span class="quote">“<span class="quote">enter</span>”</span> one by typing this
+       subcommand and press <span class="keycap">Enter</span>.
+      </p><p>
+      For example, if you type <code class="command">resource</code> you enter the
+      resource management level. Your prompt changes to
+      <code class="literal">crm(live)resource#</code>. To leave the
+      internal shell, use the command <code class="command">quit</code>. If you need to go
+      one level back, use <code class="command">back</code>, <code class="command">up</code>,
+      <code class="command">end</code>, or <code class="command">cd</code>.
+     </p><p>
+      You can enter the level directly by typing <code class="command">crm</code> and
+      the respective subcommand(s) without any options and press
+      <span class="keycap">Enter</span>.
+     </p><p>
+      The internal shell supports also tab completion for subcommands and
+      resources. Type the beginning of a command, press
+      <span class="keycap">→|</span> and <code class="command">crm</code> completes the
+      respective object.
+     </p></li></ul></div><p>
+    In addition to previously explained methods, crmsh also supports
+    synchronous command execution. Use the <code class="option">-w</code> option to
+    activate it. If you have started <code class="command">crm</code> without
+    <code class="option">-w</code>, you can enable it later with the user preference's
+    <code class="command">wait</code> set to <code class="literal">yes</code> (<code class="command">options
+    wait yes</code>). If this option is enabled, <code class="command">crm</code>
+    waits until the transition is finished. Whenever a transaction is
+    started, dots are printed to indicate progress. Synchronous command
+    execution is only applicable for commands like <code class="command">resource
+    start</code>.
+   </p><div id="id-1.4.4.3.7.9.5" data-id-title="Differentiate between management and configuration subcommands" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Differentiate between management and configuration subcommands</div><p>
+     The <code class="command">crm</code> tool has management capability (the
+     subcommands <code class="command">resource</code> and <code class="command">node</code>)
+     and can be used for configuration (<code class="command">cib</code>,
+     <code class="command">configure</code>).
+    </p></div><p>
+    The following subsections give you an overview of some important aspects
+    of the <code class="command">crm</code> tool.
+   </p></section><section class="sect2" id="sec-ha-manual-config-ocf" data-id-title="Displaying information about OCF resource agents"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.3 </span><span class="title-name">Displaying information about OCF resource agents</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-ocf">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    As you need to deal with resource agents in your cluster configuration
+    all the time, the <code class="command">crm</code> tool contains the
+    <code class="command">ra</code> command. Use it to show information about resource
+    agents and to manage them (for additional information, see also
+    <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-raclasses" title="6.2. Supported resource agent classes">Section 6.2, “Supported resource agent classes”</a>):
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> ra
+<code class="prompt custom">crm(live)ra# </code></pre></div><p>
+    The command <code class="command">classes</code> lists all classes and providers:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)ra# </code><code class="command">classes</code>
+ lsb
+ ocf / heartbeat linbit lvm2 ocfs2 pacemaker
+ service
+ stonith
+ systemd</pre></div><p>
+    To get an overview of all available resource agents for a class (and
+    provider) use the <code class="command">list</code> command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)ra# </code><code class="command">list</code> ocf
+AoEtarget           AudibleAlarm        CTDB                ClusterMon
+Delay               Dummy               EvmsSCC             Evmsd
+Filesystem          HealthCPU           HealthSMART         ICP
+IPaddr              IPaddr2             IPsrcaddr           IPv6addr
+LVM                 LinuxSCSI           MailTo              ManageRAID
+ManageVE            Pure-FTPd           Raid1               Route
+SAPDatabase         SAPInstance         SendArp             ServeRAID
+...</pre></div><p>
+    An overview of a resource agent can be viewed with
+    <code class="command">info</code>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)ra# </code><code class="command">info</code> ocf:linbit:drbd
+This resource agent manages a DRBD* resource
+as a master/slave resource. DRBD is a shared-nothing replicated storage
+device. (ocf:linbit:drbd)
+
+Master/Slave OCF Resource Agent for DRBD
+
+Parameters (* denotes required, [] the default):
+
+drbd_resource* (string): drbd resource name
+    The name of the drbd resource from the drbd.conf file.
+
+drbdconf (string, [/etc/drbd.conf]): Path to drbd.conf
+    Full path to the drbd.conf file.
+
+Operations' defaults (advisory minimum):
+
+    start         timeout=240
+    promote       timeout=90
+    demote        timeout=90
+    notify        timeout=90
+    stop          timeout=100
+    monitor_Slave_0 interval=20 timeout=20 start-delay=1m
+    monitor_Master_0 interval=10 timeout=20 start-delay=1m</pre></div><p>
+    Leave the viewer by pressing <span class="keycap">Q</span>.
+   </p><div id="id-1.4.4.3.7.10.11" data-id-title="Use crm directly" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Use <code class="command">crm</code> directly</div><p>
+     In the former example we used the internal shell of the
+     <code class="command">crm</code> command. However, you do not necessarily need to
+     use it. You get the same results if you add the respective subcommands
+     to <code class="command">crm</code>. For example, you can list all the OCF
+     resource agents by entering <code class="command">crm</code> <code class="option">ra list
+     ocf</code> in your shell.
+    </p></div></section><section class="sect2" id="sec-ha-manual-config-crmshellscripts" data-id-title="Using crmshs shell scripts"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.4 </span><span class="title-name">Using crmsh's shell scripts</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-crmshellscripts">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The crmsh shell scripts provide a convenient way to enumerate crmsh
+    subcommands into a file. This makes it easy to comment specific lines or
+    to replay them later. Keep in mind that a crmsh shell script can contain
+    <span class="emphasis"><em>only crmsh subcommands</em></span>. Any other commands are not
+    allowed.
+   </p><p>
+    Before you can use a crmsh shell script, create a file with specific
+    commands. For example, the following file prints the status of the cluster
+    and gives a list of all nodes:
+   </p><div class="example" id="ex-ha-manual-config-crmshellscripts" data-id-title="A simple crmsh shell script"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 5.3: </span><span class="title-name">A simple crmsh shell script </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#ex-ha-manual-config-crmshellscripts">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen"># A small example file with some crm subcommands
+<code class="command">status</code>
+<code class="command">node</code> list</pre></div></div></div><p>
+    Any line starting with the hash symbol (<code class="literal">#</code>) is a
+    comment and is ignored. If a line is too long, insert a backslash
+    (<code class="literal">\</code>) at the end and continue in the next line. It is
+    recommended to indent lines that belong to a certain subcommand to improve
+    readability.
+   </p><p>To use this script, use one of the following methods:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> -f example.cli
+<code class="prompt root"># </code><code class="command">crm</code> &lt; example.cli</pre></div></section><section class="sect2" id="sec-ha-manual-config-clusterscripts" data-id-title="Using crmshs cluster scripts"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.5 </span><span class="title-name">Using crmsh's cluster scripts</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-clusterscripts">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>Collecting information from all cluster nodes and deploying any
+      changes is a key cluster administration task. Instead of performing
+      the same procedures manually on different nodes (which is error-prone),
+      you can use the crmsh cluster scripts.
+   </p><p>
+    Do not confuse them with the <span class="emphasis"><em>crmsh shell scripts</em></span>,
+    which are explained in <a class="xref" href="cha-ha-config-basics.html#sec-ha-manual-config-crmshellscripts" title="5.5.4. Using crmsh's shell scripts">Section 5.5.4, “Using crmsh's shell scripts”</a>.
+    </p><p>In contrast to crmsh shell scripts, cluster scripts performs
+    additional tasks like:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Installing software that is required for a specific task.</p></li><li class="listitem"><p>Creating or modifying any configuration files.</p></li><li class="listitem"><p>Collecting information and reporting potential problems with the
+          cluster.</p></li><li class="listitem"><p>Deploying the changes to all nodes.</p></li></ul></div><p>crmsh cluster scripts do not replace other tools for managing
+      clusters—they provide an integrated way to perform the above
+      tasks across the cluster. Find detailed information at <a class="link" href="http://crmsh.github.io/scripts/" target="_blank">http://crmsh.github.io/scripts/</a>.
+    </p><section class="sect3" id="sec-ha-manual-config-clusterscripts-usage" data-id-title="Usage"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">5.5.5.1 </span><span class="title-name">Usage</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-clusterscripts-usage">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>To get a list of all available cluster scripts, run:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script list</pre></div><p>To view the components of a script, use the
+        <code class="command">show</code> command and the name of the cluster script,
+        for example:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script show mailto
+mailto (Basic)
+MailTo
+
+ This is a resource agent for MailTo. It sends email to a sysadmin
+whenever  a takeover occurs.
+
+1. Notifies recipients by email in the event of resource takeover
+
+  id (required)  (unique)
+      Identifier for the cluster resource
+  email (required)
+      Email address
+  subject
+      Subject</pre></div><p>The output of <code class="command">show</code> contains a title, a
+          short description, and a procedure. Each procedure is divided
+          into a series of steps, performed in the given order. </p><p>Each step contains a list of required and optional parameters,
+        along with a short description and its default value.</p><p>Each cluster script understands a set of common parameters.
+        These parameters can be passed to any script:</p><div class="table" id="id-1.4.4.3.7.12.8.9" data-id-title="Common parameters"><div class="title-container"><div class="table-title-wrap"><div class="table-title"><span class="title-number-name"><span class="title-number">Table 5.1: </span><span class="title-name">Common parameters </span></span><a title="Permalink" class="permalink" href="cha-ha-config-basics.html#id-1.4.4.3.7.12.8.9">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div><div class="table-contents"><table style="border-collapse: collapse; border-top: 1px solid ; border-bottom: 1px solid ; border-left: 1px solid ; border-right: 1px solid ; "><colgroup><col/><col/><col/></colgroup><thead><tr><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">Parameter</th><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">Argument</th><th style="border-bottom: 1px solid ; ">Description</th></tr></thead><tbody><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">action</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">INDEX</em></td><td style="border-bottom: 1px solid ; ">If set, only execute a single action (index, as
+                returned by verify)</td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">dry_run</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">BOOL</em></td><td style="border-bottom: 1px solid ; ">If set, simulate execution only (default: no) </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">nodes</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">LIST</em></td><td style="border-bottom: 1px solid ; ">List of nodes to execute the script for</td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">port</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">NUMBER</em></td><td style="border-bottom: 1px solid ; ">Port to connect to</td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">statefile</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">FILE</em></td><td style="border-bottom: 1px solid ; ">When single-stepping, the state is saved in the given
+                file </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">sudo</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">BOOL</em></td><td style="border-bottom: 1px solid ; ">If set, crm will prompt for a sudo password and use sudo
+                where appropriate (default: no) </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">timeout</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">NUMBER</em></td><td style="border-bottom: 1px solid ; ">Execution timeout in seconds (default: 600) </td></tr><tr><td style="border-right: 1px solid ; "><em class="parameter">user</em></td><td style="border-right: 1px solid ; "><em class="replaceable">USER</em></td><td>Run script as the given user </td></tr></tbody></table></div></div></section><section class="sect3" id="sec-ha-manual-config-clusterscripts-verify-run" data-id-title="Verifying and running a cluster script"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">5.5.5.2 </span><span class="title-name">Verifying and running a cluster script</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-clusterscripts-verify-run">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>Before running a cluster script, review the actions that it will
+          perform and verify its parameters to avoid problems. A cluster script
+          can potentially perform a series of actions and may fail for
+          various reasons. Thus, verifying your parameters before
+          running it helps to avoid problems.</p><p>For example, the <code class="systemitem">mailto</code> resource agent
+        requires a unique identifier and an e-mail address. To verify these
+        parameters, run:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script verify mailto id=sysadmin email=tux@example.org
+1. Ensure mail package is installed
+
+        mailx
+
+2. Configure cluster resources
+
+        primitive sysadmin MailTo
+                email="tux@example.org"
+                op start timeout="10"
+                op stop timeout="10"
+                op monitor interval="10" timeout="10"
+
+        clone c-sysadmin sysadmin</pre></div><p>The <code class="command">verify</code> prints the steps and replaces
+        any placeholders with your given parameters. If <code class="command">verify</code>
+        finds any problems, it will report it.
+        If everything is OK, replace the <code class="command">verify</code>
+        command with <code class="command">run</code>:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script run mailto id=sysadmin email=tux@example.org
+INFO: MailTo
+INFO: Nodes: alice, bob
+OK: Ensure mail package is installed
+OK: Configure cluster resources</pre></div><p>Check whether your resource is integrated into your cluster
+          with <code class="command">crm status</code>:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> status
+[...]
+ Clone Set: c-sysadmin [sysadmin]
+     Started: [ alice bob ]</pre></div></section></section><section class="sect2" id="sec-ha-manual-config-template" data-id-title="Using configuration templates"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.6 </span><span class="title-name">Using configuration templates</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-template">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.4.3.7.13.3" data-id-title="Deprecation notice" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Deprecation notice</div><p>The use of configuration templates is deprecated and will
+        be removed in the future. Configuration templates will be replaced
+        by cluster scripts, see <a class="xref" href="cha-ha-config-basics.html#sec-ha-manual-config-clusterscripts" title="5.5.5. Using crmsh's cluster scripts">Section 5.5.5, “Using crmsh's cluster scripts”</a>.
+      </p></div><p>
+    Configuration templates are ready-made cluster configurations for
+    crmsh. Do not confuse them with the <span class="emphasis"><em>resource
+    templates</em></span> (as described in
+    <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-rsc-template" title="6.8.2. Creating resource templates with crmsh">Section 6.8.2, “Creating resource templates with crmsh”</a>). Those are
+    templates for the <span class="emphasis"><em>cluster</em></span> and not for the crm
+    shell.
+   </p><p>
+    Configuration templates require minimum effort to be tailored to the
+    particular user's needs. Whenever a template creates a configuration,
+    warning messages give hints which can be edited later for further
+    customization.
+   </p><p>
+    The following procedure shows how to create a simple yet functional
+    Apache configuration:
+   </p><div class="procedure" id="pro-ha-manual-config-template"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      Create a new configuration from a configuration template:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Switch to the <code class="command">template</code> subcommand:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">template</code></pre></div></li><li class="step"><p>
+        List the available configuration templates:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">list</code> templates
+gfs2-base   filesystem  virtual-ip  apache   clvm     ocfs2    gfs2</pre></div></li><li class="step"><p>
+        Decide which configuration template you need. As we need an Apache
+        configuration, we select the <code class="literal">apache</code> template and
+        name it <code class="literal">g-intranet</code>:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">new</code> g-intranet apache
+INFO: pulling in template apache
+INFO: pulling in template virtual-ip</pre></div></li></ol></li><li class="step"><p>
+      Define your parameters:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        List the configuration you have created:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">list</code>
+g-intranet</pre></div></li><li class="step" id="st-config-cli-show"><p>
+        Display the minimum required changes that need to be filled out by
+        you:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">show</code>
+ERROR: 23: required parameter ip not set
+ERROR: 61: required parameter id not set
+ERROR: 65: required parameter configfile not set</pre></div></li><li class="step" id="st-config-cli-edit"><p>
+        Invoke your preferred text editor and fill out all lines that have
+        been displayed as errors in <a class="xref" href="cha-ha-config-basics.html#st-config-cli-show" title="Step 3.b">Step 3.b</a>:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">edit</code></pre></div></li></ol></li><li class="step"><p>
+      Show the configuration and check whether it is valid (bold text
+      depends on the configuration you have entered in
+      <a class="xref" href="cha-ha-config-basics.html#st-config-cli-edit" title="Step 3.c">Step 3.c</a>):
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">show</code>
+primitive virtual-ip ocf:heartbeat:IPaddr \
+    params ip=<span class="strong"><strong>"192.168.1.101"</strong></span>
+primitive apache apache \
+    params configfile=<span class="strong"><strong>"/etc/apache2/httpd.conf"</strong></span>
+    monitor apache 120s:60s
+group <span class="strong"><strong>g-intranet</strong></span> \
+    apache virtual-ip</pre></div></li><li class="step"><p>
+      Apply the configuration:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">apply</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">cd ..</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">show</code></pre></div></li><li class="step"><p>
+      Submit your changes to the CIB:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div><p>
+    It is possible to simplify the commands even more, if you know the
+    details. The above procedure can be summarized with the following
+    command on the shell:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure template \
+   new g-intranet apache params \
+   configfile="/etc/apache2/httpd.conf" ip="192.168.1.101"</pre></div><p>
+    If you are inside your internal <code class="command">crm</code> shell, use the
+    following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">new</code> intranet apache params \
+   configfile="/etc/apache2/httpd.conf" ip="192.168.1.101"</pre></div><p>
+    However, the previous command only creates its configuration from the
+    configuration template. It does not apply nor commit it to the CIB.
+   </p></section><section class="sect2" id="sec-ha-manual-config-shadowconfig" data-id-title="Testing with shadow configuration"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.7 </span><span class="title-name">Testing with shadow configuration</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-shadowconfig">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A shadow configuration is used to test different configuration
+    scenarios. If you have created several shadow configurations, you can
+    test them one by one to see the effects of your changes.
+   </p><p>
+    The usual process looks like this:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      Create a new shadow configuration:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">cib</code> new myNewConfig
+INFO: myNewConfig shadow CIB created</pre></div><p>
+      If you omit the name of the shadow CIB, a temporary name
+      <code class="literal">@tmp@</code> is created.
+     </p></li><li class="step"><p>
+      To copy the current live configuration into your shadow
+      configuration, use the following command, otherwise skip this step:
+     </p><div class="verbatim-wrap"><pre class="screen">crm(myNewConfig)# <code class="command">cib</code> reset myNewConfig</pre></div><p>
+      The previous command makes it easier to modify any existing resources
+      later.
+     </p></li><li class="step"><p>
+      Make your changes as usual. After you have created the shadow
+      configuration, all changes go there. To save all your changes, use the
+      following command:
+     </p><div class="verbatim-wrap"><pre class="screen">crm(myNewConfig)# <code class="command">commit</code></pre></div></li><li class="step"><p>
+      If you need the live cluster configuration again, switch back with the
+      following command:
+     </p><div class="verbatim-wrap"><pre class="screen">crm(myNewConfig)configure# <code class="command">cib</code> use live
+<code class="prompt custom">crm(live)# </code></pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-debugging" data-id-title="Debugging your configuration changes"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.8 </span><span class="title-name">Debugging your configuration changes</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-debugging">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Before loading your configuration changes back into the cluster, it is
+    recommended to review your changes with <code class="command">ptest</code>. The
+    <code class="command">ptest</code> command can show a diagram of actions that will
+    be induced by committing the changes. You need the
+    <span class="package">graphviz</span> package to display the diagrams. The
+    following example is a transcript, adding a monitor operation:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure
+<code class="prompt custom">crm(live)configure# </code><code class="command">show</code> fence-bob
+primitive fence-bob stonith:apcsmart \
+        params hostlist="bob"
+<code class="prompt custom">crm(live)configure# </code><code class="command">monitor</code> fence-bob 120m:60s
+<code class="prompt custom">crm(live)configure# </code><code class="command">show</code> changed
+primitive fence-bob stonith:apcsmart \
+        params hostlist="bob" \
+        op monitor interval="120m" timeout="60s"
+<code class="prompt custom">crm(live)configure# </code><span class="strong"><strong>ptest</strong></span>
+<code class="prompt custom">crm(live)configure# </code>commit</pre></div></section><section class="sect2" id="sec-ha-manual-config-diagram" data-id-title="Cluster diagram"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.9 </span><span class="title-name">Cluster diagram</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-diagram">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To output a cluster diagram, use the command
+    <code class="command">crm</code> <code class="command">configure graph</code>. It displays
+    the current configuration on its current window, therefore requiring
+    X11.
+   </p><p>
+    If you prefer Scalable Vector Graphics (SVG), use the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure graph dot config.svg svg</pre></div></section><section class="sect2" id="sec-ha-manual-config-crm-corosync" data-id-title="Managing Corosync configuration"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.10 </span><span class="title-name">Managing Corosync configuration</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-manual-config-crm-corosync">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Corosync is the underlying messaging layer for most HA clusters. The
+   <code class="command">corosync</code> subcommand provides commands for editing and
+   managing the Corosync configuration.
+  </p><p>
+   For example, to list the status of the cluster, use
+   <code class="command">status</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> corosync status
+Printing ring status.
+Local node ID 175704363
+RING ID 0
+        id      = 10.121.9.43
+        status  = ring 0 active with no faults
+Quorum information
+------------------
+Date:             Thu May  8 16:41:56 2014
+Quorum provider:  corosync_votequorum
+Nodes:            2
+Node ID:          175704363
+Ring ID:          4032
+Quorate:          Yes
+
+Votequorum information
+----------------------
+Expected votes:   2
+Highest expected: 2
+Total votes:      2
+Quorum:           2
+Flags:            Quorate
+
+Membership information
+----------------------
+    Nodeid      Votes Name
+ 175704363          1 alice.example.com (local)
+ 175704619          1 bob.example.com</pre></div><p>
+   The <code class="command">diff</code> command is very helpful: It compares the
+   Corosync configuration on all nodes (if not stated otherwise) and
+   prints the difference between:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> corosync diff
+--- bob
++++ alice
+@@ -46,2 +46,2 @@
+-       expected_votes: 2
+-       two_node: 1
++       expected_votes: 1
++       two_node: 0</pre></div><p>
+   For more details, see
+   <a class="link" href="http://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync" target="_blank">http://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync</a>.
+  </p></section><section class="sect2" id="sec-ha-config-crm-setpwd" data-id-title="Setting passwords independent of cib.xml"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.11 </span><span class="title-name">Setting passwords independent of <code class="filename">cib.xml</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-crm-setpwd">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   If your cluster configuration contains sensitive information, such
+   as passwords, it should be stored in local files. That way, these
+   parameters will never be logged or leaked in support reports.
+  </p><p>
+   Before using <code class="command">secret</code>, better run the
+   <code class="command">show</code> command first to get an overview of all your
+   resources:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show
+primitive mydb mysql \
+   params replication_user=admin ...</pre></div><p>
+   To set a password for the above <code class="literal">mydb</code>
+   resource, use the following commands:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource secret mydb set passwd linux
+INFO: syncing /var/lib/heartbeat/lrm/secrets/mydb/passwd to [your node list]</pre></div><p>
+   You can get the saved password back with:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource secret mydb show passwd
+linux</pre></div><p>
+   Note that the parameters need to be synchronized between nodes; the
+   <code class="command">crm resource secret</code> command will take care of that. We
+   highly recommend to only use this command to manage secret parameters.
+  </p></section></section><section class="sect1" id="sec-ha-config-basics-more" data-id-title="For more information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5.6 </span><span class="title-name">For more information</span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-basics-more">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_basics.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.3.8.2.1"><span class="term"><a class="link" href="http://crmsh.github.io/" target="_blank">http://crmsh.github.io/</a>
+    </span></dt><dd><p>
+      Home page of the crm shell (crmsh), the advanced command line
+      interface for High Availability cluster management.
+     </p></dd><dt id="id-1.4.4.3.8.2.2"><span class="term"><a class="link" href="http://crmsh.github.io/documentation" target="_blank">http://crmsh.github.io/documentation</a>
+    </span></dt><dd><p>
+      Holds several documents about the crm shell, including a
+      <em class="citetitle">Getting Started</em> tutorial for basic cluster
+      setup with crmsh and the comprehensive
+      <em class="citetitle">Manual</em> for the crm shell. The latter is
+      available at <a class="link" href="http://crmsh.github.io/man-2.0/" target="_blank">http://crmsh.github.io/man-2.0/</a>.
+      Find the tutorial at
+      <a class="link" href="http://crmsh.github.io/start-guide/" target="_blank">http://crmsh.github.io/start-guide/</a>.
+     </p></dd><dt id="id-1.4.4.3.8.2.3"><span class="term"><a class="link" href="http://clusterlabs.org/" target="_blank">http://clusterlabs.org/</a>
+    </span></dt><dd><p>
+      Home page of Pacemaker, the cluster resource manager shipped with
+      SUSE Linux Enterprise High Availability.
+     </p></dd><dt id="id-1.4.4.3.8.2.4"><span class="term"><a class="link" href="http://www.clusterlabs.org/pacemaker/doc/" target="_blank">http://www.clusterlabs.org/pacemaker/doc/</a>
+    </span></dt><dd><p>
+      Holds several comprehensive manuals and some shorter documents
+      explaining general concepts. For example:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         <em class="citetitle">Pacemaker Explained</em>: Contains comprehensive and very detailed information
+        for reference.
+       </p></li><li class="listitem"><p>
+        <em class="citetitle">Colocation Explained</em>
+       </p></li><li class="listitem"><p>
+        <em class="citetitle">Ordering Explained</em>
+       </p></li></ul></div></dd></dl></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="part-config.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Part II </span>Configuration and administration</span></a> </div><div><a class="pagination-link next" href="sec-ha-config-basics-resources.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 6 </span>Configuring cluster resources</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-config-basics.html#sec-ha-config-basics-scenarios"><span class="title-number">5.1 </span><span class="title-name">Use case scenarios</span></a></span></li><li><span class="sect1"><a href="cha-ha-config-basics.html#sec-ha-config-basics-global"><span class="title-number">5.2 </span><span class="title-name">Quorum determination</span></a></span></li><li><span class="sect1"><a href="cha-ha-config-basics.html#sec-ha-config-basics-global-options"><span class="title-number">5.3 </span><span class="title-name">Global cluster options</span></a></span></li><li><span class="sect1"><a href="cha-ha-config-basics.html#cha-conf-hawk2"><span class="title-number">5.4 </span><span class="title-name">Introduction to Hawk2</span></a></span></li><li><span class="sect1"><a href="cha-ha-config-basics.html#cha-ha-manual-config"><span class="title-number">5.5 </span><span class="title-name">Introduction to crmsh</span></a></span></li><li><span class="sect1"><a href="cha-ha-config-basics.html#sec-ha-config-basics-more"><span class="title-number">5.6 </span><span class="title-name">For more information</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

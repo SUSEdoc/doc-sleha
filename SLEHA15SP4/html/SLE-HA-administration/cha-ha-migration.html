@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP4 | Administration Guide | Upgrading your cluster and updating software packages</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Upgrading your cluster and updating software packages | SLE…"/>
+<meta name="description" content="This chapter covers two different scenarios: upgrading…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP4"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 29. Upgrading your cluster and updating software packages"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP4"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Upgrading your cluster and updating software packages …"/>
+<meta property="og:description" content="This chapter covers two different scenarios: upgrading a cluster to another version of SUSE Linux Enterprise High Availabili…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Upgrading your cluster and updating software packages …"/>
+<meta name="twitter:description" content="This chapter covers two different scenarios: upgrading a cluster to another version of SUSE Linux Enterprise High Availabili…"/>
+<link rel="prev" href="cha-ha-maintenance.html" title="Chapter 28. Executing maintenance tasks"/><link rel="next" href="part-appendix.html" title="Part V. Appendix"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-maintenance.html">Maintenance and upgrade</a><span> / </span><a class="crumb" href="cha-ha-migration.html">Upgrading your cluster and updating software packages</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li><a href="part-config.html" class="has-children "><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-virtualization.html" class=" "><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li class="active"><a href="part-maintenance.html" class="has-children you-are-here"><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" you-are-here"><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-migration" data-id-title="Upgrading your cluster and updating software packages"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP4</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    This chapter covers two different scenarios: upgrading a cluster to
+    another version of SUSE Linux Enterprise High Availability (either a major release or a service
+    pack) as opposed to updating individual packages on cluster nodes. See
+    <a class="xref" href="cha-ha-migration.html#sec-ha-migration-upgrade" title="29.2. Upgrading your cluster to the latest product version">Section 29.2, “Upgrading your cluster to the latest product version”</a> versus
+    <a class="xref" href="cha-ha-migration.html#sec-ha-migration-update" title="29.3. Updating software packages on cluster nodes">Section 29.3, “Updating software packages on cluster nodes”</a>.
+   </p><p>
+    If you want to upgrade your cluster, check
+    <a class="xref" href="cha-ha-migration.html#sec-ha-migration-upgrade-oview" title="29.2.1. Supported upgrade paths for SLE HA and SLE HA Geo">Section 29.2.1, “Supported upgrade paths for SLE HA and SLE HA Geo”</a> and
+    <a class="xref" href="cha-ha-migration.html#sec-ha-migration-upgrade-require" title="29.2.2. Required preparations before upgrading">Section 29.2.2, “Required preparations before upgrading”</a> before starting
+    to upgrade.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-migration-terminology" data-id-title="Terminology"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">29.1 </span><span class="title-name">Terminology</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-terminology">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   In the following, find definitions of the most important terms used in
+   this chapter:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.6.4.3.3.1"><span class="term">Major release, </span><span class="term">General Availability (GA) version</span></dt><dd><p>
+      A major release is a new product version that brings new features and
+      tools, and decommissions previously deprecated components. It comes with
+      backward incompatible changes.
+     </p></dd><dt id="vle-upgrade-offline"><span class="term">Cluster offline upgrade</span></dt><dd><p>
+      If a new product version includes major changes that are backward
+      incompatible, the cluster needs to be upgraded by a cluster offline
+      upgrade. You need to take all nodes offline and upgrade the cluster as a whole,
+      before you can bring all nodes back online.
+     </p></dd><dt id="vle-upgrade-rolling"><span class="term">Cluster rolling upgrade</span></dt><dd><p>
+      In a cluster rolling upgrade one cluster node at a time is upgraded while the
+      rest of the cluster is still running. You take the first node offline,
+      upgrade it and bring it back online to join the cluster. Then you
+      continue one by one until all cluster nodes are upgraded to a major
+      version.
+     </p></dd><dt id="id-1.4.6.4.3.3.4"><span class="term">Service Pack (SP)</span></dt><dd><p>
+      Combines several patches into a form that is easy to install or
+      deploy. Service packs are numbered and usually contain security fixes,
+      updates, upgrades, or enhancements of programs.
+     </p></dd><dt id="id-1.4.6.4.3.3.5"><span class="term">Update</span></dt><dd><p>
+      Installation of a newer <span class="emphasis"><em>minor</em></span> version of a
+      package, which usually contains security fixes and other important fixes.
+     </p></dd><dt id="id-1.4.6.4.3.3.6"><span class="term">Upgrade</span></dt><dd><p>
+      Installation of a newer <span class="emphasis"><em>major</em></span> version of a
+      package or distribution, which brings <span class="emphasis"><em>new
+      features</em></span>. See also <a class="xref" href="cha-ha-migration.html#vle-upgrade-offline">Cluster offline upgrade</a>
+      versus <a class="xref" href="cha-ha-migration.html#vle-upgrade-rolling">Cluster rolling upgrade</a>.
+     </p></dd></dl></div></section><section class="sect1" id="sec-ha-migration-upgrade" data-id-title="Upgrading your cluster to the latest product version"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">29.2 </span><span class="title-name">Upgrading your cluster to the latest product version</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-upgrade">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Which upgrade path is supported, and how to perform the upgrade, depends
+   on the current product version and on the target version you want
+   to migrate to.
+  </p><p>
+   SUSE Linux Enterprise High Availability has the same supported upgrade paths as the underlying base system. For a complete
+   overview, see the section <a class="link" href="https://documentation.suse.com/sles-15/html/SLES-all/cha-upgrade-paths.html#sec-upgrade-paths-supported" target="_blank"><em class="citetitle">Supported Upgrade Paths to SUSE Linux Enterprise Server 15 SP4</em></a> in the
+   SUSE Linux Enterprise Server Upgrade Guide.
+  </p><p>
+   In addition, the following rules apply, as the High Availability cluster stack offers two methods for
+   upgrading the cluster:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title"><a class="xref" href="cha-ha-migration.html#vle-upgrade-rolling">Cluster rolling upgrade</a>. </span>A cluster rolling upgrade is only supported within the same major release
+      (from one service pack to the next, or from the GA version of a product to SP1).</p></li><li class="listitem"><p><span class="formalpara-title"><a class="xref" href="cha-ha-migration.html#vle-upgrade-offline">Cluster offline upgrade</a>. </span>A cluster offline upgrade is required to upgrade from one major release to
+      the next (for example, from SLE HA 12 to
+      SLE HA 15) or from a service pack within one major
+      release to the next major release (for example, from
+      SLE HA 12 SP3 to SLE HA 15).
+     </p></li></ul></div><p>
+   <a class="xref" href="cha-ha-migration.html#sec-ha-migration-upgrade-oview" title="29.2.1. Supported upgrade paths for SLE HA and SLE HA Geo">Section 29.2.1</a>
+   lists the supported upgrade paths and methods for SLE HA (Geo),
+   moving from one version to the next. The column <em class="citetitle">For Details</em> lists
+   the specific upgrade documentation you should refer to (including also the base
+   system and Geo Clustering for SUSE Linux Enterprise High Availability). This documentation is available from:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      <a class="link" href="https://documentation.suse.com/sles-15" target="_blank">https://documentation.suse.com/sles-15</a>
+     </p></li><li class="listitem"><p>
+      <a class="link" href="https://documentation.suse.com/sle-ha-15" target="_blank">https://documentation.suse.com/sle-ha-15</a>
+     </p></li></ul></div><div id="id-1.4.6.4.4.8" data-id-title="No support for mixed clusters and reversion after upgrade" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: No support for mixed clusters and reversion after upgrade</div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Mixed clusters running on SUSE Linux Enterprise High Availability 12/SUSE Linux Enterprise High Availability 15 are
+      <span class="emphasis"><em>not</em></span> supported.
+     </p></li><li class="listitem"><p>
+      After the upgrade process to product version 15, reverting back to
+      product version 12 is <span class="emphasis"><em>not</em></span> supported.
+     </p></li></ul></div></div><section class="sect2" id="sec-ha-migration-upgrade-oview" data-id-title="Supported upgrade paths for SLE HA and SLE HA Geo"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">29.2.1 </span><span class="title-name">Supported upgrade paths for SLE HA and SLE HA Geo</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-upgrade-oview">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><div class="informaltable"><table style="border-collapse: collapse; border-top: 1px solid ; border-bottom: 1px solid ; border-left: 1px solid ; border-right: 1px solid ; "><colgroup><col class="1"/><col class="2"/><col class="3"/></colgroup><thead><tr><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         Upgrade From ... To
+        </p>
+       </th><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         Upgrade Path
+        </p>
+       </th><th style="border-bottom: 1px solid ; ">
+        <p>
+         For Details
+        </p>
+       </th></tr></thead><tbody><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         SLE HA 11 SP3 to
+        </p>
+       <p>SLE HA (Geo) 12</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         Cluster Offline Upgrade
+        </p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Deployment Guide for SLES 12, part
+           <em class="citetitle">Updating and Upgrading SUSE Linux Enterprise</em>
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline" title="Upgrading from product version 11 to 12: cluster offline upgrade">Upgrading from product version 11 to 12: cluster offline upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: Geo Clustering Quick Start for
+           SLE HA 12, section <em class="citetitle">Upgrading from
+             SLE HA (Geo) 11 SP3 to
+             SLE HA Geo 12</em>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         SLE HA (Geo) 11 SP4 to
+         SLE HA (Geo) 12 SP1
+        </p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         Cluster Offline Upgrade
+        </p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Deployment Guide for SLES 12 SP1,
+           part <em class="citetitle">Updating and Upgrading SUSE Linux Enterprise</em>
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline" title="Upgrading from product version 11 to 12: cluster offline upgrade">Upgrading from product version 11 to 12: cluster offline upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: Geo Clustering Quick Start for
+           SLE HA 12 SP1,
+           section <em class="citetitle">Upgrading to the Latest Product Version</em>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         SLE HA (Geo) 12 to
+         SLE HA (Geo) 12 SP1
+        </p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>
+         Cluster Rolling Upgrade
+        </p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Deployment Guide for SLES 12 SP1,
+           part <em class="citetitle">Updating and Upgrading SUSE Linux Enterprise</em>
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: Geo Clustering Quick Start for
+           SLE HA 12 SP1, section <em class="citetitle">Upgrading to the
+           Latest Product Version</em>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA (Geo) 12 SP1 to
+         SLE HA (Geo) 12 SP2</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Deployment Guide for SLES 12 SP2,
+           part <em class="citetitle">Updating and Upgrading SUSE Linux Enterprise</em>
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: Geo Clustering Quick Start for
+           SLE HA 12 SP2, section <em class="citetitle">Upgrading to the
+           Latest Product Version</em>
+          </p></li><li class="listitem"><p>DRBD 8 to DRBD 9: <a class="xref" href="cha-ha-drbd.html#sec-ha-drbd-migrate" title="23.4. Migrating from DRBD 8 to DRBD 9">Migrating from DRBD 8 to DRBD 9</a></p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA (Geo) 12 SP2 to
+         SLE HA (Geo) 12 SP3</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Deployment Guide for SLES 12 SP3,
+           part <em class="citetitle">Updating and Upgrading SUSE Linux Enterprise</em>
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: Geo Clustering Guide for
+           SLE HA 12 SP3, section <em class="citetitle">Upgrading to the
+           Latest Product Version</em>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA (Geo) 12 SP3 to
+         SLE HA (Geo) 12 SP4</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Deployment Guide for SLES 12 SP4,
+           part <em class="citetitle">Updating and Upgrading SUSE Linux Enterprise</em>
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: Geo Clustering Guide for
+           SLE HA 12 SP4, section <em class="citetitle">Upgrading to the
+           Latest Product Version</em>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA (Geo) 12 SP3 to
+         SLE HA 15</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Offline Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Upgrade Guide for SLES 15
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline-12-15" title="Upgrading from product version 12 to 15: cluster offline upgrade">Upgrading from product version 12 to 15: cluster offline upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li><li class="listitem"><p>Cluster LVM: <a class="xref" href="cha-ha-clvm.html#sec-ha-clvm-migrate" title="24.4. Online migration from mirror LV to cluster MD">Online migration from mirror LV to cluster MD</a></p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA (Geo) 12 SP4 to
+         SLE HA (Geo) 12 SP5</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Deployment Guide for SLES 12 SP5,
+           part <em class="citetitle">Updating and Upgrading SUSE Linux Enterprise</em>
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA (Geo) 12 SP4 to
+         SLE HA 15 SP1</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Offline Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Upgrade Guide for SLES 15 SP1
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline-12-15" title="Upgrading from product version 12 to 15: cluster offline upgrade">Upgrading from product version 12 to 15: cluster offline upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li><li class="listitem"><p>Cluster LVM: <a class="xref" href="cha-ha-clvm.html#sec-ha-clvm-migrate" title="24.4. Online migration from mirror LV to cluster MD">Online migration from mirror LV to cluster MD</a></p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA (Geo) 12 SP5 to
+         SLE HA 15 SP2</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Offline Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Upgrade Guide for SLES 15 SP2
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline-12-15" title="Upgrading from product version 12 to 15: cluster offline upgrade">Upgrading from product version 12 to 15: cluster offline upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li><li class="listitem"><p>Cluster LVM: <a class="xref" href="cha-ha-clvm.html#sec-ha-clvm-migrate" title="24.4. Online migration from mirror LV to cluster MD">Online migration from mirror LV to cluster MD</a></p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA 15 to
+         SLE HA 15 SP1</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Upgrade Guide for
+           SLES 15 SP1
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA 15 SP1 to
+         SLE HA 15 SP2</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Upgrade Guide for
+           SLES 15 SP2
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>SLE HA 15 SP2 to
+         SLE HA 15 SP3</p>
+       </td><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td style="border-bottom: 1px solid ; ">
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Upgrade Guide for
+           SLES 15 SP3
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li></ul></div>
+       </td></tr><tr><td style="border-right: 1px solid ; ">
+        <p>SLE HA 15 SP3 to
+         SLE HA 15 SP4</p>
+       </td><td style="border-right: 1px solid ; ">
+        <p>Cluster Rolling Upgrade</p>
+       </td><td>
+        <div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           Base System: Upgrade Guide for
+           SLES 15 SP4
+          </p></li><li class="listitem"><p>
+           SLE HA:
+           <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Performing a cluster rolling upgrade</a>
+          </p></li><li class="listitem"><p>
+           SLE HA Geo: <span class="intraxref">Book “Geo Clustering Guide”, Chapter 10 “Upgrading to the latest product version”</span>
+          </p></li></ul></div>
+       </td></tr></tbody></table></div><div id="id-1.4.6.4.4.9.3" data-id-title="Skipping service packs" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Skipping service packs</div><p>
+     The easiest upgrade path is consecutively installing all service packs.
+     For the SUSE Linux Enterprise 15 product line (GA and the subsequent service packs) it is
+     also supported to skip one service pack when upgrading. For example, upgrading from
+     SLE HA 15 GA to 15 SP2 or from SLE HA 15 SP1
+     to 15 SP3 is supported.
+    </p></div></section><section class="sect2" id="sec-ha-migration-upgrade-require" data-id-title="Required preparations before upgrading"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">29.2.2 </span><span class="title-name">Required preparations before upgrading</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-upgrade-require">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.6.4.4.10.2.1"><span class="term">Backup</span></dt><dd><p>
+       Ensure that your system backup is up to date and restorable.
+      </p></dd><dt id="id-1.4.6.4.4.10.2.2"><span class="term">Testing</span></dt><dd><p>
+       Test the upgrade procedure on a staging instance of your cluster
+       setup first, before performing it in a production environment.
+       This gives you an estimation of the time frame required for the
+       maintenance window. It also helps to detect and solve any unexpected
+       problems that might arise.
+      </p></dd></dl></div></section><section class="sect2" id="sec-ha-migration-upgrade-offline" data-id-title="Cluster offline upgrade"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">29.2.3 </span><span class="title-name">Cluster offline upgrade</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-upgrade-offline">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    This section applies to the following scenarios:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Upgrading from SLE HA 11 SP3 to
+      SLE HA 12—for details see
+      <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline" title="Upgrading from product version 11 to 12: cluster offline upgrade">Procedure 29.1, “Upgrading from product version 11 to 12: cluster offline upgrade”</a>.</p></li><li class="listitem"><p>
+      Upgrading from SLE HA 11 SP4 to
+      SLE HA 12 SP1—for details see
+      <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline" title="Upgrading from product version 11 to 12: cluster offline upgrade">Procedure 29.1, “Upgrading from product version 11 to 12: cluster offline upgrade”</a>.
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 12 SP3 to
+      SLE HA 15—for details see
+      <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline-12-15" title="Upgrading from product version 12 to 15: cluster offline upgrade">Procedure 29.2, “Upgrading from product version 12 to 15: cluster offline upgrade”</a>.
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 12 SP4 to
+      SLE HA 15 SP1—for details see
+      <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline-12-15" title="Upgrading from product version 12 to 15: cluster offline upgrade">Procedure 29.2, “Upgrading from product version 12 to 15: cluster offline upgrade”</a>.
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 12 SP5 to
+      SLE HA 15 SP2—for details see
+      <a class="xref" href="cha-ha-migration.html#pro-ha-migration-offline-12-15" title="Upgrading from product version 12 to 15: cluster offline upgrade">Procedure 29.2, “Upgrading from product version 12 to 15: cluster offline upgrade”</a>.
+     </p></li></ul></div><p>
+    If your cluster is still based on an older product version than the ones
+    listed above, first upgrade it to a version of SLES and SLE HA
+    that can be used as a source for upgrading to the desired target
+    version.
+   </p><div class="procedure" id="pro-ha-migration-offline" data-id-title="Upgrading from product version 11 to 12: cluster offline upgrade"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 29.1: </span><span class="title-name">Upgrading from product version 11 to 12: cluster offline upgrade </span></span><a title="Permalink" class="permalink" href="cha-ha-migration.html#pro-ha-migration-offline">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+     SUSE Linux Enterprise High Availability 12 cluster stack comes with major changes in various
+     components (for example, <code class="filename">/etc/corosync/corosync.conf</code>, disk formats of OCFS2).
+     Therefore, a <code class="literal">cluster rolling upgrade</code> from any SUSE Linux Enterprise High Availability
+     11 version is not supported. Instead, all cluster nodes must be offline
+     and the cluster needs to be upgraded as a whole as described below.
+    </p><ol class="procedure" type="1"><li class="step"><p>
+      Log in to each cluster node and stop the cluster stack with:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">rcopenais stop</code></pre></div></li><li class="step"><p>
+      For each cluster node, perform an upgrade to the desired target
+      version of SUSE Linux Enterprise Server and SUSE Linux Enterprise High Availability—see <a class="xref" href="cha-ha-migration.html#sec-ha-migration-upgrade-oview" title="29.2.1. Supported upgrade paths for SLE HA and SLE HA Geo">Section 29.2.1, “Supported upgrade paths for SLE HA and SLE HA Geo”</a>.
+     </p></li><li class="step"><p>
+      After the upgrade process has finished, reboot each node with the
+      upgraded version of SUSE Linux Enterprise Server and SUSE Linux Enterprise High Availability.
+     </p></li><li class="step"><p>
+      If you use OCFS2 in your cluster setup, update the on-device structure
+      by executing the following command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">o2cluster --update <em class="replaceable">PATH_TO_DEVICE</em></code></pre></div><p>
+      It adds additional parameters to the disk. They are needed for the
+      updated OCFS2 version that is shipped with SUSE Linux Enterprise High Availability 12 and
+      12 SPx.
+     </p></li><li class="step"><p>
+      To update <code class="filename">/etc/corosync/corosync.conf</code> for Corosync version 2:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Log in to one node and start the YaST cluster module.
+       </p></li><li class="step"><p>
+        Switch to the <span class="guimenu">Communication Channels</span> category and
+        enter values for the following new parameters: <span class="guimenu">Cluster
+        Name</span> and <span class="guimenu">Expected Votes</span>. For details,
+        see <a class="xref" href="cha-ha-ycluster.html#pro-ha-installation-setup-channel1-udp" title="Defining the first communication channel (multicast)">Procedure 4.1, “Defining the first communication channel (multicast)”</a>
+        or <a class="xref" href="cha-ha-ycluster.html#pro-ha-installation-setup-channel1-udpu" title="Defining the first communication channel (unicast)">Procedure 4.2, “Defining the first communication channel (unicast)”</a>,
+        respectively.
+       </p><p>
+        If YaST should detect any other options that are invalid or
+        missing according to Corosync version 2, it will prompt you to
+        change them.
+       </p></li><li class="step"><p>
+        Confirm your changes in YaST. YaST will write them to
+        <code class="filename">/etc/corosync/corosync.conf</code>.
+       </p></li><li class="step"><p>
+        If Csync2 is configured for your cluster, use the following command
+        to push the updated Corosync configuration to the other cluster
+        nodes:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">csync2 -xv</code></pre></div><p>
+        For details on Csync2, see
+        <a class="xref" href="cha-ha-ycluster.html#sec-ha-installation-setup-csync2" title="4.7. Transferring the configuration to all nodes">Section 4.7, “Transferring the configuration to all nodes”</a>.
+       </p><p>
+        Alternatively, synchronize the updated Corosync configuration by
+        manually copying <code class="filename">/etc/corosync/corosync.conf</code> to all cluster nodes.
+       </p></li></ol></li><li class="step"><p>
+      Log in to each node and start the cluster stack with:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start</code></pre></div></li><li class="step"><p>
+      Check the cluster status with <code class="command">crm status</code> or with
+      Hawk2.
+     </p></li><li class="step"><p>Configure the following services to start at boot time:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl enable pacemaker</code>
+<code class="prompt root"># </code><code class="command">systemctl enable hawk</code>
+<code class="prompt root"># </code><code class="command">systemctl enable sbd</code></pre></div></li></ol></div></div><div id="note-ha-cib-upgrade" data-id-title="Upgrading the CIB syntax version" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Upgrading the CIB syntax version</div><p>
+     Sometimes new features are only available with the latest CIB syntax version.
+     When you upgrade to a new product version, your CIB syntax version
+     will <span class="emphasis"><em>not</em></span> be upgraded by default.
+     </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Check your version with:</p><div class="verbatim-wrap"><pre class="screen"><code class="command">cibadmin -Q | grep validate-with</code></pre></div></li><li class="step"><p>Upgrade to the latest CIB syntax version with:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">cibadmin --upgrade --force</code></pre></div></li></ol></div></div></div><div class="procedure" id="pro-ha-migration-offline-12-15" data-id-title="Upgrading from product version 12 to 15: cluster offline upgrade"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 29.2: </span><span class="title-name">Upgrading from product version 12 to 15: cluster offline upgrade </span></span><a title="Permalink" class="permalink" href="cha-ha-migration.html#pro-ha-migration-offline-12-15">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><div id="id-1.4.6.4.4.11.7.2" data-id-title="Installation from scratch" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Installation from scratch</div><p>If you decide to install the cluster nodes from scratch (instead
+      of upgrading them), see <a class="xref" href="cha-ha-requirements.html#sec-ha-requirements-sw" title="2.2. Software requirements">Section 2.2, “Software requirements”</a> for the
+      list of modules required for SUSE Linux Enterprise High Availability 15 SP4. Find more
+      information about modules, extensions and related products in the release
+      notes for SUSE Linux Enterprise Server 15. They are available at <a class="link" href="https://www.suse.com/releasenotes/" target="_blank">https://www.suse.com/releasenotes/</a>.
+     </p></div><ol class="procedure" type="1"><li class="step"><p>
+      Before starting the offline upgrade to SUSE Linux Enterprise High Availability 15, manually
+      upgrade the CIB syntax in your current cluster as described in
+      <a class="xref" href="cha-ha-migration.html#note-ha-cib-upgrade" title="Note: Upgrading the CIB syntax version">Note: Upgrading the CIB syntax version</a>.
+     </p></li><li class="step"><p>
+      Log in to each cluster node and stop the cluster stack with:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop</code></pre></div></li><li class="step"><p>
+      For each cluster node, perform an upgrade to the desired target
+      version of SUSE Linux Enterprise Server and SUSE Linux Enterprise High Availability—see <a class="xref" href="cha-ha-migration.html#sec-ha-migration-upgrade-oview" title="29.2.1. Supported upgrade paths for SLE HA and SLE HA Geo">Section 29.2.1, “Supported upgrade paths for SLE HA and SLE HA Geo”</a>.
+     </p></li><li class="step"><p>
+      After the upgrade process has finished, log in to each node and boot it with the
+      upgraded version of SUSE Linux Enterprise Server and SUSE Linux Enterprise High Availability.
+     </p></li><li class="step"><p>If you use Cluster LVM, you need to migrate from clvmd to lvmlockd.
+      See the man page of <code class="command">lvmlockd</code>, section
+      <em class="citetitle">changing a clvm VG to a lockd VG</em> and <a class="xref" href="cha-ha-clvm.html#sec-ha-clvm-migrate" title="24.4. Online migration from mirror LV to cluster MD">Section 24.4, “Online migration from mirror LV to cluster MD”</a>.
+     </p></li><li class="step"><p>
+      Log in to a cluster node and start the cluster stack on all nodes:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start --all</code></pre></div><div id="id-1.4.6.4.4.11.7.8.3" data-id-title="--all option only available in version 15 SP4" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: <code class="option">--all</code> option only available in version 15 SP4</div><p>
+       The <code class="option">--all</code> option was added in SUSE Linux Enterprise High Availability 15 SP4.
+       In earlier versions, you must run the <code class="command">crm cluster start</code>
+       command on each node one by one.
+      </p></div></li><li class="step"><p>
+      Check the cluster status with <code class="command">crm status</code> or with
+      Hawk2.
+     </p></li></ol></div></div></section><section class="sect2" id="sec-ha-migration-upgrade-rolling" data-id-title="Cluster rolling upgrade"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">29.2.4 </span><span class="title-name">Cluster rolling upgrade</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-upgrade-rolling">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    This section applies to the following scenarios:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Upgrading from SLE HA 12 to SLE HA 12 SP1
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 12 SP1 to
+      SLE HA 12 SP2
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 12 SP2 to
+      SLE HA 12 SP3
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 12 SP3 to
+      SLE HA 12 SP4
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 12 SP4 to
+      SLE HA 12 SP5
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 15 to
+      SLE HA 15 SP1
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 15 SP1 to
+      SLE HA 15 SP2
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 15 SP2 to
+      SLE HA 15 SP3
+     </p></li><li class="listitem"><p>
+      Upgrading from SLE HA 15 SP3 to
+      SLE HA 15 SP4
+     </p></li></ul></div><p>Use one of the following procedures for your scenario:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      For a more general rolling upgrade, refer to <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade" title="Performing a cluster rolling upgrade">Procedure 29.3</a>.
+     </p></li><li class="listitem"><p>
+      For a specific rolling upgrade, refer to <a class="xref" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade-newsp-freshinstall" title="Performing a cluster-wide fresh installation of a new service pack">Procedure 29.4</a>.
+     </p></li></ul></div><div id="id-1.4.6.4.4.12.6" data-id-title="Active cluster stack" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Active cluster stack</div><p>
+     Before starting an upgrade for a node, <span class="emphasis"><em>stop</em></span> the
+     cluster stack <span class="emphasis"><em>on that node</em></span>.
+    </p><p>
+     If the cluster resource manager on a node is active during the software
+     update, this can lead to results such as fencing of active
+     nodes.
+    </p></div><div id="id-1.4.6.4.4.12.7" data-id-title="Time limit for cluster rolling upgrade" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Time limit for cluster rolling upgrade</div><p>
+     The new features shipped with the latest product version will only be
+     available after <span class="emphasis"><em>all</em></span> cluster nodes have been
+     upgraded to the latest product version. Mixed version clusters are only
+     supported for a short time frame during the cluster rolling upgrade. Complete
+     the cluster rolling upgrade within one week.
+    </p><p>
+     Once all the online nodes are running the upgraded version, it is not
+     possible for any other nodes with the old version to (re-)join without
+     having been upgraded.
+    </p></div><div class="procedure" id="pro-ha-migration-rolling-upgrade" data-id-title="Performing a cluster rolling upgrade"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 29.3: </span><span class="title-name">Performing a cluster rolling upgrade </span></span><a title="Permalink" class="permalink" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> on the node that you want to upgrade and stop the
+      cluster stack:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop</code></pre></div></li><li class="step" id="step-ha-migration-upgrade-tolatest"><p>
+      Perform an upgrade to the desired target version of SUSE Linux Enterprise Server and
+      SUSE Linux Enterprise High Availability. To find the details for the individual upgrade
+      processes, see
+      <a class="xref" href="cha-ha-migration.html#sec-ha-migration-upgrade-oview" title="29.2.1. Supported upgrade paths for SLE HA and SLE HA Geo">Section 29.2.1, “Supported upgrade paths for SLE HA and SLE HA Geo”</a>.
+     </p></li><li class="step" id="step-ha-migration-upgrade-ais"><p>
+      Start the cluster stack on the upgraded node to make the node rejoin
+      the cluster:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start</code></pre></div></li><li class="step"><p>
+      Take the next node offline and repeat the procedure for that node.
+     </p></li><li class="step"><p>
+      Check the cluster status with <code class="command">crm status</code> or with
+      Hawk2.
+     </p><p>
+      The Hawk2 <span class="guimenu">Status</span> screen also shows a warning if
+      different CRM versions are detected for your cluster nodes.
+     </p></li></ol></div></div><div id="id-1.4.6.4.4.12.9" data-id-title="Time limit for rolling upgrade" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Time limit for rolling upgrade</div><p>
+     The new features shipped with the latest product version will only be
+     available after <span class="emphasis"><em>all</em></span> cluster nodes have been
+     upgraded to the latest product version. Mixed version clusters are only
+     supported for a short time frame during the rolling upgrade. Complete
+     the rolling upgrade within one week.
+    </p></div><p>The Hawk2 <span class="guimenu">Status</span> screen also shows a warning if
+    different CRM versions are detected for your cluster nodes.</p><p>Beside an in-place upgrade, many customers prefer a fresh installation
+    even for moving to the next service pack. The following procedure shows a
+    scenario where a two-node cluster with the nodes alice and bob is
+    upgraded to the next service pack (SP):
+   </p><div class="procedure" id="pro-ha-migration-rolling-upgrade-newsp-freshinstall" data-id-title="Performing a cluster-wide fresh installation of a new service pack"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 29.4: </span><span class="title-name">Performing a cluster-wide fresh installation of a new service pack </span></span><a title="Permalink" class="permalink" href="cha-ha-migration.html#pro-ha-migration-rolling-upgrade-newsp-freshinstall">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step" id="st-ha-migration-rolling-up-sp-backup"><p>Make a backup of your cluster configuration. A minimum set of files
+      is shown in the following list:
+     </p><div class="verbatim-wrap"><pre class="screen">/etc/corosync/corosync.conf
+/etc/corosync/authkey
+/etc/sysconfig/sbd
+/etc/modules-load.d/watchdog.conf
+/etc/hosts
+/etc/ntp.conf</pre></div><p>Depending on your resources, you may also need the following files:</p><div class="verbatim-wrap"><pre class="screen">/etc/services
+/etc/passwd
+/etc/shadow
+/etc/groups
+/etc/drbd/*
+/etc/lvm/lvm.conf
+/etc/mdadm.conf
+/etc/mdadm.SID.conf</pre></div></li><li class="step" id="st-ha-migration-rolling-alice"><p>Start with node alice.
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Put the node into standby node. That way, resources can move off the node:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm --wait node standby alice reboot</code></pre></div><p>
+        With the option <code class="option">--wait</code>, the command returns only when
+        the cluster finishes the transition and becomes idle.
+        The <code class="option">reboot</code> option has the effect that the node will
+        be already out of standby mode when it is online again.
+        Despite its name, the <code class="option">reboot</code> option works as long
+        as the node goes offline and online.
+       </p></li><li class="step"><p>Stop the cluster services on node alice:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop</code></pre></div></li><li class="step"><p>
+        At this point, alice does not have running resources anymore.
+        Upgrade the node alice and reboot it afterward.
+        Cluster services are assumed not to start on boot.
+       </p></li><li class="step"><p>
+        Copy your backup files from <a class="xref" href="cha-ha-migration.html#st-ha-migration-rolling-up-sp-backup" title="Step 1">Step 1</a>
+        to the original places.
+       </p></li><li class="step"><p>Bring back node alice into cluster:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start</code></pre></div></li><li class="step"><p>Check that resources are fine.</p></li></ol></li><li class="step"><p>Repeat <a class="xref" href="cha-ha-migration.html#st-ha-migration-rolling-alice" title="Step 2">Step 2</a> for node
+      bob.
+     </p></li></ol></div></div></section></section><section class="sect1" id="sec-ha-migration-update" data-id-title="Updating software packages on cluster nodes"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">29.3 </span><span class="title-name">Updating software packages on cluster nodes</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-update">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.6.4.5.2" data-id-title="Active cluster stack" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Active cluster stack</div><p>
+    Before starting a package update for a node, either <span class="emphasis"><em>stop</em></span>
+    the cluster stack <span class="emphasis"><em>on that node</em></span> or put the
+    <span class="emphasis"><em>node into maintenance mode</em></span>, depending on whether the
+    cluster stack is affected or not. See <a class="xref" href="cha-ha-migration.html#step-update-check" title="Step 1">Step 1</a>
+    for details.
+   </p><p>
+    If the cluster resource manager on a node is active during the software
+    update, this can lead to results such as fencing of active
+    nodes.
+   </p></div><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step" id="step-update-check"><p>
+     Before installing any package updates on a node, check the following:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+       Does the update affect any packages belonging to SUSE Linux Enterprise High Availability?
+       If <code class="literal">yes</code>: Stop the cluster stack on
+       the node before starting the software update:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop</code></pre></div></li><li class="listitem"><p>
+       Does the package update require a reboot? If <code class="literal">yes</code>:
+       Stop the cluster stack on the node before starting the software
+       update:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster stop</code></pre></div></li><li class="listitem"><p>
+       If none of the situations above apply, you do not need to stop the
+       cluster stack. In that case, put the node into maintenance mode
+       before starting the software update:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node maintenance <em class="replaceable">NODE_NAME</em></code></pre></div><p>
+       For more details on maintenance mode, see
+       <a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-overview" title="28.2. Different options for maintenance tasks">Section 28.2, “Different options for maintenance tasks”</a>.
+      </p></li></ul></div></li><li class="step"><p>
+     Install the package update using either YaST or Zypper.
+    </p></li><li class="step"><p>
+     After the update has been successfully installed:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+       Either start the cluster stack on the respective node (if you
+       stopped it in <a class="xref" href="cha-ha-migration.html#step-update-check" title="Step 1">Step 1</a>):
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start</code></pre></div></li><li class="listitem"><p>
+       or remove the maintenance flag to bring the node back to
+       normal mode:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node ready <em class="replaceable">NODE_NAME</em></code></pre></div></li></ul></div></li><li class="step"><p>
+     Check the cluster status with <code class="command">crm status</code> or with
+     Hawk2.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-migration-more" data-id-title="For more information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">29.4 </span><span class="title-name">For more information</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-more">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   For detailed information about any changes and new features of the
+   product you are upgrading to, refer to its release notes. They are
+   available from <a class="link" href="https://www.suse.com/releasenotes/" target="_blank">https://www.suse.com/releasenotes/</a>.
+  </p></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-maintenance.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 28 </span>Executing maintenance tasks</span></a> </div><div><a class="pagination-link next" href="part-appendix.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Part V </span>Appendix</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-migration.html#sec-ha-migration-terminology"><span class="title-number">29.1 </span><span class="title-name">Terminology</span></a></span></li><li><span class="sect1"><a href="cha-ha-migration.html#sec-ha-migration-upgrade"><span class="title-number">29.2 </span><span class="title-name">Upgrading your cluster to the latest product version</span></a></span></li><li><span class="sect1"><a href="cha-ha-migration.html#sec-ha-migration-update"><span class="title-number">29.3 </span><span class="title-name">Updating software packages on cluster nodes</span></a></span></li><li><span class="sect1"><a href="cha-ha-migration.html#sec-ha-migration-more"><span class="title-number">29.4 </span><span class="title-name">For more information</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

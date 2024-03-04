@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP3 | Administration Guide | Configuring resource constraints</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Configuring resource constraints | SLE HA 15 SP3"/>
+<meta name="description" content="Having all the resources configured is only part of th…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP3"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 7. Configuring resource constraints"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability 15 SP3"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Configuring resource constraints | SLE HA 15 SP3"/>
+<meta property="og:description" content="Having all the resources configured is only part of the job. Even if the cluster knows all needed resources, it still might …"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Configuring resource constraints | SLE HA 15 SP3"/>
+<meta name="twitter:description" content="Having all the resources configured is only part of the job. Even if the cluster knows all needed resources, it still might …"/>
+<link rel="prev" href="sec-ha-config-basics-resources.html" title="Chapter 6. Configuring cluster resources"/><link rel="next" href="cha-ha-manage-resources.html" title="Chapter 8. Managing cluster resources"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and administration</a><span> / </span><a class="crumb" href="sec-ha-config-basics-constraints.html">Configuring resource constraints</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" you-are-here"><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">18 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">19 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">20 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">22 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">23 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">25 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">26 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">27 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">28 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="chapter" id="sec-ha-config-basics-constraints" data-id-title="Configuring resource constraints"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP3</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    Having all the resources configured is only part of the job. Even if the
+    cluster knows all needed resources, it still might not be able to handle
+    them correctly. Resource constraints let you specify which cluster nodes
+    resources can run on, what order resources will load in, and what other
+    resources a specific resource is dependent on.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-config-basics-constraints-types" data-id-title="Types of constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.1 </span><span class="title-name">Types of constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-types">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    There are three different kinds of constraints available:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.5.3.3.1"><span class="term">Resource location
+    </span></dt><dd><p>
+       Location constraints define on which nodes a resource may be
+       run, may not be run or is preferred to be run.
+      </p></dd><dt id="id-1.4.4.5.3.3.2"><span class="term">Resource colocation</span></dt><dd><p>
+       Colocation constraints tell the cluster which resources may or
+       may not run together on a node.
+      </p></dd><dt id="id-1.4.4.5.3.3.3"><span class="term">Resource order</span></dt><dd><p>
+       Order constraints define the sequence of actions.
+      </p></dd></dl></div><div id="id-1.4.4.5.3.4" data-id-title="Restrictions for constraints and certain types of resources" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Restrictions for constraints and certain types of resources</div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Do not create colocation constraints for <span class="emphasis"><em>members</em></span> of a resource
+       group. Create a colocation constraint pointing to the resource group as a whole instead. All
+       other types of constraints are safe to use for members of a resource group.</p></li><li class="listitem"><p>Do not use any constraints on a resource that has a clone resource or a promotable clone
+       resource applied to it. The constraints must apply to the clone or promotable clone resource, not
+       to the child resource.</p></li></ul></div></div></section><section class="sect1" id="sec-ha-config-basics-constraints-scores" data-id-title="Scores and infinity"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.2 </span><span class="title-name">Scores and infinity</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-scores">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    When defining constraints, you also need to deal with scores. Scores of
+    all kinds are integral to how the cluster works. Practically everything
+    from migrating a resource to deciding which resource to stop in a
+    degraded cluster is achieved by manipulating scores in some way. Scores
+    are calculated on a per-resource basis and any node with a negative
+    score for a resource cannot run that resource. After calculating the
+    scores for a resource, the cluster then chooses the node with the
+    highest score.
+   </p><p>
+    <code class="literal">INFINITY</code> is currently defined as
+    <code class="literal">1,000,000</code>. Additions or subtractions with it stick to
+    the following three basic rules:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Any value + INFINITY = INFINITY
+     </p></li><li class="listitem"><p>
+      Any value - INFINITY = -INFINITY
+     </p></li><li class="listitem"><p>
+      INFINITY - INFINITY = -INFINITY
+     </p></li></ul></div><p>
+    When defining resource constraints, you specify a score for each
+    constraint. The score indicates the value you are assigning to this
+    resource constraint. Constraints with higher scores are applied before
+    those with lower scores. By creating additional location constraints
+    with different scores for a given resource, you can specify an order for
+    the nodes that a resource will fail over to.
+   </p></section><section class="sect1" id="sec-ha-config-basics-constraints-templates" data-id-title="Resource templates and constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.3 </span><span class="title-name">Resource templates and constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-templates">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    If you have defined a resource template (see
+    <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-templates" title="6.8. Creating resource templates">Section 6.8, “Creating resource templates”</a>), it can be
+    referenced in the following types of constraints:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      order constraints,
+     </p></li><li class="listitem"><p>
+      colocation constraints,
+     </p></li><li class="listitem"><p>
+      rsc_ticket constraints (for Geo clusters).
+     </p></li></ul></div><p>
+    However, colocation constraints must not contain more than one reference
+    to a template. Resource sets must not contain a reference to a template.
+   </p><p>
+    Resource templates referenced in constraints stand for all primitives
+    which are derived from that template. This means, the constraint applies
+    to all primitive resources referencing the resource template.
+    Referencing resource templates in constraints is an alternative to
+    resource sets and can simplify the cluster configuration considerably.
+    For details about resource sets, refer to
+    <a class="xref" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-rscset" title="7.7. Using resource sets to define constraints">Section 7.7, “Using resource sets to define constraints”</a>.
+   </p></section><section class="sect1" id="sec-ha-conf-add-location-constraints" data-id-title="Adding location constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.4 </span><span class="title-name">Adding location constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-location-constraints">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   A location constraint determines on which node a resource may be run, is
+   preferably run, or may not be run. An example of a location constraint is to
+   place all resources related to a certain database on the same node. This type
+   of constraint may be added multiple times for each resource. All location
+   constraints are evaluated for a given resource.
+  </p><p>
+   You can add location constraints using either Hawk2 or crmsh.
+  </p><section class="sect2" id="sec-conf-hawk2-cons-loc" data-id-title="Adding location constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.1 </span><span class="title-name">Adding location constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-loc">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-location" data-id-title="Adding a location constraint"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.1: </span><span class="title-name">Adding a location constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-location">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Constraint</span> › <span class="guimenu">Location</span>.
+     </p></li><li class="step"><p>
+      Enter a unique <span class="guimenu">Constraint ID</span>.
+     </p></li><li class="step" id="step-hawk2-loc-rsc"><p>
+      From the list of <span class="guimenu">Resources</span> select the resource or
+      resources for which to define the constraint.
+     </p></li><li class="step"><p>
+      Enter a <span class="guimenu">Score</span>. The score indicates the value you are
+      assigning to this resource constraint. Positive values indicate the
+      resource can run on the <span class="guimenu">Node</span> you specify in the next
+      step. Negative values mean it should not run on that node. Constraints
+      with higher scores are applied before those with lower scores.
+     </p><p>
+      Some often-used values can also be set via the drop-down box:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        To force the resources to run on the node, click the arrow
+        icon and select <code class="literal">Always</code>. This sets the score to
+        <code class="literal">INFINITY</code>.
+       </p></li><li class="listitem"><p>
+        If you never want the resources to run on the node, click the arrow icon
+        and select <code class="literal">Never</code>. This sets the score to
+        <code class="literal">-INFINITY</code>, meaning that the resources must not run on
+        the node.
+       </p></li><li class="listitem"><p>
+        To set the score to <code class="literal">0</code>, click the arrow icon and
+        select <code class="literal">Advisory</code>. This disables the constraint. This
+        is useful when you want to set resource discovery but do not want to
+        constrain the resources.
+       </p></li></ul></div></li><li class="step"><p>
+      Select a <span class="guimenu">Node</span>.
+     </p></li><li class="step"><p>
+      Click <span class="guimenu">Create</span> to finish the configuration. A message at
+      the top of the screen shows if the action has been successful.
+     </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.6.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-loc-constraint.png"><img src="images/hawk2-loc-constraint.png" width="100%" alt="Hawk2—location constraint" title="Hawk2—location constraint"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 7.1: </span><span class="title-name">Hawk2—location constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.6.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-locational" data-id-title="Adding location constraints with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.2 </span><span class="title-name">Adding location constraints with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-locational">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The <code class="command">location</code> command defines on which nodes a
+    resource may be run, may not be run or is preferred to be run.
+   </p><p>
+    A simple example that expresses a preference to run the
+    resource <code class="literal">fs1</code> on the node with the name
+    <code class="systemitem">alice</code> to 100 would be the
+    following:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location loc-fs1 fs1 100: alice</code></pre></div><p>
+    Another example is a location with ping:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive ping ping \
+   params name=ping dampen=5s multiplier=100 host_list="r1 r2"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">clone cl-ping ping meta interleave=true</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">location loc-node_pref internal_www \
+   rule 50: #uname eq alice \
+   rule ping: defined ping</code></pre></div><p>
+    The parameter <em class="parameter">host_list</em> is a space-separated list
+    of hosts to ping and count.
+    Another use case for location constraints are grouping primitives as a
+    <span class="emphasis"><em>resource set</em></span>. This can be useful if several
+    resources depend on, for example, a ping attribute for network
+    connectivity. In former times, the <code class="literal">-inf/ping</code> rules
+    needed to be duplicated several times in the configuration, making it
+    unnecessarily complex.
+   </p><p>
+    The following example creates a resource set
+    <code class="varname">loc-alice</code>, referencing the virtual IP addresses
+    <code class="varname">vip1</code> and <code class="varname">vip2</code>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive vip1 IPaddr2 params ip=192.168.1.5</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive vip2 IPaddr2 params ip=192.168.1.6</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">location loc-alice { vip1 vip2 } inf: alice</code></pre></div><p>
+    In some cases it is much more efficient and convenient to use resource
+    patterns for your <code class="command">location</code> command. A resource
+    pattern is a regular expression between two slashes. For example, the
+    above virtual IP addresses can be all matched with the following:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location loc-alice /vip.*/ inf: alice</code></pre></div></section></section><section class="sect1" id="sec-ha-conf-add-colocation-constraints" data-id-title="Adding colocation constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.5 </span><span class="title-name">Adding colocation constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-colocation-constraints">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A colocation constraint tells the cluster which resources may or may not
+    run together on a node. As a colocation constraint defines a dependency
+    between resources, you need at least two resources to create a colocation
+    constraint.
+   </p><p>
+    You can add colocation constraints using either Hawk2 or crmsh.
+   </p><section class="sect2" id="sec-conf-hawk2-cons-col" data-id-title="Adding colocation constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.1 </span><span class="title-name">Adding colocation constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-col">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-colocation" data-id-title="Adding a colocation constraint"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.2: </span><span class="title-name">Adding a colocation constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-colocation">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Constraint</span> › <span class="guimenu">Colocation</span>.
+     </p></li><li class="step"><p>
+      Enter a unique <span class="guimenu">Constraint ID</span>.
+     </p></li><li class="step"><p>
+      Enter a <span class="guimenu">Score</span>. The score determines the location
+      relationship between the resources. Positive values indicate that the
+      resources should run on the same node. Negative values indicate that the
+      resources should not run on the same node. The score will be combined with
+      other factors to decide where to put the resource.
+     </p><p>
+      Some often-used values can also be set via the drop-down box:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        To force the resources to run on the same node, click the
+        arrow icon and select <code class="literal">Always</code>. This sets the score to
+        <code class="literal">INFINITY</code>.
+       </p></li><li class="listitem"><p>
+        If you never want the resources to run on the same node, click the arrow
+        icon and select <code class="literal">Never</code>. This sets the score to
+        <code class="literal">-INFINITY</code>, meaning that the resources must not run on
+        the same node.
+       </p></li></ul></div></li><li class="step"><p>
+      To define the resources for the constraint:
+     </p><ol type="a" class="substeps"><li class="step" id="step-hawk2-col-rsc"><p>
+        From the drop-down box in the <span class="guimenu">Resources</span> category,
+        select a resource (or a template).
+       </p><p>
+        The resource is added and a new empty drop-down box appears beneath.
+       </p></li><li class="step"><p>
+        Repeat this step to add more resources.
+       </p><p>
+        As the topmost resource depends on the next resource and so on, the
+        cluster will first decide where to put the last resource, then place the
+        depending ones based on that decision. If the constraint cannot be
+        satisfied, the cluster may not allow the dependent resource to run.
+       </p></li><li class="step"><p>
+        To swap the order of resources within the colocation constraint, click
+        the arrow up icon next to a resource to swap it with the entry above.
+       </p></li></ol></li><li class="step"><p>
+      If needed, specify further parameters for each resource (such as
+      <code class="literal">Started</code>, <code class="literal">Stopped</code>,
+      <code class="literal">Master</code>, <code class="literal">Slave</code>,
+      <code class="literal">Promote</code>, <code class="literal">Demote</code>): Click the empty
+      drop-down box next to the resource and select the desired entry.
+     </p></li><li class="step"><p>
+      Click <span class="guimenu">Create</span> to finish the configuration. A message at
+      the top of the screen shows if the action has been successful.
+     </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.7.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-col-constraint.png"><img src="images/hawk2-col-constraint.png" width="100%" alt="Hawk2—colocation constraint" title="Hawk2—colocation constraint"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 7.2: </span><span class="title-name">Hawk2—colocation constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.7.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-collocational" data-id-title="Adding colocation constraints with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.2 </span><span class="title-name">Adding colocation constraints with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-collocational">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     The <code class="command">colocation</code> command is used to define what
+     resources should run on the same or on different hosts.
+    </p><p>
+     You can set a score of either +inf or -inf, defining
+     resources that must always or must never run on the same node.
+     You can also use non-infinite scores. In that case the colocation
+     is called <span class="emphasis"><em>advisory</em></span> and the cluster may decide not
+     to follow them in favor of not stopping other resources if there is a
+     conflict.
+    </p><p>
+     For example, to always run the resources <code class="literal">resource1</code>
+     and <code class="literal">resource2</code> on the same host, use the following constraint:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation coloc-2resource inf: resource1 resource2</code></pre></div><p>
+    For a primary/secondary configuration, it is necessary to know if the
+    current node is a primary in addition to running the resource locally.
+   </p></section></section><section class="sect1" id="sec-ha-conf-add-order-constraints" data-id-title="Adding order constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.6 </span><span class="title-name">Adding order constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-order-constraints">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Order constraints can be used to start or stop a service right before or
+   after a different resource meets a special condition, such as being started,
+   stopped, or promoted to primary. For example, you cannot mount a file system
+   before the device is available to a system. As an order constraint defines
+   a dependency between resources, you need at least two resources to create
+   an order constraint.
+  </p><p>
+   You can add order constraints using either Hawk2 or crmsh.
+  </p><section class="sect2" id="sec-conf-hawk2-cons-order" data-id-title="Adding order constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.6.1 </span><span class="title-name">Adding order constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-order">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-order" data-id-title="Adding an order constraint"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.3: </span><span class="title-name">Adding an order constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-order">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Constraint</span> › <span class="guimenu">Order</span>.
+     </p></li><li class="step"><p>
+      Enter a unique <span class="guimenu">Constraint ID</span>.
+     </p></li><li class="step"><p>
+      Enter a <span class="guimenu">Score</span>. If the score is greater than zero, the
+      order constraint is mandatory, otherwise it is optional.
+     </p><p>
+      Some often-used values can also be set via the drop-down box:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        If you want to make the order constraint mandatory, click the arrow icon
+        and select <code class="literal">Mandatory</code>.
+       </p></li><li class="listitem"><p>
+        If you want the order constraint to be a suggestion only, click the
+        arrow icon and select <code class="literal">Optional</code>.
+       </p></li><li class="listitem"><p>
+        <code class="literal">Serialize</code>: To ensure that no two stop/start actions
+        occur concurrently for the resources, click the arrow icon and select
+        <code class="literal">Serialize</code>. This makes sure that one resource must
+        complete starting before the other can be started. A typical use case
+        are resources that put a high load on the host during start-up.
+       </p></li></ul></div></li><li class="step"><p>
+      For order constraints, you can usually keep the option
+      <span class="guimenu">Symmetrical</span> enabled. This specifies that resources are
+      stopped in reverse order.
+     </p></li><li class="step"><p>
+      To define the resources for the constraint:
+     </p><ol type="a" class="substeps"><li class="step" id="step-hawk2-order-rsc"><p>
+        From the drop-down box in the <span class="guimenu">Resources</span> category,
+        select a resource (or a template).
+       </p><p>
+        The resource is added and a new empty drop-down box appears beneath.
+       </p></li><li class="step"><p>
+        Repeat this step to add more resources.
+       </p><p>
+        The topmost resource will start first, then the second, etc. Usually the
+        resources will be stopped in reverse order.
+       </p></li><li class="step"><p>
+        To swap the order of resources within the order constraint, click the
+        arrow up icon next to a resource to swap it with the entry above.
+       </p></li></ol></li><li class="step"><p>
+      If needed, specify further parameters for each resource (like
+      <code class="literal">Started</code>, <code class="literal">Stopped</code>,
+      <code class="literal">Master</code>, <code class="literal">Slave</code>,
+      <code class="literal">Promote</code>, <code class="literal">Demote</code>): Click the empty
+      drop-down box next to the resource and select the desired entry.
+     </p></li><li class="step"><p>
+      Confirm your changes to finish the configuration. A message at the top of
+      the screen shows if the action has been successful.
+     </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.8.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-order-constraint.png"><img src="images/hawk2-order-constraint.png" width="100%" alt="Hawk2—order constraint" title="Hawk2—order constraint"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 7.3: </span><span class="title-name">Hawk2—order constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.8.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-ordering" data-id-title="Adding order constraints with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.6.2 </span><span class="title-name">Adding order constraints with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-ordering">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The <code class="command">order</code> command defines a sequence of action.
+   </p><p>
+    For example, to always start <code class="literal">resource1</code> before
+     <code class="literal">resource2</code>, use the following constraint:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order res1_before_res2 Mandatory: resource1 resource2</code></pre></div></section></section><section class="sect1" id="sec-ha-config-basics-constraints-rscset" data-id-title="Using resource sets to define constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.7 </span><span class="title-name">Using resource sets to define constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-rscset">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     As an alternative format for defining location, colocation, or order
+     constraints, you can use <span class="emphasis"><em>resource sets</em></span>, where
+     primitives are grouped together in one set. Previously this was
+     possible either by defining a resource group (which could not always
+     accurately express the design), or by defining each relationship as an
+     individual constraint. The latter caused a constraint explosion as the
+     number of resources and combinations grew. The configuration via
+     resource sets is not necessarily less verbose, but is easier to
+     understand and maintain.
+   </p><p>
+    You can configure resource sets using either Hawk2 or crmsh.
+   </p><section class="sect2" id="sec-conf-hawk2-cons-set" data-id-title="Using resource sets to define constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.7.1 </span><span class="title-name">Using resource sets to define constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-set">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-sets" data-id-title="Using a resource set for constraints"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.4: </span><span class="title-name">Using a resource set for constraints </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-sets">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      To use a resource set within a location constraint:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Proceed as outlined in <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-location" title="Adding a location constraint">Procedure 7.1, “Adding a location constraint”</a>,
+        apart from
+        <a class="xref" href="sec-ha-config-basics-constraints.html#step-hawk2-loc-rsc" title="Step 4">Step 4</a>: Instead
+        of selecting a single resource, select multiple resources by pressing
+        <span class="keycap">Ctrl</span> or <span class="keycap">Shift</span> and mouse
+        click. This creates a resource set within the location constraint.
+       </p></li><li class="step"><p>
+        To remove a resource from the location constraint, press
+        <span class="keycap">Ctrl</span> and click the resource again to deselect
+        it.
+       </p></li></ol></li><li class="step"><p>
+      To use a resource set within a colocation or order constraint:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Proceed as described in
+        <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-colocation" title="Adding a colocation constraint">Procedure 7.2, “Adding a colocation constraint”</a> or
+        <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-order" title="Adding an order constraint">Procedure 7.3, “Adding an order constraint”</a>, apart from the
+        step where you define the resources for the constraint
+        (<a class="xref" href="sec-ha-config-basics-constraints.html#step-hawk2-col-rsc" title="Step 5.a">Step 5.a</a> or
+        <a class="xref" href="sec-ha-config-basics-constraints.html#step-hawk2-order-rsc" title="Step 6.a">Step 6.a</a>):
+       </p></li><li class="step"><p>
+        Add multiple resources.
+       </p></li><li class="step"><p>
+        To create a resource set, click the chain icon next to a resource to
+        link it to the resource above. A resource set is visualized by a frame
+        around the resources belonging to a set.
+       </p></li><li class="step"><p>
+        You can combine multiple resources in a resource set or create multiple
+        resource sets.
+       </p><div class="figure" id="id-1.4.4.5.9.4.2.3.2.4.2"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-constraint-set.png"><img src="images/hawk2-constraint-set.png" width="100%" alt="Hawk2—two resource sets in a colocation constraint" title="Hawk2—two resource sets in a colocation constraint"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 7.4: </span><span class="title-name">Hawk2—two resource sets in a colocation constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.9.4.2.3.2.4.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+        To unlink a resource from the resource above, click the scissors icon
+        next to the resource.
+       </p></li></ol></li><li class="step"><p>
+      Confirm your changes to finish the constraint configuration.
+     </p></li></ol></div></div></section><section class="sect2" id="sec-ha-config-basics-constraints-rscset-constraints" data-id-title="Using resource sets to define constraints with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.7.2 </span><span class="title-name">Using resource sets to define constraints with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-rscset-constraints">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="complex-example"><div class="example" id="ex-config-basic-resourceset-loc" data-id-title="A resource set for location constraints"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 7.1: </span><span class="title-name">A resource set for location constraints </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#ex-config-basic-resourceset-loc">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="example-contents"><p>
+       For example, you can use the following configuration of a resource
+       set (<code class="varname">loc-alice</code>) in the crmsh to place
+       two virtual IPs (<code class="varname">vip1</code> and <code class="varname">vip2</code>)
+       on the same node, <code class="varname">alice</code>:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive vip1 IPaddr2 params ip=192.168.1.5</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive vip2 IPaddr2 params ip=192.168.1.6</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">location loc-alice { vip1 vip2 } inf: alice</code></pre></div></div></div></div><p>
+      If you want to use resource sets to replace a configuration of
+      colocation constraints, consider the following two examples:
+     </p><div class="example" id="id-1.4.4.5.9.5.4" data-id-title="A chain of colocated resources"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 7.2: </span><span class="title-name">A chain of colocated resources </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.9.5.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">&lt;constraints&gt;
+     &lt;rsc_colocation id="coloc-1" rsc="B" with-rsc="A" score="INFINITY"/&gt;
+     &lt;rsc_colocation id="coloc-2" rsc="C" with-rsc="B" score="INFINITY"/&gt;
+     &lt;rsc_colocation id="coloc-3" rsc="D" with-rsc="C" score="INFINITY"/&gt;
+&lt;/constraints&gt;</pre></div></div></div><p>
+      The same configuration expressed by a resource set:
+     </p><div class="verbatim-wrap"><pre class="screen">&lt;constraints&gt;
+    &lt;rsc_colocation id="coloc-1" score="INFINITY" &gt;
+     &lt;resource_set id="colocated-set-example" sequential="true"&gt;
+      &lt;resource_ref id="A"/&gt;
+      &lt;resource_ref id="B"/&gt;
+      &lt;resource_ref id="C"/&gt;
+      &lt;resource_ref id="D"/&gt;
+     &lt;/resource_set&gt;
+    &lt;/rsc_colocation&gt;
+&lt;/constraints&gt;</pre></div><p>
+      If you want to use resource sets to replace a configuration of
+      order constraints, consider the following two examples:
+     </p><div class="example" id="id-1.4.4.5.9.5.8" data-id-title="A chain of ordered resources"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 7.3: </span><span class="title-name">A chain of ordered resources </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.9.5.8">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">&lt;constraints&gt;
+     &lt;rsc_order id="order-1" first="A" then="B" /&gt;
+     &lt;rsc_order id="order-2" first="B" then="C" /&gt;
+     &lt;rsc_order id="order-3" first="C" then="D" /&gt;
+&lt;/constraints&gt;</pre></div></div></div><p>
+      The same purpose can be achieved by using a resource set with ordered
+      resources:
+     </p><div class="example" id="id-1.4.4.5.9.5.10" data-id-title="A chain of ordered resources expressed as resource set"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 7.4: </span><span class="title-name">A chain of ordered resources expressed as resource set </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.9.5.10">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">&lt;constraints&gt;
+     &lt;rsc_order id="order-1"&gt;
+     &lt;resource_set id="ordered-set-example" sequential="true"&gt;
+     &lt;resource_ref id="A"/&gt;
+     &lt;resource_ref id="B"/&gt;
+     &lt;resource_ref id="C"/&gt;
+     &lt;resource_ref id="D"/&gt;
+     &lt;/resource_set&gt;
+     &lt;/rsc_order&gt;
+&lt;/constraints&gt;</pre></div></div></div><p>
+      Sets can be either ordered (<code class="literal">sequential=true</code>) or
+      unordered (<code class="literal">sequential=false</code>). Furthermore, the
+      <code class="literal">require-all</code> attribute can be used to switch between
+      <code class="literal">AND</code> and <code class="literal">OR</code> logic.
+     </p></section><section class="sect2" id="sec-ha-manual-config-constraints-weak-bond" data-id-title="Collocating sets for resources without dependency"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.7.3 </span><span class="title-name">Collocating sets for resources without dependency</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-weak-bond">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      Sometimes it is useful to place a group of resources on the same node
+      (defining a colocation constraint), but without having hard
+      dependencies between the resources. For example, you want two
+      resources to be placed on the same node, but you do
+      <span class="emphasis"><em>not</em></span> want the cluster to restart the other one if
+      one of them fails.
+     </p><p>
+      This can be achieved on the crm shell by using the <code class="command">weak-bond</code> command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure assist weak-bond <em class="replaceable">resource1</em> <em class="replaceable">resource2</em></code></pre></div><p>
+      The <code class="command">weak-bond</code> command creates a dummy resource and
+      a colocation constraint with the given resources automatically.
+     </p></section></section><section class="sect1" id="sec-ha-config-basics-failover" data-id-title="Specifying resource failover nodes"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.8 </span><span class="title-name">Specifying resource failover nodes</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-failover">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A resource will be automatically restarted if it fails. If that cannot
+    be achieved on the current node, or it fails <code class="literal">N</code> times
+    on the current node, it tries to fail over to another node. Each time
+    the resource fails, its fail count is raised. You can define several
+    failures for resources (a <code class="literal">migration-threshold</code>), after
+    which they will migrate to a new node. If you have more than two nodes
+    in your cluster, the node a particular resource fails over to is chosen
+    by the High Availability software.
+   </p><p>
+    However, you can specify the node a resource will fail over to by
+    configuring one or several location constraints and a
+    <code class="literal">migration-threshold</code> for that resource.
+   </p><p>
+    You can specify resource failover nodes using either Hawk2 or crmsh.
+   </p><div class="complex-example"><div class="example" id="ex-ha-config-basics-failover" data-id-title="Migration threshold—process flow"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 7.5: </span><span class="title-name">Migration threshold—process flow </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#ex-ha-config-basics-failover">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="example-contents"><p>
+     For example, let us assume you have configured a location constraint
+     for resource <code class="literal">rsc1</code> to preferably run on
+     <code class="literal">alice</code>. If it fails there,
+     <code class="literal">migration-threshold</code> is checked and compared to the
+     fail count. If <code class="literal">failcount</code> &gt;= migration-threshold, then the resource is
+     migrated to the node with the next best preference.
+    </p><p>
+     After the threshold has been reached, the node will no longer be
+     allowed to run the failed resource until the resource's fail count is
+     reset. This can be done manually by the cluster administrator or by
+     setting a <code class="literal">failure-timeout</code> option for the resource.
+    </p><p>
+     For example, a setting of <code class="literal">migration-threshold=2</code> and
+     <code class="literal">failure-timeout=60s</code> would cause the resource to
+     migrate to a new node after two failures. It would be allowed to move
+     back (depending on the stickiness and constraint scores) after one
+     minute.
+    </p></div></div></div><p>
+    There are two exceptions to the migration threshold concept, occurring
+    when a resource either fails to start or fails to stop:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Start failures set the fail count to <code class="literal">INFINITY</code> and
+      thus always cause an immediate migration.
+     </p></li><li class="listitem"><p>
+      Stop failures cause fencing (when <code class="literal">stonith-enabled</code>
+      is set to <code class="literal">true</code> which is the default).
+     </p><p>
+      In case there is no STONITH resource defined (or
+      <code class="literal">stonith-enabled</code> is set to
+      <code class="literal">false</code>), the resource will not migrate.
+     </p></li></ul></div><section class="sect2" id="sec-conf-hawk2-failover" data-id-title="Specifying resource failover nodes with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.8.1 </span><span class="title-name">Specifying resource failover nodes with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-failover" data-id-title="Specifying a failover node"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.5: </span><span class="title-name">Specifying a failover node </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-failover">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2:
+      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       Configure a location constraint for the resource as described in
+       <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-location" title="Adding a location constraint">Procedure 7.1, “Adding a location constraint”</a>.
+      </p></li><li class="step"><p>
+       Add the <code class="literal">migration-threshold</code> meta attribute to the
+       resource as described in
+       <a class="xref" href="cha-ha-manage-resources.html#pro-conf-hawk2-rsc-modify" title="Modifying a resource or group">Procedure 8.1: Modifying a resource or group</a>,
+       <a class="xref" href="cha-ha-manage-resources.html#step-hawk2-rsc-modify-params" title="Step 5">Step 5</a>
+       and enter a value for the migration-threshold. The value should be
+       positive and less than INFINITY.
+      </p></li><li class="step"><p>
+       If you want to automatically expire the fail count for a resource, add the
+       <code class="literal">failure-timeout</code> meta attribute to the resource as
+       described in
+       <a class="xref" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-primitive-add" title="Adding a primitive resource with Hawk2">Procedure 6.2: Adding a primitive resource with Hawk2</a>,
+       <a class="xref" href="cha-ha-manage-resources.html#step-hawk2-rsc-modify-params" title="Step 5">Step 5</a>
+       and enter a <span class="guimenu">Value</span> for the
+       <code class="literal">failure-timeout</code>.
+      </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-failover-node.png"><img src="images/hawk2-failover-node.png" width="100%" alt="Image" title="Image"/></a></div></div></li><li class="step"><p>
+       If you want to specify additional failover nodes with preferences for a
+       resource, create additional location constraints.
+      </p></li></ol></div></div><p>
+     Instead of letting the fail count for a resource expire automatically, you
+     can also clean up fail counts for a resource manually at any time. Refer to
+     <a class="xref" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-cleanup" title="8.5.1. Cleaning up cluster resources with Hawk2">Section 8.5.1, “Cleaning up cluster resources with Hawk2”</a> for details.
+    </p></section><section class="sect2" id="sec-ha-manual-config-failover" data-id-title="Specifying resource failover nodes with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.8.2 </span><span class="title-name">Specifying resource failover nodes with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     To determine a resource failover, use the meta attribute
+     <code class="literal">migration-threshold</code>. If the fail count exceeds
+     <code class="literal">migration-threshold</code> on all nodes, the resource
+     remains stopped. For example:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location rsc1-alice rsc1 100: alice</code></pre></div><p>
+     Normally, <code class="literal">rsc1</code> prefers to run on <code class="literal">alice</code>.
+     If it fails there, <code class="literal">migration-threshold</code> is checked and compared
+     to the fail count. If <code class="literal">failcount</code> &gt;= <code class="literal">migration-threshold</code>,
+     then the resource is migrated to the node with the next best preference.
+    </p><p>
+     Start failures set the fail count to inf depend on the
+     <code class="option">start-failure-is-fatal</code> option. Stop failures cause
+     fencing. If there is no STONITH defined, the resource will not migrate.
+    </p></section></section><section class="sect1" id="sec-ha-config-basics-failback" data-id-title="Specifying resource failback nodes (resource stickiness)"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.9 </span><span class="title-name">Specifying resource failback nodes (resource stickiness)</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-failback">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A resource might fail back to its original node when that node is back
+    online and in the cluster. To prevent a resource from
+    failing back to the node that it was running on, or
+    to specify a different node for the resource to fail back to,
+    change its resource stickiness value. You can
+    either specify resource stickiness when you are creating a resource or
+    afterward.
+   </p><p>
+    Consider the following implications when specifying resource stickiness
+    values:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.5.11.4.1"><span class="term">Value is <code class="literal">0</code>:</span></dt><dd><p>
+       The resource is placed optimally in the
+       system. This may mean that it is moved when a <span class="quote">“<span class="quote">better</span>”</span>
+       or less loaded node becomes available. The option is almost
+       equivalent to automatic failback, except that the resource may be
+       moved to a node that is not the one it was previously active on.
+       This is the Pacemaker default.
+      </p></dd><dt id="id-1.4.4.5.11.4.2"><span class="term">Value is greater than <code class="literal">0</code>:</span></dt><dd><p>
+       The resource will prefer to remain in its current location, but may
+       be moved if a more suitable node is available. Higher values indicate
+       a stronger preference for a resource to stay where it is.
+      </p></dd><dt id="id-1.4.4.5.11.4.3"><span class="term">Value is less than <code class="literal">0</code>:</span></dt><dd><p>
+       The resource prefers to move away from its current location. Higher
+       absolute values indicate a stronger preference for a resource to be
+       moved.
+      </p></dd><dt id="id-1.4.4.5.11.4.4"><span class="term">Value is <code class="literal">INFINITY</code>:</span></dt><dd><p>
+       The resource will always remain in its current location unless forced
+       off because the node is no longer eligible to run the resource (node
+       shutdown, node standby, reaching the
+       <code class="literal">migration-threshold</code>, or configuration change).
+       This option is almost equivalent to completely disabling automatic
+       failback.
+      </p></dd><dt id="id-1.4.4.5.11.4.5"><span class="term">Value is <code class="literal">-INFINITY</code>:</span></dt><dd><p>
+       The resource will always move away from its current location.
+      </p></dd></dl></div><section class="sect2" id="sec-config-hawk2-failback" data-id-title="Specifying resource failback nodes with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.9.1 </span><span class="title-name">Specifying resource failback nodes with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-config-hawk2-failback">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-stickiness" data-id-title="Specifying resource stickiness"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.6: </span><span class="title-name">Specifying resource stickiness </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-stickiness">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2:
+      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       Add the <code class="literal">resource-stickiness</code> meta attribute to the
+       resource as described in
+       <a class="xref" href="cha-ha-manage-resources.html#pro-conf-hawk2-rsc-modify" title="Modifying a resource or group">Procedure 8.1: Modifying a resource or group</a>,
+       <a class="xref" href="cha-ha-manage-resources.html#step-hawk2-rsc-modify-params" title="Step 5">Step 5</a>.
+      </p></li><li class="step"><p>
+       Specify a value between <code class="literal">-INFINITY</code> and
+       <code class="literal">INFINITY</code> for <code class="literal">resource-stickiness</code>.
+      </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-rsc-stickiness.png"><img src="images/hawk2-rsc-stickiness.png" width="100%" alt="Image" title="Image"/></a></div></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-utilization" data-id-title="Placing resources based on their load impact"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.10 </span><span class="title-name">Placing resources based on their load impact</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-utilization">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Not all resources are equal. Some, such as Xen guests, require that
+    the node hosting them meets their capacity requirements. If resources
+    are placed such that their combined need exceed the provided capacity,
+    the resources diminish in performance (or even fail).
+   </p><p>
+    To take this into account, SUSE Linux Enterprise High Availability allows you to specify the
+    following parameters:
+   </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+      The capacity a certain node <span class="emphasis"><em>provides</em></span>.
+     </p></li><li class="listitem"><p>
+      The capacity a certain resource <span class="emphasis"><em>requires</em></span>.
+     </p></li><li class="listitem"><p>
+      An overall strategy for placement of resources.
+     </p></li></ol></div><p>
+    You can configure these setting using either Hawk2 or crmsh:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      Hawk2: <a class="xref" href="sec-ha-config-basics-constraints.html#sec-config-hawk2-utilization" title="7.10.1. Placing resources based on their load impact with Hawk2">Section 7.10.1, “Placing resources based on their load impact with Hawk2”</a>
+     </p></li><li class="listitem"><p>
+      crmsh: <a class="xref" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-utilization" title="7.10.2. Placing resources based on their load impact with crmsh">Section 7.10.2, “Placing resources based on their load impact with crmsh”</a>
+     </p></li></ul></div><p>
+    A node is considered eligible for a resource if it has sufficient free
+    capacity to satisfy the resource's requirements. The nature of the
+    capacities is completely irrelevant for the High Availability software; it only makes
+    sure that all capacity requirements of a resource are satisfied before
+    moving a resource to a node.
+   </p><p>
+    To manually configure the resource's requirements and the capacity a
+    node provides, use utilization attributes. You can name the utilization
+    attributes according to your preferences and define as many name/value
+    pairs as your configuration needs. However, the attribute's values must
+    be integers.
+   </p><p>
+    If multiple resources with utilization attributes are grouped or have
+    colocation constraints, SUSE Linux Enterprise High Availability takes that into account. If
+    possible, the resources is placed on a node that can fulfill
+    <span class="emphasis"><em>all</em></span> capacity requirements.
+   </p><div id="id-1.4.4.5.12.10" data-id-title="Utilization attributes for groups" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Utilization attributes for groups</div><p>
+     It is impossible to set utilization attributes directly for a resource
+     group. However, to simplify the configuration for a group, you can add
+     a utilization attribute with the total capacity needed to any of the
+     resources in the group.
+    </p></div><p>
+    SUSE Linux Enterprise High Availability also provides the means to detect and configure both node
+    capacity and resource requirements automatically:
+   </p><p>
+    The <code class="systemitem">NodeUtilization</code> resource agent checks the
+    capacity of a node (regarding CPU and RAM).
+    To configure automatic detection, create a clone resource of the
+    following class, provider, and type:
+    <code class="literal">ocf:pacemaker:NodeUtilization</code>. One instance of the
+    clone should be running on each node. After the instance has started, a
+    utilization section will be added to the node's configuration in CIB.
+   </p><p>
+    For automatic detection of a resource's minimal requirements (regarding
+    RAM and CPU) the <code class="systemitem">Xen</code> resource agent has been
+    improved. Upon start of a <code class="systemitem">Xen</code> resource, it will
+    reflect the consumption of RAM and CPU. Utilization attributes will
+    automatically be added to the resource configuration.
+   </p><div id="id-1.4.4.5.12.14" data-id-title="Different resource agents for Xen and libvirt" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Different resource agents for Xen and libvirt</div><p>
+     The <code class="systemitem">ocf:heartbeat:Xen</code> resource agent should not be
+     used with <code class="literal">libvirt</code>, as <code class="literal">libvirt</code> expects
+     to be able to modify the machine description file.
+    </p><p>
+     For <code class="literal">libvirt</code>, use the
+     <code class="systemitem">ocf:heartbeat:VirtualDomain</code> resource agent.
+    </p></div><p>
+    Apart from detecting the minimal requirements, the High Availability software also allows
+    to monitor the current utilization via the
+    <code class="systemitem">VirtualDomain</code> resource agent. It detects CPU
+    and RAM use of the virtual machine. To use this feature, configure a
+    resource of the following class, provider and type:
+    <code class="literal">ocf:heartbeat:VirtualDomain</code>. The following instance
+    attributes are available: <code class="varname">autoset_utilization_cpu</code> and
+    <code class="varname">autoset_utilization_hv_memory</code>. Both default to
+    <code class="literal">true</code>. This updates the utilization values in the CIB
+    during each monitoring cycle.
+   </p><p>
+    Independent of manually or automatically configuring capacity and
+    requirements, the placement strategy must be specified with the
+    <code class="literal">placement-strategy</code> property (in the global cluster
+    options). The following values are available:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.5.12.17.1"><span class="term"><code class="literal">default</code> (default value)</span></dt><dd><p>
+       Utilization values are not considered. Resources are allocated
+       according to location scoring. If scores are equal, resources are
+       evenly distributed across nodes.
+      </p></dd><dt id="id-1.4.4.5.12.17.2"><span class="term"><code class="literal">utilization</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. However,
+       load-balancing is still done based on the number of resources
+       allocated to a node.
+      </p></dd><dt id="id-1.4.4.5.12.17.3"><span class="term"><code class="literal">minimal</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. An attempt is
+       made to concentrate the resources on as few nodes as possible
+       (to achieve power savings on the remaining nodes).
+      </p></dd><dt id="id-1.4.4.5.12.17.4"><span class="term"><code class="literal">balanced</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. An attempt is
+       made to distribute the resources evenly, thus optimizing resource
+       performance.
+      </p></dd></dl></div><div id="id-1.4.4.5.12.18" data-id-title="Configuring resource priorities" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Configuring resource priorities</div><p>
+     The available placement strategies are best-effort—they do not
+     yet use complex heuristic solvers to always reach optimum allocation
+     results. Ensure that resource priorities are properly set so that
+     your most important resources are scheduled first.
+    </p></div><section class="sect2" id="sec-config-hawk2-utilization" data-id-title="Placing resources based on their load impact with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.10.1 </span><span class="title-name">Placing resources based on their load impact with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-config-hawk2-utilization">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Utilization attributes are used to configure both the resource's
+    requirements and the capacity a node provides. You first need to configure a
+    node's capacity before you can configure the capacity a resource requires.
+   </p><div class="procedure" id="pro-hawk2-utilization-node" data-id-title="Configuring the capacity a node provides"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.7: </span><span class="title-name">Configuring the capacity a node provides </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>.
+     </p></li><li class="step"><p>
+      On the <span class="guimenu">Nodes</span> tab, select the node whose capacity you
+      want to configure.
+     </p></li><li class="step"><p>
+      In the <span class="guimenu">Operations</span> column, click the arrow down icon and
+      select <span class="guimenu">Edit</span>.
+     </p><p>
+      The <span class="guimenu">Edit Node</span> screen opens.
+     </p></li><li class="step"><p>
+      Below <span class="guimenu">Utilization</span>, enter a name for a utilization
+      attribute into the empty drop-down box.
+     </p><p>
+      The name can be arbitrary (for example, <code class="literal">RAM_in_GB</code>).
+     </p></li><li class="step"><p>
+      Click the <span class="guimenu">Add</span> icon to add the attribute.
+     </p></li><li class="step"><p>
+      In the empty text box next to the attribute, enter an attribute value. The
+      value must be an integer.
+     </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-utilization-node.png"><img src="images/hawk2-utilization-node.png" width="100%" alt="Image" title="Image"/></a></div></div></li><li class="step"><p>
+      Add as many utilization attributes as you need and add values for all of
+      them.
+     </p></li><li class="step"><p>
+      Confirm your changes. A message at the top of the screen shows if the
+      action has been successful.
+     </p></li></ol></div></div><div class="procedure" id="pro-hawk2-utilization-rsc" data-id-title="Configuring the capacity a resource requires"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.8: </span><span class="title-name">Configuring the capacity a resource requires </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-rsc">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+     Configure the capacity a certain resource requires from a node either when
+     creating a primitive resource or when editing an existing primitive resource.
+    </p><p>
+     Before you can add utilization attributes to a resource, you need to have
+     set utilization attributes for your cluster nodes as described in
+     <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node" title="Configuring the capacity a node provides">Procedure 7.7</a>.
+    </p><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      To add a utilization attribute to an existing resource: Go to <span class="guimenu">Manage</span> › <span class="guimenu">Status</span> and open
+      the resource configuration dialog as described in
+      <a class="xref" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-edit" title="8.2.1. Editing resources and groups with Hawk2">Section 8.2.1, “Editing resources and groups with Hawk2”</a>.
+     </p><p>
+      If you create a new resource: Go to <span class="guimenu">Configuration</span> › <span class="guimenu">Add Resource</span> and proceed as described in
+      <a class="xref" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-primitive" title="6.4.1. Creating primitive resources with Hawk2">Section 6.4.1, “Creating primitive resources with Hawk2”</a>.
+     </p></li><li class="step"><p>
+      In the resource configuration dialog, go to the
+      <span class="guimenu">Utilization</span> category.
+     </p></li><li class="step"><p>
+      From the empty drop-down box, select one of the utilization attributes
+      that you have configured for the nodes in
+      <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node" title="Configuring the capacity a node provides">Procedure 7.7</a>.
+     </p></li><li class="step"><p>
+      In the empty text box next to the attribute, enter an attribute value. The
+      value must be an integer.
+     </p></li><li class="step"><p>
+      Add as many utilization attributes as you need and add values for all of
+      them.
+     </p></li><li class="step"><p>
+      Confirm your changes. A message at the top of the screen shows if the
+      action has been successful.
+     </p></li></ol></div></div><p>
+    After you have configured the capacities your nodes provide and the
+    capacities your resources require, set the placement strategy in
+    the global cluster options. Otherwise the capacity configurations have no
+    effect. Several strategies are available to schedule the load: for example,
+    you can concentrate it on as few nodes as possible, or balance it evenly
+    over all available nodes. For more information, refer to
+    <a class="xref" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-utilization" title="7.10. Placing resources based on their load impact">Section 7.10, “Placing resources based on their load impact”</a>.
+   </p><div class="procedure" id="pro-ha-config-hawk2-placement" data-id-title="Setting the placement strategy"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.9: </span><span class="title-name">Setting the placement strategy </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-ha-config-hawk2-placement">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Cluster Configuration</span> to open the respective screen. It shows global
+      cluster options and resource and operation defaults.
+     </p></li><li class="step"><p>
+      From the empty drop-down box in the upper part of the screen, select
+      <code class="literal">placement-strategy</code>.
+     </p><p>
+      By default, its value is set to <span class="guimenu">Default</span>, which means
+      that utilization attributes and values are not considered.
+     </p></li><li class="step"><p>
+      Depending on your requirements, set <span class="guimenu">Placement Strategy</span>
+      to the appropriate value.
+     </p></li><li class="step"><p>
+      Confirm your changes.
+     </p></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-utilization" data-id-title="Placing resources based on their load impact with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.10.2 </span><span class="title-name">Placing resources based on their load impact with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-utilization">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To configure the resource's requirements and the capacity a node
+    provides, use utilization attributes.
+    You can name the utilization attributes according to your preferences
+    and define as many name/value pairs as your configuration needs. In
+    certain cases, some agents update the utilization themselves, for
+    example the <code class="systemitem">VirtualDomain</code>.
+   </p><p>
+    In the following example, we assume that you already have a basic
+    configuration of cluster nodes and resources. You now additionally want
+    to configure the capacities a certain node provides and the capacity a
+    certain resource requires.
+   </p><div class="procedure" id="id-1.4.4.5.12.20.4" data-id-title="Adding or modifying utilization attributes with crm"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.10: </span><span class="title-name">Adding or modifying utilization attributes with <code class="command">crm</code> </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.12.20.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code></pre></div></li><li class="step"><p>
+      To specify the capacity a node <span class="emphasis"><em>provides</em></span>, use the
+      following command and replace the placeholder
+      <em class="replaceable">NODE_1</em> with the name of your node:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">node <em class="replaceable">NODE_1</em> utilization hv_memory=16384 cpu=8</code></pre></div><p>
+      With these values, <em class="replaceable">NODE_1</em> would be assumed
+      to provide 16GB of memory and 8 CPU cores to resources.
+     </p></li><li class="step"><p>
+      To specify the capacity a resource <span class="emphasis"><em>requires</em></span>, use:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive xen1 Xen ... \
+     utilization hv_memory=4096 cpu=4</code></pre></div><p>
+      This would make the resource consume 4096 of those memory units from
+      <em class="replaceable">NODE_1</em>, and 4 of the CPU units.
+     </p></li><li class="step"><p>
+      Configure the placement strategy with the <code class="command">property</code>
+      command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">property</code> ...</pre></div><p>
+      The following values are available:
+     </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.5.12.20.4.5.4.1"><span class="term"><code class="literal">default</code> (default value)</span></dt><dd><p>
+       Utilization values are not considered. Resources are allocated
+       according to location scoring. If scores are equal, resources are
+       evenly distributed across nodes.
+      </p></dd><dt id="id-1.4.4.5.12.20.4.5.4.2"><span class="term"><code class="literal">utilization</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. However,
+       load-balancing is still done based on the number of resources
+       allocated to a node.
+      </p></dd><dt id="id-1.4.4.5.12.20.4.5.4.3"><span class="term"><code class="literal">minimal</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. An attempt is
+       made to concentrate the resources on as few nodes as possible
+       (to achieve power savings on the remaining nodes).
+      </p></dd><dt id="id-1.4.4.5.12.20.4.5.4.4"><span class="term"><code class="literal">balanced</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. An attempt is
+       made to distribute the resources evenly, thus optimizing resource
+       performance.
+      </p></dd></dl></div><div id="id-1.4.4.5.12.20.4.5.5" data-id-title="Configuring resource priorities" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Configuring resource priorities</div><p>
+     The available placement strategies are best-effort—they do not
+     yet use complex heuristic solvers to always reach optimum allocation
+     results. Ensure that resource priorities are properly set so that
+     your most important resources are scheduled first.
+    </p></div></li><li class="step"><p>
+      Commit your changes before leaving crmsh:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div><p>
+    The following example demonstrates a three node cluster of equal nodes,
+    with 4 virtual machines:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">node alice utilization hv_memory="4000"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">node bob utilization hv_memory="4000"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">node charlie utilization hv_memory="4000"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive xenA Xen \
+    utilization hv_memory="3500" meta priority="10" \
+    params xmfile="/etc/xen/shared-vm/vm1"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive xenB Xen \
+    utilization hv_memory="2000" meta priority="1" \
+    params xmfile="/etc/xen/shared-vm/vm2"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive xenC Xen \
+    utilization hv_memory="2000" meta priority="1" \
+    params xmfile="/etc/xen/shared-vm/vm3"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive xenD Xen \
+    utilization hv_memory="1000" meta priority="5" \
+    params xmfile="/etc/xen/shared-vm/vm4"</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">property placement-strategy="minimal"</code></pre></div><p>
+    With all three nodes up, xenA will be placed onto a node first, followed
+    by xenD. xenB and xenC would either be allocated together or one of them
+    with xenD.
+   </p><p>
+    If one node failed, too little total memory would be available to host
+    them all. xenA would be ensured to be allocated, as would xenD. However,
+    only one of xenB or xenC could still be placed, and since their priority
+    is equal, the result is not defined yet. To resolve this ambiguity as
+    well, you would need to set a higher priority for either one.
+   </p></section></section><section class="sect1" id="sec-conf-hawk2-cons-more" data-id-title="For more information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.11 </span><span class="title-name">For more information</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-more">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    For more information on configuring constraints and detailed background
+    information about the basic concepts of ordering and colocation, refer to
+    the documentations at <a class="link" href="http://www.clusterlabs.org/pacemaker/doc/" target="_blank">http://www.clusterlabs.org/pacemaker/doc/</a>:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+       <em class="citetitle">Pacemaker Explained</em>, chapter <em class="citetitle">Resource Constraints</em>
+     </p></li><li class="listitem"><p>
+      <em class="citetitle">Colocation Explained</em>
+     </p></li><li class="listitem"><p>
+      <em class="citetitle">Ordering Explained</em>
+     </p></li></ul></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="sec-ha-config-basics-resources.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 6 </span>Configuring cluster resources</span></a> </div><div><a class="pagination-link next" href="cha-ha-manage-resources.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 8 </span>Managing cluster resources</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-types"><span class="title-number">7.1 </span><span class="title-name">Types of constraints</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-scores"><span class="title-number">7.2 </span><span class="title-name">Scores and infinity</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-templates"><span class="title-number">7.3 </span><span class="title-name">Resource templates and constraints</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-location-constraints"><span class="title-number">7.4 </span><span class="title-name">Adding location constraints</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-colocation-constraints"><span class="title-number">7.5 </span><span class="title-name">Adding colocation constraints</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-order-constraints"><span class="title-number">7.6 </span><span class="title-name">Adding order constraints</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-rscset"><span class="title-number">7.7 </span><span class="title-name">Using resource sets to define constraints</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-failover"><span class="title-number">7.8 </span><span class="title-name">Specifying resource failover nodes</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-failback"><span class="title-number">7.9 </span><span class="title-name">Specifying resource failback nodes (resource stickiness)</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-utilization"><span class="title-number">7.10 </span><span class="title-name">Placing resources based on their load impact</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-more"><span class="title-number">7.11 </span><span class="title-name">For more information</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><title>SLEHA 15 | Administration Guide | Troubleshooting</title><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<meta name="title" content="Troubleshooting | SLEHA 15"/>
+<meta name="description" content="Strange problems may occur that are not easy to understand, especially when starting to experiment with High Availability. However, there are several…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability Extension"/>
+<meta name="product-number" content="15"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Appendix A. Troubleshooting"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15"/>
+<meta property="og:title" content="Troubleshooting | SLEHA 15"/>
+<meta property="og:description" content="Strange problems may occur that are not easy to understand, especially when starting to experiment with High Availability. However, there are several…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Troubleshooting | SLEHA 15"/>
+<meta name="twitter:description" content="Strange problems may occur that are not easy to understand, especially when starting to experiment with High Availability. However, there are several…"/>
+<link rel="prev" href="part-appendix.html" title="Part V. Appendix"/><link rel="next" href="app-naming.html" title="Appendix B. Naming Conventions"/>
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-appendix.html">Appendix</a><span> / </span><a class="crumb" href="app-ha-troubleshooting.html">Troubleshooting</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title"><em class="citetitle">Administration Guide</em></div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">About This Guide</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and Setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product Overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System Requirements and Recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing the High Availability Extension</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST Cluster Module</span></a></li></ol></li><li><a href="part-config.html" class="has-children "><span class="title-number">II </span><span class="title-name">Configuration and Administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and Administration Basics</span></a></li><li><a href="cha-conf-hawk2.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring and Managing Cluster Resources with Hawk2</span></a></li><li><a href="cha-ha-manual-config.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring and Managing Cluster Resources (Command Line)</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing Services on Remote Hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">9 </span><span class="title-name">Adding or Modifying Resource Agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">10 </span><span class="title-name">Monitoring Clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">11 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">12 </span><span class="title-name">Storage Protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">13 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">14 </span><span class="title-name">Access Control Lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">15 </span><span class="title-name">Network Device Bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">16 </span><span class="title-name">Load Balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">17 </span><span class="title-name">Geo Clusters (Multi-Site Clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and Data Replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">18 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">19 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">20 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">21 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">22 </span><span class="title-name">Cluster Logical Volume Manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">23 </span><span class="title-name">Cluster Multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">24 </span><span class="title-name">Samba Clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">25 </span><span class="title-name">Disaster Recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and Upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">26 </span><span class="title-name">Executing Maintenance Tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">27 </span><span class="title-name">Upgrading Your Cluster and Updating Software Packages</span></a></li></ol></li><li class="active"><a href="part-appendix.html" class="has-children you-are-here"><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" you-are-here"><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming Conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster Management Tools (Command Line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running Cluster Reports Without <code class="systemitem">root</code> Access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU Licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="appendix" id="app-ha-troubleshooting" data-id-title="Troubleshooting"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability Extension</span> <span class="productnumber">15</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">A </span><span class="title-name">Troubleshooting</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    Strange problems may occur that are not easy to understand, especially
+    when starting to experiment with High Availability. However, there are several
+    utilities that allow you to take a closer look at the High Availability internal
+    processes. This chapter recommends various solutions.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-troubleshooting-install" data-id-title="Installation and First Steps"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.1 </span><span class="title-name">Installation and First Steps</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-install">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Troubleshooting difficulties when installing the packages or bringing the
+   cluster online.
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.7.2.3.3.1"><span class="term">Are the HA packages installed?</span></dt><dd><p>
+      The packages needed for configuring and managing a cluster are
+      included in the <code class="literal">High Availability</code> installation
+      pattern, available with the High Availability Extension.
+     </p><p>
+      Check if High Availability Extension is installed as an extension to SUSE Linux Enterprise Server
+      15 on each of the cluster nodes and if the
+      <span class="guimenu">High Availability</span> pattern is installed on each of
+      the machines as described in the <em class="citetitle">Installation and Setup Quick Start</em>.
+     </p></dd><dt id="id-1.4.7.2.3.3.2"><span class="term">Is the initial configuration the same for all cluster nodes?</span></dt><dd><p>
+      To communicate with each other, all nodes belonging to the same
+      cluster need to use the same <code class="literal">bindnetaddr</code>,
+      <code class="literal">mcastaddr</code> and <code class="literal">mcastport</code> as
+      described in <a class="xref" href="cha-ha-ycluster.html" title="Chapter 4. Using the YaST Cluster Module">Chapter 4, <em>Using the YaST Cluster Module</em></a>.
+     </p><p>
+      Check if the communication channels and options configured in
+      <code class="filename">/etc/corosync/corosync.conf</code> are the same for all
+      cluster nodes.
+     </p><p>
+      In case you use encrypted communication, check if the
+      <code class="filename">/etc/corosync/authkey</code> file is available on all
+      cluster nodes.
+     </p><p>
+      All <code class="filename">corosync.conf</code> settings except for
+      <code class="literal">nodeid</code> must be the same;
+      <code class="filename">authkey</code> files on all nodes must be identical.
+     </p></dd><dt id="id-1.4.7.2.3.3.3"><span class="term">Does the firewall allow communication via the
+            <code class="literal">mcastport</code>?</span></dt><dd><p>
+      If the mcastport used for communication between the cluster nodes is
+      blocked by the firewall, the nodes cannot see each other. When
+      doing the initial setup with YaST or the bootstrap scripts
+      (as described in <a class="xref" href="cha-ha-ycluster.html" title="Chapter 4. Using the YaST Cluster Module">Chapter 4, <em>Using the YaST Cluster Module</em></a> or
+      the <span class="intraxref">Article “<em class="citetitle">Installation and Setup Quick Start</em>”</span>, respectively), the firewall
+      settings are usually automatically adjusted.
+     </p><p>
+      To make sure the mcastport is not blocked by the firewall, check the
+      firewall settings on each  node.
+     </p></dd><dt id="id-1.4.7.2.3.3.4"><span class="term">Are Pacemaker and Corosync started on each cluster node?</span></dt><dd><p>
+      Usually, starting Pacemaker also starts the Corosync service. To
+      check if both services are running:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> status pacemaker corosync</pre></div><p>
+      In case they are not running, start them by executing the following
+      command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> start pacemaker</pre></div></dd></dl></div></section><section class="sect1" id="sec-ha-troubleshooting-log" data-id-title="Logging"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.2 </span><span class="title-name">Logging</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-log">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.7.2.4.2.1"><span class="term">Where to find the log files? </span></dt><dd><p>
+      Pacemaker writes its log files into the <code class="filename">/var/log/pacemaker</code>
+      directory. The main Pacemaker log file is
+      <code class="filename">/var/log/pacemaker/pacemaker.log</code>. In case you cannot
+      find the log files, check the
+      logging settings in <code class="filename">/etc/sysconfig/pacemaker</code>,
+      Pacemaker's own configuration file. If <code class="literal">PCMK_logfile</code> is
+      configured there, Pacemaker will
+      use the path that is defined by this parameter.
+     </p><p>
+      If you need a cluster-wide report showing all relevant log files, see
+      <a class="xref" href="app-ha-troubleshooting.html#vle-ha-crmreport">How can I create a report with an analysis of all my cluster nodes?</a> for more information.
+     </p></dd><dt id="id-1.4.7.2.4.2.2"><span class="term">I enabled monitoring but there is no trace of monitoring operations in
+          the log files?</span></dt><dd><p>
+      The <code class="systemitem">lrmd</code> daemon does not log
+      recurring monitor operations unless an error occurred. Logging all
+      recurring operations would produce too much noise. Therefore recurring
+      monitor operations are logged only once an hour.
+     </p></dd><dt id="id-1.4.7.2.4.2.3"><span class="term">I only get a <code class="literal">failed</code> message. Is it possible to get more
+          information?</span></dt><dd><p>
+      Add the <code class="literal">--verbose</code> parameter to your commands. If
+      you do that multiple times, the debug output becomes quite verbose.
+      See the logging data (<code class="command">sudo journalctl -n</code>) for
+      useful hints.
+     </p></dd><dt id="id-1.4.7.2.4.2.4"><span class="term">How can I get an overview of all my nodes and resources?</span></dt><dd><p>
+      Use the <code class="command">crm_mon</code> command. The following displays the
+      resource operation history (option <code class="option">-o</code>) and inactive
+      resources (<code class="option">-r</code>):
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm_mon</code> -o -r</pre></div><p>
+      The display is refreshed when the status changes (to cancel this press
+      <span class="keycap">Ctrl</span><span class="key-connector">–</span><span class="keycap">C</span>). An example may look like:
+     </p><div class="example" id="id-1.4.7.2.4.2.4.2.4" data-id-title="Stopped Resources"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example A.1: </span><span class="title-name">Stopped Resources </span></span><a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#id-1.4.7.2.4.2.4.2.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">Last updated: Fri Aug 15 10:42:08 2014
+Last change: Fri Aug 15 10:32:19 2014
+ Stack: corosync
+Current DC: bob (175704619) - partition with quorum
+Version: 1.1.12-ad083a8
+2 Nodes configured
+3 Resources configured
+       
+Online: [ alice bob ]
+       
+Full list of resources:
+       
+my_ipaddress    (ocf:heartbeat:Dummy): Started bob
+my_filesystem   (ocf:heartbeat:Dummy): Stopped
+my_webserver    (ocf:heartbeat:Dummy): Stopped
+       
+Operations:
+* Node bob: 
+    my_ipaddress: migration-threshold=3
+      + (14) start: rc=0 (ok)
+      + (15) monitor: interval=10000ms rc=0 (ok)
+      * Node alice:</pre></div></div></div><p>
+      The  <em class="citetitle">Pacemaker Explained</em> PDF, available at <a class="link" href="http://www.clusterlabs.org/pacemaker/doc/" target="_blank">http://www.clusterlabs.org/pacemaker/doc/</a>, covers three
+      different recovery types in the <em class="citetitle">How are OCF Return Codes
+      Interpreted?</em> section.
+     </p></dd><dt id="id-1.4.7.2.4.2.5"><span class="term">How to view logs?</span></dt><dd><p>For a more detailed view of what is happening in your
+            cluster, use the following command:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> history log [<em class="replaceable">NODE</em>]</pre></div><p>Replace <em class="replaceable">NODE</em> with the node you
+            want to examine, or leave it empty. See <a class="xref" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-history" title="A.5. History">Section A.5, “History”</a> for further
+            information.</p></dd></dl></div></section><section class="sect1" id="sec-ha-troubleshooting-resource" data-id-title="Resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.3 </span><span class="title-name">Resources</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-resource">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.7.2.5.2.1"><span class="term">How can I clean up my resources?</span></dt><dd><p>
+      Use the following commands:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource list
+crm resource cleanup <em class="replaceable">rscid</em> [<em class="replaceable">node</em>]</pre></div><p>
+      If you leave out the node, the resource is cleaned on all nodes. More
+      information can be found in
+      <a class="xref" href="cha-ha-manual-config.html#sec-ha-manual-config-cleanup" title="7.4.4. Cleaning Up Resources">Section 7.4.4, “Cleaning Up Resources”</a>.
+     </p></dd><dt id="id-1.4.7.2.5.2.2"><span class="term">How can I list my currently known resources?</span></dt><dd><p>
+      Use the command <code class="command">crm resource list</code> to display your
+      current resources.
+     </p></dd><dt id="id-1.4.7.2.5.2.3"><span class="term">I configured a resource, but it always fails. Why?</span></dt><dd><p>
+      To check an OCF script use <code class="command">ocf-tester</code>, for
+      instance:
+     </p><div class="verbatim-wrap"><pre class="screen">ocf-tester -n ip1 -o ip=<em class="replaceable">YOUR_IP_ADDRESS</em> \
+  /usr/lib/ocf/resource.d/heartbeat/IPaddr</pre></div><p>
+      Use <code class="option">-o</code> multiple times for more parameters. The list
+      of required and optional parameters can be obtained by running
+      <code class="command">crm</code> <code class="option">ra</code> <code class="option">info</code>
+      <em class="replaceable">AGENT</em>, for example:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> ra info ocf:heartbeat:IPaddr</pre></div><p>
+      Before running ocf-tester, make sure the resource is not managed by
+      the cluster.
+     </p></dd><dt id="id-1.4.7.2.5.2.4"><span class="term">Why do resources not fail over and why are there no errors?</span></dt><dd><p>
+      The terminated node might be considered unclean.
+      Then it is necessary to fence it. If the STONITH resource is not
+      operational or does not exist, the remaining node will waiting for the
+      fencing to happen. The fencing timeouts are typically high, so it may
+      take quite a while to see any obvious sign of problems (if ever).
+     </p><p>
+      Yet another possible explanation is that a resource is simply not
+      allowed to run on this node. That may be because of a failure which
+      happened in the past and which was not <span class="quote">“<span class="quote">cleaned</span>”</span>. Or it
+      may be because of an earlier administrative action, that is a location
+      constraint with a negative score. Such a location constraint is
+      inserted by the <code class="command">crm resource move</code> command,
+      for example.
+     </p></dd><dt id="id-1.4.7.2.5.2.5"><span class="term">Why can I never tell where my resource will run?</span></dt><dd><p>
+      If there are no location constraints for a resource, its placement is
+      subject to an (almost) random node choice. You are well advised to
+      always express a preferred node for resources. That does not mean that
+      you need to specify location preferences for <span class="emphasis"><em>all</em></span>
+      resources. One preference suffices for a set of related (colocated)
+      resources. A node preference looks like this:
+     </p><div class="verbatim-wrap"><pre class="screen">location rsc-prefers-alice rsc 100: alice</pre></div></dd></dl></div></section><section class="sect1" id="sec-ha-troubleshooting-stonith" data-id-title="STONITH and Fencing"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.4 </span><span class="title-name">STONITH and Fencing</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-stonith">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.7.2.6.2.1"><span class="term">Why does my STONITH resource not start?</span></dt><dd><p>
+      Start (or enable) operation includes checking the status of the
+      device. If the device is not ready, the STONITH resource will
+      fail to start.
+     </p><p>
+      At the same time the STONITH plugin will be asked to produce a
+      host list. If this list is empty, there is no point in running a
+      STONITH resource which cannot shoot anything. The name of the
+      host on which STONITH is running is filtered from the list, since
+      the node cannot shoot itself.
+     </p><p>
+      If you want to use single-host management devices such as lights-out
+      devices, make sure that the STONITH resource is
+      <span class="emphasis"><em>not</em></span> allowed to run on the node which it is
+      supposed to fence. Use an infinitely negative location node preference
+      (constraint). The cluster will move the STONITH resource to
+      another place where it can start, but not before informing you.
+     </p></dd><dt id="id-1.4.7.2.6.2.2"><span class="term">Why does fencing not happen, although I have the STONITH resource?</span></dt><dd><p>
+      Each STONITH resource must provide a host list. This list may be
+      inserted by hand in the STONITH resource configuration or
+      retrieved from the device itself from outlet names, for example. That
+      depends on the nature of the STONITH plugin.
+      <code class="systemitem">stonithd</code> uses the list to find out which
+      STONITH resource can fence the target node. Only if the node
+      appears in the list can the STONITH resource shoot (fence) the
+      node.
+     </p><p>
+      If <code class="systemitem">stonithd</code> does not find the node in any of
+      the host lists provided by running STONITH resources, it will ask
+      <code class="systemitem">stonithd</code> instances on other nodes. If the
+      target node does not show up in the host lists of other
+      <code class="systemitem">stonithd</code> instances, the fencing request ends
+      in a timeout at the originating node.
+     </p></dd><dt id="id-1.4.7.2.6.2.3"><span class="term">Why does my STONITH resource fail occasionally?</span></dt><dd><p>
+      Power management devices may give up if there is too much broadcast
+      traffic. Space out the monitor operations. Given that fencing is
+      necessary only once in a while (and hopefully never), checking the
+      device status once a few hours is more than enough.
+     </p><p>
+      Also, some of these devices may refuse to talk to more than one party
+      at the same time. This may be a problem if you keep a terminal or
+      browser session open while the cluster tries to test the status.
+     </p></dd></dl></div></section><section class="sect1" id="sec-ha-troubleshooting-history" data-id-title="History"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.5 </span><span class="title-name">History</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-history">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.7.2.7.2.1"><span class="term">How to retrieve status information or a log from a failed resource?</span></dt><dd><p>Use the <code class="command">history</code> command and its subcommand
+         <code class="command">resource</code>:
+         </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> history resource <em class="replaceable">NAME1</em></pre></div><p>This gives you a full transition log for the given resource only.
+          However, it is possible to investigate more than one resource. Append
+          the resource names after the first.
+         </p><p>If you followed some naming conventions (see <a class="xref" href="app-naming.html" title="Appendix B. Naming Conventions">Appendix B, <em>Naming Conventions</em></a>), the
+         <code class="command">resource</code> command makes it easier to investigate
+          a group of resources. For example, this command investigates all
+          primitives starting with <code class="literal">db</code>:
+         </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> history resource db*</pre></div><p>View the log file in
+           <code class="filename">/var/cache/crm/history/live/alice/ha-log.txt</code>.</p></dd><dt id="id-1.4.7.2.7.2.2"><span class="term">How can I reduce the history output?</span></dt><dd><p>There are two options for the <code class="command">history</code> command:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Use <code class="command">exclude</code></p></li><li class="listitem"><p>Use <code class="command">timeframe</code></p></li></ul></div><p>The <code class="command">exclude</code> command let you set an
+            additive regular expression that excludes certain patterns
+            from the log. For example, the following command excludes
+            all SSH, <code class="systemitem">systemd</code>, and kernel messages: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> history exclude ssh|systemd|kernel.</pre></div><p>With the <code class="command">timeframe</code> command you limit
+            the output to a certain range. For example, the following
+            command shows all the events on August 23rd from 12:00 to
+            12:30:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> history timeframe "Aug 23 12:00" "Aug 23 12:30"</pre></div></dd><dt id="id-1.4.7.2.7.2.3"><span class="term">How can I store a <span class="quote">“<span class="quote">session</span>”</span> for later inspection?</span></dt><dd><p>When you encounter a bug or an event that needs further
+            examination, it is useful to store all the current settings.
+            This file can be sent to support or viewed with
+              <code class="command">bzless</code>. For example:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">timeframe</code> "Oct 13 15:00" "Oct 13 16:00"
+<code class="prompt custom">crm(live)history# </code><code class="command">session</code> save tux-test
+<code class="prompt custom">crm(live)history# </code><code class="command">session</code> pack
+Report saved in '/root/tux-test.tar.bz2'</pre></div></dd></dl></div></section><section class="sect1" id="sec-ha-troubleshooting-hawk2" data-id-title="Hawk2"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.6 </span><span class="title-name">Hawk2</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-hawk2">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="vle-trouble-hawk2-cert"><span class="term">Replacing the Self-Signed Certificate</span></dt><dd><p> To avoid the warning about the self-signed certificate on first
+      Hawk2 start-up, replace the automatically created certificate with
+      your own certificate (or a certificate that was signed by an official
+      Certificate Authority, CA):</p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>Replace <code class="filename">/etc/hawk/hawk.key</code> with the private
+        key.</p></li><li class="step"><p>Replace <code class="filename">/etc/hawk/hawk.pem</code> with the
+        certificate that Hawk2 should present.</p></li><li class="step"><p>
+        Restart the Hawk2 services to reload the new certificate:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> restart hawk-backend hawk</pre></div></li></ol></div></div><p>
+      Change ownership of the files to <code class="literal">root:haclient</code>
+      and make the files accessible to the group:</p><div class="verbatim-wrap"><pre class="screen">chown root:haclient /etc/hawk/hawk.key /etc/hawk/hawk.pem
+chmod 640 /etc/hawk/hawk.key /etc/hawk/hawk.pem</pre></div></dd></dl></div></section><section class="sect1" id="sec-ha-troubleshooting-misc" data-id-title="Miscellaneous"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.7 </span><span class="title-name">Miscellaneous</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-misc">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.7.2.9.2.1"><span class="term">How can I run commands on all cluster nodes?</span></dt><dd><p>
+      Use the command <code class="command">crm cluster run</code> for this task. For example:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster run "ls -l /etc/corosync/*.conf"</code>
+INFO: [alice]
+-rw-r--r-- 1 root root 812 Oct 27 15:42 /etc/corosync/corosync.conf
+INFO: [bob]
+-rw-r--r-- 1 root root 812 Oct 27 15:42 /etc/corosync/corosync.conf
+INFO: [charlie]
+-rw-r--r-- 1 root root 812 Oct 27 15:42 /etc/corosync/corosync.conf</pre></div><p>
+      By default, the specified command runs on all nodes in the cluster.
+      Alternatively, you can run the command on a specific node or group of nodes:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster run "ls -l /etc/corosync/*.conf" alice bob</code></pre></div></dd><dt id="id-1.4.7.2.9.2.2"><span class="term">What is the state of my cluster?</span></dt><dd><p>
+      To check the current state of your cluster, use one of the programs
+      <code class="literal">crm_mon</code> or <code class="command">crm</code>
+      <code class="option">status</code>. This displays the current DC and all the
+      nodes and resources known by the current node.
+     </p></dd><dt id="id-1.4.7.2.9.2.3"><span class="term">Why can several nodes of my cluster not see each other?</span></dt><dd><p>
+      There could be several reasons:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        Look first in the configuration file
+        <code class="filename">/etc/corosync/corosync.conf</code>. Check if the
+        multicast or unicast address is the same for every node in the
+        cluster (look in the <code class="literal">interface</code> section with the
+        key <code class="literal">mcastaddr</code>).
+       </p></li><li class="listitem"><p>
+        Check your firewall settings.
+       </p></li><li class="listitem"><p>
+        Check if your switch supports multicast or unicast addresses.
+       </p></li><li class="listitem"><p>
+        Check if the connection between your nodes is broken. Most often,
+        this is the result of a badly configured firewall. This also may be
+        the reason for a <span class="emphasis"><em>split brain</em></span> condition, where
+        the cluster is partitioned.
+       </p></li></ul></div></dd><dt id="id-1.4.7.2.9.2.4"><span class="term">Why can an OCFS2 device not be mounted?</span></dt><dd><p>
+      Check the log messages (<code class="command">sudo journalctl -n</code>) for the
+      following line:
+     </p><div class="verbatim-wrap"><pre class="screen">Jan 12 09:58:55 alice lrmd: [3487]: info: RA output: [...] 
+  ERROR: Could not load ocfs2_stackglue
+Jan 12 16:04:22 alice modprobe: FATAL: Module ocfs2_stackglue not found.</pre></div><p>
+      In this case the Kernel module <code class="filename">ocfs2_stackglue.ko</code>
+      is missing. Install the package
+      <code class="filename">ocfs2-kmp-default</code>,
+      <code class="filename">ocfs2-kmp-pae</code> or
+      <code class="filename">ocfs2-kmp-xen</code>, depending on the installed Kernel.
+     </p></dd><dt id="vle-ha-crmreport"><span class="term">How can I create a report with an analysis of all my cluster nodes?</span></dt><dd><p> On the crm shell, use <code class="command">crm report</code> to
+            create a report. This tool compiles: </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        Cluster-wide log files,
+       </p></li><li class="listitem"><p>
+        Package states,
+       </p></li><li class="listitem"><p>
+        DLM/OCFS2 states,
+       </p></li><li class="listitem"><p>
+        System information,
+       </p></li><li class="listitem"><p>
+        CIB history,
+       </p></li><li class="listitem"><p>
+        Parsing of core dump reports, if a debuginfo package is installed.
+       </p></li></ul></div><p>
+      Usually run <code class="command">crm report</code> with the following command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm report</code> -f 0:00 -n alice -n bob</pre></div><p>
+      The command extracts all information since 0am on the hosts alice
+      and bob and creates a <code class="literal">*.tar.bz2</code> archive named
+      <code class="filename">crm_report-<em class="replaceable">DATE</em>.tar.bz2</code>
+      in the current directory, for example,
+      <code class="filename">crm_report-Wed-03-Mar-2012</code>. If you are only
+      interested in a specific time frame, add the end time with the
+      <code class="option">-t</code> option.
+     </p><div id="id-1.4.7.2.9.2.5.2.6" data-id-title="Remove Sensitive Information" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Remove Sensitive Information</div><p>
+       The <code class="command">crm report</code> tool tries to remove any sensitive
+       information from the CIB and the PE input files, however, it cannot know
+       everything. If you have more sensitive information, supply additional
+       patterns with the <code class="option">-p</code> option (see man page).
+       The log files and the <code class="command">crm_mon</code>,
+       <code class="command">ccm_tool</code>, and <code class="command">crm_verify</code> output
+       are <span class="emphasis"><em>not</em></span> sanitized.
+      </p><p>
+       Before sharing your data in any way, check the archive and remove all
+       information you do not want to expose.
+      </p></div><p>
+      Customize the command execution with further options. For example, if
+      you have a Pacemaker cluster, you certainly want to add the option
+      <code class="option">-A</code>. In case you have another user who has permissions
+      to the cluster, use the <code class="option">-u</code> option and specify this
+      user (in addition to <code class="systemitem">root</code> and
+      <code class="systemitem">hacluster</code>). In case you have
+      a non-standard SSH port, use the <code class="option">-X</code> option to add the
+      port (for example, with the port 3479, use <code class="literal">-X "-p
+      3479"</code>). Further options can be found in the man page of
+      <code class="command">crm report</code>.
+     </p><p>
+      After <code class="command">crm report</code> has analyzed all the relevant log
+      files and created the directory (or archive), check the log files for
+      an uppercase <code class="literal">ERROR</code> string. The most important files
+      in the top level directory of the report are:
+     </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.7.2.9.2.5.2.9.1"><span class="term"><code class="filename">analysis.txt</code>
+       </span></dt><dd><p>
+         Compares files that should be identical on all nodes.
+        </p></dd><dt id="id-1.4.7.2.9.2.5.2.9.2"><span class="term"><code class="filename">corosync.txt</code>
+         </span></dt><dd><p>
+             Contains a copy of the Corosync configuration file.
+           </p></dd><dt id="id-1.4.7.2.9.2.5.2.9.3"><span class="term"><code class="filename">crm_mon.txt</code>
+       </span></dt><dd><p>
+         Contains the output of the <code class="command">crm_mon</code> command.
+        </p></dd><dt id="id-1.4.7.2.9.2.5.2.9.4"><span class="term"><code class="filename">description.txt</code>
+       </span></dt><dd><p>
+         Contains all cluster package versions on your nodes. There is also
+         the <code class="filename">sysinfo.txt</code> file which is node specific.
+         It is linked to the top directory.
+        </p><p>This file can be used as a template to describe the issue
+        you encountered and post it to <a class="link" href="https://github.com/ClusterLabs/crmsh/issues" target="_blank">https://github.com/ClusterLabs/crmsh/issues</a>.</p></dd><dt id="id-1.4.7.2.9.2.5.2.9.5"><span class="term"><code class="filename">members.txt</code></span></dt><dd><p>A list of all nodes</p></dd><dt id="id-1.4.7.2.9.2.5.2.9.6"><span class="term"><code class="filename">sysinfo.txt</code></span></dt><dd><p>Contains a list of all relevant package names and their
+            versions. Additionally, there is also a list of configuration
+            files which are different from the original RPM package.</p></dd></dl></div><p>
+      Node-specific files are stored in a subdirectory named by the node's
+      name. It contains a copy of the directory <code class="filename">/etc</code>
+      of the respective node.
+     </p><p>
+      In case you need to simplify the arguments, set your default values
+      in the configuration file <code class="filename">/etc/crm/crm.conf</code>,
+      section <code class="literal">report</code>. Further information is
+      written in the man page <code class="command">man 8 crmsh_hb_report</code>.
+     </p></dd></dl></div></section><section class="sect1" id="sec-ha-troubleshooting-moreinfo" data-id-title="For More Information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">A.8 </span><span class="title-name">For More Information</span></span> <a title="Permalink" class="permalink" href="app-ha-troubleshooting.html#sec-ha-troubleshooting-moreinfo">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_troubleshooting.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   For additional information about high availability on Linux, including
+   configuring cluster resources and managing and customizing a High Availability
+   cluster, see
+   <a class="link" href="http://clusterlabs.org/wiki/Documentation" target="_blank">http://clusterlabs.org/wiki/Documentation</a>.
+  </p></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="part-appendix.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Part V </span>Appendix</span></a> </div><div><a class="pagination-link next" href="app-naming.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Appendix B </span>Naming Conventions</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-install"><span class="title-number">A.1 </span><span class="title-name">Installation and First Steps</span></a></span></li><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-log"><span class="title-number">A.2 </span><span class="title-name">Logging</span></a></span></li><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-resource"><span class="title-number">A.3 </span><span class="title-name">Resources</span></a></span></li><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-stonith"><span class="title-number">A.4 </span><span class="title-name">STONITH and Fencing</span></a></span></li><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-history"><span class="title-number">A.5 </span><span class="title-name">History</span></a></span></li><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-hawk2"><span class="title-number">A.6 </span><span class="title-name">Hawk2</span></a></span></li><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-misc"><span class="title-number">A.7 </span><span class="title-name">Miscellaneous</span></a></span></li><li><span class="sect1"><a href="app-ha-troubleshooting.html#sec-ha-troubleshooting-moreinfo"><span class="title-number">A.8 </span><span class="title-name">For More Information</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2023</span></div></div></footer></body></html>

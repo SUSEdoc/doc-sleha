@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><title>SLEHA 15 | Administration Guide | Access Control Lists</title><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<meta name="title" content="Access Control Lists | SLEHA 15"/>
+<meta name="description" content="The cluster administration tools like crm shell (crmsh) or Hawk2 can be used by root or any user in the group haclient. By default, these users have …"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability Extension"/>
+<meta name="product-number" content="15"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 14. Access Control Lists"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15"/>
+<meta property="og:title" content="Access Control Lists | SLEHA 15"/>
+<meta property="og:description" content="The cluster administration tools like crm shell (crmsh) or Hawk2 can be used by root or any user in the group haclient. By default, these users have …"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Access Control Lists | SLEHA 15"/>
+<meta name="twitter:description" content="The cluster administration tools like crm shell (crmsh) or Hawk2 can be used by root or any user in the group haclient. By default, these users have …"/>
+<link rel="prev" href="cha-ha-qdevice.html" title="Chapter 13. QDevice and QNetd"/><link rel="next" href="cha-ha-netbonding.html" title="Chapter 15. Network Device Bonding"/>
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and Administration</a><span> / </span><a class="crumb" href="cha-ha-acl.html">Access Control Lists</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title"><em class="citetitle">Administration Guide</em></div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">About This Guide</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and Setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product Overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System Requirements and Recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing the High Availability Extension</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST Cluster Module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and Administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and Administration Basics</span></a></li><li><a href="cha-conf-hawk2.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring and Managing Cluster Resources with Hawk2</span></a></li><li><a href="cha-ha-manual-config.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring and Managing Cluster Resources (Command Line)</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing Services on Remote Hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">9 </span><span class="title-name">Adding or Modifying Resource Agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">10 </span><span class="title-name">Monitoring Clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">11 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">12 </span><span class="title-name">Storage Protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">13 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" you-are-here"><span class="title-number">14 </span><span class="title-name">Access Control Lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">15 </span><span class="title-name">Network Device Bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">16 </span><span class="title-name">Load Balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">17 </span><span class="title-name">Geo Clusters (Multi-Site Clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and Data Replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">18 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">19 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">20 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">21 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">22 </span><span class="title-name">Cluster Logical Volume Manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">23 </span><span class="title-name">Cluster Multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">24 </span><span class="title-name">Samba Clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">25 </span><span class="title-name">Disaster Recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and Upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">26 </span><span class="title-name">Executing Maintenance Tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">27 </span><span class="title-name">Upgrading Your Cluster and Updating Software Packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming Conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster Management Tools (Command Line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running Cluster Reports Without <code class="systemitem">root</code> Access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU Licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-acl" data-id-title="Access Control Lists"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability Extension</span> <span class="productnumber">15</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">14 </span><span class="title-name">Access Control Lists</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    The cluster administration tools like crm shell (crmsh) or
+    Hawk2 can be used by <code class="systemitem">root</code> or any user in the group
+    <code class="systemitem">haclient</code>. By default, these
+    users have full read/write access. To limit access or assign more
+    fine-grained access rights, you can use <span class="emphasis"><em>Access control
+    lists</em></span> (ACLs).
+   </p><p>
+    Access control lists consist of an ordered set of access rules. Each
+    rule allows read or write access or denies access to a part of the
+    cluster configuration. Rules are typically combined to produce a
+    specific role, then users may be assigned to a role that matches their
+    tasks.
+   </p></div></div></div></div><div id="id-1.4.4.12.4" data-id-title="CIB Syntax Validation Version and ACL Differences" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: CIB Syntax Validation Version and ACL Differences</div><p>
+   This ACL documentation only applies if your CIB is validated with the CIB
+   syntax version <code class="literal">pacemaker-2.0</code> or higher. For details on
+   how to check this and upgrade the CIB version, see
+   <a class="xref" href="cha-ha-migration.html#note-ha-cib-upgrade" title="Note: Upgrading the CIB Syntax Version">Note: Upgrading the CIB Syntax Version</a>.
+  </p></div><section class="sect1" id="sec-ha-acl-require" data-id-title="Requirements and Prerequisites"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.1 </span><span class="title-name">Requirements and Prerequisites</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-require">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Before you start using ACLs on your cluster, make sure the following
+   conditions are fulfilled:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     Ensure you have the same users on all nodes in your cluster, either by
+     using NIS, Active Directory, or by manually adding the same users to
+     all nodes.
+    </p></li><li class="listitem"><p>
+     All users for whom you want to modify access rights with ACLs must
+     belong to the <code class="systemitem">haclient</code>
+     group.
+    </p></li><li class="listitem"><p>
+     All users need to run crmsh by its absolute path
+     <code class="filename">/usr/sbin/crm</code>.
+    </p></li><li class="listitem"><p>
+     If non-privileged users want to run crmsh, their
+     <code class="envar">PATH</code> variable needs to be extended with
+     <code class="filename">/usr/sbin</code>.
+    </p></li></ul></div><div id="id-1.4.4.12.5.4" data-id-title="Default Access Rights" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Default Access Rights</div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      ACLs are an optional feature. By default, use of ACLs is disabled.
+     </p></li><li class="listitem"><p>
+      If ACLs are not enabled, <code class="systemitem">root</code> and all users belonging to the
+      <code class="systemitem">haclient</code> group have full
+      read/write access to the cluster configuration.
+     </p></li><li class="listitem"><p>
+      Even if ACLs are enabled and configured, both <code class="systemitem">root</code> and the
+      default CRM owner <code class="systemitem">hacluster</code>
+      <span class="emphasis"><em>always</em></span> have full access to the cluster
+      configuration.
+     </p></li></ul></div></div></section><section class="sect1" id="sec-ha-acl-basics" data-id-title="Conceptual Overview"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.2 </span><span class="title-name">Conceptual Overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-basics">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Access control lists consist of an ordered set of access rules. Each rule
+   allows read or write access or denies access to a part of the cluster
+   configuration. Rules are typically combined to produce a specific role,
+   then users may be assigned to a role that matches their tasks. An ACL
+   role is a set of rules which describe access rights to CIB. A rule
+   consists of the following:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     an access right like <code class="literal">read</code>, <code class="literal">write</code>,
+     or <code class="literal">deny</code>
+    </p></li><li class="listitem"><p>
+     a specification where to apply the rule. This specification can be a
+     type, an ID reference, or an XPath expression.
+     XPath is a language for selecting nodes in an XML document. Refer to
+     <a class="link" href="http://en.wikipedia.org/wiki/XPath" target="_blank">http://en.wikipedia.org/wiki/XPath</a>.
+    </p></li></ul></div><p>
+   Usually, it is convenient to bundle ACLs into roles and assign a specific
+   role to system users (ACL targets). There are these methods to create ACL
+   roles:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     <a class="xref" href="cha-ha-acl.html#sec-ha-acl-config-xpath" title="14.7. Setting ACL Rules via XPath Expressions">Section 14.7, “Setting ACL Rules via XPath Expressions”</a>. You need to know the
+     structure of the underlying XML to create ACL rules.
+    </p></li><li class="listitem"><p>
+     <a class="xref" href="cha-ha-acl.html#sec-ha-acl-config-tag" title="14.8. Setting ACL Rules via Abbreviations">Section 14.8, “Setting ACL Rules via Abbreviations”</a>. Create a shorthand syntax and
+     ACL rules to apply to the matched objects.
+    </p></li></ul></div></section><section class="sect1" id="sec-ha-acl-enable" data-id-title="Enabling Use of ACLs in Your Cluster"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.3 </span><span class="title-name">Enabling Use of ACLs in Your Cluster</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-enable">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Before you can start configuring ACLs, you need to
+   <span class="emphasis"><em>enable</em></span> use of ACLs. To do so, use the following
+   command in the crmsh:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure property enable-acl=true</pre></div><p>
+   Alternatively, use Hawk2 as described in
+   <a class="xref" href="cha-ha-acl.html#pro-ha-acl-enable-hawk2" title="Enabling Use of ACLs with Hawk2">Procedure 14.1, “Enabling Use of ACLs with Hawk2”</a>.
+  </p><div class="procedure" id="pro-ha-acl-enable-hawk2" data-id-title="Enabling Use of ACLs with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 14.1: </span><span class="title-name">Enabling Use of ACLs with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-acl.html#pro-ha-acl-enable-hawk2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     In the left navigation bar, select <span class="guimenu">Cluster Configuration</span>
+     to display the global cluster options and their current values.
+    </p></li><li class="step"><p>
+     Below <span class="guimenu">Cluster Configuration</span> click the empty drop-down box
+     and select <span class="guimenu">enable-acl</span> to add the parameter. It is added
+     with its default value <code class="literal">No</code>.
+    </p></li><li class="step"><p>
+     Set its value to <code class="literal">Yes</code> and apply your changes.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-acl-create-ro-monitor-role" data-id-title="Creating a Read-Only Monitor Role"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.4 </span><span class="title-name">Creating a Read-Only Monitor Role</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-create-ro-monitor-role">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The following subsections describe how to configure read-only access
+   by defining a <code class="systemitem">monitor</code> role either in Hawk2
+   or crm shell.
+  </p><section class="sect2" id="sec-ha-acl-config-hawk2" data-id-title="Creating a Read-Only Monitor Role with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">14.4.1 </span><span class="title-name">Creating a Read-Only Monitor Role with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-config-hawk2">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following procedures show how to configure read-only access to the
+    cluster configuration by defining a <code class="systemitem">monitor</code> role and
+    assigning it to a user. Alternatively, you can use crmsh to do so,
+    as described in <a class="xref" href="cha-ha-acl.html#pro-ha-acl-crm" title="Adding a Monitor Role and Assigning a User with crmsh">Procedure 14.4, “Adding a Monitor Role and Assigning a User with crmsh”</a>.
+   </p><div class="procedure" id="pro-ha-acl-hawk2-role" data-id-title="Adding a Monitor Role with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 14.2: </span><span class="title-name">Adding a Monitor Role with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-acl.html#pro-ha-acl-hawk2-role">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2: </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      In the left navigation bar, select <span class="guimenu">Roles</span>.
+     </p></li><li class="step"><p>
+      Click <span class="guimenu">Create</span>.
+     </p></li><li class="step"><p>
+      Enter a unique <span class="guimenu">Role ID</span>, for example,
+      <code class="literal">monitor</code>.
+     </p></li><li class="step"><p>
+      As access <span class="guimenu">Right</span>, select <code class="literal">Read</code>.
+     </p></li><li class="step"><p>
+      As <span class="guimenu">Xpath</span>, enter the XPath expression
+      <code class="literal">/cib</code>.
+     </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-acl-role.png"><img src="images/hawk2-acl-role.png" width="100%" alt="Image" title="Image"/></a></div></div></li><li class="step"><p>
+      Click <span class="guimenu">Create</span>.
+     </p><p>
+      This creates a new role with the name <code class="literal">monitor</code>, sets
+      the <code class="literal">read</code> rights and applies this to all elements in
+      the CIB by using the XPath expression<code class="literal">/cib</code>.
+     </p></li><li class="step"><p>
+      If necessary, add more rules by clicking the plus icon and specifying
+      the respective parameters.
+     </p></li><li class="step"><p>
+      Sort the individual rules by using the arrow up or down buttons.
+     </p></li></ol></div></div><div class="procedure" id="pro-ha-acl-hawk2-target" data-id-title="Assigning a Role to a Target with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 14.3: </span><span class="title-name">Assigning a Role to a Target with Hawk2 </span></span><a title="Permalink" class="permalink" href="cha-ha-acl.html#pro-ha-acl-hawk2-target">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+     To assign the role we created in <a class="xref" href="cha-ha-acl.html#pro-ha-acl-hawk2-role" title="Adding a Monitor Role with Hawk2">Procedure 14.2</a> to a system user (target), proceed as follows:
+    </p><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2: </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      In the left navigation bar, select <span class="guimenu">Targets</span>.
+     </p></li><li class="step"><p>
+      To create a system user (ACL Target), click <span class="guimenu">Create</span> and
+      enter a unique <span class="guimenu">Target ID</span>, for example, <code class="literal">tux</code>.
+      Make sure this user belongs to the <code class="systemitem">haclient</code> group.
+     </p></li><li class="step"><p>
+      To assign a role to the target, select one or multiple <span class="guimenu">Roles</span>.
+     </p><p>
+      In our example, select the <code class="literal">monitor</code> role you created
+      in <a class="xref" href="cha-ha-acl.html#pro-ha-acl-hawk2-role" title="Adding a Monitor Role with Hawk2">Procedure 14.2</a>.
+     </p><div class="informalfigure"><div class="mediaobject"><a href="images/hawk2-acl-user-assign.png"><img src="images/hawk2-acl-user-assign.png" width="80%" alt="Image" title="Image"/></a></div></div></li><li class="step"><p>
+      Confirm your choice.
+     </p></li></ol></div></div><p>
+    To configure access rights for resources or constraints, you can also use
+    the abbreviated syntax as explained in
+    <a class="xref" href="cha-ha-acl.html#sec-ha-acl-config-tag" title="14.8. Setting ACL Rules via Abbreviations">Section 14.8, “Setting ACL Rules via Abbreviations”</a>.
+   </p></section><section class="sect2" id="sec-ha-acl-config-crm" data-id-title="Creating a Read-Only Monitor Role with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">14.4.2 </span><span class="title-name">Creating a Read-Only Monitor Role with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-config-crm">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following procedure shows how to configure a read-only access to the
+    cluster configuration by defining a <code class="literal">monitor</code> role and
+    assigning it to a user.
+   </p><div class="procedure" id="pro-ha-acl-crm" data-id-title="Adding a Monitor Role and Assigning a User with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 14.4: </span><span class="title-name">Adding a Monitor Role and Assigning a User with crmsh </span></span><a title="Permalink" class="permalink" href="cha-ha-acl.html#pro-ha-acl-crm">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Start the interactive mode of crmsh:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure
+<code class="prompt custom">crm(live)configure# </code></pre></div></li><li class="step"><p>
+      Define your ACL role(s):
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Use the <code class="command">role</code> command to define a new role:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">role</code> monitor read xpath:"/cib"</pre></div><p>
+        The previous command creates a new role with the name
+        <code class="literal">monitor</code>, sets the <code class="literal">read</code> rights
+        and applies it to all elements in the CIB by using the XPath
+        expression <code class="literal">/cib</code>. If necessary, you can add more
+        access rights and XPath arguments.
+       </p></li><li class="step"><p>
+        Add additional roles as needed.
+       </p></li></ol></li><li class="step"><p>
+      Assign your roles to one or multiple ACL targets, which are the
+      corresponding system users. Make sure they belong to the
+      <code class="systemitem">haclient</code> group.
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">acl_target</code> tux monitor</pre></div></li><li class="step"><p>
+      Check your changes:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">show</code></pre></div></li><li class="step"><p>
+      Commit your changes:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div><p>
+    To configure access rights for resources or constraints, you can also use
+    the abbreviated syntax as explained in
+    <a class="xref" href="cha-ha-acl.html#sec-ha-acl-config-tag" title="14.8. Setting ACL Rules via Abbreviations">Section 14.8, “Setting ACL Rules via Abbreviations”</a>.
+   </p></section></section><section class="sect1" id="sec-ha-acl-rm-user" data-id-title="Removing a User"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.5 </span><span class="title-name">Removing a User</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-rm-user">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following subsections describe how to remove an existing user from
+    ACL either in Hawk2 or crmsh.
+   </p><section class="sect2" id="sec-ha-acl-rm-user-hawk2" data-id-title="Removing a User with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">14.5.1 </span><span class="title-name">Removing a User with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-rm-user-hawk2">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>To remove a user from ACL, proceed as follows:</p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2: </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       In the left navigation bar, select <span class="guimenu">Targets</span>.
+      </p></li><li class="step"><p>
+       To remove a system user (ACL target), click the garbage bin icon under
+       the <span class="guimenu">Operations</span> column.
+      </p></li><li class="step"><p>
+       Confirm the dialog box.
+      </p></li></ol></div></div></section><section class="sect2" id="sec-ha-acl-rm-user-crmsh" data-id-title="Removing a User with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">14.5.2 </span><span class="title-name">Removing a User with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-rm-user-crmsh">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p> To remove a user from ACL, replace the placeholder
+     <em class="replaceable">USER</em> with the name of the user: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure delete <em class="replaceable">USERNAME</em></pre></div><p>
+     As an alternative, you can use the <code class="command">edit</code> subcommand:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure edit <em class="replaceable">USERNAME</em></pre></div></section></section><section class="sect1" id="sec-ha-acl-rm-role" data-id-title="Removing an Existing Role"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.6 </span><span class="title-name">Removing an Existing Role</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-rm-role">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following subsections describe how to remove an existing role in either Hawk2 or crmsh.
+   </p><div id="id-1.4.4.12.10.3" data-id-title="Deleting Roles with Referenced Users" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Deleting Roles with Referenced Users</div><p>
+     Keep in mind, no user should belong to this role. If there is still a reference to a user in the
+     role, the role cannot be deleted.
+     Delete the references to the users first before you delete the role.
+    </p></div><section class="sect2" id="sec-ha-acl-rm-role-hawk2" data-id-title="Removing an Existing Role with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">14.6.1 </span><span class="title-name">Removing an Existing Role with Hawk2</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-rm-role-hawk2">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>To remove a role, proceed as follows:</p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2: </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       In the left navigation bar, select <span class="guimenu">Roles</span>.
+      </p></li><li class="step"><p>
+       To remove a role, click the garbage bin icon under
+       the <span class="guimenu">Operations</span> column.
+      </p></li><li class="step"><p>
+       Confirm the dialog box. If an error message appears, make sure your
+       role is <span class="quote">“<span class="quote">empty</span>”</span> and does not reference users.
+      </p></li></ol></div></div></section><section class="sect2" id="sec-ha-acl-rm-role-crmsh" data-id-title="Removing an Existing Role with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">14.6.2 </span><span class="title-name">Removing an Existing Role with crmsh</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-rm-role-crmsh">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To remove an existing role, replace the placeholder <em class="replaceable">ROLE</em> with the name
+    of the role:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure delete <em class="replaceable">ROLE</em></pre></div></section></section><section class="sect1" id="sec-ha-acl-config-xpath" data-id-title="Setting ACL Rules via XPath Expressions"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.7 </span><span class="title-name">Setting ACL Rules via XPath Expressions</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-config-xpath">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To manage ACL rules via XPath, you need to know the structure of the
+   underlying XML. Retrieve the structure with the following command that
+   shows your cluster configuration in XML (see
+   <a class="xref" href="cha-ha-acl.html#ex-ha-acl-excerpt" title="Excerpt of a Cluster Configuration in XML">Example 14.1</a>):
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show xml</pre></div><div class="example" id="ex-ha-acl-excerpt" data-id-title="Excerpt of a Cluster Configuration in XML"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 14.1: </span><span class="title-name">Excerpt of a Cluster Configuration in XML </span></span><a title="Permalink" class="permalink" href="cha-ha-acl.html#ex-ha-acl-excerpt">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">&lt;cib&gt;
+  &lt;!-- ... --&gt;
+  &lt;configuration&gt;
+    &lt;crm_config&gt;
+       &lt;cluster_property_set id="cib-bootstrap-options"&gt;
+        &lt;nvpair name="stonith-enabled" value="true" id="cib-bootstrap-options-stonith-enabled"/&gt;
+       [...]
+      &lt;/cluster_property_set&gt;
+    &lt;/crm_config&gt;
+    &lt;nodes&gt;
+      &lt;node id="175704363" uname="alice"/&gt;
+      &lt;node id="175704619" uname="bob"/&gt;
+    &lt;/nodes&gt;
+    &lt;resources&gt; [...]  &lt;/resources&gt;
+    &lt;constraints/&gt;
+    &lt;rsc_defaults&gt; [...] &lt;/rsc_defaults&gt;
+    &lt;op_defaults&gt; [...] &lt;/op_defaults&gt;
+  &lt;configuration&gt;
+&lt;/cib&gt;</pre></div></div></div><p>
+   With the XPath language you can locate nodes in this XML document. For
+   example, to select the root node (<code class="literal">cib</code>) use the XPath
+   expression <code class="literal">/cib</code>. To locate the global cluster
+   configurations, use the XPath expression
+   <code class="literal">/cib/configuration/crm_config</code>.
+  </p><p>
+   As an example, <a class="xref" href="cha-ha-acl.html#tab-ha-acl-operator" title="Operator Role—Access Types and XPath Expressions">Table 14.1, “Operator Role—Access Types and XPath Expressions”</a> shows the
+   parameters (access type and XPath expression) to create an
+   <span class="quote">“<span class="quote">operator</span>”</span> role. Users with this role can only execute the
+   tasks mentioned in the second column—they cannot reconfigure
+   any resources (for example, change parameters or operations), nor change
+   the configuration of colocation or ordering constraints.
+  </p><div class="table" id="tab-ha-acl-operator" data-id-title="Operator Role—Access Types and XPath Expressions"><div class="title-container"><div class="table-title-wrap"><div class="table-title"><span class="title-number-name"><span class="title-number">Table 14.1: </span><span class="title-name">Operator Role—Access Types and XPath Expressions </span></span><a title="Permalink" class="permalink" href="cha-ha-acl.html#tab-ha-acl-operator">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div><div class="table-contents"><table style="border-collapse: collapse; border-top: 1px solid ; border-bottom: 1px solid ; border-left: 1px solid ; border-right: 1px solid ; "><colgroup><col/><col/></colgroup><thead><tr><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+       <p>
+        Type
+       </p>
+      </th><th style="border-bottom: 1px solid ; ">
+       <p>
+        XPath/Explanation
+       </p>
+      </th></tr></thead><tbody><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+       <p>
+        Write
+       </p>
+      </td><td style="border-bottom: 1px solid ; ">
+       <div class="verbatim-wrap"><pre class="screen">//crm_config//nvpair[@name='maintenance-mode']</pre></div>
+       <p>
+        Turn cluster maintenance mode on or off.
+       </p>
+      </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+       <p>
+        Write
+       </p>
+      </td><td style="border-bottom: 1px solid ; ">
+       <div class="verbatim-wrap"><pre class="screen">//op_defaults//nvpair[@name='record-pending']</pre></div>
+       <p>
+        Choose whether pending operations are recorded.
+       </p>
+      </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+       <p>
+        Write
+       </p>
+      </td><td style="border-bottom: 1px solid ; ">
+       <div class="verbatim-wrap"><pre class="screen">//nodes/node//nvpair[@name='standby']</pre></div>
+       <p>
+        Set node in online or standby mode.
+       </p>
+      </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+       <p>
+        Write
+       </p>
+      </td><td style="border-bottom: 1px solid ; ">
+       <div class="verbatim-wrap"><pre class="screen">//resources//nvpair[@name='target-role']</pre></div>
+       <p>
+        Start, stop, promote or demote any resource.
+       </p>
+      </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+       <p>
+        Write
+       </p>
+      </td><td style="border-bottom: 1px solid ; ">
+       <div class="verbatim-wrap"><pre class="screen">//resources//nvpair[@name='maintenance']</pre></div>
+       <p>
+        Select if a resource should be put to maintenance mode or not.
+       </p>
+      </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+       <p>
+        Write
+       </p>
+      </td><td style="border-bottom: 1px solid ; ">
+       <div class="verbatim-wrap"><pre class="screen">//constraints/rsc_location</pre></div>
+       <p>
+        Migrate/move resources from one node to another.
+       </p>
+      </td></tr><tr><td style="border-right: 1px solid ; ">
+       <p>
+        Read
+       </p>
+      </td><td>
+       <div class="verbatim-wrap"><pre class="screen">/cib</pre></div>
+       <p>
+        View the status of the cluster.
+       </p>
+      </td></tr></tbody></table></div></div></section><section class="sect1" id="sec-ha-acl-config-tag" data-id-title="Setting ACL Rules via Abbreviations"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">14.8 </span><span class="title-name">Setting ACL Rules via Abbreviations</span></span> <a title="Permalink" class="permalink" href="cha-ha-acl.html#sec-ha-acl-config-tag">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/ha_acl.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   For users who do not want to deal with the XML structure there is an
+   easier method.
+   
+  </p><p>
+   For example, consider the following XPath:
+  </p><div class="verbatim-wrap"><pre class="screen">//*[@id="rsc1"]</pre></div><p>
+   which locates all the XML nodes with the ID <code class="literal">rsc1</code>.
+  </p><p>
+   The abbreviated syntax is written like this:
+  </p><div class="verbatim-wrap"><pre class="screen">ref:"rsc1"</pre></div><p>
+   This also works for constraints. Here is the verbose XPath:
+  </p><div class="verbatim-wrap"><pre class="screen">//constraints/rsc_location</pre></div><p>
+   The abbreviated syntax is written like this:
+  </p><div class="verbatim-wrap"><pre class="screen">type:"rsc_location"</pre></div><p>
+   The abbreviated syntax can be used in crmsh and Hawk2. The CIB
+   daemon knows how to apply the ACL rules to the matching objects.
+  </p></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-qdevice.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 13 </span>QDevice and QNetd</span></a> </div><div><a class="pagination-link next" href="cha-ha-netbonding.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 15 </span>Network Device Bonding</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-require"><span class="title-number">14.1 </span><span class="title-name">Requirements and Prerequisites</span></a></span></li><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-basics"><span class="title-number">14.2 </span><span class="title-name">Conceptual Overview</span></a></span></li><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-enable"><span class="title-number">14.3 </span><span class="title-name">Enabling Use of ACLs in Your Cluster</span></a></span></li><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-create-ro-monitor-role"><span class="title-number">14.4 </span><span class="title-name">Creating a Read-Only Monitor Role</span></a></span></li><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-rm-user"><span class="title-number">14.5 </span><span class="title-name">Removing a User</span></a></span></li><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-rm-role"><span class="title-number">14.6 </span><span class="title-name">Removing an Existing Role</span></a></span></li><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-config-xpath"><span class="title-number">14.7 </span><span class="title-name">Setting ACL Rules via XPath Expressions</span></a></span></li><li><span class="sect1"><a href="cha-ha-acl.html#sec-ha-acl-config-tag"><span class="title-number">14.8 </span><span class="title-name">Setting ACL Rules via Abbreviations</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2023</span></div></div></footer></body></html>

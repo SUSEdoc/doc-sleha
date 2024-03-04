@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP6 | Administration Guide | Naming conventions</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Naming conventions | SLE HA 15 SP6"/>
+<meta name="description" content="This guide uses the following naming conventions for c…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP6"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Appendix B. Naming conventions"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP6"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Naming conventions | SLE HA 15 SP6"/>
+<meta property="og:description" content="This guide uses the following naming conventions for cluster nodes and names, cluster resources, and constraints."/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Naming conventions | SLE HA 15 SP6"/>
+<meta name="twitter:description" content="This guide uses the following naming conventions for cluster nodes and names, cluster resources, and constraints."/>
+<link rel="prev" href="app-ha-troubleshooting.html" title="Appendix A. Troubleshooting"/><link rel="next" href="app-ha-management.html" title="Appendix C. Cluster management tools (command line)"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/script-purejs.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_naming.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-appendix.html">Appendix</a><span> / </span><a class="crumb" href="app-naming.html">Naming conventions</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li><a href="part-config.html" class="has-children "><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-virtualization.html" class=" "><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li class="active"><a href="part-appendix.html" class="has-children you-are-here"><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" you-are-here"><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="appendix" id="app-naming" data-id-title="Naming conventions"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP6</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">B </span><span class="title-name">Naming conventions</span></span> <a title="Permalink" class="permalink" href="app-naming.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_naming.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  This guide uses the following naming conventions for cluster nodes and
+  names, cluster resources, and constraints.
+ </p><div class="variablelist" id="vl-naming-cluster-names-nodes"><dl class="variablelist"><dt id="id-1.4.7.3.4.1"><span class="term">Cluster nodes</span></dt><dd><p>
+     Cluster nodes use first names:
+    </p><p>
+     alice, bob, charlie, doro, and eris
+    </p></dd><dt id="id-1.4.7.3.4.2"><span class="term">Cluster site names</span></dt><dd><p>
+     Cluster sites are named after cities:
+    </p><p>
+     amsterdam, berlin, canberra, dublin,
+     fukuoka, gizeh, hanoi, and istanbul
+    </p></dd><dt id="id-1.4.7.3.4.3"><span class="term">Cluster resources</span></dt><dd><div class="informaltable"><table style="border-collapse: collapse; border-top: 1px solid ; border-bottom: 1px solid ; border-left: 1px solid ; border-right: 1px solid ; "><colgroup><col/><col/></colgroup><tbody><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+         <p>
+          Primitives
+         </p>
+        </td><td style="border-bottom: 1px solid ; ">
+         <p>
+          No prefix
+         </p>
+        </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+         <p>
+          Groups
+         </p>
+        </td><td style="border-bottom: 1px solid ; ">
+         <p>
+          Prefix <code class="literal">g-</code>
+         </p>
+        </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+         <p>
+          Clones
+         </p>
+        </td><td style="border-bottom: 1px solid ; ">
+         <p>
+          Prefix <code class="literal">cl-</code>
+         </p>
+        </td></tr><tr><td style="border-right: 1px solid ; ">
+         <p>
+          Promotable Clones
+         </p>
+        </td><td>
+         <p>
+          (formerly known as multi-state resources)
+         </p>
+         <p>
+          Prefix <code class="literal">ms-</code>
+         </p>
+        </td></tr></tbody></table></div></dd><dt id="id-1.4.7.3.4.4"><span class="term">Constraints</span></dt><dd><div class="informaltable"><table style="border-collapse: collapse; border-top: 1px solid ; border-bottom: 1px solid ; border-left: 1px solid ; border-right: 1px solid ; "><colgroup><col/><col/></colgroup><tbody><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+         <p>
+          Order constraints
+         </p>
+        </td><td style="border-bottom: 1px solid ; ">
+         <p>
+          Prefix <code class="literal">o-</code>
+         </p>
+        </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; ">
+         <p>
+          Location constraints
+         </p>
+        </td><td style="border-bottom: 1px solid ; ">
+         <p>
+          Prefix <code class="literal">loc-</code>
+         </p>
+        </td></tr><tr><td style="border-right: 1px solid ; ">
+         <p>
+          Colocation constraints
+         </p>
+        </td><td>
+         <p>
+          Prefix <code class="literal">col-</code>
+         </p>
+        </td></tr></tbody></table></div></dd></dl></div></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="app-ha-troubleshooting.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Appendix A </span>Troubleshooting</span></a> </div><div><a class="pagination-link next" href="app-ha-management.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Appendix C </span>Cluster management tools (command line)</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

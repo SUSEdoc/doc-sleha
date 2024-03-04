@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP6 | Geo Clustering Guide | Setting up the booth services</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Setting up the booth services | SLE HA 15 SP6"/>
+<meta name="description" content="This chapter describes the setup and configuration opt…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP6"/>
+<meta name="book-title" content="Geo Clustering Guide"/>
+<meta name="chapter-title" content="Chapter 4. Setting up the booth services"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP6"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Setting up the booth services | SLE HA 15 SP6"/>
+<meta property="og:description" content="This chapter describes the setup and configuration options for booth, how to synchronize the booth configuration to all site…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Setting up the booth services | SLE HA 15 SP6"/>
+<meta name="twitter:description" content="This chapter describes the setup and configuration options for booth, how to synchronize the booth configuration to all site…"/>
+<link rel="prev" href="cha-ha-geo-req.html" title="Chapter 3. Requirements"/><link rel="next" href="cha-ha-geo-sync.html" title="Chapter 5. Synchronizing configuration files across all sites and arbitrators"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/script-purejs.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Geo Clustering Guide</a><span> / </span><a class="crumb" href="cha-ha-geo-booth.html">Setting up the booth services</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Geo Clustering Guide</div><ol><li><a href="pre-geo.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="cha-ha-geo-challenges.html" class=" "><span class="title-number">1 </span><span class="title-name">Challenges for Geo clusters</span></a></li><li><a href="cha-ha-geo-concept.html" class=" "><span class="title-number">2 </span><span class="title-name">Conceptual overview</span></a></li><li><a href="cha-ha-geo-req.html" class=" "><span class="title-number">3 </span><span class="title-name">Requirements</span></a></li><li><a href="cha-ha-geo-booth.html" class=" you-are-here"><span class="title-number">4 </span><span class="title-name">Setting up the booth services</span></a></li><li><a href="cha-ha-geo-sync.html" class=" "><span class="title-number">5 </span><span class="title-name">Synchronizing configuration files across all sites and arbitrators</span></a></li><li><a href="cha-ha-geo-rsc.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources and constraints</span></a></li><li><a href="cha-ha-geo-ip-relocation.html" class=" "><span class="title-number">7 </span><span class="title-name">Setting up IP relocation via DNS update</span></a></li><li><a href="cha-ha-geo-manage.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing Geo clusters</span></a></li><li><a href="cha-ha-geo-trouble.html" class=" "><span class="title-number">9 </span><span class="title-name">Troubleshooting</span></a></li><li><a href="cha-ha-geo-upgrade.html" class=" "><span class="title-number">10 </span><span class="title-name">Upgrading to the latest product version</span></a></li><li><a href="sec-ha-geo-more.html" class=" "><span class="title-number">11 </span><span class="title-name">For more information</span></a></li><li><a href="bk03apa.html" class=" "><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-geo-booth" data-id-title="Setting up the booth services"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP6</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">4 </span><span class="title-name">Setting up the booth services</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    This chapter describes the setup and configuration options for booth, how
+    to synchronize the booth configuration to all sites and arbitrators, how to
+    enable and start the booth services, and how to reconfigure booth while its
+    services are running.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-geo-booth-basic" data-id-title="Booth configuration and setup options"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4.1 </span><span class="title-name">Booth configuration and setup options</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#sec-ha-geo-booth-basic">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The default booth configuration is <code class="filename">/etc/booth/booth.conf</code>. This file must be the same
+   on all sites of your Geo cluster, including the arbitrator or arbitrators.
+   To keep the booth configuration synchronous across all sites and
+   arbitrators, use Csync2, as described in
+   <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-sync" title="4.5. Synchronizing the booth configuration to all sites and arbitrators">Section 4.5, “Synchronizing the booth configuration to all sites and arbitrators”</a>.
+  </p><div id="note-ha-geo-booth-ownership" data-id-title="Ownership of /etc/booth and files" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Ownership of <code class="filename">/etc/booth</code> and files</div><p>
+    The directory <code class="filename">/etc/booth</code> and all
+    files therein need to belong to the user
+    <code class="systemitem">hacluster</code> and the group
+    <code class="systemitem">haclient</code>. Whenever you copy
+    a new file from this directory, use the option <code class="option">-p</code> for the
+    <code class="command">cp</code> command to preserve the ownership. Alternatively,
+    when you create a new file, set the user and group afterward with
+    <code class="command">chown hacluster:haclient <em class="replaceable">FILE</em></code>.
+   </p></div><p>
+    For setups including multiple Geo clusters, it is possible to <span class="quote">“<span class="quote">share</span>”</span> the same arbitrator (as
+ of SUSE Linux Enterprise High Availability 12). By providing several booth configuration files, you can
+ start multiple booth instances on the same arbitrator, with each booth
+ instance running on a different port. That way, you can use <span class="emphasis"><em>one</em></span> machine to serve as
+ arbitrator for <span class="emphasis"><em>different</em></span> Geo clusters. For details on how to configure booth for multiple
+   Geo clusters, refer to <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-multi" title="4.4. Using a multi-tenant booth setup">Section 4.4, “Using a multi-tenant booth setup”</a>.
+  </p><p>
+   To prevent malicious parties from disrupting the booth service, you can
+   configure authentication for talking to booth, based on a shared key. For
+   details, see <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-auth"><span class="callout">5</span></a> in
+   <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>. All hosts that communicate with
+   booth servers need this key. Therefore make sure to include the key
+   file in the Csync2 configuration or to synchronize it manually across all
+   parties.
+  </p></section><section class="sect1" id="sec-ha-geo-booth-ticket-types" data-id-title="Automatic versus manual tickets"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4.2 </span><span class="title-name">Automatic versus manual tickets</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#sec-ha-geo-booth-ticket-types">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   A ticket grants the right to run certain resources on a specific
+   cluster site. Two types of tickets are supported:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Automatic tickets are controlled by the <code class="systemitem">boothd</code> daemon.</p></li><li class="listitem"><p>Manual tickets are managed by the cluster administrator only.</p></li></ul></div><p>Automatic and manual tickets have the following properties:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">Automatic and manual tickets can be defined together. </span>You can define and use both automatic and manual tickets within the
+      same Geo cluster.</p></li><li class="listitem"><p><span class="formalpara-title">Manual ticket management remains manual. </span>The automatic ticket management is not applied to manually controlled
+      tickets.
+      Manual tickets do not require any quorum elections, cannot fail over
+      automatically, and do not have an expiry time.</p></li><li class="listitem"><p><span class="formalpara-title">Manual tickets are not moved automatically. </span>Tickets that were manually granted to a site remain there
+      until they are manually revoked. Even if a site goes offline, the
+      ticket is not moved to another site. This behavior ensures that
+      the services that depend on a ticket remain on a particular site and
+      are not moved to another site.
+     </p></li><li class="listitem"><p><span class="formalpara-title">Same commands for managing both types of tickets. </span>The manual tickets are managed by the same commands as automatic
+     tickets (<code class="command">grant</code> or <code class="command">revoke</code>, for example).</p></li><li class="listitem"><p><span class="formalpara-title">Arbitrators are not needed if only manual tickets are used. </span>
+      If you configure only manual tickets in a Geo cluster, arbitrators are
+      not necessary, because manual ticket management does not require quorum
+      decisions.</p></li></ul></div><p>
+   To configure tickets, use the <code class="filename">/etc/booth/booth.conf</code>
+   configuration file (see <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-default" title="4.3. Using the default booth setup">Section 4.3, “Using the default booth setup”</a> for
+   further information).</p></section><section class="sect1" id="sec-ha-geo-booth-default" data-id-title="Using the default booth setup"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4.3 </span><span class="title-name">Using the default booth setup</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#sec-ha-geo-booth-default">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   If you have set up your basic Geo cluster with the
+   bootstrap scripts as described in the Geo Clustering Quick Start, the scripts have created a default
+   booth configuration on all sites with a minimal set of parameters. To extend
+   or fine-tune the minimal booth configuration, have a look at
+   <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1</a> or at
+   the examples in <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-multi" title="4.4. Using a multi-tenant booth setup">Section 4.4, “Using a multi-tenant booth setup”</a>.
+  </p><p>
+   To add or change parameters needed for booth, either edit the booth
+   configuration files manually or use the YaST <span class="guimenu">Geo
+   Cluster</span> module. To access the YaST module, start it from command
+   line with <code class="command">yast2 geo-cluster</code> (or start YaST and select
+   <span class="guimenu">High Availability</span> › <span class="guimenu">Geo
+   Cluster</span>).
+  </p><div class="example" id="ex-ha-booth-conf-default" data-id-title="A booth configuration file"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 4.1: </span><span class="title-name">A booth configuration file </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">transport = UDP <span class="callout" id="co-ha-geo-booth-config-transport">1</span>
+port = 9929 <span class="callout" id="co-ha-geo-booth-config-port">2</span>
+arbitrator = 192.168.203.100 <span class="callout" id="co-ha-geo-booth-config-arbitrator">3</span>
+site =  192.168.201.100 <span class="callout" id="co-ha-geo-booth-config-site">4</span>
+site =  192.168.202.100 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-site"><span class="callout">4</span></a>
+authfile = /etc/booth/authkey <span class="callout" id="co-ha-geo-booth-config-auth">5</span>
+ticket = "ticket-nfs" <span class="callout" id="co-ha-geo-booth-config-ticket">6</span>
+     mode = MANUAL <span class="callout" id="co-ha-geo-booth-mode">7</span>
+ticket = "ticketA" <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a>
+     expire = 600 <span class="callout" id="co-ha-geo-booth-config-expiry">8</span>
+     timeout = 10 <span class="callout" id="co-ha-geo-booth-config-timeout">9</span>
+     retries = 5 <span class="callout" id="co-ha-geo-booth-config-retries">10</span>
+     renewal-freq = 30 <span class="callout" id="co-ha-geo-booth-config-renewal">11</span>
+     before-acquire-handler<span class="callout" id="co-ha-geo-booth-config-handler">12</span> = /etc/booth/ticket-A<span class="callout" id="co-ha-geo-booth-config-script">13</span> db-1 <span class="callout" id="co-ha-geo-booth-config-rsc">14</span>
+     acquire-after = 60 <span class="callout" id="co-ha-geo-booth-config-acquire-after">15</span>
+ticket = "ticketB" <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a>
+     expire = 600 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-expiry"><span class="callout">8</span></a>
+     timeout = 10 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-timeout"><span class="callout">9</span></a>
+     retries = 5 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-retries"><span class="callout">10</span></a>
+     renewal-freq = 30 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-renewal"><span class="callout">11</span></a>
+     before-acquire-handler<a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-handler"><span class="callout">12</span></a> = /etc/booth/ticket-B<a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-script"><span class="callout">13</span></a> db-8 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-rsc"><span class="callout">14</span></a>
+     acquire-after = 60 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-acquire-after"><span class="callout">15</span></a></pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-transport"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The transport protocol used for communication between the sites.
+   Only UDP is supported, but other transport layers will follow in
+   the future. Currently, this parameter can therefore be omitted.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-port"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The port to be used for communication between the booth instances at each
+ site. When not using the default port (<code class="literal">9929</code>),
+      choose a port that is not already used for different services. Make sure
+      to open the port in the nodes' and arbitrators' firewall rules. The
+      booth clients use TCP to communicate with the <code class="systemitem">boothd</code>. Booth always
+      binds and listens to both UDP and TCP ports.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-arbitrator"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       The IP address of the machine to use as arbitrator.  Add an entry for each arbitrator you use in your Geo
+      cluster setup.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-site"><span class="callout">4</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The IP address used for the <code class="systemitem">boothd</code> on a site.  Add an entry for each site you use in your Geo cluster
+      setup. Make sure to insert the correct virtual IP addresses
+      (<code class="systemitem">IPaddr2</code>) for each site, otherwise the booth
+      mechanism will not work correctly. Booth works with both IPv4 and IPv6
+      addresses.
+     </p><p>
+      If you have set up booth with the
+      bootstrap scripts, the virtual IPs you have specified during setup have been
+      written to the booth configuration already (and have been added to the
+      cluster configuration, too). To set up the cluster resources manually,
+      see <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-boothd" title="6.2. Configuring a resource group for boothd">Section 6.2, “Configuring a resource group for <code class="systemitem">boothd</code>”</a>.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-auth"><span class="callout">5</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Optional parameter. Enables booth authentication for clients and servers on the basis
+  of a shared key. This parameter specifies the path to the
+  key file.
+     </p><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Key Requirements </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#id-1.5.7.5.4.3.5.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>The key can be either binary or text.</p><p>If it is text, the following characters are ignored: leading and trailing white space,
+        new lines.</p></li><li class="listitem"><p>The key must be between 8 and 64 characters long.</p></li><li class="listitem"><p>The key must belong to the user <code class="systemitem">hacluster</code> and the group <code class="systemitem">haclient</code>.
+        </p></li><li class="listitem"><p>The key must be readable only by the file owner.</p></li></ul></div></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The tickets to be managed by booth or a cluster administrator. For each ticket, add a <code class="literal">ticket</code> entry.
+      For example, the ticket <code class="literal">ticket-nfs</code> specified here can
+      be used for failover of NFS and DRBD as explained in
+      <a class="link" href="https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html" target="_blank">https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html</a>.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-mode"><span class="callout">7</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>Optional parameter. Defines the ticket mode. By default, all
+      tickets are managed by booth. To define tickets which are managed by
+      the administrator (<span class="emphasis"><em>manual tickets</em></span>), set the
+      <em class="parameter">mode</em> parameter to
+      <code class="literal">MANUAL</code> or <code class="literal">manual</code>.
+     </p><p>Manual tickets do not have <em class="parameter">expire</em>,
+      <em class="parameter">renewal-freq</em>, and <em class="parameter">retries</em>
+      parameters.</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-expiry"><span class="callout">8</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Optional parameter. Defines the ticket's expiry time in seconds. A
+      site that has been granted a ticket will renew the ticket regularly. If
+      booth does not receive any information about renewal of the ticket within
+      the defined expiry time, the ticket will be revoked and granted to
+      another site. If no expiry time is specified, the ticket will expire
+      after <code class="literal">600</code> seconds by default. The parameter should not
+      be set to a value less than 120 seconds. The default value set by the
+      bootstrap scripts is <code class="literal">600</code>.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-timeout"><span class="callout">9</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Optional parameter. Defines a timeout period in seconds. After that time,
+      booth will resend packets if it did not receive a reply within this
+      period. The timeout defined should be long enough to allow packets to
+      reach other booth members (all arbitrators and sites).
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-retries"><span class="callout">10</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Optional parameter. Defines how many times booth retries sending packets
+      before giving up waiting for confirmation by other sites. Values smaller
+      than <code class="literal">3</code> are invalid and will prevent booth from
+      starting.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-renewal"><span class="callout">11</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Optional parameter. Sets the ticket renewal frequency period. Ticket
+      renewal occurs every half expiry time by default. If the network
+      reliability is often reduced over prolonged periods, it is advisable to
+      renew more often. Before every renewal the
+      <code class="literal">before-acquire-handler</code> is run.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-handler"><span class="callout">12</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Optional parameter. It supports one or more scripts. To use more than one
+      script, each script can be responsible for different checks, like cluster
+      state, data center connectivity, environment health sensors, and more.
+      Store all scripts in the directory
+      <code class="filename">/etc/booth.d/<em class="replaceable">TICKET_NAME</em></code>
+      and make sure they have the correct ownership (user
+      <code class="systemitem">hacluster</code> and group
+      <code class="systemitem">haclient</code>). Assign the
+      directory name as a value to the parameter
+      <em class="parameter">before-acquire-handler</em>.
+     </p><p>
+      The scripts in this directory are executed in alphabetical order. All
+      scripts will be called before <code class="systemitem">boothd</code> tries to acquire or renew a
+      ticket. For the ticket to be granted or renewed, <span class="emphasis"><em>all</em></span>
+      scripts must succeed. The semantics are the same as for a single script:
+      On exit code other than <code class="literal">0</code>, <code class="systemitem">boothd</code> relinquishes the
+      ticket.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-script"><span class="callout">13</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The <code class="filename">/usr/share/booth/service-runnable</code> script is
+      included in the product as an example. To use it, link it into the
+      respective <span class="quote">“<span class="quote">ticket</span>”</span> directory:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ln -s /usr/share/booth/service-runnable /etc/booth.d/<em class="replaceable">TICKET_NAME</em></code></pre></div><p>
+      Assume that the
+      <code class="filename">/etc/booth.d<em class="replaceable">TICKET_NAME</em></code>
+      directory contains the <code class="command">service-runnable</code> script. This
+      simple script is based on <code class="command">crm_simulate</code>. It can be used
+      to test whether a particular cluster resource <span class="emphasis"><em>can</em></span> be
+      run on the current cluster site. That means, it checks if the cluster is
+      healthy enough to run the resource (all resource dependencies are
+      fulfilled, the cluster partition has quorum, no dirty nodes, etc.). For
+      example, if a service in the dependency-chain has a fail count of
+      <code class="literal">INFINITY</code> on all available nodes, the service cannot be
+      run on that site. In that case, it is of no use to claim the ticket.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-rsc"><span class="callout">14</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The resource to be tested by the
+      <code class="literal">before-acquire-handler</code> (in this case, by the
+      <code class="filename">service-runnable</code> script). You need to reference the
+      resource that is protected by the respective ticket. In this example,
+      resource <code class="literal">db-1</code> is protected by
+      <code class="literal">ticketA</code> whereas <code class="literal">db-8</code> is protected
+      by <code class="literal">ticketB</code>. The resource for DRBD
+      (<code class="literal">ms_drbd_nfs</code>) is protected by the ticket
+      <code class="literal">ticket-nfs</code>.
+     </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-acquire-after"><span class="callout">15</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      Optional parameter. After a ticket is lost, booth will wait this time in
+      addition before acquiring the ticket. This is to allow for the site that
+      lost the ticket to relinquish the resources, by either stopping them or
+      fencing a node. A typical delay might be <code class="literal">60</code> seconds,
+      but ultimately it depends on the protected resources and the fencing
+      configuration. The default value is <code class="literal">0</code>.
+     </p><p>
+      If you are unsure how long stopping or demoting the resources or fencing
+      a node may take (depending on the <code class="literal">loss-policy</code>), use
+      this parameter to prevent resources from running on two sites at the same
+      time.
+     </p></td></tr></table></div></div></div><section class="sect2" id="pro-ha-geo-setup-booth-config-edit" data-id-title="Manually editing the booth configuration file"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">4.3.1 </span><span class="title-name">Manually editing the booth configuration file</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#pro-ha-geo-setup-booth-config-edit">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to a cluster node as <code class="systemitem">root</code> or equivalent.
+     </p></li><li class="step"><p>
+      If <code class="filename">/etc/booth/booth.conf</code> does not exist yet, copy the example booth configuration
+      file <code class="filename">/etc/booth/booth.conf.example</code> to <code class="filename">/etc/booth/booth.conf</code>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">cp -p /etc/booth/booth.conf.example /etc/booth/booth.conf</code></pre></div></li><li class="step"><p>
+      Edit <code class="filename">/etc/booth/booth.conf</code> according to
+      <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>.
+     </p></li><li class="step"><p>
+      Verify your changes and save the file.
+     </p></li><li class="step"><p>
+      On all cluster nodes and arbitrators, open the port in the firewall that
+      you have configured for booth. See
+      <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>, position
+      <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-port"><span class="callout">2</span></a>.
+     </p></li></ol></div></div></section><section class="sect2" id="pro-ha-geo-setup-booth-yast" data-id-title="Setting up booth with YaST"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">4.3.2 </span><span class="title-name">Setting up booth with YaST</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#pro-ha-geo-setup-booth-yast">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to a cluster node as <code class="systemitem">root</code> or equivalent.
+     </p></li><li class="step"><p>
+      Start the YaST <span class="guimenu">Geo Cluster</span> module.
+     </p></li><li class="step"><p>
+      Choose to <span class="guimenu">Edit</span> an existing booth configuration file or
+      click <span class="guimenu">Add</span> to create a new booth configuration file:
+     </p><ol type="a" class="substeps"><li class="step" id="step-ha-booth-conf-params"><p>
+        In the screen that appears configure the following parameters:
+       </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">Configuration file. </span>
+           A name for the booth configuration file. YaST suggests
+           <code class="literal">booth</code> by default. This results in the booth
+           configuration being written to <code class="filename">/etc/booth/booth.conf</code>. Only change this value
+           if you need to set up multiple booth instances for different Geo
+           clusters as described in <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-multi" title="4.4. Using a multi-tenant booth setup">Section 4.4, “Using a multi-tenant booth setup”</a>.
+          </p></li><li class="listitem"><p><span class="formalpara-title">Transport. </span>
+           The transport protocol used for communication between the sites.
+   Only UDP is supported, but other transport layers will follow in
+   the future. See also
+           <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>, position
+           <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-transport"><span class="callout">1</span></a>.
+          </p></li><li class="listitem"><p><span class="formalpara-title">Port. </span>
+           The port to be used for communication between the booth instances at each
+ site. See also <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>,
+           position <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-port"><span class="callout">2</span></a>.
+          </p></li><li class="listitem"><p><span class="formalpara-title">Arbitrator. </span>
+            The IP address of the machine to use as arbitrator.  See also
+           <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>, position
+           <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-arbitrator"><span class="callout">3</span></a>.
+          </p><p>
+          To specify an <span class="guimenu">Arbitrator</span>, click
+          <span class="guimenu">Add</span>. In the dialog that opens, enter the IP
+          address of your arbitrator and click <span class="guimenu">OK</span>.
+         </p></li><li class="listitem"><p><span class="formalpara-title">Site. </span>
+           The IP address used for the <code class="systemitem">boothd</code> on a site.  See also <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>,
+           position <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-site"><span class="callout">4</span></a>.
+          </p><p>
+          To specify a <span class="guimenu">Site</span> of your Geo cluster, click
+          <span class="guimenu">Add</span>. In the dialog that opens, enter the IP
+          address of one site and click <span class="guimenu">OK</span>.
+         </p></li><li class="listitem"><p><span class="formalpara-title">Ticket. </span>
+           The tickets to be managed by booth or a cluster administrator. See also <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>,
+           position <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a>.
+          </p><p>
+          To specify a <span class="guimenu">Ticket</span>, click <span class="guimenu">Add</span>.
+          In the dialog that opens, enter a unique <span class="guimenu">Ticket</span>
+          name. If you need to define multiple tickets with the same parameters
+          and values, save configuration effort by creating a <span class="quote">“<span class="quote">ticket
+          template</span>”</span> that specifies the default parameters and values for
+          all tickets. To do so, use <code class="literal">__default__</code> as
+          <span class="guimenu">Ticket</span> name.
+         </p></li><li class="listitem"><p><span class="formalpara-title">Authentication. </span>
+           To enable authentication for booth, click
+           <span class="guimenu">Authentication</span> and in the dialog that opens,
+           activate <span class="guimenu">Enable Security Auth</span>. If you already
+           have an existing key, specify the path and file name in
+           <span class="guimenu">Authentication file</span>. To generate a key file for a
+           new Geo cluster, click <span class="guimenu">Generate Authentication Key
+           File</span>. The key will be created and written to the location
+           specified in <span class="guimenu">Authentication file</span>.
+          </p><p>
+          Additionally, you can specify optional parameters for your ticket.
+          For an overview, see <a class="xref" href="cha-ha-geo-booth.html#ex-ha-booth-conf-default" title="A booth configuration file">Example 4.1, “A booth configuration file”</a>,
+          positions <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-mode"><span class="callout">7</span></a> to
+          <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-acquire-after"><span class="callout">15</span></a>.
+         </p><p>
+          Click <span class="guimenu">OK</span> to confirm your changes.
+         </p></li></ul></div><div class="figure" id="fig-yast-ha-geo-booth"><div class="figure-contents"><div class="mediaobject"><a href="images/yast_geo_cluster_booth.png"><img src="images/yast_geo_cluster_booth.png" width="50%" alt="Example ticket dependency" title="Example ticket dependency"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 4.1: </span><span class="title-name">Example ticket dependency </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#fig-yast-ha-geo-booth">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+        Click <span class="guimenu">OK</span> to close the current booth configuration
+        screen. YaST shows the name of the booth configuration file that you
+        have defined.
+       </p></li></ol></li><li class="step"><p>
+      Before closing the YaST module, switch to the <span class="guimenu">Firewall
+      Configuration</span> category.
+     </p></li><li class="step"><p>
+      To open the port you have configured for booth, enable <span class="guimenu">Open Port
+      in Firewall</span>.
+     </p><div id="id-1.5.7.5.6.2.5.2" data-id-title="Firewall setting for local machine only" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Firewall setting for local machine only</div><p>
+       The firewall setting is only applied to the current machine. It
+       opens the UDP/TCP ports for all ports that have been specified in
+       <code class="filename">/etc/booth/booth.conf</code> or any other booth configuration files (see
+       <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-multi" title="4.4. Using a multi-tenant booth setup">Section 4.4, “Using a multi-tenant booth setup”</a>).
+      </p><p>
+       Make sure to open the respective ports on all other cluster nodes and
+       arbitrators of your Geo cluster setup, too. Do so either manually or
+       by synchronizing the following files with Csync2:
+      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+         <code class="filename">/usr/lib/firewalld</code>
+        </p></li><li class="listitem"><p>
+         <code class="filename">/usr/lib/firewalld/services/booth.xml</code>
+        </p></li></ul></div></div></li><li class="step"><p>
+      Click <span class="guimenu">Finish</span> to confirm all settings and close the
+      YaST module. Depending on the <em class="replaceable">NAME</em> of the
+      <span class="guimenu">Configuration File </span> specified in
+      <a class="xref" href="cha-ha-geo-booth.html#step-ha-booth-conf-params" title="Step 3.a">Step 3.a</a>, the configuration is written
+      to <code class="filename">/etc/booth/<em class="replaceable">NAME</em>.conf</code>.
+     </p></li></ol></div></div></section></section><section class="sect1" id="sec-ha-geo-booth-multi" data-id-title="Using a multi-tenant booth setup"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4.4 </span><span class="title-name">Using a multi-tenant booth setup</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#sec-ha-geo-booth-multi">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    For setups including multiple Geo clusters, it is possible to <span class="quote">“<span class="quote">share</span>”</span> the same arbitrator (as
+ of SUSE Linux Enterprise High Availability 12). By providing several booth configuration files, you can
+ start multiple booth instances on the same arbitrator, with each booth
+ instance running on a different port. That way, you can use <span class="emphasis"><em>one</em></span> machine to serve as
+ arbitrator for <span class="emphasis"><em>different</em></span> Geo clusters.
+  </p><p>
+   Let us assume you have two Geo clusters, one in EMEA (Europe, the Middle
+   East and Africa), and one in the Asia-Pacific region (APAC).
+  </p><p>
+   To use the same arbitrator for both Geo clusters, create two configuration
+   files in the <code class="filename">/etc/booth</code> directory:
+   <code class="filename">/etc/booth/emea.conf</code> and
+   <code class="filename">/etc/booth/apac.conf</code>. Both must minimally differ in the
+   following parameters:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     The port used for the communication of the booth instances.
+    </p></li><li class="listitem"><p>
+     The sites belonging to the different Geo clusters that the arbitrator is
+     used for.
+    </p></li></ul></div><div class="example" id="ex-ha-conf-booth-multi-1" data-id-title="/etc/booth/apac.conf"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 4.2: </span><span class="title-name"><code class="filename">/etc/booth/apac.conf</code> </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#ex-ha-conf-booth-multi-1">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">transport = UDP <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-transport"><span class="callout">1</span></a>
+port = 9133 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-port"><span class="callout">2</span></a>
+arbitrator = 192.168.203.100 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-arbitrator"><span class="callout">3</span></a>
+site = 192.168.2.254 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-site"><span class="callout">4</span></a>
+site = 192.168.1.112 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-site"><span class="callout">4</span></a>
+authfile = /etc/booth/authkey-apac <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-auth"><span class="callout">5</span></a>
+ticket ="tkt-db-apac-intern" <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a>
+     timeout = 10
+     retries = 5
+     renewal-freq = 60
+     before-acquire-handler<a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-handler"><span class="callout">12</span></a> = /usr/share/booth/service-runnable<a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-script"><span class="callout">13</span></a> db-apac-intern <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-rsc"><span class="callout">14</span></a>
+ticket = "tkt-db-apac-cust" <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a>
+     timeout = 10
+     retries = 5
+     renewal-freq = 60
+     before-acquire-handler = /usr/share/booth/service-runnable db-apac-cust</pre></div></div></div><div class="example" id="ex-ha-conf-booth-multi-2" data-id-title="/etc/booth/emea.conf"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 4.3: </span><span class="title-name"><code class="filename">/etc/booth/emea.conf</code> </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#ex-ha-conf-booth-multi-2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen">transport = UDP <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-transport"><span class="callout">1</span></a>
+port = 9150 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-port"><span class="callout">2</span></a>
+arbitrator = 192.168.203.100 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-arbitrator"><span class="callout">3</span></a>
+site = 192.168.201.100 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-site"><span class="callout">4</span></a>
+site = 192.168.202.100 <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-site"><span class="callout">4</span></a>
+authfile = /etc/booth/authkey-emea <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-auth"><span class="callout">5</span></a>
+ticket = "tkt-sap-crm" <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a>
+     expire = 900
+     renewal-freq = 60
+     before-acquire-handler<a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-handler"><span class="callout">12</span></a> = /usr/share/booth/service-runnable<a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-script"><span class="callout">13</span></a> sap-crm <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-rsc"><span class="callout">14</span></a>
+ticket = "tkt-sap-prod" <a class="xref" href="cha-ha-geo-booth.html#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a>
+     expire = 600
+     renewal-freq = 60
+     before-acquire-handler = /usr/share/booth/service-runnable sap-prod</pre></div></div></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-transport"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     The transport protocol used for communication between the sites.
+   Only UDP is supported, but other transport layers will follow in
+   the future. Currently, this parameter can therefore be omitted.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-port"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     The port to be used for communication between the booth instances at each
+ site. The configuration files use different ports to allow for
+     start of multiple booth instances on the same arbitrator.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-arbitrator"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+      The IP address of the machine to use as arbitrator.  In the examples above, we use the same arbitrator for
+     different Geo clusters.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-site"><span class="callout">4</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     The IP address used for the <code class="systemitem">boothd</code> on a site.  The sites defined in both booth configuration files are
+     different, because they belong to two different Geo clusters.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-auth"><span class="callout">5</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     Optional parameter. Enables booth authentication for clients and servers on the basis
+  of a shared key. This parameter specifies the path to the
+  key file. Use different key files for different
+     tenants.
+    </p><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Key Requirements </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#id-1.5.7.6.8.5.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>The key can be either binary or text.</p><p>If it is text, the following characters are ignored: leading and trailing white space,
+        new lines.</p></li><li class="listitem"><p>The key must be between 8 and 64 characters long.</p></li><li class="listitem"><p>The key must belong to the user <code class="systemitem">hacluster</code> and the group <code class="systemitem">haclient</code>.
+        </p></li><li class="listitem"><p>The key must be readable only by the file owner.</p></li></ul></div></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-ticket"><span class="callout">6</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     The tickets to be managed by booth or a cluster administrator. Theoretically the same ticket names can be defined in
+     different booth configuration files—the tickets will not interfere
+     because they are part of different Geo clusters that are managed by
+     different booth instances. However, (for better overview) we advise to use
+     distinct ticket names for each Geo cluster as shown in the examples
+     above.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-handler"><span class="callout">12</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     Optional parameter. If set, the specified command will be called before
+     <code class="systemitem">boothd</code> tries to acquire or renew a ticket. On exit code other than
+     <code class="literal">0</code>, <code class="systemitem">boothd</code> relinquishes the ticket.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-script"><span class="callout">13</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     The <code class="filename">service-runnable</code> script referenced here is
+     included in the product as an example. It is a simple script based on
+     <code class="command">crm_simulate</code>. It can be used to test whether a
+     particular cluster resource <span class="emphasis"><em>can</em></span> be run on the current
+     cluster site. That means, it checks if the cluster is healthy enough to
+     run the resource (all resource dependencies are fulfilled, the cluster
+     partition has quorum, no dirty nodes, etc.). For example, if a service in
+     the dependency chain has a fail count of <code class="literal">INFINITY</code> on all
+     available nodes, the service cannot be run on that site. In that case, it
+     is of no use to claim the ticket.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-config-rsc"><span class="callout">14</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+     The resource to be tested by the <code class="literal">before-acquire-handler</code>
+     (in this case, by the <code class="filename">service-runnable</code> script). You
+     need to reference the resource that is protected by the respective ticket.
+    </p></td></tr></table></div><div class="procedure" id="id-1.5.7.6.9" data-id-title="Using the same arbitrator for different Geo clusters"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 4.1: </span><span class="title-name">Using the same arbitrator for different Geo clusters </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#id-1.5.7.6.9">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Create different booth configuration files in
+     <code class="filename">/etc/booth</code> as shown in
+     <a class="xref" href="cha-ha-geo-booth.html#ex-ha-conf-booth-multi-1" title="/etc/booth/apac.conf">Example 4.2, “<code class="filename">/etc/booth/apac.conf</code>”</a> and
+     <a class="xref" href="cha-ha-geo-booth.html#ex-ha-conf-booth-multi-2" title="/etc/booth/emea.conf">Example 4.3, “<code class="filename">/etc/booth/emea.conf</code>”</a>. Do so either manually or with
+     YaST, as outlined in <a class="xref" href="cha-ha-geo-booth.html#pro-ha-geo-setup-booth-yast" title="4.3.2. Setting up booth with YaST">Section 4.3.2, “Setting up booth with YaST”</a>.
+    </p></li><li class="step"><p>
+     On the arbitrator, open the ports that are defined in any of the booth
+     configuration files in <code class="filename">/etc/booth</code>.
+    </p></li><li class="step"><p>
+     On the nodes belonging to the individual Geo clusters that the
+     arbitrator is used for, open the port that is used for the respective
+     booth instance.
+    </p></li><li class="step"><p>
+     Synchronize the respective booth configuration files across all cluster
+     nodes and arbitrators that use the same booth configuration. For details,
+     see <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-sync" title="4.5. Synchronizing the booth configuration to all sites and arbitrators">Section 4.5, “Synchronizing the booth configuration to all sites and arbitrators”</a>.
+    </p></li><li class="step"><p>
+     On the arbitrator, start the individual booth instances as described in
+     <a class="xref" href="cha-ha-geo-booth.html#vle-ha-geo-setup-booth-service-arbitrator">Starting the booth services on arbitrators</a> for
+     multi-tenancy setups.
+    </p></li><li class="step"><p>
+     On the individual Geo clusters, start the booth service as described in
+     <a class="xref" href="cha-ha-geo-booth.html#vle-ha-geo-setup-booth-service-sites">Starting the booth services on cluster sites</a>.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-geo-booth-sync" data-id-title="Synchronizing the booth configuration to all sites and arbitrators"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4.5 </span><span class="title-name">Synchronizing the booth configuration to all sites and arbitrators</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#sec-ha-geo-booth-sync">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.5.7.7.2" data-id-title="Use the same booth configuration on all sites and arbitrators" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Use the same booth configuration on all sites and arbitrators</div><p>
+    To make booth work correctly, all cluster nodes and arbitrators within one
+    Geo cluster must use the same booth configuration.
+   </p><p>
+    You can use Csync2 to synchronize the booth configuration. For details,
+    see <a class="xref" href="cha-ha-geo-sync.html#sec-ha-geo-booth-sync-csync2-setup" title="5.1. Csync2 setup for Geo clusters">Section 5.1, “Csync2 setup for Geo clusters”</a> and
+    <a class="xref" href="cha-ha-geo-sync.html#sec-ha-geo-booth-sync-csync2-start" title="5.2. Synchronizing changes with Csync2">Section 5.2, “Synchronizing changes with Csync2”</a>.
+   </p><p>
+    In case of any booth configuration changes, make sure to update the
+    configuration files accordingly on all parties and to restart the booth
+    services as described in <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-setup-booth-reconfig" title="4.7. Reconfiguring booth while running">Section 4.7, “Reconfiguring booth while running”</a>.
+   </p></div></section><section class="sect1" id="sec-ha-geo-setup-booth-service" data-id-title="Enabling and starting the booth services"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4.6 </span><span class="title-name">Enabling and starting the booth services</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#sec-ha-geo-setup-booth-service">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><div class="variablelist"><dl class="variablelist"><dt id="vle-ha-geo-setup-booth-service-sites"><span class="term">Starting the booth services on cluster sites</span></dt><dd><p>
+      The booth service for each cluster site is managed by the booth resource
+      group (that has either been configured automatically if you used the
+      bootstrap scripts for Geo cluster setup,
+      or manually as described in <a class="xref" href="cha-ha-geo-rsc.html#sec-ha-geo-rsc-boothd" title="6.2. Configuring a resource group for boothd">Section 6.2, “Configuring a resource group for <code class="systemitem">boothd</code>”</a>). To
+      start one instance of the booth service per site, start the respective
+      booth resource group on each cluster site.
+     </p></dd><dt id="vle-ha-geo-setup-booth-service-arbitrator"><span class="term">Starting the booth services on arbitrators</span></dt><dd><p>
+      Starting with SUSE Linux Enterprise 12, booth arbitrators are managed with systemd. The
+      unit file is named <code class="filename">booth@.service</code>. The
+      <code class="literal">@</code> denotes the possibility to run the service with a
+      parameter, which is in this case the name of the configuration file.
+     </p><p>
+      To <span class="emphasis"><em>enable</em></span> the booth service on an arbitrator, use
+      the following command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl enable booth@booth</code></pre></div><p>
+      After the service has been enabled from command line, YaST
+      Services Manager can be used to manage the service (as long as the service
+      is not disabled). In that case, it disappears from the service list
+      in YaST the next time systemd is restarted.
+     </p><p>
+      The command to <span class="emphasis"><em>start</em></span> the booth service depends on
+      your booth setup:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        If you are using the default setup as described in
+        <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-default" title="4.3. Using the default booth setup">Section 4.3</a>,
+        only <code class="filename">/etc/booth/booth.conf</code> is configured. In that
+        case, log in to each arbitrator and use the following command:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl start booth@booth</code></pre></div></li><li class="listitem"><p>
+        If you are running booth in multi-tenancy mode as described in
+        <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-booth-multi" title="4.4. Using a multi-tenant booth setup">Section 4.4</a>, you
+        have configured multiple booth configuration files in
+        <code class="filename">/etc/booth</code>. To start the services for the
+        individual booth instances, use
+        <code class="command">systemctl start booth@<em class="replaceable">NAME</em></code>,
+        where <em class="replaceable">NAME</em>
+        stands for the name of the respective configuration file
+        <code class="filename">/etc/booth/<em class="replaceable">NAME</em>.conf</code>.
+       </p><p>
+        For example, if you have the booth configuration files
+        <code class="filename">/etc/booth/emea.conf</code> and
+        <code class="filename">/etc/booth/apac.conf</code>, log in to your arbitrator
+        and execute the following commands:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl start booth@emea</code>
+<code class="prompt root"># </code><code class="command">systemctl start booth@apac</code></pre></div></li></ul></div><p>
+      This starts the booth service in arbitrator mode. It can communicate with
+      all other booth daemons but in contrast to the booth daemons running on
+      the cluster sites, it cannot be granted a ticket. Booth arbitrators take
+      part in elections only. Otherwise, they are dormant.
+     </p></dd></dl></div></section><section class="sect1" id="sec-ha-geo-setup-booth-reconfig" data-id-title="Reconfiguring booth while running"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4.7 </span><span class="title-name">Reconfiguring booth while running</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-booth.html#sec-ha-geo-setup-booth-reconfig">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_booth_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   In case you need to change the booth configuration while the booth services
+   are already running, proceed as follows:
+  </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Adjust the booth configuration files as desired.
+    </p></li><li class="step"><p>
+     Synchronize the updated booth configuration files to all cluster nodes and
+     arbitrators that are part of your Geo cluster. For details, see
+     <a class="xref" href="cha-ha-geo-sync.html" title="Chapter 5. Synchronizing configuration files across all sites and arbitrators">Chapter 5, <em>Synchronizing configuration files across all sites and arbitrators</em></a>.
+    </p></li><li class="step"><p>
+     Restart the booth services on the arbitrators and cluster sites as
+     described in <a class="xref" href="cha-ha-geo-booth.html#sec-ha-geo-setup-booth-service" title="4.6. Enabling and starting the booth services">Section 4.6, “Enabling and starting the booth services”</a>. This does
+     not have any effect on tickets that have already been granted to sites.
+    </p></li></ol></div></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-geo-req.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 3 </span>Requirements</span></a> </div><div><a class="pagination-link next" href="cha-ha-geo-sync.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 5 </span>Synchronizing configuration files across all sites and arbitrators</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-geo-booth.html#sec-ha-geo-booth-basic"><span class="title-number">4.1 </span><span class="title-name">Booth configuration and setup options</span></a></span></li><li><span class="sect1"><a href="cha-ha-geo-booth.html#sec-ha-geo-booth-ticket-types"><span class="title-number">4.2 </span><span class="title-name">Automatic versus manual tickets</span></a></span></li><li><span class="sect1"><a href="cha-ha-geo-booth.html#sec-ha-geo-booth-default"><span class="title-number">4.3 </span><span class="title-name">Using the default booth setup</span></a></span></li><li><span class="sect1"><a href="cha-ha-geo-booth.html#sec-ha-geo-booth-multi"><span class="title-number">4.4 </span><span class="title-name">Using a multi-tenant booth setup</span></a></span></li><li><span class="sect1"><a href="cha-ha-geo-booth.html#sec-ha-geo-booth-sync"><span class="title-number">4.5 </span><span class="title-name">Synchronizing the booth configuration to all sites and arbitrators</span></a></span></li><li><span class="sect1"><a href="cha-ha-geo-booth.html#sec-ha-geo-setup-booth-service"><span class="title-number">4.6 </span><span class="title-name">Enabling and starting the booth services</span></a></span></li><li><span class="sect1"><a href="cha-ha-geo-booth.html#sec-ha-geo-setup-booth-reconfig"><span class="title-number">4.7 </span><span class="title-name">Reconfiguring booth while running</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

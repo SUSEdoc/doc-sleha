@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP5 | Administration Guide | High Availability for virtualization</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="High Availability for virtualization | SLE HA 15 SP5"/>
+<meta name="description" content="This chapter explains how to configure virtual machine…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP5"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 18. High Availability for virtualization"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP5"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="High Availability for virtualization | SLE HA 15 SP5"/>
+<meta property="og:description" content="This chapter explains how to configure virtual machines as highly available cluster resources."/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="High Availability for virtualization | SLE HA 15 SP5"/>
+<meta name="twitter:description" content="This chapter explains how to configure virtual machines as highly available cluster resources."/>
+<link rel="prev" href="cha-ha-lb.html" title="Chapter 17. Load balancing"/><link rel="next" href="cha-ha-geo.html" title="Chapter 19. Geo clusters (multi-site clusters)"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and administration</a><span> / </span><a class="crumb" href="cha-ha-virtualization.html">High Availability for virtualization</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-virtualization.html" class=" you-are-here"><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="chapter" id="cha-ha-virtualization" data-id-title="High Availability for virtualization"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP5</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+        This chapter explains how to configure virtual machines as highly available cluster resources.
+      </p></div></div></div></div><section class="sect1" id="sec-ha-virtualization-overview" data-id-title="Overview"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">18.1 </span><span class="title-name">Overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#sec-ha-virtualization-overview">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      Virtual machines can take different roles in a High Availability cluster:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+          A virtual machine can be managed by the cluster as a resource, without the cluster
+          managing the services that run on the virtual machine. In this case, the VM is opaque
+          to the cluster. This is the scenario described in this document.
+        </p></li><li class="listitem"><p>
+          A virtual machine can be a cluster resource and run <code class="systemitem">pacemaker_remote</code>,
+          which allows the cluster to manage services running on the virtual machine.
+          In this case, the VM is a guest node and is transparent to the cluster.
+          For this scenario, see <span class="intraxref">Article “Pacemaker Remote Quick Start”, Section 4 “Use case 2: setting up a cluster with guest nodes”</span>.
+        </p></li><li class="listitem"><p>
+          A virtual machine can run a full cluster stack. In this case, the VM is a regular
+          cluster node and is not managed by the cluster as a resource. For this scenario,
+          see <span class="intraxref">Article “Installation and Setup Quick Start”</span>.
+        </p></li></ul></div><p>
+      The following procedures describe how to set up highly available virtual machines on
+      block storage, with another block device used as an OCFS2 volume to store the VM lock files
+      and XML configuration files. The virtual machines and the OCFS2 volume are configured as
+      resources managed by the cluster, with resource constraints to ensure that the
+      lock file directory is always available before a virtual machine starts on any node.
+      This prevents the virtual machines from starting on multiple nodes.
+    </p></section><section class="sect1" id="sec-ha-virtualization-requirements" data-id-title="Requirements"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">18.2 </span><span class="title-name">Requirements</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#sec-ha-virtualization-requirements">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+          A running High Availability cluster with at least two nodes and a fencing device such as SBD.
+        </p></li><li class="listitem"><p>
+          Passwordless <code class="systemitem">root</code> SSH login between the cluster nodes.
+        </p></li><li class="listitem"><p>
+          A network bridge on each cluster node, to be used for installing and running the VMs.
+          This must be separate from the network used for cluster communication and management.
+        </p></li><li class="listitem"><p>
+          Two or more shared storage devices (or partitions on a single shared device),
+          so that all cluster nodes can access the files and storage required by the VMs:
+        </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+              A device to use as an OCFS2 volume, which will store the VM lock files and XML configuration files.
+              Creating and mounting the OCFS2 volume is explained in the following procedure.
+            </p></li><li class="listitem"><p>
+              A device containing the VM installation source (such as an ISO file or disk image).
+            </p></li><li class="listitem"><p>
+              Depending on the installation source, you might also need another device for the
+              VM storage disks.
+            </p></li></ul></div><p>
+          To avoid I/O starvation, these devices must be separate from the shared device used for SBD.
+        </p></li><li class="listitem"><p>
+          Stable device names for all storage paths, for example,
+          <code class="filename">/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em></code>.
+          A shared storage device might have mismatched <code class="filename">/dev/sdX</code> names on
+          different nodes, which will cause VM migration to fail.
+        </p></li></ul></div></section><section class="sect1" id="sec-ha-virtualization-configuring-cluster-resources" data-id-title="Configuring cluster resources to manage the lock files"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">18.3 </span><span class="title-name">Configuring cluster resources to manage the lock files</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#sec-ha-virtualization-configuring-cluster-resources">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      Use this procedure to configure the cluster to manage the virtual machine lock files.
+      The lock file directory must be available on all nodes so that the cluster is aware of the
+      lock files no matter which node the VMs are running on.
+    </p><p>
+      You only need to run the following commands on one of the cluster nodes.
+    </p><div class="procedure" id="pro-ha-virtualization-configuring-cluster-resources" data-id-title="Configuring cluster resources to manage the lock files"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 18.1: </span><span class="title-name">Configuring cluster resources to manage the lock files </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#pro-ha-virtualization-configuring-cluster-resources">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          Create an OCFS2 volume on one of the shared storage devices:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mkfs.ocfs2 /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em></code></pre></div></li><li class="step"><p>
+          Run <code class="command">crm configure</code> to start the <code class="command">crm</code> interactive shell.
+        </p></li><li class="step"><p>
+          Create a primitive resource for DLM:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive dlm ocf:pacemaker:controld \
+  op monitor interval=60 timeout=60</code></pre></div></li><li class="step"><p>
+          Create a primitive resource for the OCFS2 volume:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive ocfs2 Filesystem \
+  params device="/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>" directory="/mnt/shared" fstype=ocfs2 \
+  op monitor interval=20 timeout=40</code></pre></div></li><li class="step"><p>
+          Create a group for the DLM and OCFS2 resources:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group g-virt-lock dlm ocfs2</code></pre></div></li><li class="step"><p>
+          Clone the group so that it runs on all nodes:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">clone cl-virt-lock g-virt-lock \
+  meta interleave=true</code></pre></div></li><li class="step"><p>
+          Review your changes with <code class="command">show</code>.
+        </p></li><li class="step"><p>
+          If everything is correct, submit your changes with <code class="command">commit</code>
+          and leave the crm live configuration with <code class="command">quit</code>.
+        </p></li><li class="step"><p>
+          Check the status of the group clone. It should be running on all nodes:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code>
+[...]
+Full List of Resources:
+[...]
+  * Clone Set: cl-virt-lock [g-virt-lock]:
+    * Started: [ alice bob ]</pre></div></li></ol></div></div></section><section class="sect1" id="sec-ha-virtualization-preparing-the-cluster-nodes" data-id-title="Preparing the cluster nodes to host virtual machines"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">18.4 </span><span class="title-name">Preparing the cluster nodes to host virtual machines</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#sec-ha-virtualization-preparing-the-cluster-nodes">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      Use this procedure to install and start the required virtualization services, and to
+      configure the nodes to store the VM lock files on the shared OCFS2 volume.
+    </p><p>
+      This procedure uses <code class="command">crm cluster run</code> to run commands on all
+      nodes at once. If you prefer to manage each node individually, you can omit the
+      <code class="command">crm cluster run</code> portion of the commands.
+    </p><div class="procedure" id="pro-ha-virtualization-preparing-the-cluster-nodes" data-id-title="Preparing the cluster nodes to host virtual machines"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 18.2: </span><span class="title-name">Preparing the cluster nodes to host virtual machines </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#pro-ha-virtualization-preparing-the-cluster-nodes">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          Install the virtualization packages on all nodes in the cluster:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster run "zypper install -y -t pattern kvm_server kvm_tools"</code></pre></div></li><li class="step"><p>
+          On one node, find and enable the <code class="literal">lock_manager</code> setting in the file
+          <code class="filename">/etc/libvirt/qemu.conf</code>:
+        </p><div class="verbatim-wrap"><pre class="screen">lock_manager = "lockd"</pre></div></li><li class="step"><p>
+          On the same node, find and enable the <code class="literal">file_lockspace_dir</code> setting in the
+          file <code class="filename">/etc/libvirt/qemu-lockd.conf</code>, and change the value to point to
+          a directory on the OCFS2 volume:
+        </p><div class="verbatim-wrap"><pre class="screen">file_lockspace_dir = "/mnt/shared/lockd"</pre></div></li><li class="step"><p>
+          Copy these files to the other nodes in the cluster:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster copy /etc/libvirt/qemu.conf</code>
+<code class="prompt root"># </code><code class="command">crm cluster copy /etc/libvirt/qemu-lockd.conf</code></pre></div></li><li class="step"><p>
+          Enable and start the <code class="literal">libvirtd</code> service on all nodes in the cluster:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster run "systemctl enable --now libvirtd"</code></pre></div><p>
+          This also starts the <code class="literal">virtlockd</code> service.
+        </p></li></ol></div></div></section><section class="sect1" id="sec-ha-virtualization-adding-virtual-machines" data-id-title="Adding virtual machines as cluster resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">18.5 </span><span class="title-name">Adding virtual machines as cluster resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#sec-ha-virtualization-adding-virtual-machines">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      Use this procedure to add virtual machines to the cluster as cluster resources, with
+      resource constraints to ensure the VMs can always access the lock files. The lock files are
+      managed by the resources in the group <code class="literal">g-virt-lock</code>, which is available on
+      all nodes via the clone <code class="literal">cl-virt-lock</code>.
+    </p><div class="procedure" id="pro-ha-virtualization-adding-virtual-machines" data-id-title="Adding virtual machines as cluster resources"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 18.3: </span><span class="title-name">Adding virtual machines as cluster resources </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#pro-ha-virtualization-adding-virtual-machines">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          Install your virtual machines on one of the cluster nodes, with the following restrictions:
+        </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+              The installation source and storage must be on shared devices.
+            </p></li><li class="listitem"><p>
+              Do not configure the VMs to start on host boot.
+            </p></li></ul></div><p>
+          For more information, see
+          <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/book-virtualization.html" target="_blank">
+          <em class="citetitle">Virtualization Guide</em> for SUSE Linux Enterprise Server</a>.
+        </p></li><li class="step"><p>
+          If the virtual machines are running, shut them down. The cluster will start the VMs
+          after you add them as resources.
+        </p></li><li class="step"><p>
+          Dump the XML configuration to the OCFS2 volume. Repeat this step for each VM:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">virsh dumpxml <em class="replaceable">VM1</em> &gt; /mnt/shared/<em class="replaceable">VM1</em>.xml</code></pre></div><div id="id-1.4.4.16.7.3.4.3" class="admonition important compact"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><p>
+            Make sure the XML files do not contain any references to unshared local paths.
+          </p></div></li><li class="step"><p>
+          Run <code class="command">crm configure</code> to start the <code class="command">crm</code> interactive shell.
+        </p></li><li class="step"><p>
+          Create primitive resources to manage the virtual machines. Repeat this step for each VM:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive <em class="replaceable">VM1</em> VirtualDomain \
+  params config="/mnt/shared/<em class="replaceable">VM1</em>.xml" remoteuri="qemu+ssh://%n/system" \
+  meta allow-migrate=true \
+  op monitor timeout=30s interval=10s</code></pre></div><p>
+          The option <code class="literal">allow-migrate=true</code> enables live migration. If the value is
+          set to <code class="literal">false</code>, the cluster migrates the VM by shutting it down on
+          one node and restarting it on another node.
+        </p><p>
+          If you need to set utilization attributes to help place VMs based on their load impact,
+          see <a class="xref" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-utilization" title="7.10. Placing resources based on their load impact">Section 7.10, “Placing resources based on their load impact”</a>.
+        </p></li><li class="step"><p>
+          Create a colocation constraint so that the virtual machines can only start on nodes where
+          <code class="literal">cl-virt-lock</code> is running:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation col-fs-virt inf: ( <em class="replaceable">VM1 VM2 VMX</em> ) cl-virt-lock</code></pre></div></li><li class="step"><p>
+          Create an ordering constraint so that <code class="literal">cl-virt-lock</code> always starts before
+          the virtual machines:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order o-fs-virt Mandatory: cl-virt-lock ( <em class="replaceable">VM1 VM2 VMX</em> )</code></pre></div></li><li class="step"><p>
+          Review your changes with <code class="command">show</code>.
+        </p></li><li class="step"><p>
+          If everything is correct, submit your changes with <code class="command">commit</code>
+          and leave the crm live configuration with <code class="command">quit</code>.
+        </p></li><li class="step"><p>
+          Check the status of the virtual machines:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code>
+[...]
+Full List of Resources:
+[...]
+  * Clone Set: cl-virt-lock [g-virt-lock]:
+    * Started: [ alice bob ]
+  * VM1 (ocf::heartbeat:VirtualDomain): Started alice
+  * VM2 (ocf::heartbeat:VirtualDomain): Started alice
+  * VMX (ocf::heartbeat:VirtualDomain): Started alice</pre></div></li></ol></div></div><p>
+      The virtual machines are now managed by the High Availability cluster, and can migrate between the cluster nodes.
+    </p><div id="id-1.4.4.16.7.5" data-id-title="Do not manually start or stop cluster-managed VMs" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Do not manually start or stop cluster-managed VMs</div><p>
+        After adding virtual machines as cluster resources, do not manage them manually.
+        Only use the cluster tools as described in <a class="xref" href="cha-ha-manage-resources.html" title="Chapter 8. Managing cluster resources">Chapter 8, <em>Managing cluster resources</em></a>.
+      </p><p>
+        To perform maintenance tasks on cluster-managed VMs, see <a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-overview" title="28.2. Different options for maintenance tasks">Section 28.2, “Different options for maintenance tasks”</a>.
+      </p></div></section><section class="sect1" id="sec-ha-virtualization-testing" data-id-title="Testing the setup"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">18.6 </span><span class="title-name">Testing the setup</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#sec-ha-virtualization-testing">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      Use the following tests to confirm that the virtual machine High Availability setup works as expected.
+    </p><div id="id-1.4.4.16.8.3" class="admonition important compact"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><p>
+        Perform these tests in a test environment, not a production environment.
+      </p></div><div class="procedure" id="id-1.4.4.16.8.4" data-id-title="Verifying that the VM resource is protected across cluster nodes"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 18.4: </span><span class="title-name">Verifying that the VM resource is protected across cluster nodes </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#id-1.4.4.16.8.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          The virtual machine <code class="literal">VM1</code> is running on node <code class="literal">alice</code>.
+        </p></li><li class="step"><p>
+          On node <code class="literal">bob</code>, try to start the VM manually with
+          <code class="command">virsh start VM1</code>.
+        </p></li><li class="step"><p>
+          <span class="bold"><strong>Expected result:</strong></span> The <code class="command">virsh</code> command
+          fails. <code class="literal">VM1</code> cannot be started manually on <code class="literal">bob</code>
+          when it is running on <code class="literal">alice</code>.
+        </p></li></ol></div></div><div class="procedure" id="id-1.4.4.16.8.5" data-id-title="Verifying that the VM resource can live migrate between cluster nodes"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 18.5: </span><span class="title-name">Verifying that the VM resource can live migrate between cluster nodes </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#id-1.4.4.16.8.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          The virtual machine <code class="literal">VM1</code> is running on node <code class="literal">alice</code>.
+        </p></li><li class="step"><p>
+          Open two terminals.
+        </p></li><li class="step"><p>
+          In the first terminal, connect to <code class="literal">VM1</code> via SSH.
+        </p></li><li class="step"><p>
+          In the second terminal, try to migrate <code class="literal">VM1</code> to node
+          <code class="literal">bob</code> with <code class="command">crm resource move VM1 bob</code>.
+        </p></li><li class="step"><p>
+          Run <code class="command">crm_mon -r</code> to monitor the cluster status until it
+          stabilizes. This might take a short time.
+        </p></li><li class="step"><p>
+          In the first terminal, check whether the SSH connection to <code class="literal">VM1</code>
+          is still active.
+        </p></li><li class="step"><p>
+          <span class="bold"><strong>Expected result:</strong></span> The cluster status shows that
+          <code class="literal">VM1</code> has started on <code class="literal">bob</code>. The SSH connection
+          to <code class="literal">VM1</code> remains active during the whole migration.
+        </p></li></ol></div></div><div class="procedure" id="id-1.4.4.16.8.6" data-id-title="Verifying that the VM resource can migrate to another node when the current node reboots"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 18.6: </span><span class="title-name">Verifying that the VM resource can migrate to another node when the current node reboots </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#id-1.4.4.16.8.6">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          The virtual machine <code class="literal">VM1</code> is running on node <code class="literal">bob</code>.
+       </p></li><li class="step"><p>
+          Reboot <code class="literal">bob</code>.
+        </p></li><li class="step"><p>
+          On node <code class="literal">alice</code>, run <code class="command">crm_mon -r</code> to
+          monitor the cluster status until it stabilizes. This might take a short time.
+        </p></li><li class="step"><p>
+          <span class="bold"><strong>Expected result:</strong></span> The cluster status shows that
+          <code class="literal">VM1</code> has started on <code class="literal">alice</code>.
+        </p></li></ol></div></div><div class="procedure" id="id-1.4.4.16.8.7" data-id-title="Verifying that the VM resource can fail over to another node when the current node crashes"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 18.7: </span><span class="title-name">Verifying that the VM resource can fail over to another node when the current node crashes </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#id-1.4.4.16.8.7">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          The virtual machine <code class="literal">VM1</code> is running on node <code class="literal">alice</code>.
+        </p></li><li class="step"><p>
+          Simulate a crash on <code class="literal">alice</code> by forcing the machine off or
+          unplugging the power cable.
+        </p></li><li class="step"><p>
+          On node <code class="literal">bob</code>, run <code class="command">crm_mon -r</code> to
+          monitor the cluster status until it stabilizes. VM failover after a node crashes
+          usually takes longer than VM migration after a node reboots.
+        </p></li><li class="step"><p>
+          <span class="bold"><strong>Expected result:</strong></span> After a short time, the cluster status
+          shows that <code class="literal">VM1</code> has started on <code class="literal">bob</code>.
+        </p></li></ol></div></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-lb.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 17 </span>Load balancing</span></a> </div><div><a class="pagination-link next" href="cha-ha-geo.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 19 </span>Geo clusters (multi-site clusters)</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-virtualization.html#sec-ha-virtualization-overview"><span class="title-number">18.1 </span><span class="title-name">Overview</span></a></span></li><li><span class="sect1"><a href="cha-ha-virtualization.html#sec-ha-virtualization-requirements"><span class="title-number">18.2 </span><span class="title-name">Requirements</span></a></span></li><li><span class="sect1"><a href="cha-ha-virtualization.html#sec-ha-virtualization-configuring-cluster-resources"><span class="title-number">18.3 </span><span class="title-name">Configuring cluster resources to manage the lock files</span></a></span></li><li><span class="sect1"><a href="cha-ha-virtualization.html#sec-ha-virtualization-preparing-the-cluster-nodes"><span class="title-number">18.4 </span><span class="title-name">Preparing the cluster nodes to host virtual machines</span></a></span></li><li><span class="sect1"><a href="cha-ha-virtualization.html#sec-ha-virtualization-adding-virtual-machines"><span class="title-number">18.5 </span><span class="title-name">Adding virtual machines as cluster resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-virtualization.html#sec-ha-virtualization-testing"><span class="title-number">18.6 </span><span class="title-name">Testing the setup</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

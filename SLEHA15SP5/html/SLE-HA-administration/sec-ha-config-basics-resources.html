@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP5 | Administration Guide | Configuring cluster resources</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Configuring cluster resources | SLE HA 15 SP5"/>
+<meta name="description" content="As a cluster administrator, you need to create cluster…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP5"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 6. Configuring cluster resources"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP5"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Configuring cluster resources | SLE HA 15 SP5"/>
+<meta property="og:description" content="As a cluster administrator, you need to create cluster resources for every resource or application you run on servers in you…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Configuring cluster resources | SLE HA 15 SP5"/>
+<meta name="twitter:description" content="As a cluster administrator, you need to create cluster resources for every resource or application you run on servers in you…"/>
+<link rel="prev" href="cha-ha-config-basics.html" title="Chapter 5. Configuration and administration basics"/><link rel="next" href="sec-ha-config-basics-constraints.html" title="Chapter 7. Configuring resource constraints"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and administration</a><span> / </span><a class="crumb" href="sec-ha-config-basics-resources.html">Configuring cluster resources</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li><a href="sec-ha-config-basics-resources.html" class=" you-are-here"><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li><a href="cha-ha-virtualization.html" class=" "><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">24 </span><span class="title-name">Cluster logical volume manager (Cluster LVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="chapter" id="sec-ha-config-basics-resources" data-id-title="Configuring cluster resources"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP5</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    As a cluster administrator, you need to create cluster resources for
+    every resource or application you run on servers in your cluster. Cluster
+    resources can include Web sites, e-mail servers, databases, file systems,
+    virtual machines and any other server-based applications or services you
+    want to make available to users at all times.
+   </p></div></div></div></div><section class="sect1" id="sec-ha-config-basics-resources-types" data-id-title="Types of resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.1 </span><span class="title-name">Types of resources</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-types">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following types of resources can be created:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.3.3.1"><span class="term">Primitives</span></dt><dd><p>
+       A primitive resource, the most basic type of resource.
+      </p></dd><dt id="id-1.4.4.4.3.3.2"><span class="term">Groups</span></dt><dd><p>
+       Groups contain a set of resources that need to be located together,
+       started sequentially and stopped in the reverse order.
+      </p></dd><dt id="id-1.4.4.4.3.3.3"><span class="term">Clones</span></dt><dd><p>
+       Clones are resources that can be active on multiple hosts. Any
+       resource can be cloned, provided the respective resource agent
+       supports it.
+      </p><p>
+       Promotable clones (also known as multi-state resources) are a
+       special type of clone resource that can be promoted.
+      </p></dd></dl></div></section><section class="sect1" id="sec-ha-config-basics-raclasses" data-id-title="Supported resource agent classes"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.2 </span><span class="title-name">Supported resource agent classes</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-raclasses">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    For each cluster resource you add, you need to define the standard that
+    the resource agent conforms to. Resource agents abstract the services
+    they provide and present an accurate status to the cluster, which allows
+    the cluster to be non-committal about the resources it manages. The
+    cluster relies on the resource agent to react appropriately when given a
+    start, stop or monitor command.
+   </p><p>
+    Typically, resource agents come in the form of shell scripts. SUSE Linux Enterprise High Availability
+    supports the following classes of resource agents:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="vle-ha-resources-ocf-ra"><span class="term">Open Cluster Framework (OCF) resource agents</span></dt><dd><p>
+       OCF RA agents are best suited for use with High Availability, especially when
+       you need promotable clone resources or special monitoring abilities. The
+       agents are generally located in
+       <code class="filename">/usr/lib/ocf/resource.d/<em class="replaceable">provider</em>/</code>.
+       Their functionality is similar to that of LSB scripts. However, the
+       configuration is always done with environmental variables that allow
+       them to accept and process parameters easily.
+       OCF specifications have strict definitions of which exit codes must
+       be returned by actions. See <a class="xref" href="cha-ha-agents.html#sec-ha-errorcodes" title="10.3. OCF return codes and failure recovery">Section 10.3, “OCF return codes and failure recovery”</a>. The
+       cluster follows these specifications exactly.
+      </p><p>
+       All OCF Resource Agents are required to have at least the actions
+       <code class="literal">start</code>, <code class="literal">stop</code>,
+       <code class="literal">status</code>, <code class="literal">monitor</code> and
+       <code class="literal">meta-data</code>. The <code class="literal">meta-data</code> action
+       retrieves information about how to configure the agent. For example,
+       to know more about the <code class="literal">IPaddr</code> agent by
+       the provider <code class="literal">heartbeat</code>, use the following command:
+      </p><div class="verbatim-wrap"><pre class="screen">OCF_ROOT=/usr/lib/ocf /usr/lib/ocf/resource.d/heartbeat/IPaddr meta-data</pre></div><p>
+       The output is information in XML format, including several sections
+       (general description, available parameters, available actions for the
+       agent).
+      </p><p>
+       Alternatively, use the crmsh to view information on OCF resource
+       agents. For details, see <a class="xref" href="cha-ha-config-basics.html#sec-ha-manual-config-ocf" title="5.5.3. Displaying information about OCF resource agents">Section 5.5.3, “Displaying information about OCF resource agents”</a>.
+      </p></dd><dt id="id-1.4.4.4.4.4.2"><span class="term">Linux Standards Base (LSB) scripts</span></dt><dd><p>
+       LSB resource agents are generally provided by the operating
+       system/distribution and are found in
+       <code class="filename">/etc/init.d</code>. To be used with the cluster, they
+       must conform to the LSB init script specification. For example, they
+       must have several actions implemented, which are, at minimum,
+       <code class="literal">start</code>, <code class="literal">stop</code>,
+       <code class="literal">restart</code>, <code class="literal">reload</code>,
+       <code class="literal">force-reload</code> and <code class="literal">status</code>. For
+       more information, see
+       <a class="link" href="https://refspecs.linuxbase.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/iniscrptact.html" target="_blank">https://refspecs.linuxbase.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/iniscrptact.html</a>.
+      </p><p>
+       The configuration of those services is not standardized. If you
+       intend to use an LSB script with High Availability, make sure that you
+       understand how the relevant script is configured. You can often find
+       information about this in the documentation of the relevant package
+       in
+       <code class="filename">/usr/share/doc/packages/<em class="replaceable">PACKAGENAME</em></code>.
+      </p></dd><dt id="id-1.4.4.4.4.4.3"><span class="term">systemd</span></dt><dd><p>
+       Pacemaker can manage systemd services if they
+       are present. Instead of init scripts, systemd has unit files.
+       Generally, the services (or unit files) are provided by the operating
+       system. In case you want to convert existing init scripts, find more
+       information at
+       <a class="link" href="https://0pointer.de/blog/projects/systemd-for-admins-3.html" target="_blank">https://0pointer.de/blog/projects/systemd-for-admins-3.html</a>.
+      </p></dd><dt id="id-1.4.4.4.4.4.4"><span class="term">Service</span></dt><dd><p>
+       There are currently many types of system
+       services that exist in parallel: <code class="literal">LSB</code> (belonging to
+       System V init), <code class="literal">systemd</code> and (in some
+       distributions) <code class="literal">upstart</code>. Therefore, Pacemaker
+       supports a special alias that figures out which one
+       applies to a given cluster node. This is particularly useful when the
+       cluster contains a mix of systemd, upstart and LSB services.
+       Pacemaker tries to find the named service in the following order:
+       as an LSB (SYS-V) init script, a systemd unit file or an Upstart
+       job.
+      </p></dd><dt id="id-1.4.4.4.4.4.5"><span class="term">Nagios</span></dt><dd><p>
+       Monitoring plug-ins (formerly called Nagios plug-ins) allow to
+       monitor services on remote hosts. Pacemaker can do remote monitoring
+       with the monitoring plug-ins if they are present. For detailed
+       information, see
+       <a class="xref" href="sec-ha-config-basics-remote.html#sec-ha-config-basics-remote-nagios" title="9.1. Monitoring services on remote hosts with monitoring plug-ins">Section 9.1, “Monitoring services on remote hosts with monitoring plug-ins”</a>.
+      </p></dd><dt id="id-1.4.4.4.4.4.6"><span class="term">STONITH (fencing) resource agents</span></dt><dd><p>
+       This class is used exclusively for fencing related resources. For
+       more information, see <a class="xref" href="cha-ha-fencing.html" title="Chapter 12. Fencing and STONITH">Chapter 12, <em>Fencing and STONITH</em></a>.
+      </p></dd></dl></div><p>
+    The agents supplied with SUSE Linux Enterprise High Availability are written to OCF
+    specifications.
+   </p></section><section class="sect1" id="sec-ha-config-basics-timeouts" data-id-title="Timeout values"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.3 </span><span class="title-name">Timeout values</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-timeouts">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Timeouts values for resources can be influenced by the following
+    parameters:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      <code class="varname">op_defaults</code> (global timeout for operations),
+     </p></li><li class="listitem"><p>
+      a specific timeout value defined in a resource template,
+     </p></li><li class="listitem"><p>
+      a specific timeout value defined for a resource.
+     </p></li></ul></div><div id="id-1.4.4.4.5.4" data-id-title="Priority of values" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Priority of values</div><p>
+     If a <span class="emphasis"><em>specific</em></span> value is defined for a resource, it
+     takes precedence over the global default. A specific value for a
+     resource also takes precedence over a value that is defined in a
+     resource template.
+    </p></div><p>
+    Getting timeout values right is very important. Setting them too low
+    results in a lot of (unnecessary) fencing operations for the
+    following reasons:
+   </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+      If a resource runs into a timeout, it fails and the cluster tries
+      to stop it.
+     </p></li><li class="listitem"><p>
+      If stopping the resource also fails (for example, because the timeout
+      for stopping is set too low), the cluster fences the node. It
+      considers the node where this happens to be out of control.
+     </p></li></ol></div><p>
+    You can adjust the global default for operations and set any specific
+    timeout values with both crmsh and Hawk2. The best practice for
+    determining and setting timeout values is as follows:
+   </p><div class="procedure" id="id-1.4.4.4.5.8" data-id-title="Determining timeout values"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.1: </span><span class="title-name">Determining timeout values </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.5.8">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Check how long it takes your resources to start and stop (under load).
+     </p></li><li class="step"><p>
+      If needed, add the <code class="varname">op_defaults</code> parameter and set
+      the (default) timeout value accordingly:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        For example, set <code class="literal">op_defaults</code> to
+        <code class="literal">60</code> seconds:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">op_defaults timeout=60</code></pre></div></li><li class="step"><p>
+        For resources that need longer periods of time, define individual
+        timeout values.
+       </p></li></ol></li><li class="step"><p>
+      When configuring operations for a resource, add separate
+      <code class="literal">start</code> and <code class="literal">stop</code> operations. When
+      configuring operations with Hawk2, it provides useful timeout
+      proposals for those operations.
+     </p></li></ol></div></div></section><section class="sect1" id="sec-ha-config-basics-resources-management" data-id-title="Creating primitive resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.4 </span><span class="title-name">Creating primitive resources</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-management">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Before you can use a resource in the cluster, it must be set up. For
+    example, to use an Apache server as a cluster resource, set
+    up the Apache server first and complete the Apache configuration before
+    starting the respective resource in your cluster.
+   </p><p>
+    If a resource has specific environment requirements, make sure they are
+    present and identical on all cluster nodes. This kind of configuration
+    is not managed by SUSE Linux Enterprise High Availability. You must do this yourself.
+   </p><p>
+    You can create primitive resources using either Hawk2 or crmsh.
+   </p><div id="id-1.4.4.4.6.5" data-id-title="Do not touch services managed by the cluster" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Do not touch services managed by the cluster</div><p>
+     When managing a resource with SUSE Linux Enterprise High Availability, the same resource must not
+     be started or stopped otherwise (outside of the cluster, for example
+     manually or on boot or reboot). The High Availability software is responsible
+     for all service start or stop actions.
+    </p><p>
+     If you need to execute testing or maintenance tasks after the services
+     are already running under cluster control, make sure to put the
+     resources, nodes, or the whole cluster into maintenance mode before you
+     touch any of them manually. For details, see
+     <a class="xref" href="cha-ha-maintenance.html#sec-ha-maint-overview" title="28.2. Different options for maintenance tasks">Section 28.2, “Different options for maintenance tasks”</a>.
+    </p></div><div id="id-1.4.4.4.6.6" data-id-title="Resource IDs and node names" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Resource IDs and node names</div><p>Cluster resources and cluster nodes should be named differently.
+     Otherwise, Hawk2 will fail.</p></div><section class="sect2" id="sec-conf-hawk2-rsc-primitive" data-id-title="Creating primitive resources with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.4.1 </span><span class="title-name">Creating primitive resources with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-primitive">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     To create the most basic type of resource, proceed as follows:
+    </p><div class="procedure" id="pro-conf-hawk2-primitive-add" data-id-title="Adding a primitive resource with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.2: </span><span class="title-name">Adding a primitive resource with Hawk2 </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-primitive-add">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2:
+      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add
+       Resource</span> › <span class="guimenu">Primitive</span>.
+      </p></li><li class="step"><p>
+       Enter a unique <span class="guimenu">Resource ID</span>.
+      </p></li><li class="step"><p>
+       If a resource template exists on which you want to base the resource
+       configuration, select the respective <span class="guimenu">Template</span>.
+      </p></li><li class="step" id="step-ha-config-hawk2-primitive-start"><p>
+       Select the resource agent <span class="guimenu">Class</span> you want to use:
+       <code class="literal">lsb</code>, <code class="literal">ocf</code>,
+       <code class="literal">service</code>, <code class="literal">stonith</code> or
+       <code class="literal">systemd</code>. For more information, see
+       <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-raclasses" title="6.2. Supported resource agent classes">Section 6.2, “Supported resource agent classes”</a>.
+      </p></li><li class="step"><p>
+       If you selected <code class="literal">ocf</code> as class, specify the
+       <span class="guimenu">Provider</span> of your OCF resource agent. The OCF
+       specification allows multiple vendors to supply the same resource agent.
+      </p></li><li class="step"><p>
+       From the <span class="guimenu">Type</span> list, select the resource agent you want
+       to use (for example, <span class="guimenu">IPaddr</span> or
+       <span class="guimenu">Filesystem</span>). A short description for this resource
+       agent is displayed.
+      </p><div id="id-1.4.4.4.6.7.3.8.2" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note</div><p>
+        The selection you get in the <span class="guimenu">Type</span> list depends on the
+        <span class="guimenu">Class</span> (and for OCF resources also on the
+        <span class="guimenu">Provider</span>) you have chosen.
+       </p></div><div class="figure" id="id-1.4.4.4.6.7.3.8.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-primitive-basic.png"><img src="images/hawk2-primitive-basic.png" width="100%" alt="Hawk2—primitive resource" title="Hawk2—primitive resource"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 6.1: </span><span class="title-name">Hawk2—primitive resource </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.6.7.3.8.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+       After you have specified the resource basics, Hawk2 shows
+       the following categories. Either keep these categories as suggested by Hawk2,
+       or edit them as required.
+      </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.6.7.3.9.2.1"><span class="term">Parameters (instance attributes)</span></dt><dd><p>
+          Determines which instance of a service the resource controls.
+          When creating a resource, Hawk2 automatically shows any required
+          parameters. Edit them to get a valid resource configuration.
+         </p><p>
+          For more information, refer to <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-inst-attr" title="6.13. Instance attributes (parameters)">Section 6.13, “Instance attributes (parameters)”</a>.
+         </p></dd><dt id="id-1.4.4.4.6.7.3.9.2.2"><span class="term">Operations</span></dt><dd><p>
+          Needed for resource monitoring. When creating a resource, Hawk2 displays
+          the most important resource operations (<code class="literal">monitor</code>,
+          <code class="literal">start</code> and <code class="literal">stop</code>).
+         </p><p>
+          For more information, refer to <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-operations" title="6.14. Resource operations">Section 6.14, “Resource operations”</a>.
+         </p></dd><dt id="id-1.4.4.4.6.7.3.9.2.3"><span class="term">Meta attributes</span></dt><dd><p>
+          Tells the CRM how to treat a specific resource. When creating a resource,
+          Hawk2 automatically lists the important meta
+          attributes for that resource (for example, the
+          <code class="literal">target-role</code> attribute that defines the initial state of
+          a resource. By default, it is set to <code class="literal">Stopped</code>, so the
+          resource will not start immediately).
+         </p><p>
+          For more information, refer to <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-meta-attr" title="6.12. Resource options (meta attributes)">Section 6.12, “Resource options (meta attributes)”</a>.
+         </p></dd><dt id="id-1.4.4.4.6.7.3.9.2.4"><span class="term">Utilization</span></dt><dd><p>
+          Tells the CRM what capacity a certain resource requires from a node.
+         </p><p>
+          For more information, refer to <a class="xref" href="sec-ha-config-basics-constraints.html#sec-config-hawk2-utilization" title="7.10.1. Placing resources based on their load impact with Hawk2">Section 7.10.1, “Placing resources based on their load impact with Hawk2”</a>.
+         </p></dd></dl></div></li><li class="step"><p>
+       Click <span class="guimenu">Create</span> to finish the configuration. A message at the
+       top of the screen shows if the action has been successful.
+      </p></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-create" data-id-title="Creating primitive resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.4.2 </span><span class="title-name">Creating primitive resources with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-create">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-ha-manual-config-create" data-id-title="Adding a primitive resource with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.3: </span><span class="title-name">Adding a primitive resource with crmsh </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-ha-manual-config-create">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code> tool:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code></pre></div></li><li class="step"><p>
+       Configure a primitive IP address:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive myIP IPaddr \
+      params ip=127.0.0.99 op monitor interval=60s</code></pre></div><p>
+       The previous command configures a <span class="quote">“<span class="quote">primitive</span>”</span> with the
+       name <code class="literal">myIP</code>. You need to choose a class (here
+       <code class="literal">ocf</code>), provider (<code class="literal">heartbeat</code>), and
+       type (<code class="literal">IPaddr</code>). Furthermore, this primitive expects
+       other parameters like the IP address. Change the address to your
+       setup.
+      </p></li><li class="step"><p>
+       Display and review the changes you have made:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">show</code></pre></div></li><li class="step"><p>
+       Commit your changes to take effect:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-resources-advanced-groups" data-id-title="Creating resource groups"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.5 </span><span class="title-name">Creating resource groups</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-advanced-groups">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Some cluster resources depend on other components or resources. They
+    require that each component or resource starts in a specific order and
+    runs together on the same server as the resources it depends on. To
+    simplify this configuration, you can use cluster resource groups.
+   </p><p>
+    You can create resource groups using either Hawk2 or crmsh.
+   </p><div class="complex-example"><div class="example" id="ex-ha-config-resource-group" data-id-title="Resource group for a web server"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 6.1: </span><span class="title-name">Resource group for a web server </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#ex-ha-config-resource-group">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="example-contents"><p>
+     An example of a resource group would be a Web server that requires an
+     IP address and a file system. In this case, each component is a
+     separate resource that is combined into a cluster resource group. The
+     resource group would run on one or more servers. In case of a software
+     or hardware malfunction, the group would fail over to another server
+     in the cluster, similar to an individual cluster resource.
+    </p></div></div></div><div class="figure" id="id-1.4.4.4.7.5"><div class="figure-contents"><div class="mediaobject"><a href="images/webserver_groupresource_a.svg"><img src="images/webserver_groupresource_a.svg" width="63%" alt="Group resource" title="Group resource"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 6.2: </span><span class="title-name">Group resource </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.7.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div><p>
+    Groups have the following properties:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.7.7.1"><span class="term">Starting and stopping</span></dt><dd><p>
+       Resources are started in the order they appear in and stopped in
+       reverse order.
+      </p></dd><dt id="id-1.4.4.4.7.7.2"><span class="term">Dependency</span></dt><dd><p>
+       If a resource in the group cannot run anywhere, then none of the
+       resources located after that resource in the group is allowed to
+       run.
+      </p></dd><dt id="id-1.4.4.4.7.7.3"><span class="term">Contents</span></dt><dd><p>
+       Groups may only contain a collection of primitive cluster resources.
+       Groups must contain at least one resource, otherwise the
+       configuration is not valid. To refer to the child of a group
+       resource, use the child's ID instead of the group's ID.
+      </p></dd><dt id="id-1.4.4.4.7.7.4"><span class="term">Constraints</span></dt><dd><p>
+       Although it is possible to reference the group's children in
+       constraints, it is usually preferable to use the group's name
+       instead.
+      </p></dd><dt id="id-1.4.4.4.7.7.5"><span class="term">Stickiness</span></dt><dd><p>
+       Stickiness is additive in groups. Every <span class="emphasis"><em>active</em></span>
+       member of the group contributes its stickiness value to the
+       group's total. So if the default
+       <code class="literal">resource-stickiness</code> is <code class="literal">100</code> and
+       a group has seven members (ﬁve of which are active), the group as
+       a whole will prefer its current location with a score of
+       <code class="literal">500</code>.
+      </p></dd><dt id="id-1.4.4.4.7.7.6"><span class="term">Resource monitoring</span></dt><dd><p>
+       To enable resource monitoring for a group, you must configure
+       monitoring separately for each resource in the group that you want
+       monitored.
+      </p></dd></dl></div><section class="sect2" id="sec-conf-hawk2-rsc-group" data-id-title="Creating resource groups with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.5.1 </span><span class="title-name">Creating resource groups with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-group">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.4.4.7.8.2" data-id-title="Empty groups" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Empty groups</div><p>
+      Groups must contain at least one resource, otherwise the configuration is
+      not valid. While creating a group, Hawk2 allows you to create more
+      primitives and add them to the group.
+     </p></div><div class="procedure" id="pro-conf-hawk2-group" data-id-title="Adding a resource group with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.4: </span><span class="title-name">Adding a resource group with Hawk2 </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-group">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2:
+      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Resource</span> › <span class="guimenu">Group</span>.
+      </p></li><li class="step"><p>
+       Enter a unique <span class="guimenu">Group ID</span>.
+      </p></li><li class="step"><p>
+       To define the group members, select one or multiple entries in the list of
+       <span class="guimenu">Children</span>. Re-sort group members by dragging and
+       dropping them into the order you want by using the <span class="quote">“<span class="quote">handle</span>”</span>
+       icon on the right.
+      </p></li><li class="step"><p>
+       If needed, modify or add <span class="guimenu">Meta Attributes</span>.
+      </p></li><li class="step"><p>
+       Click <span class="guimenu">Create</span> to finish the configuration. A message at
+       the top of the screen shows if the action has been successful.
+      </p></li></ol></div></div><div class="figure" id="id-1.4.4.4.7.8.4"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-rsc-group.png"><img src="images/hawk2-rsc-group.png" width="100%" alt="Hawk2—resource group" title="Hawk2—resource group"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 6.3: </span><span class="title-name">Hawk2—resource group </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.7.8.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-group" data-id-title="Creating a resource group with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.5.2 </span><span class="title-name">Creating a resource group with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-group">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     The following example creates two primitives (an IP address and an
+     e-mail resource).
+    </p><div class="procedure" id="id-1.4.4.4.7.9.3" data-id-title="Adding a resource group with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.5: </span><span class="title-name">Adding a resource group with crmsh </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.7.9.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Run the <code class="command">crm</code> command as system administrator. The
+       prompt changes to <code class="literal">crm(live)</code>.
+      </p></li><li class="step"><p>
+       Configure the primitives:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive Public-IP ocf:heartbeat:IPaddr2 \
+    params ip=1.2.3.4 \
+    op monitor interval=10s</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive Email systemd:postfix \
+    op monitor interval=10s</code></pre></div></li><li class="step"><p>
+       Group the primitives with their relevant identifiers in the correct
+       order:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group g-mailsvc Public-IP Email</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-resources-advanced-clones" data-id-title="Creating clone resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.6 </span><span class="title-name">Creating clone resources</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-advanced-clones">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    You may want certain resources to run simultaneously on multiple nodes
+    in your cluster. To do this, you must configure a resource as a clone.
+    Examples of resources that might be configured as clones include
+    cluster file systems like OCFS2. You can clone any
+    resource provided. This is supported by the resource's Resource
+    Agent. Clone resources may even be configured differently depending on
+    which nodes they are hosted.
+   </p><p>
+    There are three types of resource clones:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.8.4.1"><span class="term">Anonymous clones</span></dt><dd><p>
+       These are the simplest type of clones. They behave identically
+       anywhere they are running. Because of this, there can only be one
+       instance of an anonymous clone active per machine.
+      </p></dd><dt id="id-1.4.4.4.8.4.2"><span class="term">Globally unique clones</span></dt><dd><p>
+       These resources are distinct entities. An instance of the clone
+       running on one node is not equivalent to another instance on another
+       node; nor would any two instances on the same node be equivalent.
+      </p></dd><dt id="id-1.4.4.4.8.4.3"><span class="term">Promotable clones (multi-state resources)</span></dt><dd><p>
+       Active instances of these resources are divided into two states:
+       active and passive. These are also sometimes called primary and
+       secondary. Promotable clones can be either
+       anonymous or globally unique. For more information, see
+       <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-promotable-clones" title="6.7. Creating promotable clones (multi-state resources)">Section 6.7, “Creating promotable clones (multi-state resources)”</a>.
+      </p></dd></dl></div><p>
+    Clones must contain exactly one group or one regular resource.
+   </p><p>
+    When configuring resource monitoring or constraints, clones have
+    different requirements than simple resources. For details, see
+     <em class="citetitle">Pacemaker Explained</em>, available from <a class="link" href="https://www.clusterlabs.org/pacemaker/doc/" target="_blank">https://www.clusterlabs.org/pacemaker/doc/</a>.
+   </p><p>
+    You can create clone resources using either Hawk2 or crmsh.
+   </p><section class="sect2" id="sec-conf-hawk2-rsc-clone" data-id-title="Creating clone resources with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.6.1 </span><span class="title-name">Creating clone resources with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-clone">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.4.4.8.8.2" data-id-title="Child resources for clones" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Child resources for clones</div><p>
+      Clones can either contain a primitive or a group as child resources. In
+      Hawk2, child resources cannot be created or modified while creating a
+      clone. Before adding a clone, create child resources and configure them as desired.
+     </p></div><div class="procedure" id="pro-conf-hawk2-clone" data-id-title="Adding a clone resource with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.6: </span><span class="title-name">Adding a clone resource with Hawk2 </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-clone">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2:
+      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Resource</span> › <span class="guimenu">Clone</span>.
+      </p></li><li class="step"><p>
+       Enter a unique <span class="guimenu">Clone ID</span>.
+      </p></li><li class="step"><p>
+       From the <span class="guimenu">Child Resource</span> list, select the primitive or
+       group to use as a subresource for the clone.
+      </p></li><li class="step"><p>
+       If needed, modify or add <span class="guimenu">Meta Attributes</span>.
+      </p></li><li class="step"><p>
+       Click <span class="guimenu">Create</span> to finish the configuration. A message at
+       the top of the screen shows if the action has been successful.
+      </p></li></ol></div></div><div class="figure" id="id-1.4.4.4.8.8.4"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-clone.png"><img src="images/hawk2-clone.png" width="100%" alt="Hawk2—clone resource" title="Hawk2—clone resource"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 6.4: </span><span class="title-name">Hawk2—clone resource </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.8.8.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-clone" data-id-title="Creating clone resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.6.2 </span><span class="title-name">Creating clone resources with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-clone">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+      To create an anonymous clone resource, first create a primitive
+      resource and then refer to it with the <code class="command">clone</code> command.
+     </p><div class="procedure" id="id-1.4.4.4.8.9.3" data-id-title="Adding a clone resource with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.7: </span><span class="title-name">Adding a clone resource with crmsh </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.8.9.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+        Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+        interactive shell:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code></pre></div></li><li class="step"><p>
+        Configure the primitive, for example:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive Apache apache</code></pre></div></li><li class="step"><p>
+        Clone the primitive:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">clone cl-apache Apache</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-resources-promotable-clones" data-id-title="Creating promotable clones (multi-state resources)"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.7 </span><span class="title-name">Creating promotable clones (multi-state resources)</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-promotable-clones">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Promotable clones (formerly known as multi-state resources) are a
+    specialization of clones. They allow the
+    instances to be in one of two operating modes (primary or
+    secondary). Promotable clones must contain
+    exactly one group or one regular resource.
+   </p><p>
+    When configuring resource monitoring or constraints, promotable
+    clones have different requirements than simple resources. For
+    details, see  <em class="citetitle">Pacemaker Explained</em>, available from
+    <a class="link" href="https://www.clusterlabs.org/pacemaker/doc/" target="_blank">https://www.clusterlabs.org/pacemaker/doc/</a>.
+   </p><p>
+    You can create promotable clones using either Hawk2 or crmsh.
+   </p><section class="sect2" id="sec-conf-hawk2-rsc-ms" data-id-title="Creating promotable clones with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.7.1 </span><span class="title-name">Creating promotable clones with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-ms">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.4.4.9.5.2" data-id-title="Child resources for promotable clones" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Child resources for promotable clones</div><p>
+      Promotable clones can either contain a primitive or a group as child
+      resources. In Hawk2, child resources cannot be created or modified while
+      creating a promotable clone. Before adding a promotable clone,
+      create child resources and configure them as desired. See
+      <a class="xref" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-primitive" title="6.4.1. Creating primitive resources with Hawk2">Section 6.4.1, “Creating primitive resources with Hawk2”</a> or
+      <a class="xref" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-group" title="6.5.1. Creating resource groups with Hawk2">Section 6.5.1, “Creating resource groups with Hawk2”</a>.
+     </p></div><div class="procedure" id="pro-conf-hawk2-ms" data-id-title="Adding a promotable clone with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.8: </span><span class="title-name">Adding a promotable clone with Hawk2 </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-ms">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in to Hawk2:
+      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+       From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Resource</span> › <span class="guimenu">Multi-state</span>.
+      </p></li><li class="step"><p>
+       Enter a unique <span class="guimenu">Multi-state ID</span>.
+      </p></li><li class="step"><p>
+       From the <span class="guimenu">Child Resource</span> list, select the primitive or
+       group to use as a subresource for the multi-state resource.
+      </p></li><li class="step"><p>
+       If needed, modify or add <span class="guimenu">Meta Attributes</span>.
+      </p></li><li class="step"><p>
+       Click <span class="guimenu">Create</span> to finish the configuration. A message at
+       the top of the screen shows if the action has been successful.
+      </p></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-clone-stateful" data-id-title="Creating promotable clones with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.7.2 </span><span class="title-name">Creating promotable clones with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-clone-stateful">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     To create a promotable clone resource, first create a primitive resource
+     and then the promotable clone resource. The promotable clone resource must
+     support at least promote and demote operations.
+    </p><div class="procedure" id="id-1.4.4.4.9.6.3" data-id-title="Adding a promotable clone with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.9: </span><span class="title-name">Adding a promotable clone with crmsh </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.9.6.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+       interactive shell:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code></pre></div></li><li class="step"><p>
+       Configure the primitive. Change the intervals if needed:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive my-rsc ocf:myCorp:myAppl \
+    op monitor interval=60 \
+    op monitor interval=61 role=Promoted</code></pre></div></li><li class="step"><p>
+       Create the promotable clone resource:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">clone clone-rsc my-rsc meta promotable=true</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-resources-templates" data-id-title="Creating resource templates"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.8 </span><span class="title-name">Creating resource templates</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-templates">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    If you want to create lots of resources with similar configurations,
+    defining a resource template is the easiest way. After being
+    defined, it can be referenced in primitives, or in certain types
+    of constraints as described in <a class="xref" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-templates" title="7.3. Resource templates and constraints">Section 7.3, “Resource templates and constraints”</a>.
+   </p><p>
+    If a template is referenced in a primitive, the primitive inherits
+    all operations, instance attributes (parameters), meta attributes and
+    utilization attributes defined in the template. Additionally, you can
+    define specific operations or attributes for your primitive. If any of
+    these are defined in both the template and the primitive, the values
+    defined in the primitive take precedence over the ones defined in
+    the template.
+   </p><p>
+    You can create resource templates using either Hawk2 or crmsh.
+   </p><section class="sect2" id="sec-conf-hawk2-rsc-template" data-id-title="Creating resource templates with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.8.1 </span><span class="title-name">Creating resource templates with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-template">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     Resource templates are configured like primitive resources.
+    </p><div class="procedure" id="pro-conf-hawk2-template-add" data-id-title="Adding a resource template"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.10: </span><span class="title-name">Adding a resource template </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-template-add">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Resource</span> › <span class="guimenu">Template</span>.
+     </p></li><li class="step"><p>
+      Enter a unique <span class="guimenu">Resource ID</span>.
+     </p></li><li class="step"><p>
+      Follow the instructions in <a class="xref" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-primitive-add" title="Adding a primitive resource with Hawk2">Procedure 6.2, “Adding a primitive resource with Hawk2”</a>,
+      starting from
+      <a class="xref" href="sec-ha-config-basics-resources.html#step-ha-config-hawk2-primitive-start" title="Step 5">Step 5</a>.
+     </p></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-rsc-template" data-id-title="Creating resource templates with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.8.2 </span><span class="title-name">Creating resource templates with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-rsc-template">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Use the <code class="command">rsc_template</code> command to get familiar with the syntax:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure rsc_template</code>
+ usage: rsc_template &lt;name&gt; [&lt;class&gt;:[&lt;provider&gt;:]]&lt;type&gt;
+        [params &lt;param&gt;=&lt;value&gt; [&lt;param&gt;=&lt;value&gt;...]]
+        [meta &lt;attribute&gt;=&lt;value&gt; [&lt;attribute&gt;=&lt;value&gt;...]]
+        [utilization &lt;attribute&gt;=&lt;value&gt; [&lt;attribute&gt;=&lt;value&gt;...]]
+        [operations id_spec
+            [op op_type [&lt;attribute&gt;=&lt;value&gt;...] ...]]</pre></div><p>
+    For example, the following command creates a new resource template with
+    the name <code class="literal">BigVM</code> derived from the
+    <code class="literal">ocf:heartbeat:Xen</code> resource and some default values
+    and operations:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">rsc_template BigVM ocf:heartbeat:Xen \
+   params allow_mem_management="true" \
+   op monitor timeout=60s interval=15s \
+   op stop timeout=10m \
+   op start timeout=10m</code></pre></div><p>
+    Once you define the new resource template, you can use it in primitives
+    or reference it in order, colocation or rsc_ticket constraints. To
+    reference the resource template, use the <code class="literal">@</code> sign:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive MyVM1 @BigVM \
+   params xmfile="/etc/xen/shared-vm/MyVM1" name="MyVM1"</code></pre></div><p>
+    The new primitive MyVM1 is going to inherit everything from the BigVM
+    resource templates. For example, the equivalent of the above two would
+    be:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive MyVM1 Xen \
+   params xmfile="/etc/xen/shared-vm/MyVM1" name="MyVM1" \
+   params allow_mem_management="true" \
+   op monitor timeout=60s interval=15s \
+   op stop timeout=10m \
+   op start timeout=10m</code></pre></div><p>
+    If you want to overwrite some options or operations, add them to your
+    (primitive) definition. For example, the following new primitive MyVM2
+    doubles the timeout for monitor operations but leaves others untouched:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive MyVM2 @BigVM \
+   params xmfile="/etc/xen/shared-vm/MyVM2" name="MyVM2" \
+   op monitor timeout=120s interval=30s</code></pre></div><p>
+    A resource template may be referenced in constraints to stand for all
+    primitives which are derived from that template. This helps to produce a
+    more concise and clear cluster configuration. Resource template
+    references are allowed in all constraints except location constraints.
+    Colocation constraints may not contain more than one template reference.
+   </p></section></section><section class="sect1" id="sec-ha-conf-stonith-rsc" data-id-title="Creating STONITH resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.9 </span><span class="title-name">Creating STONITH resources</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-conf-stonith-rsc">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.4.4.11.2" data-id-title="No Support Without STONITH" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: No Support Without STONITH</div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>You must have a node fencing
+        mechanism for your cluster.</p></li><li class="listitem"><p>The global cluster options
+          <code class="systemitem">stonith-enabled</code> and
+          <code class="systemitem">startup-fencing</code> must be set to
+          <code class="literal">true</code>.
+          When you change them, you lose support.</p></li></ul></div></div><p>
+   By default, the global cluster option <code class="literal">stonith-enabled</code> is
+   set to <code class="literal">true</code>. If no STONITH resources have been defined,
+   the cluster will refuse to start any resources. Configure one or more
+   STONITH resources to complete the STONITH setup. While STONITH resources
+   are configured similarly to other resources, their behavior is different in
+   some respects. For details refer to <a class="xref" href="cha-ha-fencing.html#sec-ha-fencing-config" title="12.3. STONITH resources and configuration">Section 12.3, “STONITH resources and configuration”</a>.
+  </p><p>
+   You can create STONITH resources using either Hawk2 or crmsh.
+  </p><section class="sect2" id="sec-conf-hawk2-rsc-stonith" data-id-title="Creating STONITH resources with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.9.1 </span><span class="title-name">Creating STONITH resources with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-stonith">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   To add a STONITH resource for SBD, for libvirt (KVM/Xen), or for vCenter/ESX Server,
+   the easiest way is to use the Hawk2 wizard.
+  </p><div class="procedure" id="pro-conf-hawk2-stonith" data-id-title="Adding a STONITH resource with Hawk2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.11: </span><span class="title-name">Adding a STONITH resource with Hawk2 </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-stonith">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in to Hawk2:
+    </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+     From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add
+     Resource</span> › <span class="guimenu">Primitive</span>.
+    </p></li><li class="step"><p>
+     Enter a unique <span class="guimenu">Resource ID</span>.
+    </p></li><li class="step"><p>
+     From the <span class="guimenu">Class</span> list, select the resource agent class
+     <span class="guimenu">stonith</span>.
+    </p></li><li class="step"><p>
+     From the <span class="guimenu">Type</span> list, select the STONITH plug-in to
+     control your STONITH device. A short description for this plug-in is
+     displayed.
+    </p></li><li class="step"><p>
+     Hawk2 automatically shows the required <span class="guimenu">Parameters</span> for
+     the resource. Enter values for each parameter.
+    </p></li><li class="step"><p>
+     Hawk2 displays the most important resource <span class="guimenu">Operations</span>
+     and proposes default values. If you do not modify any settings here,
+     Hawk2 adds the proposed operations and their default values when you
+     confirm.
+    </p></li><li class="step"><p>
+     If there is no reason to change them, keep the default <span class="guimenu">Meta
+     Attributes</span> settings.
+    </p><div class="figure" id="id-1.4.4.4.11.5.3.9.2"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-primitive-stonith.png"><img src="images/hawk2-primitive-stonith.png" width="100%" alt="Hawk2—STONITH resource" title="Hawk2—STONITH resource"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 6.5: </span><span class="title-name">Hawk2—STONITH resource </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.11.5.3.9.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+     Confirm your changes to create the STONITH resource.
+    </p><p>
+     A message at the top of the screen shows if the action has been
+     successful.
+    </p></li></ol></div></div><p>
+   To complete your fencing configuration, add constraints. For more details,
+   refer to <a class="xref" href="cha-ha-fencing.html" title="Chapter 12. Fencing and STONITH">Chapter 12, <em>Fencing and STONITH</em></a>.
+  </p></section><section class="sect2" id="sec-ha-manual-create-stonith" data-id-title="Creating STONITH resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.9.2 </span><span class="title-name">Creating STONITH resources with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-create-stonith">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="id-1.4.4.4.11.6.2" data-id-title="Adding a STONITH resource with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.12: </span><span class="title-name">Adding a STONITH resource with crmsh </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.11.6.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+     interactive shell:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code></pre></div></li><li class="step"><p>
+     Get a list of all STONITH types with the following command:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">ra list stonith</code>
+apcmaster                  apcmastersnmp              apcsmart
+baytech                    bladehpi                   cyclades
+drac3                      external/drac5             external/dracmc-telnet
+external/hetzner           external/hmchttp           external/ibmrsa
+external/ibmrsa-telnet     external/ipmi              external/ippower9258
+external/kdumpcheck        external/libvirt           external/nut
+external/rackpdu           external/riloe             external/sbd
+external/vcenter           external/vmware            external/xen0
+external/xen0-ha           fence_legacy               ibmhmc
+ipmilan                    meatware                   nw_rpc100s
+rcd_serial                 rps10                      suicide
+wti_mpc                    wti_nps</pre></div></li><li class="step" id="st-ha-manual-create-stonith-type"><p>
+     Choose a STONITH type from the above list and view the list of
+     possible options. Use the following command:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">ra info stonith:external/ipmi</code>
+IPMI STONITH external device (stonith:external/ipmi)
+
+ipmitool based power management. Apparently, the power off
+method of ipmitool is intercepted by ACPI which then makes
+a regular shutdown. In case of a split brain on a two-node,
+it may happen that no node survives. For two-node clusters,
+use only the reset method.
+
+Parameters (* denotes required, [] the default):
+
+hostname (string): Hostname
+   The name of the host to be managed by this STONITH device.
+...</pre></div></li><li class="step"><p>
+     Create the STONITH resource with the <code class="literal">stonith</code>
+     class, the type you have chosen in
+     <a class="xref" href="sec-ha-config-basics-resources.html#st-ha-manual-create-stonith-type" title="Step 3">Step 3</a>,
+     and the respective parameters if needed, for example:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive my-stonith stonith:external/ipmi \
+   params hostname="alice" \
+   ipaddr="192.168.1.221" \
+   userid="admin" passwd="secret" \
+   op monitor interval=60m timeout=120s</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-monitoring" data-id-title="Configuring resource monitoring"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.10 </span><span class="title-name">Configuring resource monitoring</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-monitoring">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   If you want to ensure that a resource is running, you must configure
+   resource monitoring for it. You can configure resource monitoring using
+   either Hawk2 or crmsh.
+  </p><p>
+   If the resource monitor detects a failure, the following takes place:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     Log file messages are generated, according to the configuration
+     specified in the <code class="literal">logging</code> section of
+     <code class="filename">/etc/corosync/corosync.conf</code>.
+    </p></li><li class="listitem"><p>
+     The failure is reflected in the cluster management tools (Hawk2,
+     <code class="command">crm status</code>), and in the CIB status section.
+    </p></li><li class="listitem"><p>
+     The cluster initiates noticeable recovery actions, which may include
+     stopping the resource to repair the failed state and restarting the
+     resource locally or on another node. The resource also may not be
+     restarted, depending on the configuration and state of the cluster.
+    </p></li></ul></div><p>
+   If you do not configure resource monitoring, resource failures after a
+   successful start will not be communicated, and the cluster will always
+   show the resource as healthy.
+  </p><p>
+    Usually, resources are only
+    monitored by the cluster while they are running. However, to detect
+    concurrency violations, also configure monitoring for resources which are
+    stopped. For resource monitoring, specify a timeout and/or start delay
+    value, and an interval. The interval tells the CRM how often it should check
+    the resource status. You can also set particular parameters such as
+    <code class="literal">timeout</code> for <code class="literal">start</code> or
+    <code class="literal">stop</code> operations.
+   </p><p>
+    For more information about monitor operation parameters, see
+    <a class="xref" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-operations" title="6.14. Resource operations">Section 6.14, “Resource operations”</a>.
+   </p><section class="sect2" id="sec-conf-hawk2-rsc-monitor" data-id-title="Configuring resource monitoring with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.10.1 </span><span class="title-name">Configuring resource monitoring with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-monitor">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-operations" data-id-title="Adding and modifying an operation"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 6.13: </span><span class="title-name">Adding and modifying an operation </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-hawk2-operations">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in to Hawk2:
+     </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
+      Add a resource as described in
+      <a class="xref" href="sec-ha-config-basics-resources.html#pro-conf-hawk2-primitive-add" title="Adding a primitive resource with Hawk2">Procedure 6.2, “Adding a primitive resource with Hawk2”</a> or select an existing
+      primitive to edit.
+     </p><p>
+      Hawk2 automatically shows the most important
+      <span class="guimenu">Operations</span> (<code class="literal">start</code>,
+      <code class="literal">stop</code>, <code class="literal">monitor</code>) and proposes default
+      values.
+     </p><p>
+      To see the attributes belonging to each proposed value, hover the mouse
+      pointer over the respective value.
+     </p><div class="figure" id="id-1.4.4.4.12.8.2.3.4"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-monitor-op.png"><img src="images/hawk2-monitor-op.png" width="60%" alt="In the Operations list, beside the monitor operation, hovering the mouse pointer over the number 20 shows that this is the value for the timeout attribute." title="In the Operations list, beside the monitor operation, hovering the mouse pointer over the number 20 shows that this is the value for the timeout attribute."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 6.6: </span><span class="title-name">Operation values </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.12.8.2.3.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></li><li class="step"><p>
+      To change the suggested <code class="literal">timeout</code> values for the
+      <code class="literal">start</code> or <code class="literal">stop</code> operation:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Click the pen icon next to the operation.
+       </p></li><li class="step"><p>
+        In the dialog that opens, enter a different value for the
+        <code class="literal">timeout</code> parameter, for example <code class="literal">10</code>,
+        and confirm your change.
+       </p></li></ol></li><li class="step"><p>
+      To change the suggested <span class="guimenu">interval</span> value for the
+      <code class="literal">monitor</code> operation:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Click the pen icon next to the operation.
+       </p></li><li class="step"><p>
+        In the dialog that opens, enter a different value for the monitoring
+        <code class="literal">interval</code>.
+       </p></li><li class="step"><p>
+        To configure resource monitoring in the case that the resource is
+        stopped:
+       </p><ol type="i" class="substeps"><li class="step"><p>
+          Select the <code class="literal">role</code> entry from the empty drop-down box
+          below.
+         </p></li><li class="step"><p>
+          From the <code class="literal">role</code> drop-down box, select
+          <code class="literal">Stopped</code>.
+         </p></li><li class="step"><p>
+          Click <span class="guimenu">Apply</span> to confirm your changes and to close
+          the dialog for the operation.
+         </p></li></ol></li></ol></li><li class="step"><p>
+      Confirm your changes in the resource configuration screen. A message at
+      the top of the screen shows if the action has been successful.
+     </p></li></ol></div></div><p>
+    To view resource failures, switch to the <span class="guimenu">Status</span> screen in
+    Hawk2 and select the resource you are interested in. In the
+    <span class="guimenu">Operations</span> column click the arrow down icon and select
+    <span class="guimenu">Recent Events</span>. The dialog that opens lists recent actions
+    performed for the resource. Failures are displayed in red. To view the
+    resource details, click the magnifier icon in the
+    <span class="guimenu">Operations</span> column.
+   </p><div class="figure" id="id-1.4.4.4.12.8.4"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-rsc-details.png"><img src="images/hawk2-rsc-details.png" width="60%" alt="Hawk2—resource details" title="Hawk2—resource details"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 6.7: </span><span class="title-name">Hawk2—resource details </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.12.8.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-monitor" data-id-title="Configuring resource monitoring with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.10.2 </span><span class="title-name">Configuring resource monitoring with crmsh</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-monitor">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To monitor a resource, there are two possibilities: either define a
+    monitor operation with the <code class="command">op</code> keyword or use the
+    <code class="command">monitor</code> command. The following example configures an
+    Apache resource and monitors it every 60 seconds with the
+    <code class="literal">op</code> keyword:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive apache apache \
+  params ... \
+  <span class="emphasis"><em>op monitor interval=60s timeout=30s</em></span></code></pre></div><p>
+    The same can be done with the following commands:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive apache apache \
+   params ...</code>
+ <code class="prompt custom">crm(live)configure# </code><code class="command">monitor apache 60s:30s</code></pre></div><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.12.9.6.1"><span class="term">Monitoring stopped resources</span></dt><dd><p>
+       Usually, resources are only monitored by the cluster while they
+       are running. However, to detect concurrency violations, also configure
+       monitoring for resources which are stopped. For example:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive dummy1 Dummy \
+     op monitor interval="300s" role="Stopped" timeout="10s" \
+     op monitor interval="30s" timeout="10s"</code></pre></div><p>
+       This configuration triggers a monitoring operation every
+       <code class="literal">300</code> seconds for the resource
+       <code class="literal">dummy1</code> when it is in
+       <code class="literal">role="Stopped"</code>. When running, it will be monitored
+       every <code class="literal">30</code> seconds.
+      </p></dd><dt id="id-1.4.4.4.12.9.6.2"><span class="term">Probing</span></dt><dd><p>
+       The CRM executes an initial monitoring for each resource on every
+       node, the so-called <code class="literal">probe</code>. A probe is also executed
+       after the cleanup of a resource. If multiple monitoring operations are
+       defined for a resource, the CRM selects the one with the smallest
+       interval and uses its timeout value as default timeout for
+       probing. If no monitor operation is configured, the cluster-wide
+       default applies. The default is <code class="literal">20</code> seconds (if not
+       specified otherwise by configuring the <code class="varname">op_defaults</code>
+       parameter). If you do not want to rely on the automatic calculation or
+       the <code class="systemitem">op_defaults</code> value, define a specific
+       monitoring operation for the <span class="emphasis"><em>probing</em></span> of this
+       resource. Do so by adding a monitoring operation with the
+       <code class="literal">interval</code> set to <code class="literal">0</code>, for example:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive rsc1 ocf:pacemaker:Dummy \
+     op monitor interval="0" timeout="60"</code></pre></div><p>
+       The probe of <code class="systemitem">rsc1</code> times out in
+       <code class="literal">60s</code>, independent of the global timeout defined in
+       <code class="varname">op_defaults</code>, or any other operation timeouts
+       configured. If you did not set <code class="literal">interval="0"</code> for
+       specifying the probing of the respective resource, the CRM
+       automatically checks for any other monitoring operations defined for
+       that resource and calculates the timeout value for probing as
+       described above.
+      </p></dd></dl></div></section></section><section class="sect1" id="sec-ha-manual-config-load" data-id-title="Loading resources from a file"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.11 </span><span class="title-name">Loading resources from a file</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-load">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Parts or all of the configuration can be loaded from a local file or a
+   network URL. Three different methods can be defined:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.13.3.1"><span class="term"><code class="option">replace</code></span></dt><dd><p>
+      This option replaces the current configuration with the new source
+      configuration.
+     </p></dd><dt id="id-1.4.4.4.13.3.2"><span class="term"><code class="option">update</code></span></dt><dd><p>
+      This option tries to import the source configuration. It adds new items
+      or updates existing items to the current configuration.
+     </p></dd><dt id="id-1.4.4.4.13.3.3"><span class="term"><code class="option">push</code></span></dt><dd><p>
+      This option imports the content from the source into the current
+      configuration (same as <code class="option">update</code>). However, it removes
+      objects that are not available in the new configuration.
+     </p></dd></dl></div><p>
+   To load the new configuration from the file <code class="filename">mycluster-config.txt</code>
+   use the following syntax:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure load push mycluster-config.txt</code></pre></div></section><section class="sect1" id="sec-ha-config-basics-meta-attr" data-id-title="Resource options (meta attributes)"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.12 </span><span class="title-name">Resource options (meta attributes)</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-meta-attr">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   For each resource you add, you can define options. Options are used by
+   the cluster to decide how your resource should behave; they tell
+   the CRM how to treat a specific resource. Resource options can be set
+   with the <code class="command">crm_resource --meta</code> command or with Hawk2.
+  </p><p>
+   The following list shows some common options:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.14.4.1"><span class="term"><code class="literal">priority</code></span></dt><dd><p>
+      If not all resources can be active, the cluster stops lower-priority
+      resources to keep higher-priority resources active.
+     </p><p>
+      The default value is <code class="literal">0</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.2"><span class="term"><code class="literal">target-role</code></span></dt><dd><p>
+      In what state should the cluster attempt to keep this resource?
+      Allowed values: <code class="literal">Stopped</code>, <code class="literal">Started</code>,
+      <code class="literal">Unpromoted</code>, <code class="literal">Promoted</code>.
+     </p><p>
+      The default value is <code class="literal">Started</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.3"><span class="term"><code class="literal">is-managed</code></span></dt><dd><p>
+      Is the cluster allowed to start and stop the resource? Allowed
+      values: <code class="literal">true</code>, <code class="literal">false</code>. If the
+      value is set to <code class="literal">false</code>, the status of the
+      resource is still monitored and any failures are reported. This is
+      different from setting a resource to
+      <code class="literal">maintenance="true"</code>.
+     </p><p>
+      The default value is <code class="literal">true</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.4"><span class="term"><code class="literal">maintenance</code></span></dt><dd><p>
+      Can the resources be touched manually? Allowed values:
+      <code class="literal">true</code>, <code class="literal">false</code>. If set to
+      <code class="literal">true</code>, all resources become unmanaged: the
+      cluster stops monitoring them and does not know their
+      status. You can stop or restart cluster resources without
+      the cluster attempting to restart them.
+     </p><p>
+      The default value is <code class="literal">false</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.5"><span class="term"><code class="literal">resource-stickiness</code></span></dt><dd><p>
+      How much does the resource prefer to stay where it is?
+     </p><p>
+      The default value is <code class="literal">1</code> for individual clone instances,
+      and <code class="literal">0</code> for all other resources.
+     </p></dd><dt id="id-1.4.4.4.14.4.6"><span class="term"><code class="literal">migration-threshold</code></span></dt><dd><p>
+      How many failures should occur for this resource on a node before
+      making the node ineligible to host this resource?
+     </p><p>
+      The default value is <code class="literal">INFINITY</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.7"><span class="term"><code class="literal">multiple-active</code></span></dt><dd><p>
+      What should the cluster do if it ever finds the resource active on
+      more than one node? Allowed values: <code class="literal">block</code> (mark
+      the resource as unmanaged), <code class="literal">stop_only</code>,
+      <code class="literal">stop_start</code>.
+     </p><p>
+      The default value is <code class="literal">stop_start</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.8"><span class="term"><code class="literal">failure-timeout</code></span></dt><dd><p>
+      How many seconds to wait before acting as if the failure did not
+      occur (and potentially allowing the resource back to the node on
+      which it failed)?
+     </p><p>
+      The default value is <code class="literal">0</code> (disabled).
+     </p></dd><dt id="id-1.4.4.4.14.4.9"><span class="term"><code class="literal">allow-migrate</code></span></dt><dd><p>
+      Whether to allow live migration for resources that support
+      <code class="literal">migrate_to</code> and <code class="literal">migrate_from</code>
+      actions. If the value is set to <code class="literal">true</code>, the resource can
+      be migrated without loss of state. If the value is set to <code class="literal">false</code>,
+      the resource will be shut down on the first node and restarted on the second node.
+     </p><p>
+      The default value is <code class="literal">true</code> for
+      <code class="literal">ocf:pacemaker:remote</code> resources, and
+      <code class="literal">false</code> for all other resources.
+     </p></dd><dt id="id-1.4.4.4.14.4.10"><span class="term"><code class="literal">allow-unhealthy-nodes</code></span></dt><dd><p>
+        Allows the resource to run on a node even if the node's health score would otherwise
+        prevent it.
+       </p><p>
+         The default value is <code class="literal">false</code>.
+       </p></dd><dt id="id-1.4.4.4.14.4.11"><span class="term"><code class="literal">remote-node</code></span></dt><dd><p>
+      The name of the remote node this resource defines. This both
+      enables the resource as a remote node and defines the unique name
+      used to identify the remote node. If no other parameters are set,
+      this value is also assumed as the host name to connect to at the
+      <code class="varname">remote-port</code> port.
+     </p><p>
+      This option is disabled by default.
+     </p><div id="id-1.4.4.4.14.4.11.2.3" data-id-title="Use unique IDs" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Use unique IDs</div><p>
+       This value must not overlap with any existing resource or node IDs.
+      </p></div></dd><dt id="id-1.4.4.4.14.4.12"><span class="term"><code class="literal">remote-port</code></span></dt><dd><p>
+      Custom port for the guest connection to pacemaker_remote.
+     </p><p>
+      The default value is <code class="literal">3121</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.13"><span class="term"><code class="literal">remote-addr</code></span></dt><dd><p>
+      The IP address or host name to connect to if the remote node's
+      name is not the host name of the guest.
+     </p><p>
+      The default value is the value set by <code class="literal">remote-node</code>.
+     </p></dd><dt id="id-1.4.4.4.14.4.14"><span class="term"><code class="literal">remote-connect-timeout</code></span></dt><dd><p>
+      How long before a pending guest connection times out?
+     </p><p>
+      The default value is <code class="literal">60s</code>.
+     </p></dd></dl></div></section><section class="sect1" id="sec-ha-config-basics-inst-attr" data-id-title="Instance attributes (parameters)"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.13 </span><span class="title-name">Instance attributes (parameters)</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-inst-attr">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The scripts of all resource classes can be given parameters which
+   determine how they behave and which instance of a service they control.
+   If your resource agent supports parameters, you can add them with the
+   <code class="command">crm_resource</code> command or with Hawk2. In the
+   <code class="command">crm</code> command line utility and in Hawk2, instance
+   attributes are called <code class="literal">params</code> or
+   <code class="literal">Parameter</code>, respectively. The list of instance
+   attributes supported by an OCF script can be found by executing the
+   following command as <code class="systemitem">root</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm ra info <em class="replaceable">[class:[provider:]]resource_agent</em></code></pre></div><p>
+   or (without the optional parts):
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm ra info <em class="replaceable">resource_agent</em></code></pre></div><p>
+   The output lists all the supported attributes, their purpose and default
+   values.
+  </p><div id="id-1.4.4.4.15.7" data-id-title="Instance attributes for groups, clones or promotable clones" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Instance attributes for groups, clones or promotable clones</div><p>
+    Note that groups, clones and promotable clone resources do not have instance
+    attributes. However, any instance attributes set will be inherited by
+    the group's, clone's or promotable clone's children.
+   </p></div></section><section class="sect1" id="sec-ha-config-basics-operations" data-id-title="Resource operations"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6.14 </span><span class="title-name">Resource operations</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-operations">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   By default, the cluster will not ensure that your resources are still
+   healthy. To instruct the cluster to do this, you need to add a monitor
+   operation to the resource's definition. Monitor operations can be
+   added for all classes or resource agents.
+  </p><p>
+   Monitor operations can have the following properties:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.16.4.1"><span class="term"><code class="literal">id</code></span></dt><dd><p>
+      Your name for the action. Must be unique. (The ID is not shown.)
+     </p></dd><dt id="id-1.4.4.4.16.4.2"><span class="term"><code class="literal">name</code></span></dt><dd><p>
+      The action to perform. Common values: <code class="literal">monitor</code>,
+        <code class="literal">start</code>, <code class="literal">stop</code>.
+     </p></dd><dt id="id-1.4.4.4.16.4.3"><span class="term"><code class="literal">interval</code></span></dt><dd><p>
+      How frequently to perform the operation, in seconds.
+     </p></dd><dt id="id-1.4.4.4.16.4.4"><span class="term"><code class="literal">timeout</code></span></dt><dd><p>
+      How long to wait before declaring the action has failed.
+     </p></dd><dt id="id-1.4.4.4.16.4.5"><span class="term"><code class="literal">requires</code></span></dt><dd><p>
+      What conditions need to be satisfied before this action occurs.
+      Allowed values: <code class="literal">nothing</code>,
+      <code class="literal">quorum</code>, <code class="literal">fencing</code>. The default
+      depends on whether fencing is enabled and if the resource's class
+      is <code class="literal">stonith</code>. For STONITH resources, the
+      default is <code class="literal">nothing</code>.
+     </p></dd><dt id="id-1.4.4.4.16.4.6"><span class="term"><code class="literal">on-fail</code></span></dt><dd><p>
+      The action to take if this action ever fails. Allowed values:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        <code class="literal">ignore</code>: Pretend the resource did not fail.
+       </p></li><li class="listitem"><p>
+        <code class="literal">block</code>: Do not perform any further operations
+        on the resource.
+       </p></li><li class="listitem"><p>
+        <code class="literal">stop</code>: Stop the resource and do not start it
+        elsewhere.
+       </p></li><li class="listitem"><p>
+        <code class="literal">restart</code>: Stop the resource and start it again
+        (possibly on a different node).
+       </p></li><li class="listitem"><p>
+        <code class="literal">fence</code>: Bring down the node on which the
+        resource failed (STONITH).
+       </p></li><li class="listitem"><p>
+        <code class="literal">standby</code>: Move <span class="emphasis"><em>all</em></span>
+        resources away from the node on which the resource failed.
+       </p></li></ul></div></dd><dt id="id-1.4.4.4.16.4.7"><span class="term"><code class="literal">enabled</code></span></dt><dd><p>
+      If <code class="literal">false</code>, the operation is treated as if it does
+      not exist. Allowed values: <code class="literal">true</code>,
+      <code class="literal">false</code>.
+     </p></dd><dt id="id-1.4.4.4.16.4.8"><span class="term"><code class="literal">role</code></span></dt><dd><p>
+      Run the operation only if the resource has this role.
+     </p></dd><dt id="id-1.4.4.4.16.4.9"><span class="term"><code class="literal">record-pending</code></span></dt><dd><p>
+      Can be set either globally or for individual resources. Makes the
+        CIB reflect the state of <span class="quote">“<span class="quote">in-flight</span>”</span> operations on
+        resources.
+     </p></dd><dt id="id-1.4.4.4.16.4.10"><span class="term"><code class="literal">description</code></span></dt><dd><p>
+      Description of the operation.
+     </p></dd></dl></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-config-basics.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 5 </span>Configuration and administration basics</span></a> </div><div><a class="pagination-link next" href="sec-ha-config-basics-constraints.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 7 </span>Configuring resource constraints</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-types"><span class="title-number">6.1 </span><span class="title-name">Types of resources</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-raclasses"><span class="title-number">6.2 </span><span class="title-name">Supported resource agent classes</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-timeouts"><span class="title-number">6.3 </span><span class="title-name">Timeout values</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-management"><span class="title-number">6.4 </span><span class="title-name">Creating primitive resources</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-advanced-groups"><span class="title-number">6.5 </span><span class="title-name">Creating resource groups</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-advanced-clones"><span class="title-number">6.6 </span><span class="title-name">Creating clone resources</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-promotable-clones"><span class="title-number">6.7 </span><span class="title-name">Creating promotable clones (multi-state resources)</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-templates"><span class="title-number">6.8 </span><span class="title-name">Creating resource templates</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-conf-stonith-rsc"><span class="title-number">6.9 </span><span class="title-name">Creating STONITH resources</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-monitoring"><span class="title-number">6.10 </span><span class="title-name">Configuring resource monitoring</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-manual-config-load"><span class="title-number">6.11 </span><span class="title-name">Loading resources from a file</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-meta-attr"><span class="title-number">6.12 </span><span class="title-name">Resource options (meta attributes)</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-inst-attr"><span class="title-number">6.13 </span><span class="title-name">Instance attributes (parameters)</span></a></span></li><li><span class="sect1"><a href="sec-ha-config-basics-resources.html#sec-ha-config-basics-operations"><span class="title-number">6.14 </span><span class="title-name">Resource operations</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

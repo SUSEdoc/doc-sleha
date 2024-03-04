@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP6 | Installation and Setup Quick Start | Basic iSCSI storage for SBD</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Basic iSCSI storage for SBD | SLE HA 15 SP6"/>
+<meta name="description" content="Use the following procedures to configure basic iSCSI …"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP6"/>
+<meta name="book-title" content="Installation and Setup Quick Start"/>
+<meta name="chapter-title" content="A. Basic iSCSI storage for SBD"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP6"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Basic iSCSI storage for SBD | SLE HA 15 SP6"/>
+<meta property="og:description" content="Use the following procedures to configure basic iSCSI storage to use with SBD. These procedures are only recommended for tes…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Basic iSCSI storage for SBD | SLE HA 15 SP6"/>
+<meta name="twitter:description" content="Use the following procedures to configure basic iSCSI storage to use with SBD. These procedures are only recommended for tes…"/>
+<link rel="prev" href="article-installation.html" title="Installation and Setup Quick Start"/><link rel="next" href="bk01ar01apb.html" title="B. GNU licenses"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/script-purejs.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_iscsi_for_sbd.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Installation and Setup Quick Start</a><span> / </span><a class="crumb" href="ha-iscsi-for-sbd.html">Basic iSCSI storage for SBD</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Installation and Setup Quick Start</div><ol><li><a href="article-installation.html#sec-ha-inst-quick-usage-scenario" class=" "><span class="title-number">1 </span><span class="title-name">Usage scenario</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-req" class=" "><span class="title-number">2 </span><span class="title-name">System requirements</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-bootstrap" class=" "><span class="title-number">3 </span><span class="title-name">Overview of the bootstrap scripts</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-installation" class=" "><span class="title-number">4 </span><span class="title-name">Installing the High Availability packages</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-sbd" class=" "><span class="title-number">5 </span><span class="title-name">Using SBD for node fencing</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-setup-1st-node" class=" "><span class="title-number">6 </span><span class="title-name">Setting up the first node</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-setup-2nd-node" class=" "><span class="title-number">7 </span><span class="title-name">Adding the second node</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-test" class=" "><span class="title-number">8 </span><span class="title-name">Testing the cluster</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-next" class=" "><span class="title-number">9 </span><span class="title-name">Next steps</span></a></li><li><a href="article-installation.html#sec-ha-inst-quick-moreinfo" class=" "><span class="title-number">10 </span><span class="title-name">For more information</span></a></li><li><a href="ha-iscsi-for-sbd.html" class=" you-are-here"><span class="title-number">A </span><span class="title-name">Basic iSCSI storage for SBD</span></a></li><li><a href="bk01ar01apb.html" class=" "><span class="title-number">B </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="appendix" id="ha-iscsi-for-sbd" data-id-title="Basic iSCSI storage for SBD"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP6</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">A </span><span class="title-name">Basic iSCSI storage for SBD</span></span> <a title="Permalink" class="permalink" href="ha-iscsi-for-sbd.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    Use the following procedures to configure basic iSCSI storage to use with SBD.
+    These procedures are only recommended for testing purposes. Before using iSCSI in a
+    production environment, see
+    <a class="link" href="https://documentation.suse.com/sles/html/SLES-all/cha-iscsi.html" target="_blank">
+    Storage Administration Guide for SUSE Linux Enterprise Server</a>.
+   </p></div></div></div></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Requirements </span></span><a title="Permalink" class="permalink" href="ha-iscsi-for-sbd.html#id-1.3.2.13.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+    A SUSE Linux Enterprise Server virtual machine to act as the iSCSI target. This VM is not
+    part of the cluster.
+   </p></li><li class="listitem"><p>
+    Two virtual storage devices on the VM: a 20 GB device for the system,
+    and a 1 GB device for SBD.
+   </p></li><li class="listitem"><p>
+    Two SUSE Linux Enterprise Server nodes that have not been added to a High Availability cluster yet.
+   </p></li></ul></div><p>
+  First, set up an iSCSI target on the virtual machine:
+ </p><div class="procedure" id="pro-iscsi-for-sbd-target" data-id-title="Configuring an iSCSI target"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure A..1: </span><span class="title-name">Configuring an iSCSI target </span></span><a title="Permalink" class="permalink" href="ha-iscsi-for-sbd.html#pro-iscsi-for-sbd-target">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Install the package <span class="package">yast2-iscsi-lio-server</span>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">zypper install yast2-iscsi-lio-server</code></pre></div></li><li class="step"><p>
+    Start the <code class="literal">iscsi-lio-server</code> module in YaST:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">yast2 iscsi-lio-server</code></pre></div></li><li class="step"><p>
+    In the <span class="guimenu">Service</span> tab, under <span class="guimenu">After reboot</span>, select
+    <span class="guimenu">Start on boot</span>.
+   </p></li><li class="step"><p>
+    Activate <span class="guimenu">Open Port in Firewall</span>.
+   </p></li><li class="step"><p>
+    In the <span class="guimenu">Discovery</span> tab, activate <span class="guimenu">Discovery Authentication</span>.
+    </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Targets</span>, enter a <span class="guimenu">Username</span>
+    and <span class="guimenu">Password</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Initiators</span>, enter a
+    <span class="guimenu">Mutual Username</span> and <span class="guimenu">Mutual Password</span>.
+    This password must be different from the <span class="guimenu">Authentication by Targets</span> password.
+   </p></li><li class="step"><p>
+    In the <span class="guimenu">Target</span> tab, select <span class="guimenu">Add</span>.
+   </p></li><li class="step"><p>
+    Change the <span class="guimenu">Target</span> name by replacing <code class="literal">.com.example</code>.
+   </p></li><li class="step"><p>
+    Add the <span class="guimenu">IP Address</span> of the server.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Add</span>.
+   </p></li><li class="step"><p>
+    In the <span class="guimenu">LUN Details</span> window, enter the <span class="guimenu">LUN Path</span> to the 1 GB storage device (for example, <code class="filename">/dev/vbd</code>).
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Ok</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Next</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Finish</span> to close YaST.
+   </p></li><li class="step"><p>
+    To check the target setup, switch to the target CLI:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">targetcli</code></pre></div><p>
+    Show the configuration:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">/&gt; </code><code class="command">ls</code></pre></div></li></ol></div></div><p>
+  Next, set up iSCSI initiators on the nodes. Repeat this procedure on both nodes:
+ </p><div class="procedure" id="pro-iscsi-for-sbd-clients" data-id-title="Configuring an iSCSI initiator"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure A..2: </span><span class="title-name">Configuring an iSCSI initiator </span></span><a title="Permalink" class="permalink" href="ha-iscsi-for-sbd.html#pro-iscsi-for-sbd-clients">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_iscsi_for_sbd.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    Install the package <span class="package">yast2-iscsi-client</span>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">zypper install yast2-iscsi-client</code></pre></div></li><li class="step"><p>
+    Start the <code class="literal">iscsid</code> service:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl start iscsid</code></pre></div></li><li class="step"><p>
+    Open the <code class="literal">iscsi-client</code> module in YaST:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">yast2 iscsi-client</code></pre></div></li><li class="step"><p>
+    In the <span class="guimenu">Discovered Targets</span> tab, select <span class="guimenu">Discovery</span>.
+   </p></li><li class="step"><p>
+    Enter the IP address of the iSCSI target.
+   </p></li><li class="step"><p>
+    Clear <span class="guimenu">No Discovery Authentication</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Initiator</span>, enter the initiator
+    <span class="guimenu">Username</span> and <span class="guimenu">Password</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Authentication by Targets</span>, enter the target
+    <span class="guimenu">Username</span> and <span class="guimenu">Password</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Next</span>.
+   </p></li><li class="step"><p>
+    After YaST discovers the iSCSI target, select <span class="guimenu">Connect</span>.
+   </p></li><li class="step"><p>
+    Under <span class="guimenu">Startup</span>, select <span class="guimenu">onboot</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Next</span>.
+   </p></li><li class="step"><p>
+    Select <span class="guimenu">Ok</span> to close YaST.
+   </p></li><li class="step"><p>
+    Check the iSCSI initiator:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lsscsi</code>
+[0:0:1:0] cd/dvd QEMU QEMU DVD-ROM 2.5+ /dev/sr0
+[2:0:0:0] disk LIO-ORG IBLOCK 4.0 /dev/sda</pre></div><p>
+    Look for a line with <code class="literal">IBLOCK</code>. In this example,
+    the iSCSI device is <code class="literal">/dev/sda</code>.
+   </p></li><li class="step"><p>
+    Check the status of the <code class="literal">iscsid</code> service:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl status iscsid</code></pre></div></li></ol></div></div><p>
+  You can find the stable device name in <code class="filename">/dev/disk/by-id/</code>.
+  Usually, an iSCSI device starts with <code class="literal">scsi-SLIO-ORG_IBLOCK</code>.
+ </p><p>
+  If you have multiple disks, you can run the command <code class="command">lsblk -o name,serial</code>
+   to confirm which stable device name corresponds to which short name (for example,
+   <code class="filename">/dev/sda</code>).
+ </p><p>
+  When you configure the cluster, specify the stable device name using one of these methods:
+ </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    When you run <code class="command">crm cluster init</code>, enter the stable device name when prompted.
+   </p></li><li class="listitem"><p>
+    Before running <code class="command">crm cluster init</code>, add the stable device name
+    to <code class="filename">/etc/sysconfig/sbd</code>:
+   </p><div class="verbatim-wrap"><pre class="screen">SBD_DEVICE=/dev/disk/by-id/scsi-SLIO-ORG_IBLOCK_<em class="replaceable">DEVICE_ID_STRING</em></pre></div><p>
+    When you run <code class="command">crm cluster init</code>, answer <code class="literal">n</code>
+    for this question:
+   </p><div class="verbatim-wrap"><pre class="screen">SBD is already configured to use /dev/disk/by-id/scsi-SLIO-ORG_IBLOCK_... - overwrite (y/n)?</pre></div></li></ul></div></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="article-installation.html"><span class="pagination-relation">Previous</span><span class="pagination-label">Installation and Setup Quick Start</span></a> </div><div><a class="pagination-link next" href="bk01ar01apb.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Appendix B </span>GNU licenses</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

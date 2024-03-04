@@ -1,0 +1,1249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 12 SP5 | Administration Guide | Configuring and Managing Cluster Resources (Command Line)</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Configuring and Managing Cluster Resources (Command Line) |…"/>
+<meta name="description" content="To configure and manage cluster resources, either use …"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="12 SP5"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 7. Configuring and Managing Cluster Resources (Command Line)"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 12 SP5"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Configuring and Managing Cluster Resources (Command Li…"/>
+<meta property="og:description" content="To configure and manage cluster resources, either use the crm shell (crmsh) command line utility or HA Web Console (Hawk2), …"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Configuring and Managing Cluster Resources (Command Li…"/>
+<meta name="twitter:description" content="To configure and manage cluster resources, either use the crm shell (crmsh) command line utility or HA Web Console (Hawk2), …"/>
+<link rel="prev" href="cha-conf-hawk2.html" title="Chapter 6. Configuring and Managing Cluster Resources with Hawk2"/><link rel="next" href="cha-ha-agents.html" title="Chapter 8. Adding or Modifying Resource Agents"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span> / </span><a class="crumb" href="part-config.html">Configuration and Administration</a><span> / </span><a class="crumb" href="cha-ha-manual-config.html">Configuring and Managing Cluster Resources (Command Line)</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Administration Guide</div><ol><li><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">About This Guide</span></a></li><li><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and Setup</span></a><ol><li><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product Overview</span></a></li><li><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System Requirements and Recommendations</span></a></li><li><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li><a href="cha-ha-setup.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST Cluster Module</span></a></li></ol></li><li class="active"><a href="part-config.html" class="has-children you-are-here"><span class="title-number">II </span><span class="title-name">Configuration and Administration</span></a><ol><li><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and Administration Basics</span></a></li><li><a href="cha-conf-hawk2.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring and Managing Cluster Resources with Hawk2</span></a></li><li><a href="cha-ha-manual-config.html" class=" you-are-here"><span class="title-number">7 </span><span class="title-name">Configuring and Managing Cluster Resources (Command Line)</span></a></li><li><a href="cha-ha-agents.html" class=" "><span class="title-number">8 </span><span class="title-name">Adding or Modifying Resource Agents</span></a></li><li><a href="cha-ha-fencing.html" class=" "><span class="title-number">9 </span><span class="title-name">Fencing and STONITH</span></a></li><li><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">10 </span><span class="title-name">Storage Protection and SBD</span></a></li><li><a href="cha-ha-acl.html" class=" "><span class="title-number">11 </span><span class="title-name">Access Control Lists</span></a></li><li><a href="cha-ha-netbonding.html" class=" "><span class="title-number">12 </span><span class="title-name">Network Device Bonding</span></a></li><li><a href="cha-ha-lb.html" class=" "><span class="title-number">13 </span><span class="title-name">Load Balancing</span></a></li><li><a href="cha-ha-geo.html" class=" "><span class="title-number">14 </span><span class="title-name">Geo Clusters (Multi-Site Clusters)</span></a></li></ol></li><li><a href="part-storage.html" class="has-children "><span class="title-number">III </span><span class="title-name">Storage and Data Replication</span></a><ol><li><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">15 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">16 </span><span class="title-name">OCFS2</span></a></li><li><a href="cha-ha-gfs2.html" class=" "><span class="title-number">17 </span><span class="title-name">GFS2</span></a></li><li><a href="cha-ha-drbd.html" class=" "><span class="title-number">18 </span><span class="title-name">DRBD</span></a></li><li><a href="cha-ha-clvm.html" class=" "><span class="title-number">19 </span><span class="title-name">Cluster Logical Volume Manager (cLVM)</span></a></li><li><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">20 </span><span class="title-name">Cluster Multi-device (Cluster MD)</span></a></li><li><a href="cha-ha-samba.html" class=" "><span class="title-number">21 </span><span class="title-name">Samba Clustering</span></a></li><li><a href="cha-ha-rear.html" class=" "><span class="title-number">22 </span><span class="title-name">Disaster Recovery with Relax-and-Recover (ReaR)</span></a></li></ol></li><li><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and Upgrade</span></a><ol><li><a href="cha-ha-maintenance.html" class=" "><span class="title-number">23 </span><span class="title-name">Executing Maintenance Tasks</span></a></li><li><a href="cha-ha-migration.html" class=" "><span class="title-number">24 </span><span class="title-name">Upgrading Your Cluster and Updating Software Packages</span></a></li></ol></li><li><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol><li><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming Conventions</span></a></li><li><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster Management Tools (Command Line)</span></a></li><li><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running Cluster Reports Without <code class="systemitem">root</code> Access</span></a></li></ol></li><li><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li><a href="bk01ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-manual-config" data-id-title="Configuring and Managing Cluster Resources (Command Line)"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">12 SP5</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">7 </span><span class="title-name">Configuring and Managing Cluster Resources (Command Line)</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div><div><div class="abstract"><p>
+    To configure and manage cluster resources, either use the crm shell
+    (crmsh) command line utility or HA Web Console (Hawk2), a Web-based
+    user interface.
+   </p><p>
+    This chapter introduces <code class="command">crm</code>, the command line tool
+    and covers an overview of this tool, how to use templates, and mainly
+    configuring and managing cluster resources: creating basic and advanced
+    types of resources (groups and clones), configuring constraints,
+    specifying failover nodes and failback nodes, configuring resource
+    monitoring, starting, cleaning up or removing resources, and migrating
+    resources manually.
+   </p></div></div></div></div><div id="id-1.3.4.5.3" data-id-title="User Privileges" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: User Privileges</div><p>
+   Sufficient privileges are necessary to manage a cluster. The
+   <code class="command">crm</code> command and its subcommands need to be run either
+   as <code class="systemitem">root</code> user or as the CRM owner user (typically the user
+   <code class="systemitem">hacluster</code>).
+  </p><p>
+   However, the <code class="option">user</code> option allows you to run
+   <code class="command">crm</code> and its subcommands as a regular (unprivileged)
+   user and to change its ID using <code class="command">sudo</code> whenever
+   necessary. For example, with the following command <code class="command">crm</code>
+   will use <code class="systemitem">hacluster</code> as the
+   privileged user ID:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> options user hacluster</pre></div><p>
+   Note that you need to set up <code class="filename">/etc/sudoers</code> so that
+   <code class="command">sudo</code> does not ask for a password.
+  </p></div><section class="sect1" id="sec-ha-manual-config-crm" data-id-title="crmsh—Overview"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.1 </span><span class="title-name">crmsh—Overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-crm">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   The <code class="command">crm</code> command has several subcommands which manage
+   resources, CIBs, nodes, resource agents, and others. It offers a thorough
+   help system with embedded examples. All examples follow a naming
+   convention described in
+   <a class="xref" href="app-naming.html" title="Appendix B. Naming Conventions">Appendix B</a>.
+  </p><div id="id-1.3.4.5.4.3" data-id-title="Interactive crm Prompt" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Interactive crm Prompt</div><p>By using crm without arguments (or with only one sublevel as
+    argument), the crm shell enters the interactive mode. This mode is
+    indicated by the following prompt:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">crm(live/HOSTNAME)</code></pre></div><p>
+    For readability reasons, we omit the host name in the interactive crm
+    prompts in our documentation. We only include the host name if you need
+    to run the interactive shell on a specific node, like alice for example:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">crm(live/alice)</code></pre></div></div><section class="sect2" id="sec-ha-manual-config-crm-help" data-id-title="Getting Help"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.1 </span><span class="title-name">Getting Help</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-crm-help">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Help can be accessed in several ways:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+      To output the usage of <code class="command">crm</code> and its command line
+      options:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> --help</pre></div></li><li class="listitem"><p>
+      To give a list of all available commands:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> help</pre></div></li><li class="listitem"><p>
+      To access other help sections, not just the command reference:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> help topics</pre></div></li><li class="listitem"><p>
+      To view the extensive help text of the <code class="command">configure</code>
+      subcommand:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure help</pre></div></li><li class="listitem"><p>
+      To print the syntax, its usage, and examples of the <code class="command">group</code>
+      subcommand of <code class="command">configure</code>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure help group</pre></div><p>
+      This is the same:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> help configure group</pre></div></li></ul></div><p>
+    Almost all output of the <code class="command">help</code> subcommand (do not mix
+    it up with the <code class="option">--help</code> option) opens a text viewer. This
+    text viewer allows you to scroll up or down and read the help text more
+    comfortably. To leave the text viewer, press the <span class="keycap">Q</span> key.
+   </p><div id="tip-crm-tabcompletion" data-id-title="Use Tab Completion in Bash and Interactive Shell" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Use Tab Completion in Bash and Interactive Shell</div><p>
+     The crmsh supports full tab completion in Bash directly, not only
+     for the interactive shell. For example, typing <code class="literal">crm help
+     config</code><span class="keycap">→|</span> will complete the word
+     like in the interactive shell.
+    </p></div></section><section class="sect2" id="sec-ha-manual-config-crm-run" data-id-title="Executing crmshs Subcommands"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.2 </span><span class="title-name">Executing crmsh's Subcommands</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-crm-run">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The <code class="command">crm</code> command itself can be used in the following
+    ways:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">Directly:</span>
+       Concatenate all subcommands to <code class="command">crm</code>, press
+       <span class="keycap">Enter</span> and you see the output immediately. For
+       example, enter <code class="command">crm</code> <code class="option">help ra</code> to get
+       information about the <code class="command">ra</code> subcommand (resource
+       agents).
+      </p><p>It is possible to abbreviate subcommands as long as they are
+        unique. For example, you can shorten <code class="command">status</code> as
+      <code class="command">st</code> and crmsh will know what you have meant.
+      </p><p>Another feature is to shorten parameters. Usually, you add
+        parameters through the <code class="command">params</code> keyword.
+        You can leave out the params section if it is the first and only section.
+        For example, this line:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> primitive ipaddr IPaddr2 params ip=192.168.0.55</pre></div><p>is equivalent to this line:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> primitive ipaddr IPaddr2 ip=192.168.0.55</pre></div></li><li class="listitem"><p><span class="formalpara-title">As crm Shell Script:</span>
+       Crm shell scripts contain subcommands of <code class="command">crm</code>.
+       For more information, see <a class="xref" href="cha-ha-manual-config.html#sec-ha-manual-config-crmshellscripts" title="7.1.4. Using crmsh's Shell Scripts">Section 7.1.4, “Using crmsh's Shell Scripts”</a>.
+      </p></li><li class="listitem"><p><span class="formalpara-title">As crmsh Cluster Scripts:</span>These are a collection of metadata, references to RPM packages,
+          configuration files, and crmsh subcommands bundled under a single,
+          yet descriptive name. They are managed through the
+          <code class="command">crm script</code> command.
+        </p><p>Do not confuse them with crmsh shell scripts: although both share
+        some common objectives, the crm shell scripts only contain subcommands
+        whereas cluster scripts incorporate much more than a simple
+        enumeration of commands. For more information, see <a class="xref" href="cha-ha-manual-config.html#sec-ha-manual-config-clusterscripts" title="7.1.5. Using crmsh's Cluster Scripts">Section 7.1.5, “Using crmsh's Cluster Scripts”</a>.
+      </p></li><li class="listitem"><p><span class="formalpara-title">Interactive as Internal Shell:</span>
+       Type <code class="command">crm</code> to enter the internal shell. The prompt
+       changes to <code class="literal">crm(live)</code>. With
+       <code class="command">help</code> you can get an overview of the available
+       subcommands. As the internal shell has different levels of
+       subcommands, you can <span class="quote">“<span class="quote">enter</span>”</span> one by typing this
+       subcommand and press <span class="keycap">Enter</span>.
+      </p><p>
+      For example, if you type <code class="command">resource</code> you enter the
+      resource management level. Your prompt changes to
+      <code class="literal">crm(live)resource#</code>. If you want to leave the
+      internal shell, use the commands <code class="command">quit</code>,
+      <code class="command">bye</code>, or <code class="command">exit</code>. If you need to go
+      one level back, use <code class="command">back</code>, <code class="command">up</code>,
+      <code class="command">end</code>, or <code class="command">cd</code>.
+     </p><p>
+      You can enter the level directly by typing <code class="command">crm</code> and
+      the respective subcommand(s) without any options and press
+      <span class="keycap">Enter</span>.
+     </p><p>
+      The internal shell supports also tab completion for subcommands and
+      resources. Type the beginning of a command, press
+      <span class="keycap">→|</span> and <code class="command">crm</code> completes the
+      respective object.
+     </p></li></ul></div><p>
+    In addition to previously explained methods, crmsh also supports
+    synchronous command execution. Use the <code class="option">-w</code> option to
+    activate it. If you have started <code class="command">crm</code> without
+    <code class="option">-w</code>, you can enable it later with the user preference's
+    <code class="command">wait</code> set to <code class="literal">yes</code> (<code class="command">options
+    wait yes</code>). If this option is enabled, <code class="command">crm</code>
+    waits until the transition is finished. Whenever a transaction is
+    started, dots are printed to indicate progress. Synchronous command
+    execution is only applicable for commands like <code class="command">resource
+    start</code>.
+   </p><div id="id-1.3.4.5.4.5.5" data-id-title="Differentiate Between Management and Configuration Subcommands" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Differentiate Between Management and Configuration Subcommands</div><p>
+     The <code class="command">crm</code> tool has management capability (the
+     subcommands <code class="command">resource</code> and <code class="command">node</code>)
+     and can be used for configuration (<code class="command">cib</code>,
+     <code class="command">configure</code>).
+    </p></div><p>
+    The following subsections give you an overview of some important aspects
+    of the <code class="command">crm</code> tool.
+   </p></section><section class="sect2" id="sec-ha-manual-config-ocf" data-id-title="Displaying Information about OCF Resource Agents"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.3 </span><span class="title-name">Displaying Information about OCF Resource Agents</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-ocf">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    As you need to deal with resource agents in your cluster configuration
+    all the time, the <code class="command">crm</code> tool contains the
+    <code class="command">ra</code> command. Use it to show information about resource
+    agents and to manage them (for additional information, see also
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-raclasses" title="5.3.2. Supported Resource Agent Classes">Section 5.3.2, “Supported Resource Agent Classes”</a>):
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> ra
+<code class="prompt custom">crm(live)ra# </code></pre></div><p>
+    The command <code class="command">classes</code> lists all classes and providers:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)ra# </code><code class="command">classes</code>
+ lsb
+ ocf / heartbeat linbit lvm2 ocfs2 pacemaker
+ service
+ stonith
+ systemd</pre></div><p>
+    To get an overview of all available resource agents for a class (and
+    provider) use the <code class="command">list</code> command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)ra# </code><code class="command">list</code> ocf
+AoEtarget           AudibleAlarm        CTDB                ClusterMon
+Delay               Dummy               EvmsSCC             Evmsd
+Filesystem          HealthCPU           HealthSMART         ICP
+IPaddr              IPaddr2             IPsrcaddr           IPv6addr
+LVM                 LinuxSCSI           MailTo              ManageRAID
+ManageVE            Pure-FTPd           Raid1               Route
+SAPDatabase         SAPInstance         SendArp             ServeRAID
+...</pre></div><p>
+    An overview of a resource agent can be viewed with
+    <code class="command">info</code>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)ra# </code><code class="command">info</code> ocf:linbit:drbd
+This resource agent manages a DRBD* resource
+as a master/slave resource. DRBD is a shared-nothing replicated storage
+device. (ocf:linbit:drbd)
+
+Master/Slave OCF Resource Agent for DRBD
+
+Parameters (* denotes required, [] the default):
+
+drbd_resource* (string): drbd resource name
+    The name of the drbd resource from the drbd.conf file.
+
+drbdconf (string, [/etc/drbd.conf]): Path to drbd.conf
+    Full path to the drbd.conf file.
+
+Operations' defaults (advisory minimum):
+
+    start         timeout=240
+    promote       timeout=90
+    demote        timeout=90
+    notify        timeout=90
+    stop          timeout=100
+    monitor_Slave_0 interval=20 timeout=20 start-delay=1m
+    monitor_Master_0 interval=10 timeout=20 start-delay=1m</pre></div><p>
+    Leave the viewer by pressing <span class="keycap">Q</span>.
+   </p><div id="id-1.3.4.5.4.6.11" data-id-title="Use crm Directly" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Use <code class="command">crm</code> Directly</div><p>
+     In the former example we used the internal shell of the
+     <code class="command">crm</code> command. However, you do not necessarily need to
+     use it. You get the same results if you add the respective subcommands
+     to <code class="command">crm</code>. For example, you can list all the OCF
+     resource agents by entering <code class="command">crm</code> <code class="option">ra list
+     ocf</code> in your shell.
+    </p></div></section><section class="sect2" id="sec-ha-manual-config-crmshellscripts" data-id-title="Using crmshs Shell Scripts"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.4 </span><span class="title-name">Using crmsh's Shell Scripts</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-crmshellscripts">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The crmsh shell scripts provide a convenient way to enumerate crmsh
+    subcommands into a file. This makes it easy to comment specific lines or
+    to replay them later. Keep in mind that a crmsh shell script can contain
+    <span class="emphasis"><em>only crmsh subcommands</em></span>. Any other commands are not
+    allowed.
+   </p><p>
+    Before you can use a crmsh shell script, create a file with specific
+    commands. For example, the following file prints the status of the cluster
+    and gives a list of all nodes:
+   </p><div class="example" id="ex-ha-manual-config-crmshellscripts" data-id-title="A Simple crmsh Shell Script"><div class="title-container"><div class="example-title-wrap"><div class="example-title"><span class="title-number-name"><span class="title-number">Example 7.1: </span><span class="title-name">A Simple crmsh Shell Script </span></span><a title="Permalink" class="permalink" href="cha-ha-manual-config.html#ex-ha-manual-config-crmshellscripts">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div><div class="example-contents"><div class="verbatim-wrap"><pre class="screen"># A small example file with some crm subcommands
+<code class="command">status</code>
+<code class="command">node</code> list</pre></div></div></div><p>
+    Any line starting with the hash symbol (<code class="literal">#</code>) is a
+    comment and is ignored. If a line is too long, insert a backslash
+    (<code class="literal">\</code>) at the end and continue in the next line. It is
+    recommended to indent lines that belong to a certain subcommand to improve
+    readability.
+   </p><p>To use this script, use one of the following methods:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> -f example.cli
+<code class="prompt root"># </code><code class="command">crm</code> &lt; example.cli</pre></div></section><section class="sect2" id="sec-ha-manual-config-clusterscripts" data-id-title="Using crmshs Cluster Scripts"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.5 </span><span class="title-name">Using crmsh's Cluster Scripts</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-clusterscripts">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>Collecting information from all cluster nodes and deploying any
+      changes is a key cluster administration task. Instead of performing
+      the same procedures manually on different nodes (which is error-prone),
+      you can use the crmsh cluster scripts.
+   </p><p>
+    Do not confuse them with the <span class="emphasis"><em>crmsh shell scripts</em></span>,
+    which are explained in <a class="xref" href="cha-ha-manual-config.html#sec-ha-manual-config-crmshellscripts" title="7.1.4. Using crmsh's Shell Scripts">Section 7.1.4, “Using crmsh's Shell Scripts”</a>.
+    </p><p>In contrast to crmsh shell scripts, cluster scripts performs
+    additional tasks like:</p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Installing software that is required for a specific task.</p></li><li class="listitem"><p>Creating or modifying any configuration files.</p></li><li class="listitem"><p>Collecting information and reporting potential problems with the
+          cluster.</p></li><li class="listitem"><p>Deploying the changes to all nodes.</p></li></ul></div><p>crmsh cluster scripts do not replace other tools for managing
+      clusters—they provide an integrated way to perform the above
+      tasks across the cluster. Find detailed information at <a class="link" href="http://crmsh.github.io/scripts/" target="_blank">http://crmsh.github.io/scripts/</a>.
+    </p><section class="sect3" id="sec-ha-manual-config-clusterscripts-usage" data-id-title="Usage"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.1.5.1 </span><span class="title-name">Usage</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-clusterscripts-usage">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>To get a list of all available cluster scripts, run:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script list</pre></div><p>To view the components of a script, use the
+        <code class="command">show</code> command and the name of the cluster script,
+        for example:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script show mailto
+mailto (Basic)
+MailTo
+
+ This is a resource agent for MailTo. It sends email to a sysadmin
+whenever  a takeover occurs.
+
+1. Notifies recipients by email in the event of resource takeover
+
+  id (required)  (unique)
+      Identifier for the cluster resource
+  email (required)
+      Email address
+  subject
+      Subject</pre></div><p>The output of <code class="command">show</code> contains a title, a
+          short description, and a procedure. Each procedure is divided
+          into a series of steps, performed in the given order. </p><p>Each step contains a list of required and optional parameters,
+        along with a short description and its default value.</p><p>Each cluster script understands a set of common parameters.
+        These parameters can be passed to any script:</p><div class="table" id="id-1.3.4.5.4.8.8.9" data-id-title="Common Parameters"><div class="title-container"><div class="table-title-wrap"><div class="table-title"><span class="title-number-name"><span class="title-number">Table 7.1: </span><span class="title-name">Common Parameters </span></span><a title="Permalink" class="permalink" href="cha-ha-manual-config.html#id-1.3.4.5.4.8.8.9">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div><div class="table-contents"><table style="border-collapse: collapse; border-top: 1px solid ; border-bottom: 1px solid ; border-left: 1px solid ; border-right: 1px solid ; "><colgroup><col/><col/><col/></colgroup><thead><tr><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">Parameter</th><th style="border-right: 1px solid ; border-bottom: 1px solid ; ">Argument</th><th style="border-bottom: 1px solid ; ">Description</th></tr></thead><tbody><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">action</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">INDEX</em></td><td style="border-bottom: 1px solid ; ">If set, only execute a single action (index, as
+                returned by verify)</td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">dry_run</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">BOOL</em></td><td style="border-bottom: 1px solid ; ">If set, simulate execution only (default: no) </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">nodes</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">LIST</em></td><td style="border-bottom: 1px solid ; ">List of nodes to execute the script for</td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">port</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">NUMBER</em></td><td style="border-bottom: 1px solid ; ">Port to connect to</td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">statefile</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">FILE</em></td><td style="border-bottom: 1px solid ; ">When single-stepping, the state is saved in the given
+                file </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">sudo</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">BOOL</em></td><td style="border-bottom: 1px solid ; ">If set, crm will prompt for a sudo password and use sudo
+                where appropriate (default: no) </td></tr><tr><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="parameter">timeout</em></td><td style="border-right: 1px solid ; border-bottom: 1px solid ; "><em class="replaceable">NUMBER</em></td><td style="border-bottom: 1px solid ; ">Execution timeout in seconds (default: 600) </td></tr><tr><td style="border-right: 1px solid ; "><em class="parameter">user</em></td><td style="border-right: 1px solid ; "><em class="replaceable">USER</em></td><td>Run script as the given user </td></tr></tbody></table></div></div></section><section class="sect3" id="sec-ha-manual-config-clusterscripts-verify-run" data-id-title="Verifying and Running a Cluster Script"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.1.5.2 </span><span class="title-name">Verifying and Running a Cluster Script</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-clusterscripts-verify-run">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>Before running a cluster script, review the actions that it will
+          perform and verify its parameters to avoid problems. A cluster script
+          can potentially perform a series of actions and may fail for
+          various reasons. Thus, verifying your parameters before
+          running it helps to avoid problems.</p><p>For example, the <code class="systemitem">mailto</code> resource agent
+        requires a unique identifier and an e-mail address. To verify these
+        parameters, run:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script verify mailto id=sysadmin email=tux@example.org
+1. Ensure mail package is installed
+
+        mailx
+
+2. Configure cluster resources
+
+        primitive sysadmin MailTo
+                email="tux@example.org"
+                op start timeout="10"
+                op stop timeout="10"
+                op monitor interval="10" timeout="10"
+
+        clone c-sysadmin sysadmin</pre></div><p>The <code class="command">verify</code> prints the steps and replaces
+        any placeholders with your given parameters. If <code class="command">verify</code>
+        finds any problems, it will report it.
+        If everything is ok, replace the <code class="command">verify</code>
+        command with <code class="command">run</code>:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script run mailto id=sysadmin email=tux@example.org
+INFO: MailTo
+INFO: Nodes: alice, bob
+OK: Ensure mail package is installed
+OK: Configure cluster resources</pre></div><p>Check whether your resource is integrated into your cluster
+          with <code class="command">crm status</code>:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> status
+[...]
+ Clone Set: c-sysadmin [sysadmin]
+     Started: [ alice bob ]</pre></div></section></section><section class="sect2" id="sec-ha-manual-config-template" data-id-title="Using Configuration Templates"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.6 </span><span class="title-name">Using Configuration Templates</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-template">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.3.4.5.4.9.3" data-id-title="Deprecation Notice" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Deprecation Notice</div><p>The use of configuration templates is deprecated and will
+        be removed in the future. Configuration templates will be replaced
+        by cluster scripts, see <a class="xref" href="cha-ha-manual-config.html#sec-ha-manual-config-clusterscripts" title="7.1.5. Using crmsh's Cluster Scripts">Section 7.1.5, “Using crmsh's Cluster Scripts”</a>.
+      </p></div><p>
+    Configuration templates are ready-made cluster configurations for
+    crmsh. Do not confuse them with the <span class="emphasis"><em>resource
+    templates</em></span> (as described in
+    <a class="xref" href="cha-ha-manual-config.html#sec-ha-manual-config-rsc-template" title="7.4.3. Creating Resource Templates">Section 7.4.3, “Creating Resource Templates”</a>). Those are
+    templates for the <span class="emphasis"><em>cluster</em></span> and not for the crm
+    shell.
+   </p><p>
+    Configuration templates require minimum effort to be tailored to the
+    particular user's needs. Whenever a template creates a configuration,
+    warning messages give hints which can be edited later for further
+    customization.
+   </p><p>
+    The following procedure shows how to create a simple yet functional
+    Apache configuration:
+   </p><div class="procedure" id="pro-ha-manual-config-template"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      Create a new configuration from a configuration template:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Switch to the <code class="command">template</code> subcommand:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">template</code></pre></div></li><li class="step"><p>
+        List the available configuration templates:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">list</code> templates
+gfs2-base   filesystem  virtual-ip  apache   clvm     ocfs2    gfs2</pre></div></li><li class="step"><p>
+        Decide which configuration template you need. As we need an Apache
+        configuration, we select the <code class="literal">apache</code> template and
+        name it <code class="literal">g-intranet</code>:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">new</code> g-intranet apache
+INFO: pulling in template apache
+INFO: pulling in template virtual-ip</pre></div></li></ol></li><li class="step"><p>
+      Define your parameters:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        List the configuration you have created:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">list</code>
+g-intranet</pre></div></li><li class="step" id="st-config-cli-show"><p>
+        Display the minimum required changes that need to be filled out by
+        you:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">show</code>
+ERROR: 23: required parameter ip not set
+ERROR: 61: required parameter id not set
+ERROR: 65: required parameter configfile not set</pre></div></li><li class="step" id="st-config-cli-edit"><p>
+        Invoke your preferred text editor and fill out all lines that have
+        been displayed as errors in <a class="xref" href="cha-ha-manual-config.html#st-config-cli-show" title="Step 3.b">Step 3.b</a>:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">edit</code></pre></div></li></ol></li><li class="step"><p>
+      Show the configuration and check whether it is valid (bold text
+      depends on the configuration you have entered in
+      <a class="xref" href="cha-ha-manual-config.html#st-config-cli-edit" title="Step 3.c">Step 3.c</a>):
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">show</code>
+primitive virtual-ip ocf:heartbeat:IPaddr \
+    params ip=<span class="strong"><strong>"192.168.1.101"</strong></span>
+primitive apache apache \
+    params configfile=<span class="strong"><strong>"/etc/apache2/httpd.conf"</strong></span>
+    monitor apache 120s:60s
+group <span class="strong"><strong>g-intranet</strong></span> \
+    apache virtual-ip</pre></div></li><li class="step"><p>
+      Apply the configuration:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">apply</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">cd ..</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">show</code></pre></div></li><li class="step"><p>
+      Submit your changes to the CIB:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div><p>
+    It is possible to simplify the commands even more, if you know the
+    details. The above procedure can be summarized with the following
+    command on the shell:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure template \
+   new g-intranet apache params \
+   configfile="/etc/apache2/httpd.conf" ip="192.168.1.101"</pre></div><p>
+    If you are inside your internal <code class="command">crm</code> shell, use the
+    following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure template# </code><code class="command">new</code> intranet apache params \
+   configfile="/etc/apache2/httpd.conf" ip="192.168.1.101"</pre></div><p>
+    However, the previous command only creates its configuration from the
+    configuration template. It does not apply nor commit it to the CIB.
+   </p></section><section class="sect2" id="sec-ha-manual-config-shadowconfig" data-id-title="Testing with Shadow Configuration"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.7 </span><span class="title-name">Testing with Shadow Configuration</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-shadowconfig">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A shadow configuration is used to test different configuration
+    scenarios. If you have created several shadow configurations, you can
+    test them one by one to see the effects of your changes.
+   </p><p>
+    The usual process looks like this:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      Create a new shadow configuration:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">cib</code> new myNewConfig
+INFO: myNewConfig shadow CIB created</pre></div><p>
+      If you omit the name of the shadow CIB, a temporary name
+      <code class="literal">@tmp@</code> is created.
+     </p></li><li class="step"><p>
+      If you want to copy the current live configuration into your shadow
+      configuration, use the following command, otherwise skip this step:
+     </p><div class="verbatim-wrap"><pre class="screen">crm(myNewConfig)# <code class="command">cib</code> reset myNewConfig</pre></div><p>
+      The previous command makes it easier to modify any existing resources
+      later.
+     </p></li><li class="step"><p>
+      Make your changes as usual. After you have created the shadow
+      configuration, all changes go there. To save all your changes, use the
+      following command:
+     </p><div class="verbatim-wrap"><pre class="screen">crm(myNewConfig)# <code class="command">commit</code></pre></div></li><li class="step"><p>
+      If you need the live cluster configuration again, switch back with the
+      following command:
+     </p><div class="verbatim-wrap"><pre class="screen">crm(myNewConfig)configure# <code class="command">cib</code> use live
+<code class="prompt custom">crm(live)# </code></pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-debugging" data-id-title="Debugging Your Configuration Changes"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.8 </span><span class="title-name">Debugging Your Configuration Changes</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-debugging">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Before loading your configuration changes back into the cluster, it is
+    recommended to review your changes with <code class="command">ptest</code>. The
+    <code class="command">ptest</code> command can show a diagram of actions that will
+    be induced by committing the changes. You need the
+    <code class="systemitem">graphviz</code> package to display the diagrams. The
+    following example is a transcript, adding a monitor operation:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure
+<code class="prompt custom">crm(live)configure# </code><code class="command">show</code> fence-bob
+primitive fence-bob stonith:apcsmart \
+        params hostlist="bob"
+<code class="prompt custom">crm(live)configure# </code><code class="command">monitor</code> fence-bob 120m:60s
+<code class="prompt custom">crm(live)configure# </code><code class="command">show</code> changed
+primitive fence-bob stonith:apcsmart \
+        params hostlist="bob" \
+        op monitor interval="120m" timeout="60s"
+<code class="prompt custom">crm(live)configure# </code><span class="strong"><strong>ptest</strong></span>
+<code class="prompt custom">crm(live)configure# </code>commit</pre></div></section><section class="sect2" id="sec-ha-manual-config-diagram" data-id-title="Cluster Diagram"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.1.9 </span><span class="title-name">Cluster Diagram</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-diagram">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To output a cluster diagram, use the command
+    <code class="command">crm</code> <code class="command">configure graph</code>. It displays
+    the current configuration on its current window, therefore requiring
+    X11.
+   </p><p>
+    If you prefer Scalable Vector Graphics (SVG), use the following command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure graph dot config.svg svg</pre></div></section></section><section class="sect1" id="sec-ha-manual-config-crm-corosync" data-id-title="Managing Corosync Configuration"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.2 </span><span class="title-name">Managing Corosync Configuration</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-crm-corosync">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Corosync is the underlying messaging layer for most HA clusters. The
+   <code class="command">corosync</code> subcommand provides commands for editing and
+   managing the Corosync configuration.
+  </p><p>
+   For example, to list the status of the cluster, use
+   <code class="command">status</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> corosync status
+Printing ring status.
+Local node ID 175704363
+RING ID 0
+        id      = 10.121.9.43
+        status  = ring 0 active with no faults
+Quorum information
+------------------
+Date:             Thu May  8 16:41:56 2014
+Quorum provider:  corosync_votequorum
+Nodes:            2
+Node ID:          175704363
+Ring ID:          4032
+Quorate:          Yes
+
+Votequorum information
+----------------------
+Expected votes:   2
+Highest expected: 2
+Total votes:      2
+Quorum:           2
+Flags:            Quorate
+
+Membership information
+----------------------
+    Nodeid      Votes Name
+ 175704363          1 alice.example.com (local)
+ 175704619          1 bob.example.com</pre></div><p>
+   The <code class="command">diff</code> command is very helpful: It compares the
+   Corosync configuration on all nodes (if not stated otherwise) and
+   prints the difference between:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> corosync diff
+--- bob
++++ alice
+@@ -46,2 +46,2 @@
+-       expected_votes: 2
+-       two_node: 1
++       expected_votes: 1
++       two_node: 0</pre></div><p>
+   For more details, see
+   <a class="link" href="http://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync" target="_blank">http://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync</a>.
+  </p></section><section class="sect1" id="sec-ha-config-crm-global" data-id-title="Configuring Global Cluster Options"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.3 </span><span class="title-name">Configuring Global Cluster Options</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm-global">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Global cluster options control how the cluster behaves when confronted
+   with certain situations. The predefined values can usually be kept.
+   However, to make key functions of your cluster work correctly, you need
+   to adjust the following parameters after basic cluster setup:
+  </p><div class="procedure" id="id-1.3.4.5.6.5" data-id-title="Modifying Global Cluster Options With crm"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.1: </span><span class="title-name">Modifying Global Cluster Options With <code class="command">crm</code> </span></span><a title="Permalink" class="permalink" href="cha-ha-manual-config.html#id-1.3.4.5.6.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code> tool:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+     Use the following commands to set the options for two-node clusters
+     only:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">property</code> no-quorum-policy=stop
+<code class="prompt custom">crm(live)configure# </code><code class="command">property</code> stonith-enabled=true</pre></div><div id="id-1.3.4.5.6.5.3.3" data-id-title="No Support Without STONITH" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: No Support Without STONITH</div><p>
+      A cluster without STONITH is not supported.
+     </p></div></li><li class="step"><p>
+     Show your changes:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">show</code>
+property $id="cib-bootstrap-options" \
+   dc-version="1.1.1-530add2a3721a0ecccb24660a97dbfdaa3e68f51" \
+   cluster-infrastructure="corosync" \
+   expected-quorum-votes="2" \
+   no-quorum-policy="stop" \
+   stonith-enabled="true"</pre></div></li><li class="step"><p>
+     Commit your changes and exit:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">exit</code></pre></div></li></ol></div></div></section><section class="sect1" id="sec-ha-config-crm-resources" data-id-title="Configuring Cluster Resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.4 </span><span class="title-name">Configuring Cluster Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm-resources">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   As a cluster administrator, you need to create cluster resources for
+   every resource or application you run on servers in your cluster. Cluster
+   resources can include Web sites, e-mail servers, databases, file systems,
+   virtual machines, and any other server-based applications or services you
+   want to make available to users at all times.
+  </p><p>
+   For an overview of resource types you can create, refer to
+   <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-resources-types" title="5.3.3. Types of Resources">Section 5.3.3, “Types of Resources”</a>.
+  </p><section class="sect2" id="sec-ha-manual-config-load" data-id-title="Loading Cluster Resources from a File"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.1 </span><span class="title-name">Loading Cluster Resources from a File</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-load">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Parts or all of the configuration can be loaded from a local file or a
+    network URL. Three different methods can be defined:
+   </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.3.4.5.7.4.3.1"><span class="term"><code class="option">replace</code></span></dt><dd><p>
+       This option replaces the current configuration with the new source
+       configuration.
+      </p></dd><dt id="id-1.3.4.5.7.4.3.2"><span class="term"><code class="option">update</code></span></dt><dd><p>
+       This option tries to import the source configuration. It adds new items
+       or updates existing items to the current configuration.
+       
+      </p></dd><dt id="id-1.3.4.5.7.4.3.3"><span class="term"><code class="option">push</code></span></dt><dd><p>
+       This option imports the content from the source into the current
+       configuration (same as <code class="option">update</code>). However, it removes
+       objects that are not available in the new configuration.
+      </p></dd></dl></div><p>
+    To load the new configuration from the file <code class="filename">mycluster-config.txt</code>
+    use the following syntax:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure load push mycluster-config.txt</pre></div></section><section class="sect2" id="sec-ha-manual-config-create" data-id-title="Creating Cluster Resources"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.2 </span><span class="title-name">Creating Cluster Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-create">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    There are three types of RAs (Resource Agents) available with the
+    cluster (for background information, see
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-raclasses" title="5.3.2. Supported Resource Agent Classes">Section 5.3.2, “Supported Resource Agent Classes”</a>). To add a new resource
+    to the cluster, proceed as follows:
+   </p><div class="procedure" id="pro-ha-manual-config-create"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code> tool:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      Configure a primitive IP address:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> myIP IPaddr \
+     params ip=127.0.0.99 op monitor interval=60s</pre></div><p>
+      The previous command configures a <span class="quote">“<span class="quote">primitive</span>”</span> with the
+      name <code class="literal">myIP</code>. You need to choose a class (here
+      <code class="literal">ocf</code>), provider (<code class="literal">heartbeat</code>), and
+      type (<code class="literal">IPaddr</code>). Furthermore, this primitive expects
+      other parameters like the IP address. Change the address to your
+      setup.
+     </p></li><li class="step"><p>
+      Display and review the changes you have made:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">show</code></pre></div></li><li class="step"><p>
+      Commit your changes to take effect:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-rsc-template" data-id-title="Creating Resource Templates"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.3 </span><span class="title-name">Creating Resource Templates</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-rsc-template">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    If you want to create several resources with similar configurations, a
+    resource template simplifies the task. See also
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-constraints-templates" title="5.5.3. Resource Templates and Constraints">Section 5.5.3, “Resource Templates and Constraints”</a> for some
+    basic background information. Do not confuse them with the
+    <span class="quote">“<span class="quote">normal</span>”</span> templates from
+    <a class="xref" href="cha-ha-manual-config.html#sec-ha-manual-config-template" title="7.1.6. Using Configuration Templates">Section 7.1.6, “Using Configuration Templates”</a>. Use the
+    <code class="command">rsc_template</code> command to get familiar with the syntax:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure rsc_template
+usage: rsc_template &lt;name&gt; [&lt;class&gt;:[&lt;provider&gt;:]]&lt;type&gt;
+        [params &lt;param&gt;=&lt;value&gt; [&lt;param&gt;=&lt;value&gt;...]]
+        [meta &lt;attribute&gt;=&lt;value&gt; [&lt;attribute&gt;=&lt;value&gt;...]]
+        [utilization &lt;attribute&gt;=&lt;value&gt; [&lt;attribute&gt;=&lt;value&gt;...]]
+        [operations id_spec
+            [op op_type [&lt;attribute&gt;=&lt;value&gt;...] ...]]</pre></div><p>
+    For example, the following command creates a new resource template with
+    the name <code class="literal">BigVM</code> derived from the
+    <code class="literal">ocf:heartbeat:Xen</code> resource and some default values
+    and operations:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">rsc_template</code> BigVM ocf:heartbeat:Xen \
+   params allow_mem_management="true" \
+   op monitor timeout=60s interval=15s \
+   op stop timeout=10m \
+   op start timeout=10m</pre></div><p>
+    Once you defined the new resource template, you can use it in primitives
+    or reference it in order, colocation, or rsc_ticket constraints. To
+    reference the resource template, use the <code class="literal">@</code> sign:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> MyVM1 @BigVM \
+   params xmfile="/etc/xen/shared-vm/MyVM1" name="MyVM1"</pre></div><p>
+    The new primitive MyVM1 is going to inherit everything from the BigVM
+    resource templates. For example, the equivalent of the above two would
+    be:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> MyVM1 Xen \
+   params xmfile="/etc/xen/shared-vm/MyVM1" name="MyVM1" \
+   params allow_mem_management="true" \
+   op monitor timeout=60s interval=15s \
+   op stop timeout=10m \
+   op start timeout=10m</pre></div><p>
+    If you want to overwrite some options or operations, add them to your
+    (primitive) definition. For example, the following new primitive MyVM2
+    doubles the timeout for monitor operations but leaves others untouched:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> MyVM2 @BigVM \
+   params xmfile="/etc/xen/shared-vm/MyVM2" name="MyVM2" \
+   op monitor timeout=120s interval=30s</pre></div><p>
+    A resource template may be referenced in constraints to stand for all
+    primitives which are derived from that template. This helps to produce a
+    more concise and clear cluster configuration. Resource template
+    references are allowed in all constraints except location constraints.
+    Colocation constraints may not contain more than one template reference.
+   </p></section><section class="sect2" id="sec-ha-manual-create-stonith" data-id-title="Creating a STONITH Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.4 </span><span class="title-name">Creating a STONITH Resource</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-create-stonith">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    From the <code class="command">crm</code> perspective, a STONITH device is
+    just another resource. To create a STONITH resource, proceed as
+    follows:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      Get a list of all STONITH types with the following command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">ra</code> list stonith
+apcmaster                  apcmastersnmp              apcsmart
+baytech                    bladehpi                   cyclades
+drac3                      external/drac5             external/dracmc-telnet
+external/hetzner           external/hmchttp           external/ibmrsa
+external/ibmrsa-telnet     external/ipmi              external/ippower9258
+external/kdumpcheck        external/libvirt           external/nut
+external/rackpdu           external/riloe             external/sbd
+external/vcenter           external/vmware            external/xen0
+external/xen0-ha           fence_legacy               ibmhmc
+ipmilan                    meatware                   nw_rpc100s
+rcd_serial                 rps10                      suicide
+wti_mpc                    wti_nps</pre></div></li><li class="step" id="st-ha-manual-create-stonith-type"><p>
+      Choose a STONITH type from the above list and view the list of
+      possible options. Use the following command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">ra</code> info stonith:external/ipmi
+IPMI STONITH external device (stonith:external/ipmi)
+
+ipmitool based power management. Apparently, the power off
+method of ipmitool is intercepted by ACPI which then makes
+a regular shutdown. If case of a split brain on a two-node
+it may happen that no node survives. For two-node clusters
+use only the reset method.
+
+Parameters (* denotes required, [] the default):
+
+hostname (string): Hostname
+    The name of the host to be managed by this STONITH device.
+...</pre></div></li><li class="step"><p>
+      Create the STONITH resource with the <code class="literal">stonith</code>
+      class, the type you have chosen in
+      <a class="xref" href="cha-ha-manual-config.html#st-ha-manual-create-stonith-type" title="Step 3">Step 3</a>,
+      and the respective parameters if needed, for example:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> my-stonith stonith:external/ipmi \
+    params hostname="alice" \
+    ipaddr="192.168.1.221" \
+    userid="admin" passwd="secret" \
+    op monitor interval=60m timeout=120s</pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints" data-id-title="Configuring Resource Constraints"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.5 </span><span class="title-name">Configuring Resource Constraints</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Having all the resources configured is only one part of the job. Even if
+    the cluster knows all needed resources, it might still not be able to
+    handle them correctly. For example, try not to mount the file system on
+    the slave node of DRBD (in fact, this would fail with DRBD). Define
+    constraints to make these kind of information available to the cluster.
+   </p><p>
+    For more information about constraints, see
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-constraints" title="5.5. Resource Constraints">Section 5.5, “Resource Constraints”</a>.
+   </p><section class="sect3" id="sec-ha-manual-config-constraints-locational" data-id-title="Locational Constraints"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.4.5.1 </span><span class="title-name">Locational Constraints</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-locational">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     The <code class="command">location</code> command defines on which nodes a
+     resource may be run, may not be run or is preferred to be run.
+    </p><p>
+     This type of constraint may be added multiple times for each resource.
+     All <code class="literal">location</code> constraints are evaluated for a given
+     resource. A simple example that expresses a preference to run the
+     resource <code class="literal">fs1</code> on the node with the name
+     <code class="systemitem">alice</code> to 100 would be the
+     following:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location</code> loc-fs1 fs1 100: alice</pre></div><p>
+     Another example is a location with ping:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> ping ping \
+    params name=ping dampen=5s multiplier=100 host_list="r1 r2"
+<code class="prompt custom">crm(live)configure# </code><code class="command">clone</code> cl-ping ping meta interleave=true
+<code class="prompt custom">crm(live)configure# </code><code class="command">location</code> loc-node_pref internal_www \
+    rule 50: #uname eq alice \
+    rule ping: defined ping</pre></div><p>
+     The parameter <em class="parameter">host_list</em> is a space-separated list
+     of hosts to ping and count.
+     Another use case for location constraints are grouping primitives as a
+     <span class="emphasis"><em>resource set</em></span>. This can be useful if several
+     resources depend on, for example, a ping attribute for network
+     connectivity. In former times, the <code class="literal">-inf/ping</code> rules
+     needed to be duplicated several times in the configuration, making it
+     unnecessarily complex.
+    </p><p>
+     The following example creates a resource set
+     <code class="varname">loc-alice</code>, referencing the virtual IP addresses
+     <code class="varname">vip1</code> and <code class="varname">vip2</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> vip1 IPaddr2 params ip=192.168.1.5
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> vip2 IPaddr2 params ip=192.168.1.6
+<code class="prompt custom">crm(live)configure# </code><code class="command">location</code> loc-alice { vip1 vip2 } inf: alice</pre></div><p>
+     In some cases it is much more efficient and convenient to use resource
+     patterns for your <code class="command">location</code> command. A resource
+     pattern is a regular expression between two slashes. For example, the
+     above virtual IP addresses can be all matched with the following:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location</code>  loc-alice /vip.*/ inf: alice</pre></div></section><section class="sect3" id="sec-ha-manual-config-constraints-collocational" data-id-title="Colocational Constraints"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.4.5.2 </span><span class="title-name">Colocational Constraints</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-collocational">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     The <code class="command">colocation</code> command is used to define what
+     resources should run on the same or on different hosts.
+    </p><p>
+     It is only possible to set a score of either +inf or -inf, defining
+     resources that must always or must never run on the same node. It is
+     also possible to use non-infinite scores. In that case the colocation
+     is called <span class="emphasis"><em>advisory</em></span> and the cluster may decide not
+     to follow them in favor of not stopping other resources if there is a
+     conflict.
+    </p><p>
+     For example, to run the resources with the IDs
+     <code class="literal">filesystem_resource</code> and <code class="literal">nfs_group</code>
+     always on the same host, use the following constraint:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> nfs_on_filesystem inf: nfs_group filesystem_resource</pre></div><p>
+     For a master slave configuration, it is necessary to know if the
+     current node is a master in addition to running the resource locally.
+    </p></section><section class="sect3" id="sec-ha-manual-config-constraints-weak-bond" data-id-title="Collocating Sets for Resources Without Dependency"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.4.5.3 </span><span class="title-name">Collocating Sets for Resources Without Dependency</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-weak-bond">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     Sometimes it is useful to be able to place a group of resources on the
+     same node (defining a colocation constraint), but without having hard
+     dependencies between the resources.
+    </p><p>
+     Use the command <code class="command">weak-bond</code> if you want to place
+     resources on the same node, but without any action if one of them
+     fails.
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure assist weak-bond RES1 RES2</pre></div><p>
+     The implementation of <code class="command">weak-bond</code> creates a dummy
+     resource and a colocation constraint with the given resources
+     automatically.
+    </p></section><section class="sect3" id="sec-ha-manual-config-constraints-ordering" data-id-title="Ordering Constraints"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.4.5.4 </span><span class="title-name">Ordering Constraints</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-ordering">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     The <code class="command">order</code> command defines a sequence of action.
+    </p><p>
+     Sometimes it is necessary to provide an order of resource actions or
+     operations. For example, you cannot mount a file system before the
+     device is available to a system. Ordering constraints can be used to
+     start or stop a service right before or after a different resource
+     meets a special condition, such as being started, stopped, or promoted
+     to master.
+    </p><p>
+     Use the following command in the <code class="command">crm</code> shell to
+     configure an ordering constraint:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> nfs_after_filesystem mandatory: filesystem_resource nfs_group</pre></div></section><section class="sect3" id="sec-ha-manual-config-constraints-example" data-id-title="Constraints for the Example Configuration"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.4.5.5 </span><span class="title-name">Constraints for the Example Configuration</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-constraints-example">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     The example used for this section would not work without additional
+     constraints. It is essential that all resources run on the same machine
+     as the master of the DRBD resource. The DRBD resource must be master
+     before any other resource starts. Trying to mount the DRBD device when
+     it is not the master simply fails. The following constraints must be
+     fulfilled:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+       The file system must always be on the same node as the master of the
+       DRBD resource.
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> filesystem_on_master inf: \
+    filesystem_resource drbd_resource:Master</pre></div></li><li class="listitem"><p>
+       The NFS server and the IP address must be on the same node as the
+       file system.
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> nfs_with_fs inf: \
+   nfs_group filesystem_resource</pre></div></li><li class="listitem"><p>
+       The NFS server and the IP address start after the file system is
+       mounted:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> nfs_second mandatory: \
+   filesystem_resource:start nfs_group</pre></div></li><li class="listitem"><p>
+       The file system must be mounted on a node after the DRBD resource is
+       promoted to master on this node.
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> drbd_first inf: \
+    drbd_resource:promote filesystem_resource:start</pre></div></li></ul></div></section></section><section class="sect2" id="sec-ha-manual-config-failover" data-id-title="Specifying Resource Failover Nodes"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.6 </span><span class="title-name">Specifying Resource Failover Nodes</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To determine a resource failover, use the meta attribute
+    migration-threshold. In case failcount exceeds migration-threshold on
+    all nodes, the resource will remain stopped. For example:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location</code> rsc1-alice rsc1 100: alice</pre></div><p>
+    Normally, rsc1 prefers to run on alice. If it fails there,
+    migration-threshold is checked and compared to the failcount. If
+    failcount &gt;= migration-threshold then it is migrated to the node with
+    the next best preference.
+   </p><p>
+    Start failures set the failcount to inf depend on the
+    <code class="option">start-failure-is-fatal</code> option. Stop failures cause
+    fencing. If there is no STONITH defined, the resource will not migrate.
+   </p><p>
+    For an overview, refer to
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-failover" title="5.5.4. Failover Nodes">Section 5.5.4, “Failover Nodes”</a>.
+   </p></section><section class="sect2" id="sec-ha-manual-config-failback" data-id-title="Specifying Resource Failback Nodes (Resource Stickiness)"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.7 </span><span class="title-name">Specifying Resource Failback Nodes (Resource Stickiness)</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-failback">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A resource might fail back to its original node when that node is back
+    online and in the cluster. To prevent a resource from
+    failing back to the node that it was running on, or
+    to specify a different node for the resource to fail back to,
+    change its resource stickiness value. You can
+    either specify resource stickiness when you are creating a resource or
+    afterward.
+   </p><p>
+    For an overview, refer to
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-failback" title="5.5.5. Failback Nodes">Section 5.5.5, “Failback Nodes”</a>.
+   </p></section><section class="sect2" id="sec-ha-manual-config-utilization" data-id-title="Configuring Placement of Resources Based on Load Impact"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.8 </span><span class="title-name">Configuring Placement of Resources Based on Load Impact</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-utilization">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Some resources may have specific capacity requirements such as minimum
+    amount of memory. Otherwise, they may fail to start completely or run
+    with degraded performance.
+   </p><p>
+    To take this into account, SUSE Linux Enterprise High Availability allows you to specify the
+    following parameters:
+   </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+      The capacity a certain node <span class="emphasis"><em>provides</em></span>.
+     </p></li><li class="listitem"><p>
+      The capacity a certain resource <span class="emphasis"><em>requires</em></span>.
+     </p></li><li class="listitem"><p>
+      An overall strategy for placement of resources.
+     </p></li></ol></div><p>
+    For detailed background information about the parameters and a
+    configuration example, refer to
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-utilization" title="5.5.6. Placing Resources Based on Their Load Impact">Section 5.5.6, “Placing Resources Based on Their Load Impact”</a>.
+   </p><p>
+    To configure the resource's requirements and the capacity a node
+    provides, use utilization attributes.
+
+    
+    You can name the utilization attributes according to your preferences
+    and define as many name/value pairs as your configuration needs. In
+    certain cases, some agents update the utilization themselves, for
+    example the <code class="systemitem">VirtualDomain</code>.
+   </p><p>
+    In the following example, we assume that you already have a basic
+    configuration of cluster nodes and resources. You now additionally want
+    to configure the capacities a certain node provides and the capacity a
+    certain resource requires.
+
+   </p><div class="procedure" id="id-1.3.4.5.7.11.9" data-id-title="Adding Or Modifying Utilization Attributes With crm"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 7.2: </span><span class="title-name">Adding Or Modifying Utilization Attributes With <code class="command">crm</code> </span></span><a title="Permalink" class="permalink" href="cha-ha-manual-config.html#id-1.3.4.5.7.11.9">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      To specify the capacity a node <span class="emphasis"><em>provides</em></span>, use the
+      following command and replace the placeholder
+      <em class="replaceable">NODE_1</em> with the name of your node:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">node</code> <em class="replaceable">NODE_1</em> utilization hv_memory=16384 cpu=8</pre></div><p>
+      With these values, <em class="replaceable">NODE_1</em> would be assumed
+      to provide 16GB of memory and 8 CPU cores to resources.
+     </p></li><li class="step"><p>
+      To specify the capacity a resource <span class="emphasis"><em>requires</em></span>, use:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> xen1 Xen ... \
+     utilization hv_memory=4096 cpu=4</pre></div><p>
+      This would make the resource consume 4096 of those memory units from
+      <em class="replaceable">NODE_1</em>, and 4 of the CPU units.
+     </p></li><li class="step"><p>
+      Configure the placement strategy with the <code class="command">property</code>
+      command:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">property</code> ...</pre></div><p>
+      The following values are available:
+     </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.3.4.5.7.11.9.5.4.1"><span class="term"><code class="literal">default</code> (default value)</span></dt><dd><p>
+       Utilization values are not considered. Resources are allocated
+       according to location scoring. If scores are equal, resources are
+       evenly distributed across nodes.
+      </p></dd><dt id="id-1.3.4.5.7.11.9.5.4.2"><span class="term"><code class="literal">utilization</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. However,
+       load-balancing is still done based on the number of resources
+       allocated to a node.
+      </p></dd><dt id="id-1.3.4.5.7.11.9.5.4.3"><span class="term"><code class="literal">minimal</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. An attempt is
+       made to concentrate the resources on as few nodes as possible
+       (to achieve power savings on the remaining nodes).
+      </p></dd><dt id="id-1.3.4.5.7.11.9.5.4.4"><span class="term"><code class="literal">balanced</code>
+     </span></dt><dd><p>
+       Utilization values are considered when deciding if a node has enough
+       free capacity to satisfy a resource's requirements. An attempt is
+       made to distribute the resources evenly, thus optimizing resource
+       performance.
+      </p></dd></dl></div><div id="id-1.3.4.5.7.11.9.5.5" data-id-title="Configuring Resource Priorities" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Configuring Resource Priorities</div><p>
+     The available placement strategies are best-effort—they do not
+     yet use complex heuristic solvers to always reach optimum allocation
+     results. Ensure that resource priorities are properly set so that
+     your most important resources are scheduled first.
+    </p></div></li><li class="step"><p>
+      Commit your changes before leaving crmsh:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div><p>
+    The following example demonstrates a three node cluster of equal nodes,
+    with 4 virtual machines:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">node</code> alice utilization hv_memory="4000"
+<code class="prompt custom">crm(live)configure# </code><code class="command">node</code> bob utilization hv_memory="4000"
+<code class="prompt custom">crm(live)configure# </code><code class="command">node</code> charlie utilization hv_memory="4000"
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> xenA Xen \
+    utilization hv_memory="3500" meta priority="10" \
+    params xmfile="/etc/xen/shared-vm/vm1"
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> xenB Xen \
+    utilization hv_memory="2000" meta priority="1" \
+    params xmfile="/etc/xen/shared-vm/vm2"
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> xenC Xen \
+    utilization hv_memory="2000" meta priority="1" \
+    params xmfile="/etc/xen/shared-vm/vm3"
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> xenD Xen \
+    utilization hv_memory="1000" meta priority="5" \
+    params xmfile="/etc/xen/shared-vm/vm4"
+<code class="prompt custom">crm(live)configure# </code><code class="command">property</code> placement-strategy="minimal"</pre></div><p>
+    With all three nodes up, xenA will be placed onto a node first, followed
+    by xenD. xenB and xenC would either be allocated together or one of them
+    with xenD.
+   </p><p>
+    If one node failed, too little total memory would be available to host
+    them all. xenA would be ensured to be allocated, as would xenD. However,
+    only one of xenB or xenC could still be placed, and since their priority
+    is equal, the result is not defined yet. To resolve this ambiguity as
+    well, you would need to set a higher priority for either one.
+   </p></section><section class="sect2" id="sec-ha-manual-config-monitor" data-id-title="Configuring Resource Monitoring"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.9 </span><span class="title-name">Configuring Resource Monitoring</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-monitor">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To monitor a resource, there are two possibilities: either define a
+    monitor operation with the <code class="command">op</code> keyword or use the
+    <code class="command">monitor</code> command. The following example configures an
+    Apache resource and monitors it every 60 seconds with the
+    <code class="literal">op</code> keyword:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> apache apache \
+  params ... \
+  <span class="emphasis"><em>op monitor interval=60s timeout=30s</em></span></pre></div><p>
+    The same can be done with:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> apache apache \
+   params ...
+<code class="prompt custom">crm(live)configure# </code><code class="command">monitor</code> apache 60s:30s</pre></div><p>
+    For an overview, refer to
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-monitoring" title="5.4. Resource Monitoring">Section 5.4, “Resource Monitoring”</a>.
+   </p></section><section class="sect2" id="sec-ha-manual-config-group" data-id-title="Configuring a Cluster Resource Group"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.10 </span><span class="title-name">Configuring a Cluster Resource Group</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-group">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    One of the most common elements of a cluster is a set of resources that
+    needs to be located together. Start sequentially and stop in the reverse
+    order. To simplify this configuration we support the concept of groups.
+    The following example creates two primitives (an IP address and an
+    e-mail resource):
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Run the <code class="command">crm</code> command as system administrator. The
+      prompt changes to <code class="literal">crm(live)</code>.
+     </p></li><li class="step"><p>
+      Configure the primitives:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> Public-IP ocf:heartbeat:IPaddr2 \
+   params ip=1.2.3.4 \
+   op monitor interval=10s
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> Email systemd:postfix \
+   op monitor interval=10s</pre></div></li><li class="step"><p>
+      Group the primitives with their relevant identifiers in the correct
+      order:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group</code> g-mailsvc Public-IP Email</pre></div></li></ol></div></div><p>
+    To change the order of a group member, use the
+    <code class="command">modgroup</code> command from the
+    <code class="command">configure</code> subcommand. Use the following commands to
+    move the primitive <code class="literal">Email</code> before
+    <code class="literal">Public-IP</code>. (This is just to demonstrate the feature):
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">modgroup</code> g-mailsvc add Email before Public-IP</pre></div><p>
+    To remove a resource from a group (for example,
+    <code class="literal">Email</code>), use this command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">modgroup</code> g-mailsvc remove Email</pre></div><p>
+    For an overview, refer to
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-resources-advanced-groups" title="5.3.5.1. Groups">Section 5.3.5.1, “Groups”</a>.
+   </p></section><section class="sect2" id="sec-ha-manual-config-clone" data-id-title="Configuring a Clone Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.4.11 </span><span class="title-name">Configuring a Clone Resource</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-clone">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+
+    Clones were initially conceived as a convenient way to start N instances
+    of an IP resource and have them distributed throughout the cluster for
+    load balancing. They have turned out to be useful for several other
+    purposes, including integrating with DLM, the fencing subsystem and
+    OCFS2. You can clone any resource, provided the resource agent supports
+    it.
+   </p><p>
+    Learn more about cloned resources in
+    <a class="xref" href="cha-ha-config-basics.html#sec-ha-config-basics-resources-advanced-clones" title="5.3.5.2. Clones">Section 5.3.5.2, “Clones”</a>.
+   </p><section class="sect3" id="sec-ha-manual-config-clone-anonymous" data-id-title="Creating Anonymous Clone Resources"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.4.11.1 </span><span class="title-name">Creating Anonymous Clone Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-clone-anonymous">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     To create an anonymous clone resource, first create a primitive
+     resource and then refer to it with the <code class="command">clone</code>
+     command. Do the following:
+    </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+       interactive shell:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+       Configure the primitive, for example:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> Apache apache</pre></div></li><li class="step"><p>
+       Clone the primitive:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">clone</code> cl-apache Apache</pre></div></li></ol></div></div></section><section class="sect3" id="sec-ha-manual-config-clone-stateful" data-id-title="Creating Stateful/Multi-State Clone Resources"><div class="titlepage"><div><div><div class="title-container"><h4 class="title"><span class="title-number-name"><span class="title-number">7.4.11.2 </span><span class="title-name">Creating Stateful/Multi-State Clone Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-clone-stateful">#</a></h4><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     Multi-state resources are a specialization of clones. This type allows
+     the instances to be in one of two operating modes, be it active/passive,
+     primary/secondary, or master/slave.
+    </p><p>
+     To create a stateful clone resource, first create a primitive resource
+     and then the multi-state resource. The multi-state resource must
+     support at least promote and demote operations.
+    </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+       interactive shell:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+       Configure the primitive. Change the intervals if needed:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> my-rsc ocf:myCorp:myAppl \
+    op monitor interval=60 \
+    op monitor interval=61 role=Master</pre></div></li><li class="step"><p>
+       Create the multi-state resource:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">ms</code> ms-rsc my-rsc</pre></div></li></ol></div></div></section></section></section><section class="sect1" id="sec-ha-config-crm" data-id-title="Managing Cluster Resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.5 </span><span class="title-name">Managing Cluster Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Apart from the possibility to configure your cluster resources, the
+   <code class="command">crm</code> tool also allows you to manage existing resources.
+   The following subsections gives you an overview.
+  </p><section class="sect2" id="sec-ha-manual-config-show" data-id-title="Showing Cluster Resources"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.1 </span><span class="title-name">Showing Cluster Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-show">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    When administering a cluster the command <code class="command">crm configure show</code>
+    lists the current CIB objects like cluster configuration, global options,
+    primitives, and others:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show
+node 178326192: alice
+node 178326448: bob
+primitive admin_addr IPaddr2 \
+        params ip=192.168.2.1 \
+        op monitor interval=10 timeout=20
+primitive stonith-sbd stonith:external/sbd \
+        params pcmk_delay_max=30
+property cib-bootstrap-options: \
+        have-watchdog=true \
+        dc-version=1.1.15-17.1-e174ec8 \
+        cluster-infrastructure=corosync \
+        cluster-name=hacluster \
+        stonith-enabled=true \
+        placement-strategy=balanced \
+        standby-mode=true
+rsc_defaults rsc-options: \
+        resource-stickiness=1 \
+        migration-threshold=3
+op_defaults op-options: \
+        timeout=600 \
+        record-pending=true</pre></div><p>
+    In case you have lots of resources, the output of <code class="command">show</code>
+    is too verbose. To restrict the output, use the name of the resource.
+    For example, to list the properties of the primitive
+    <code class="systemitem">admin_addr</code> only, append the resource name to
+    <code class="command">show</code>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show admin_addr
+primitive admin_addr IPaddr2 \
+        params ip=192.168.2.1 \
+        op monitor interval=10 timeout=20</pre></div><p>
+    However, in some cases, you want to limit the output of specific resources
+    even more. This can be achieved with <span class="emphasis"><em>filters</em></span>. Filters
+    limit the output to specific components. For example, to list the
+    nodes only, use <code class="literal">type:node</code>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show type:node
+node 178326192: alice
+node 178326448: bob</pre></div><p>In case you are also interested in primitives, use the
+   <code class="literal">or</code> operator:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show type:node or type:primitive
+node 178326192: alice
+node 178326448: bob
+primitive admin_addr IPaddr2 \
+        params ip=192.168.2.1 \
+        op monitor interval=10 timeout=20
+primitive stonith-sbd stonith:external/sbd \
+        params pcmk_delay_max=30</pre></div><p>
+    Furthermore, to search for an object that starts with a certain string,
+    use this notation:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show type:primitive and and 'admin*'
+primitive admin_addr IPaddr2 \
+        params ip=192.168.2.1 \
+        op monitor interval=10 timeout=20</pre></div><p>
+    To list all available types, enter <code class="command">crm configure show type:</code>
+    and press the <span class="keycap">→|</span> key. The Bash completion will give
+    you a list of all types.
+   </p></section><section class="sect2" id="sec-ha-manual-config-start" data-id-title="Starting a New Cluster Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.2 </span><span class="title-name">Starting a New Cluster Resource</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-start">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To start a new cluster resource you need the respective identifier.
+    Proceed as follows:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code></pre></div></li><li class="step"><p>
+      Switch to the resource level:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">resource</code></pre></div></li><li class="step"><p>
+      Start the resource with <code class="command">start</code> and press the
+      <span class="keycap">→|</span> key to show all known resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)resource# </code><code class="command">start</code> <em class="replaceable">ID</em></pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-stop" data-id-title="Stopping a Cluster Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.3 </span><span class="title-name">Stopping a Cluster Resource</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-stop">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To stop one or more existing cluster resources you need the respective identifier(s).
+    Proceed as follows:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code></pre></div></li><li class="step"><p>
+      Switch to the resource level:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">resource</code></pre></div></li><li class="step"><p>
+      Stop the resource with <code class="command">stop</code> and press the
+      <span class="keycap">→|</span> key to show all known resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)resource# </code><code class="command">stop</code> <em class="replaceable">ID</em></pre></div><p>
+      It's possible to stop multiple resources at once:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)resource# </code><code class="command">stop</code> <em class="replaceable">ID1</em> <em class="replaceable">ID2</em> ...</pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-cleanup" data-id-title="Cleaning Up Resources"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.4 </span><span class="title-name">Cleaning Up Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-cleanup">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A resource will be automatically restarted if it fails, but each failure
+    raises the resource's failcount. If a
+    <code class="literal">migration-threshold</code> has been set for that resource,
+    the node will no longer be allowed to run the resource when the
+    number of failures has reached the migration threshold.
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Open a shell and log in as user <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Get a list of all your resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource list
+  ...
+Resource Group: dlm-clvm:1
+         dlm:1  (ocf:pacemaker:controld) Started
+         clvm:1 (ocf:heartbeat:clvm) Started</pre></div></li><li class="step"><p>
+      To clean up the resource <code class="literal">dlm</code>, for example:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource cleanup dlm</pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-remove" data-id-title="Removing a Cluster Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.5 </span><span class="title-name">Removing a Cluster Resource</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-remove">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Proceed as follows to remove a cluster resource:
+   </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
+      interactive shell:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure</pre></div></li><li class="step"><p>
+      Run the following command to get a list of your resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">resource</code> status</pre></div><p>
+      For example, the output can look like this (whereas myIP is the
+      relevant identifier of your resource):
+     </p><div class="verbatim-wrap"><pre class="screen">myIP    (ocf:IPaddr:heartbeat) ...</pre></div></li><li class="step"><p>
+      Delete the resource with the relevant identifier (which implies a
+      <code class="command">commit</code> too):
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure</code> delete <em class="replaceable">YOUR_ID</em></pre></div></li><li class="step"><p>
+      Commit the changes:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure</code> commit</pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-migrate" data-id-title="Migrating a Cluster Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.6 </span><span class="title-name">Migrating a Cluster Resource</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-migrate">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Although resources are configured to automatically fail over (or
+    migrate) to other nodes of the cluster if a hardware or
+    software failure occurs, you can also manually move a resource to another node
+    using either Hawk2 or the command line.
+   </p><p>
+    Use the <code class="command">migrate</code> command for this task. For example,
+    to migrate the resource <code class="literal">ipaddress1</code> to a cluster node
+    named <code class="systemitem">bob</code>, use these
+    commands:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource
+<code class="prompt custom">crm(live)resource# </code><code class="command">migrate</code> ipaddress1 bob</pre></div></section><section class="sect2" id="sec-ha-manual-config-tag" data-id-title="Grouping/Tagging Resources"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.7 </span><span class="title-name">Grouping/Tagging Resources</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-tag">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Tags are a way to refer to multiple resources at once, without creating
+    any colocation or ordering relationship between them. This can be useful
+    for grouping conceptually related resources. For example, if you have
+    several resources related to a database, create a tag called
+    <code class="literal">databases</code> and add all resources related to the
+    database to this tag:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure tag databases: db1 db2 db3</pre></div><p>
+    This allows you to start them all with a single command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource start databases</pre></div><p>
+    Similarly, you can stop them all too:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource stop databases</pre></div></section><section class="sect2" id="sec-ha-manual-config-cli-health" data-id-title="Getting Health Status"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">7.5.8 </span><span class="title-name">Getting Health Status</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-manual-config-cli-health">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The <span class="quote">“<span class="quote">health</span>”</span> status of a cluster or node can be displayed
+    with so called <span class="emphasis"><em>scripts</em></span>. A script can perform
+    different tasks—they are not targeted to health. However, for
+    this subsection, we focus on how to get the health status.
+   </p><p>
+    To get all the details about the <code class="command">health</code> command, use
+    <code class="command">describe</code>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script describe health</pre></div><p>
+    It shows a description and a list of all parameters and their default
+    values. To execute a script, use <code class="command">run</code>:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script run health</pre></div><p>
+    If you prefer to run only one step from the suite, the
+    <code class="command">describe</code> command lists all available steps in the
+    <em class="citetitle">Steps</em> category.
+   </p><p>
+    For example, the following command executes the first step of the
+    <code class="command">health</code> command. The output is stored in the
+    <code class="filename">health.json</code> file for further investigation:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> script run health
+    statefile='health.json'</pre></div><p>It is also possible to run the above commands with
+    <code class="command">crm cluster health</code>.</p><p>
+    For additional information regarding scripts, see
+    <a class="link" href="http://crmsh.github.io/scripts/" target="_blank">http://crmsh.github.io/scripts/</a>.
+   </p></section></section><section class="sect1" id="sec-ha-config-crm-setpwd" data-id-title="Setting Passwords Independent of cib.xml"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.6 </span><span class="title-name">Setting Passwords Independent of <code class="filename">cib.xml</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm-setpwd">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   In case your cluster configuration contains sensitive information, such
+   as passwords, it should be stored in local files. That way, these
+   parameters will never be logged or leaked in support reports.
+  </p><p>
+   Before using <code class="command">secret</code>, better run the
+   <code class="command">show</code> command first to get an overview of all your
+   resources:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure show
+primitive mydb mysql \
+   params replication_user=admin ...</pre></div><p>
+   If you want to set a password for the above <code class="literal">mydb</code>
+   resource, use the following commands:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource secret mydb set passwd linux
+INFO: syncing /var/lib/heartbeat/lrm/secrets/mydb/passwd to [your node list]</pre></div><p>
+   You can get the saved password back with:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> resource secret mydb show passwd
+linux</pre></div><p>
+   Note that the parameters need to be synchronized between nodes; the
+   <code class="command">crm resource secret</code> command will take care of that. We
+   highly recommend to only use this command to manage secret parameters.
+  </p></section><section class="sect1" id="sec-ha-config-crm-history" data-id-title="Retrieving History Information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.7 </span><span class="title-name">Retrieving History Information</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm-history">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Investigating the cluster history is a complex task. To simplify this
+   task, crmsh contains the <code class="command">history</code> command with its
+   subcommands. It is assumed SSH is configured correctly.
+  </p><p>
+   Each cluster moves states, migrates resources, or starts important
+   processes. All these actions can be retrieved by subcommands of
+   <code class="command">history</code>. 
+    
+  </p><p>
+   By default, all <code class="command">history</code> commands look at the events of
+   the last hour. To change this time frame, use the
+   <code class="command">limit</code> subcommand. The syntax is:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> history
+<code class="prompt custom">crm(live)history# </code><code class="command">limit</code> <em class="replaceable">FROM_TIME</em> [<em class="replaceable">TO_TIME</em>]</pre></div><p>
+   Some valid examples include:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.3.4.5.10.7.1"><span class="term"><code class="command">limit</code><code class="literal">4:00pm</code>
+    , </span><span class="term"><code class="command">limit</code><code class="literal">16:00</code>
+    </span></dt><dd><p>
+      Both commands mean the same, today at 4pm.
+     </p></dd><dt id="id-1.3.4.5.10.7.2"><span class="term"><code class="command">limit</code><code class="literal">2012/01/12 6pm</code>
+    </span></dt><dd><p>
+      January 12th 2012 at 6pm
+     </p></dd><dt id="id-1.3.4.5.10.7.3"><span class="term"><code class="command">limit</code><code class="literal">"Sun 5 20:46"</code>
+    </span></dt><dd><p>
+      In the current year of the current month at Sunday the 5th at 8:46pm
+     </p></dd></dl></div><p>
+   Find more examples and how to create time frames at
+   <a class="link" href="http://labix.org/python-dateutil" target="_blank">http://labix.org/python-dateutil</a>.
+  </p><p>
+   The <code class="command">info</code> subcommand shows all the parameters which are
+   covered by the <code class="command">crm report</code>:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">info</code>
+Source: live
+Period: 2012-01-12 14:10:56 - end
+Nodes: alice
+Groups:
+Resources:</pre></div><p>
+   To limit <code class="command">crm report</code> to certain parameters view the
+   available options with the subcommand <code class="command">help</code>.
+  </p><p>
+   To narrow down the level of detail, use the subcommand
+   <code class="command">detail</code> with a level:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">detail</code> 1</pre></div><p>
+   The higher the number, the more detailed your report will be. Default is
+   <code class="literal">0</code> (zero).
+  </p><p>
+   After you have set above parameters, use <code class="command">log</code> to show
+   the log messages.
+  </p><p>
+   To display the last transition, use the following command:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">transition</code> -1
+INFO: fetching new logs, please wait ...</pre></div><p>
+   This command fetches the logs and runs <code class="command">dotty</code> (from the
+   <code class="systemitem">graphviz</code> package) to show the
+   transition graph. The shell opens the log file which you can browse with
+   the <span class="keycap">↓</span> and <span class="keycap">↑</span> cursor keys.
+  </p><p>
+   If you do not want to open the transition graph, use the
+   <code class="option">nograph</code> option:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)history# </code><code class="command">transition</code> -1 nograph</pre></div></section><section class="sect1" id="sec-ha-config-crm-more" data-id-title="For More Information"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.8 </span><span class="title-name">For More Information</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm-more">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     The crm man page.
+    </p></li><li class="listitem"><p>
+     Visit the upstream project documentation at
+     <a class="link" href="http://crmsh.github.io/documentation" target="_blank">http://crmsh.github.io/documentation</a>.
+    </p></li><li class="listitem"><p>
+     See <span class="intraxref">Article “Highly Available NFS Storage with DRBD and Pacemaker”</span> for an exhaustive example.
+    </p></li></ul></div></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-conf-hawk2.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 6 </span>Configuring and Managing Cluster Resources with Hawk2</span></a> </div><div><a class="pagination-link next" href="cha-ha-agents.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 8 </span>Adding or Modifying Resource Agents</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-manual-config-crm"><span class="title-number">7.1 </span><span class="title-name">crmsh—Overview</span></a></span></li><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-manual-config-crm-corosync"><span class="title-number">7.2 </span><span class="title-name">Managing Corosync Configuration</span></a></span></li><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-config-crm-global"><span class="title-number">7.3 </span><span class="title-name">Configuring Global Cluster Options</span></a></span></li><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-config-crm-resources"><span class="title-number">7.4 </span><span class="title-name">Configuring Cluster Resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-config-crm"><span class="title-number">7.5 </span><span class="title-name">Managing Cluster Resources</span></a></span></li><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-config-crm-setpwd"><span class="title-number">7.6 </span><span class="title-name">Setting Passwords Independent of <code class="filename">cib.xml</code></span></a></span></li><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-config-crm-history"><span class="title-number">7.7 </span><span class="title-name">Retrieving History Information</span></a></span></li><li><span class="sect1"><a href="cha-ha-manual-config.html#sec-ha-config-crm-more"><span class="title-number">7.8 </span><span class="title-name">For More Information</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

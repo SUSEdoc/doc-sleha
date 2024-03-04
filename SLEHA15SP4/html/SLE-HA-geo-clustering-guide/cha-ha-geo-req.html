@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP4 | Geo Clustering Guide | Requirements</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Requirements | SLE HA 15 SP4"/>
+<meta name="description" content="All machines (cluster nodes and arbitrators) that will…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP4"/>
+<meta name="book-title" content="Geo Clustering Guide"/>
+<meta name="chapter-title" content="Chapter 3. Requirements"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP4"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Requirements | SLE HA 15 SP4"/>
+<meta property="og:description" content="All machines (cluster nodes and arbitrators) that will be part of the cluster need at least the following modules and extens…"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Requirements | SLE HA 15 SP4"/>
+<meta name="twitter:description" content="All machines (cluster nodes and arbitrators) that will be part of the cluster need at least the following modules and extens…"/>
+<link rel="prev" href="cha-ha-geo-concept.html" title="Chapter 2. Conceptual overview"/><link rel="next" href="cha-ha-geo-booth.html" title="Chapter 4. Setting up the booth services"/><script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_requirements_i.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Geo Clustering Guide</a><span> / </span><a class="crumb" href="cha-ha-geo-req.html">Requirements</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Geo Clustering Guide</div><ol><li><a href="pre-geo.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li><a href="cha-ha-geo-challenges.html" class=" "><span class="title-number">1 </span><span class="title-name">Challenges for Geo clusters</span></a></li><li><a href="cha-ha-geo-concept.html" class=" "><span class="title-number">2 </span><span class="title-name">Conceptual overview</span></a></li><li><a href="cha-ha-geo-req.html" class=" you-are-here"><span class="title-number">3 </span><span class="title-name">Requirements</span></a></li><li><a href="cha-ha-geo-booth.html" class=" "><span class="title-number">4 </span><span class="title-name">Setting up the booth services</span></a></li><li><a href="cha-ha-geo-sync.html" class=" "><span class="title-number">5 </span><span class="title-name">Synchronizing configuration files across all sites and arbitrators</span></a></li><li><a href="cha-ha-geo-rsc.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources and constraints</span></a></li><li><a href="cha-ha-geo-ip-relocation.html" class=" "><span class="title-number">7 </span><span class="title-name">Setting up IP relocation via DNS update</span></a></li><li><a href="cha-ha-geo-manage.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing Geo clusters</span></a></li><li><a href="cha-ha-geo-trouble.html" class=" "><span class="title-number">9 </span><span class="title-name">Troubleshooting</span></a></li><li><a href="cha-ha-geo-upgrade.html" class=" "><span class="title-number">10 </span><span class="title-name">Upgrading to the latest product version</span></a></li><li><a href="sec-ha-geo-more.html" class=" "><span class="title-number">11 </span><span class="title-name">For more information</span></a></li><li><a href="bk03apa.html" class=" "><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-geo-req" data-id-title="Requirements"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP4</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">3 </span><span class="title-name">Requirements</span></span> <a title="Permalink" class="permalink" href="cha-ha-geo-req.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_requirements_i.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Software requirements </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-req.html#id-1.5.6.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_requirements_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+    All machines (cluster nodes and arbitrators) that will be part of the cluster
+    need at least the following modules and extensions:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Basesystem Module 15 SP4</p></li><li class="listitem"><p>Server Applications Module 15 SP4</p></li><li class="listitem"><p>SUSE Linux Enterprise High Availability 15 SP4</p></li></ul></div></li><li class="listitem"><p>
+     When installing the machines, select <code class="literal">HA GEO Node</code> as 
+     <code class="systemitem">system role</code>. This leads to the installation of a
+     minimal system where the packages from the pattern <code class="literal">Geo Clustering
+     for High Availability (ha_geo)</code> are installed by default.
+   </p></li></ul></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Network requirements </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-req.html#id-1.5.6.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_requirements_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+    The virtual IPs to be used for each cluster site must be accessible across
+    the Geo cluster.
+   </p></li><li class="listitem"><p>
+     The sites must be reachable on one UDP and TCP port per booth instance.
+     That means any firewalls or IPsec tunnels in between must be configured
+     accordingly.
+    </p></li><li class="listitem"><p>
+     Other setup decisions may require to open more ports (for example, for DRBD
+     or database replication).
+    </p></li></ul></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Other Requirements and Recommendations </span></span><a title="Permalink" class="permalink" href="cha-ha-geo-req.html#id-1.5.6.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/geo_requirements_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+    All cluster nodes on all sites should synchronize to an NTP server outside
+    the cluster. For more information, see the
+    <a class="link" href="https://documentation.suse.com/sles-15/html/SLES-all/cha-ntp.html" target="_blank">
+     Administration Guide
+     for SUSE Linux Enterprise Server 15 SP4</a>.
+   </p><p>
+    If nodes are not synchronized, log files and cluster reports are very hard
+    to analyze.
+   </p></li><li class="listitem"><p>
+    Use an <span class="emphasis"><em>uneven</em></span> number of sites in your Geo
+    cluster. In case the network connection breaks down, this makes sure that
+    there still is a majority of sites (to avoid a split brain scenario). In
+    case you have an even number of cluster sites, use an arbitrator for
+    handling automatic failover of tickets. If you do not use an arbitrator,
+    you need to handle ticket failover manually.
+   </p></li><li class="listitem"><p>
+    The cluster on each site has a meaningful name, for example:
+    <code class="literal">amsterdam</code> and <code class="literal">berlin</code>.
+   </p><p>
+    The cluster names for each site are defined in the respective
+    <code class="filename">/etc/corosync/corosync.conf</code> files:
+   </p><div class="verbatim-wrap"><pre class="screen">totem {
+    [...]
+    cluster_name: amsterdam
+    }</pre></div><p>
+    Change the name with following crmsh command:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster rename <em class="replaceable">NEW_NAME</em></code></pre></div><p>
+    Stop and start the cluster services for the changes to take effect:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster restart</code></pre></div></li><li class="listitem"><p>
+     Mixed architectures within one cluster are not supported. However, for
+     Geo clusters, each member of the Geo cluster can have a different
+     architecture—be it a cluster site or an arbitrator. For example,
+     you can run a Geo cluster with three members (two cluster sites and an
+     arbitrator), where one cluster site runs on IBM Z, the other
+     cluster site runs on x86, and the arbitrator runs on POWER.
+   </p></li></ul></div></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-geo-concept.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 2 </span>Conceptual overview</span></a> </div><div><a class="pagination-link next" href="cha-ha-geo-booth.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 4 </span>Setting up the booth services</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2024</span></div></div></footer></body></html>

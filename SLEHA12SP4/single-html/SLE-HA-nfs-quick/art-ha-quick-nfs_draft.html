@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>SLE HA 12 SP4 | Highly Available NFS Storage with DRBD and Pacemaker</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<meta name="title" content="Highly Available NFS Storage with DRBD and Pacemaker | SLE …"/>
+<meta name="description" content="This document describes how to set up highly available…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="12 SP4"/>
+<meta name="book-title" content="Highly Available NFS Storage with DRBD and Pacemaker"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 12 SP4"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Highly Available NFS Storage with DRBD and Pacemaker |…"/>
+<meta property="og:description" content="This document describes how to set up highly available NFS storage in a two-node cluster, using the following components of …"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Highly Available NFS Storage with DRBD and Pacemaker |…"/>
+<meta name="twitter:description" content="This document describes how to set up highly available NFS storage in a two-node cluster, using the following components of …"/>
+<script type="text/javascript">
+
+if ( window.location.protocol.toLowerCase() != 'file:' ) {
+  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
+};
+
+</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
+
+$(document).ready(function() {
+  $('.verbatim-wrap.highlight').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+hljs.configure({
+  useBR: false
+});
+
+</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml"/></head><body class="draft single normal offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="#art-ha-quick-nfs">Highly Available NFS Storage with DRBD and Pacemaker</a></div></div><main id="_content"><nav class="side-toc placebo" id="_side-toc-overall"> </nav><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="article" id="art-ha-quick-nfs" data-id-title="Highly Available NFS Storage with DRBD and Pacemaker"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">12 SP4</span></div><div><div class="title-container"><h1 class="title">Highly Available NFS Storage with DRBD and Pacemaker <a title="Permalink" class="permalink" href="#art-ha-quick-nfs">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div><div><h3 class="subtitle"><em>SUSE Linux Enterprise High Availability 12 SP4</em></h3></div><div class="date"><span class="imprint-label">Publication Date: </span>November 08, 2023
+</div><div><div class="abstract"><p>
+     This document describes how to set up highly available NFS storage in a
+    two-node cluster, using the following components of
+    SUSE Linux Enterprise High Availability 12 SP4: DRBD* (Distributed Replicated Block Device),
+    LVM (Logical Volume Manager), and Pacemaker, the cluster resource management
+    framework.
+   </p><div id="id-1.4.2.3.6.2" data-id-title="This guide is no longer recommended" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: This guide is no longer recommended</div><p>
+     The method described in this version of the guide is outdated and may cause issues in some
+     setups. For more information, see <a class="link" href="https://www.suse.com/support/kb/doc/?id=000020396" target="_blank">https://www.suse.com/support/kb/doc/?id=000020396</a>.
+    </p><p>
+     The process for configuring highly available NFS storage has been improved in
+     versions 12 SP5 and 15 SP3.
+    </p></div></div></div></div></div><div><div xml:lang="en" class="legalnotice" id="id-1.4.2.3.5"><p>
+  Copyright © 2006–2023
+
+  SUSE LLC and contributors. All rights reserved.
+ </p><p>
+  Permission is granted to copy, distribute and/or modify this document under
+  the terms of the GNU Free Documentation License, Version 1.2 or (at your
+  option) version 1.3; with the Invariant Section being this copyright notice
+  and license. A copy of the license version 1.2 is included in the section
+  entitled <span class="quote">“<span class="quote">GNU Free Documentation License</span>”</span>.
+ </p><p>
+  For SUSE trademarks, see
+  <a class="link" href="http://www.suse.com/company/legal/" target="_blank">http://www.suse.com/company/legal/</a>. All
+  third-party trademarks are the property of their respective owners. Trademark
+  symbols (®, ™ etc.) denote trademarks of SUSE and its affiliates.
+  Asterisks (*) denote third-party trademarks.
+ </p><p>
+  All information found in this book has been compiled with utmost attention to
+  detail. However, this does not guarantee complete accuracy. Neither
+  SUSE LLC, its affiliates, the authors nor the translators shall be
+  held liable for possible errors or the consequences thereof.
+ </p></div></div><section class="sect1" id="sec-ha-quick-nfs-usagescenario" data-id-title="Usage Scenario"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">1 </span><span class="title-name">Usage Scenario</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-usagescenario">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   This document will help you set up a highly available NFS server.
+   The cluster used to for the highly available NFS storage has the
+   following properties:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     Two nodes: <code class="systemitem">alice</code> (IP: <code class="systemitem">192.168.1.1</code>)
+     and <code class="systemitem">bob</code> (IP: <code class="systemitem">192.168.1.2</code>),
+     connected to each other via network.
+    </p></li><li class="listitem"><p>
+     Two floating, virtual IP addresses (<code class="systemitem">192.168.1.10</code> and <code class="systemitem">192.168.1.11</code>), allowing clients to connect to
+     the service no matter which physical node it is running on.
+     One IP address is used for cluster administration with Hawk2, the other
+     IP address is used exclusively for the NFS exports.
+    </p></li><li class="listitem"><p>A shared storage device, used as an SBD fencing mechanism.
+     This avoids split brain scenarios.
+    </p></li><li class="listitem"><p>
+     Failover of resources from one node to the other if the active host breaks
+     down (<span class="emphasis"><em>active/passive</em></span> setup).
+    </p></li><li class="listitem"><p>
+     Local storage on each host. The data is synchronized between the
+     hosts using DRBD on top of LVM.
+    </p></li><li class="listitem"><p>
+      A file system exported through NFS.
+    </p></li></ul></div><p>
+   After installing and setting up the basic two-node cluster, and extending it
+   with storage and cluster resources for NFS, you will have a highly
+   available NFS storage server.
+  </p></section><section class="sect1" id="sec-ha-quick-nfs-installation" data-id-title="Installing a Basic Two-Node Cluster"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">2 </span><span class="title-name">Installing a Basic Two-Node Cluster</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-installation">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Before you proceed, install and set up a basic two-node cluster. This task is
+   described in the Installation and Setup Quick Start. The Installation and Setup Quick Start describes
+   how to use the crm shell to set up a
+   cluster with minimal effort.
+  </p></section><section class="sect1" id="sec-ha-quick-nfs-lvm" data-id-title="Creating an LVM Device"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">3 </span><span class="title-name">Creating an LVM Device</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-lvm">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>LVM (<span class="emphasis"><em>Logical Volume Manager</em></span>) enables
+    flexible distribution of hard disk space over several file
+    systems.
+   </p><p>To prepare your disks for LVM, do the following:</p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Check if the locking type of LVM2 is cluster-aware. The keyword
+     <code class="literal">locking_type</code> in
+     <code class="filename">/etc/lvm/lvm.conf</code> must contain the value
+     <code class="literal">3</code> (the default is <code class="literal">1</code>).
+      Copy the configuration to all nodes, if necessary.
+     </p></li><li class="step"><p>
+      Create an LVM volume group and replace <code class="filename">/dev/sdb<em class="replaceable">X</em></code>
+      with your corresponding device for LVM:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">pvcreate</code> /dev/sdb<em class="replaceable">X</em></pre></div></li><li class="step"><p>Create an LVM Volume Group <code class="systemitem">nfs</code>
+            that includes this physical volume: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgcreate</code> nfs /dev/sdb<em class="replaceable">X</em></pre></div></li><li class="step"><p>
+       Create one or more logical volumes in the volume group
+       <code class="systemitem">nfs</code>. This example assumes a 20 gigabyte volume,
+        named <code class="systemitem">work</code>:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lvcreate</code> -n work -L 20G nfs</pre></div></li><li class="step"><p>
+       Activate the volume group: </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgchange</code> -ay nfs</pre></div></li></ol></div></div><p>After you have successfully executed the above steps, your system
+    will make visible the following device: <code class="filename">/dev/<em class="replaceable">VOLGROUP</em>/<em class="replaceable">LOGICAL_VOLUME</em></code>.
+    In this case it will be <code class="filename">/dev/nfs/work</code>.
+   </p></section><section class="sect1" id="sec-ha-quick-nfs-drbd-device" data-id-title="Creating a DRBD Device"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">4 </span><span class="title-name">Creating a DRBD Device</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-drbd-device">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    This section describes how to set up a DRBD device on top of LVM. The
+    configuration of LVM as a back-end of DRBD has some benefits:
+   </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Easier setup than with LVM on top of DRBD.</p></li><li class="listitem"><p>Easier administration in case the LVM disks need to be resized or
+     more disks are added to the volume group.
+    </p></li></ul></div><p>
+    As the LVM volume group is named <code class="literal">nfs</code>, the
+    DRBD resource uses the same name.
+   </p><section class="sect2" id="sec-ha-quick-nfs-drbd-config" data-id-title="Creating DRBD Configuration"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">4.1 </span><span class="title-name">Creating DRBD Configuration</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-drbd-config">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     For consistency reasons, it is highly recommended to follow this advice:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>Use the directory <code class="filename">/etc/drbd.d/</code> for your
+      configuration.</p></li><li class="listitem"><p>Name the file according to the purpose of the resource.
+      </p></li><li class="listitem"><p>Put your resource configuration in a file with a <code class="filename">.res</code> extension. In the following
+        examples, the file <code class="filename">/etc/drbd.d/nfs.res</code> is
+        used.
+      </p></li></ul></div><p>
+     Proceed as follows:
+    </p><div class="procedure" id="id-1.4.2.7.5.5" data-id-title="Creating a DRBD Configuration"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 1: </span><span class="title-name">Creating a DRBD Configuration </span></span><a title="Permalink" class="permalink" href="#id-1.4.2.7.5.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Create the file <code class="filename">/etc/drbd.d/nfs.res</code> with the
+        following contents:
+      </p><div class="verbatim-wrap"><pre class="screen">resource nfs {
+   device /dev/drbd0; <span class="callout" id="co-ha-quick-nfs-drbd-device">1</span>
+   disk   /dev/nfs/work; <span class="callout" id="co-ha-quick-nfs-drbd-disk">2</span>
+   meta-disk internal; <span class="callout" id="co-ha-quick-nfs-drbd-metadisk">3</span>
+
+   net {
+      protocol  C; <span class="callout" id="co-ha-quick-nfs-drbd-protocol">4</span>
+      fencing: resource-and-stonith;
+   }
+
+   handlers { <span class="callout" id="co-ha-quick-nfs-fencing-handlers">5</span>
+      fence-peer "/usr/lib/drbd/crm-fence-peer.9.sh";
+      after-resync-target "/usr/lib/drbd/crm-unfence-peer.9.sh";
+      # ...
+   }
+
+   connection-mesh { <span class="callout" id="co-ha-quick-nfs-connectionmesh">6</span>
+      hosts     alice bob;
+   }
+   on alice { <span class="callout" id="co-ha-quick-nfs-drbd-on">7</span>
+      address   192.168.1.1:7790;
+      node-id   0;
+   }
+   on bob { <a class="xref" href="#co-ha-quick-nfs-drbd-on"><span class="callout">7</span></a>
+      address   192.168.1.2:7790;
+      node-id   1;
+   }
+}</pre></div><div class="calloutlist"><table style="border: 0; "><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-quick-nfs-drbd-device"><span class="callout">1</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>The DRBD device that applications are supposed to access.</p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-quick-nfs-drbd-disk"><span class="callout">2</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>The lower-level block device used by DRBD to store the actual
+         data. This is the LVM device that was created in <a class="xref" href="#sec-ha-quick-nfs-lvm" title="3. Creating an LVM Device">Section 3, “Creating an LVM Device”</a>.
+        </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-quick-nfs-drbd-metadisk"><span class="callout">3</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>Where the metadata format is stored. Using
+         <code class="literal">internal</code>, the metadata is stored together with
+         the user data on the same device. See the man page for further
+         information.
+        </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-quick-nfs-drbd-protocol"><span class="callout">4</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>The specified protocol to be used for this connection. For protocol
+         <code class="literal">C</code>, a write is considered to be complete when
+         it has reached all disks, be they local or remote.
+        </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-quick-nfs-fencing-handlers"><span class="callout">5</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+         Enables resource-level fencing. If the DRBD replication link
+         becomes disconnected, Pacemaker tries to promote the DRBD resource
+         to another node. During this process, the scripts were called.
+         See <span class="intraxref">Book “Administration Guide”, Chapter 18 “DRBD”, Section 18.6 “Using Resource-Level Fencing”</span> for more
+         information.
+        </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-quick-nfs-connectionmesh"><span class="callout">6</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>
+       Defines all nodes of a mesh.
+       The <code class="option">hosts</code> parameter contains all host names that
+       share the same DRBD setup.
+    </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-quick-nfs-drbd-on"><span class="callout">7</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>Contains the IP address and a unique identifier for each node.</p></td></tr></table></div></li><li class="step"><p>
+       Open <code class="filename">/etc/csync2/csync2.cfg</code> and check whether the
+       following two lines exist:
+      </p><div class="verbatim-wrap"><pre class="screen">include /etc/drbd.conf;
+include /etc/drbd.d/*.res;</pre></div><p>
+       If not, add them to the file.
+      </p></li><li class="step"><p>
+       Copy the file to the other nodes:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">csync2</code> -xv</pre></div><p>
+       For information about Csync2, refer to
+       <span class="intraxref">Book “Administration Guide”, Chapter 4 “Using the YaST Cluster Module”, Section 4.7 “Transferring the Configuration to All Nodes”</span>.
+      </p></li></ol></div></div></section><section class="sect2" id="sec-ha-quick-nfs-drbd-activate" data-id-title="Activating the DRBD Device"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">4.2 </span><span class="title-name">Activating the DRBD Device</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-drbd-activate">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     After you have prepared your DRBD configuration, proceed as follows:
+    </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p> If you use a firewall in your cluster, open port
+              <code class="systemitem">7790</code> in your firewall configuration. </p></li><li class="step"><p>The first time you do this, execute the following
+        commands on <span class="emphasis"><em>both</em></span> nodes (in our example, <code class="systemitem">alice</code>
+        and <code class="systemitem">bob</code>):
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">drbdadm</code> create-md nfs
+<code class="prompt root"># </code><code class="command">drbdadm</code> up nfs</pre></div><p> This initializes the metadata storage and creates the
+              <code class="filename">/dev/drbd0</code> device.
+      </p></li><li class="step"><p>
+       If the DRBD devices on all nodes have the same data, skip
+       the initial resynchronization. Use the following command:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">drbdadm</code> new-current-uuid --clear-bitmap nfs/0</pre></div></li><li class="step"><p>Make <code class="systemitem">alice</code> primary:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">drbdadm</code> primary --force nfs</pre></div></li><li class="step"><p>Check the DRBD status:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">drbdadm</code> status nfs</pre></div><p>This returns the following message:</p><div class="verbatim-wrap"><pre class="screen">nfs role:Primary
+  disk:UpToDate
+  alice role:Secondary
+    peer-disk:UpToDate</pre></div></li></ol></div></div><p>
+     After the synchronization is complete, you can access the DRBD resource
+     on the block device <code class="filename">/dev/drbd0</code>. Use this device
+     for creating your file system.
+     Find more information about DRBD in <span class="intraxref">Book “Administration Guide”, Chapter 18 “DRBD”</span>.
+     </p></section><section class="sect2" id="sec-ha-quick-nfs-drbd-createfs" data-id-title="Creating the File System"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">4.3 </span><span class="title-name">Creating the File System</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-drbd-createfs">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>After you have finished <a class="xref" href="#sec-ha-quick-nfs-drbd-activate" title="4.2. Activating the DRBD Device">Section 4.2, “Activating the DRBD Device”</a>,
+    you should see a DRBD device on <code class="filename">/dev/drbd0</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mkfs.ext3</code> /dev/drbd0</pre></div></section></section><section class="sect1" id="sec-ha-quick-nfs-initial-pacemaker" data-id-title="Adjusting Pacemakers Configuration"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">5 </span><span class="title-name">Adjusting Pacemaker's Configuration</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-initial-pacemaker">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    A resource might fail back to its original node when that node is back
+    online and in the cluster. To prevent a resource from
+    failing back to the node that it was running on, or
+    to specify a different node for the resource to fail back to,
+    change its resource stickiness value. You can
+    either specify resource stickiness when you are creating a resource or
+    afterward.
+   </p><p>
+    To adjust the option, open the crm shell as <code class="systemitem">root</code> (or any
+    non-<code class="systemitem">root</code> user that is part of the
+    <code class="systemitem">haclient</code> group) and run the
+    following commands:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm</code> configure
+<code class="prompt custom">crm(live)configure# </code><code class="command">rsc_defaults</code> resource-stickiness="200"
+<code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div><p>
+    For more information about global cluster options, refer to
+    <span class="intraxref">Book “Administration Guide”, Chapter 5 “Configuration and Administration Basics”, Section 5.2 “Quorum Determination”</span>.
+   </p></section><section class="sect1" id="sec-ha-quick-nfs-resources" data-id-title="Creating Cluster Resources"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">6 </span><span class="title-name">Creating Cluster Resources</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-resources">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>The following sections cover the configuration of
+    the required resources for a highly available NFS cluster.
+    The configuration steps use the crm shell.
+    The following list shows the necessary cluster resources:
+  </p><div class="variablelist" id="vl-ha-quick-nfs-overview-cluster-res" data-id-title="Overview of Cluster Resources"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Overview of Cluster Resources </span></span><a title="Permalink" class="permalink" href="#vl-ha-quick-nfs-overview-cluster-res">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.2.9.3.2"><span class="term">DRBD Primitive and Multi-state Resource</span></dt><dd><p>
+      These resources are used to replicate data. The multi-state resource
+      is switched from and to the Primary and Secondary roles as deemed
+      necessary by the cluster resource manager.
+     </p></dd><dt id="id-1.4.2.9.3.3"><span class="term">NFS Kernel Server Resource</span></dt><dd><p>
+      With this resource, Pacemaker ensures that the NFS server daemons are
+      always available.
+     </p></dd><dt id="id-1.4.2.9.3.4"><span class="term">NFS Exports</span></dt><dd><p>
+      One or more NFS exports, typically corresponding to the file system.
+     </p></dd></dl></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Example NFS Scenario </span></span><a title="Permalink" class="permalink" href="#id-1.4.2.9.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>The following configuration examples assume that
+         <code class="systemitem">192.168.1.11</code> is the virtual
+         IP address to use for an NFS server which serves clients in the
+         <code class="systemitem">192.168.1.x/24</code> subnet.</p></li><li class="listitem"><p>The service  exports data served from
+         <code class="literal">/srv/nfs/work</code>. </p></li><li class="listitem"><p>Into this export directory, the cluster will mount
+            <code class="literal">ext3</code> file systems from the DRBD device
+         <code class="filename">/dev/drbd0</code>.
+         This DRBD device sits on top of an LVM logical volume with the name
+         <code class="literal">nfs</code>.
+        </p></li></ul></div><section class="sect2" id="sec-ha-quick-nfs-resources-drbd" data-id-title="DRBD Primitive and Multi-state Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.1 </span><span class="title-name">DRBD Primitive and Multi-state Resource</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-resources-drbd">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    To configure these resources, run the following commands from the
+   crm shell:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">configure</code>
+<code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> drbd_nfs \
+  ocf:linbit:drbd \
+    params drbd_resource="nfs" \
+  op monitor interval="15" role="Master" \
+  op monitor interval="30" role="Slave"
+<code class="prompt custom">crm(live)configure# </code><code class="command">ms</code> ms-drbd_nfs drbd_nfs \
+  meta master-max="1" master-node-max="1" clone-max="2" \
+  clone-node-max="1" notify="true"
+<code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div><p>
+    This will create a Pacemaker multi-state resource corresponding to the
+    DRBD resource <code class="literal">nfs</code>. Pacemaker should now activate your
+    DRBD resource on both nodes and promote it to the master role on one of
+    them.
+   </p><p>
+    Check the state of the cluster with the <code class="command">crm status</code>
+     command, or run <code class="command">drbdadm status</code>.
+   </p></section><section class="sect2" id="sec-ha-quick-nfs-resources-nfsserver" data-id-title="NFS Kernel Server Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.2 </span><span class="title-name">NFS Kernel Server Resource</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-resources-nfsserver">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    In the crm shell, the resource for the NFS server
+    daemons must be configured as a <span class="emphasis"><em>clone</em></span> of a
+    <code class="literal">systemd</code> resource type.
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> nfsserver \
+  systemd:nfs-server \
+  op monitor interval="30s"
+<code class="prompt custom">crm(live)configure# </code><code class="command">clone</code> cl-nfsserver nfsserver \
+   meta interleave=true
+<code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div><p>
+    After you have committed this configuration, Pacemaker should start the
+    NFS Kernel server processes on both nodes.
+   </p></section><section class="sect2" id="sec-ha-quick-nfs-resources-lvm" data-id-title="File System Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.3 </span><span class="title-name">File System Resource</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-resources-lvm">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+      Configure the file system type resource as follows (but
+      <span class="emphasis"><em>do not</em></span> commit this configuration yet):
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> fs_work \
+  ocf:heartbeat:Filesystem \
+  params device=/dev/drbd0 \
+    directory=/srv/nfs/work \
+    fstype=ext3 \
+  op monitor interval="10s"</pre></div></li><li class="listitem"><p>
+      Combine these resources into a Pacemaker resource
+      <span class="emphasis"><em>group</em></span>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group</code> g-nfs fs_work</pre></div></li><li class="listitem"><p>
+      Add the following constraints to make sure that the group is started
+      on the same node on which the DRBD multi-state resource is in the
+      master role:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order</code> o-drbd_before_nfs inf: \
+  ms-drbd_nfs:promote g-nfs:start
+<code class="prompt custom">crm(live)configure# </code><code class="command">colocation</code> col-nfs_on_drbd inf: \
+  g-nfs ms-drbd_nfs:Master</pre></div></li><li class="listitem"><p>
+      Commit this configuration:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div><p>
+    After these changes have been committed, Pacemaker mounts the DRBD device
+    to <code class="filename">/srv/nfs/work</code> on the same node. Confirm this with
+    <code class="command">mount</code> (or by looking at <code class="filename">/proc/mounts</code>).
+   </p></section><section class="sect2" id="sec-ha-quick-nfs-resources-nfsexport" data-id-title="NFS Export Resources"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.4 </span><span class="title-name">NFS Export Resources</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-resources-nfsexport">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    When your DRBD, LVM, and file system resources are working properly,
+    continue with the resources managing your NFS exports. To create highly
+    available NFS export resources, use the <code class="literal">exportfs</code>
+    resource type.
+   </p><p>
+     To export the <code class="filename">/srv/nfs/work</code> directory to clients,
+     use the following primitive:
+    </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+       Create NFS exports with the following commands:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> exportfs_work \
+  ocf:heartbeat:exportfs \
+    params directory="/srv/nfs/work" \
+      options="rw,mountpoint" \
+      clientspec="192.168.1.0/24" \
+      wait_for_leasetime_on_stop=true \
+      fsid=100 \
+  op monitor interval="30s"</pre></div></li><li class="listitem"><p>
+       After you have created these resources, append them to the existing
+       <code class="literal">g-nfs</code> resource group:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">modgroup</code> g-nfs add exportfs_work</pre></div></li><li class="listitem"><p>
+       Commit this configuration:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div><p>
+       Pacemaker will export the NFS virtual file system root and the two
+       other exports.
+      </p></li><li class="listitem"><p>
+       Confirm that the NFS exports are set up properly:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">exportfs</code> -v
+/srv/nfs/work   <em class="replaceable">IP_ADDRESS_OF_CLIENT</em>(<em class="replaceable">OPTIONS</em>)</pre></div></li></ol></div></section><section class="sect2" id="sec-ha-quick-nfs-resources-vip" data-id-title="Virtual IP Address for NFS Exports"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.5 </span><span class="title-name">Virtual IP Address for NFS Exports</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-resources-vip">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The initial installation creates an administrative virtual IP address for
+    Hawk2. Although you could use this IP address for your NFS exports too,
+    create another one exclusively for NFS exports. This makes it easier to
+    apply security restrictions later. Use the following commands in the
+    crm shell:
+   </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> vip_nfs IPaddr2 \
+   params ip=192.168.1.11 cidr_netmask=24 \
+   op monitor interval=10 timeout=20
+<code class="prompt custom">crm(live)configure# </code><code class="command">modgroup</code> g-nfs add vip_nfs
+<code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></section></section><section class="sect1" id="sec-ha-quick-nfs-use" data-id-title="Using the NFS Service"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7 </span><span class="title-name">Using the NFS Service</span></span> <a title="Permalink" class="permalink" href="#sec-ha-quick-nfs-use">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   This section outlines how to use the highly available NFS service from an
+   NFS client.
+  </p><p>
+   To connect to the NFS service, make sure to use the <span class="emphasis"><em>virtual IP
+   address</em></span> to connect to the cluster rather than a physical IP
+   configured on one of the cluster nodes' network interfaces. For compatibility
+   reasons, use the <span class="emphasis"><em>full</em></span> path of the NFS export on the server.
+  </p><p>In its simplest form, the command to mount the NFS export looks like
+   this:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mount</code> -t nfs 192.168.1.11:/srv/nfs/work /home/work</pre></div><p>
+   To configure a specific transport protocol (<code class="option">proto</code>)
+   and maximum read and write request sizes (<code class="option">rsize</code> and
+    <code class="option">wsize</code>), use:
+  </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mount</code> -o rsize=32768,wsize=32768 \
+    192.168.1.11:/srv/nfs/work /home/work</pre></div><p>
+   In case you need to be compatible with NFS version 3, include the value
+   <code class="option">vers=3</code> after the <code class="option">-o</code> option.
+  </p><p>
+   For further NFS mount options, consult the <code class="command">nfs</code> man page.
+  </p></section><div class="legal-section"><section class="appendix" id="id-1.4.2.11" data-id-title="GNU licenses"><div class="titlepage"><div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">A </span><span class="title-name">GNU licenses</span></span> <a title="Permalink" class="permalink" href="#id-1.4.2.11">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/common_legal.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  This appendix contains the GNU Free Documentation License version 1.2.
+ </p><section class="sect1" id="id-1.4.2.11.4" data-id-title="GNU Free Documentation License"><div class="titlepage"><div><div><div class="title-container"><h2 class="title legal"><span class="title-number-name"><span class="title-name">GNU Free Documentation License</span></span> <a title="Permalink" class="permalink" href="#id-1.4.2.11.4">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/common_license_gfdl1.2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+  Copyright (C) 2000, 2001, 2002 Free Software Foundation, Inc. 51 Franklin St,
+  Fifth Floor, Boston, MA 02110-1301 USA. Everyone is permitted to copy and
+  distribute verbatim copies of this license document, but changing it is not
+  allowed.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.4"><span class="name">
+    0. PREAMBLE
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.4">#</a></h5></div><p>
+  The purpose of this License is to make a manual, textbook, or other
+  functional and useful document "free" in the sense of freedom: to assure
+  everyone the effective freedom to copy and redistribute it, with or without
+  modifying it, either commercially or non-commercially. Secondarily, this
+  License preserves for the author and publisher a way to get credit for their
+  work, while not being considered responsible for modifications made by
+  others.
+ </p><p>
+  This License is a kind of "copyleft", which means that derivative works of
+  the document must themselves be free in the same sense. It complements the
+  GNU General Public License, which is a copyleft license designed for free
+  software.
+ </p><p>
+  We have designed this License to use it for manuals for free software,
+  because free software needs free documentation: a free program should come
+  with manuals providing the same freedoms that the software does. But this
+  License is not limited to software manuals; it can be used for any textual
+  work, regardless of subject matter or whether it is published as a printed
+  book. We recommend this License principally for works whose purpose is
+  instruction or reference.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.8"><span class="name">
+    1. APPLICABILITY AND DEFINITIONS
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.8">#</a></h5></div><p>
+  This License applies to any manual or other work, in any medium, that
+  contains a notice placed by the copyright holder saying it can be distributed
+  under the terms of this License. Such a notice grants a world-wide,
+  royalty-free license, unlimited in duration, to use that work under the
+  conditions stated herein. The "Document", below, refers to any such manual or
+  work. Any member of the public is a licensee, and is addressed as "you". You
+  accept the license if you copy, modify or distribute the work in a way
+  requiring permission under copyright law.
+ </p><p>
+  A "Modified Version" of the Document means any work containing the Document
+  or a portion of it, either copied verbatim, or with modifications and/or
+  translated into another language.
+ </p><p>
+  A "Secondary Section" is a named appendix or a front-matter section of the
+  Document that deals exclusively with the relationship of the publishers or
+  authors of the Document to the Document's overall subject (or to related
+  matters) and contains nothing that could fall directly within that overall
+  subject. (Thus, if the Document is in part a textbook of mathematics, a
+  Secondary Section may not explain any mathematics.) The relationship could be
+  a matter of historical connection with the subject or with related matters,
+  or of legal, commercial, philosophical, ethical or political position
+  regarding them.
+ </p><p>
+  The "Invariant Sections" are certain Secondary Sections whose titles are
+  designated, as being those of Invariant Sections, in the notice that says
+  that the Document is released under this License. If a section does not fit
+  the above definition of Secondary then it is not allowed to be designated as
+  Invariant. The Document may contain zero Invariant Sections. If the Document
+  does not identify any Invariant Sections then there are none.
+ </p><p>
+  The "Cover Texts" are certain short passages of text that are listed, as
+  Front-Cover Texts or Back-Cover Texts, in the notice that says that the
+  Document is released under this License. A Front-Cover Text may be at most 5
+  words, and a Back-Cover Text may be at most 25 words.
+ </p><p>
+  A "Transparent" copy of the Document means a machine-readable copy,
+  represented in a format whose specification is available to the general
+  public, that is suitable for revising the document straightforwardly with
+  generic text editors or (for images composed of pixels) generic paint
+  programs or (for drawings) some widely available drawing editor, and that is
+  suitable for input to text formatters or for automatic translation to a
+  variety of formats suitable for input to text formatters. A copy made in an
+  otherwise Transparent file format whose markup, or absence of markup, has
+  been arranged to thwart or discourage subsequent modification by readers is
+  not Transparent. An image format is not Transparent if used for any
+  substantial amount of text. A copy that is not "Transparent" is called
+  "Opaque".
+ </p><p>
+  Examples of suitable formats for Transparent copies include plain ASCII
+  without markup, Texinfo input format, LaTeX input format, SGML or XML using a
+  publicly available DTD, and standard-conforming simple HTML, PostScript or
+  PDF designed for human modification. Examples of transparent image formats
+  include PNG, XCF and JPG. Opaque formats include proprietary formats that can
+  be read and edited only by proprietary word processors, SGML or XML for which
+  the DTD and/or processing tools are not generally available, and the
+  machine-generated HTML, PostScript or PDF produced by some word processors
+  for output purposes only.
+ </p><p>
+  The "Title Page" means, for a printed book, the title page itself, plus such
+  following pages as are needed to hold, legibly, the material this License
+  requires to appear in the title page. For works in formats which do not have
+  any title page as such, "Title Page" means the text near the most prominent
+  appearance of the work's title, preceding the beginning of the body of the
+  text.
+ </p><p>
+  A section "Entitled XYZ" means a named subunit of the Document whose title
+  either is precisely XYZ or contains XYZ in parentheses following text that
+  translates XYZ in another language. (Here XYZ stands for a specific section
+  name mentioned below, such as "Acknowledgements", "Dedications",
+  "Endorsements", or "History".) To "Preserve the Title" of such a section when
+  you modify the Document means that it remains a section "Entitled XYZ"
+  according to this definition.
+ </p><p>
+  The Document may include Warranty Disclaimers next to the notice which states
+  that this License applies to the Document. These Warranty Disclaimers are
+  considered to be included by reference in this License, but only as regards
+  disclaiming warranties: any other implication that these Warranty Disclaimers
+  may have is void and has no effect on the meaning of this License.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.19"><span class="name">
+    2. VERBATIM COPYING
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.19">#</a></h5></div><p>
+  You may copy and distribute the Document in any medium, either commercially
+  or non-commercially, provided that this License, the copyright notices, and
+  the license notice saying this License applies to the Document are reproduced
+  in all copies, and that you add no other conditions whatsoever to those of
+  this License. You may not use technical measures to obstruct or control the
+  reading or further copying of the copies you make or distribute. However, you
+  may accept compensation in exchange for copies. If you distribute a large
+  enough number of copies you must also follow the conditions in section 3.
+ </p><p>
+  You may also lend copies, under the same conditions stated above, and you may
+  publicly display copies.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.22"><span class="name">
+    3. COPYING IN QUANTITY
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.22">#</a></h5></div><p>
+  If you publish printed copies (or copies in media that commonly have printed
+  covers) of the Document, numbering more than 100, and the Document's license
+  notice requires Cover Texts, you must enclose the copies in covers that
+  carry, clearly and legibly, all these Cover Texts: Front-Cover Texts on the
+  front cover, and Back-Cover Texts on the back cover. Both covers must also
+  clearly and legibly identify you as the publisher of these copies. The front
+  cover must present the full title with all words of the title equally
+  prominent and visible. You may add other material on the covers in addition.
+  Copying with changes limited to the covers, as long as they preserve the
+  title of the Document and satisfy these conditions, can be treated as
+  verbatim copying in other respects.
+ </p><p>
+  If the required texts for either cover are too voluminous to fit legibly, you
+  should put the first ones listed (as many as fit reasonably) on the actual
+  cover, and continue the rest onto adjacent pages.
+ </p><p>
+  If you publish or distribute Opaque copies of the Document numbering more
+  than 100, you must either include a machine-readable Transparent copy along
+  with each Opaque copy, or state in or with each Opaque copy a
+  computer-network location from which the general network-using public has
+  access to download using public-standard network protocols a complete
+  Transparent copy of the Document, free of added material. If you use the
+  latter option, you must take reasonably prudent steps, when you begin
+  distribution of Opaque copies in quantity, to ensure that this Transparent
+  copy will remain thus accessible at the stated location until at least one
+  year after the last time you distribute an Opaque copy (directly or through
+  your agents or retailers) of that edition to the public.
+ </p><p>
+  It is requested, but not required, that you contact the authors of the
+  Document well before redistributing any large number of copies, to give them
+  a chance to provide you with an updated version of the Document.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.27"><span class="name">
+    4. MODIFICATIONS
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.27">#</a></h5></div><p>
+  You may copy and distribute a Modified Version of the Document under the
+  conditions of sections 2 and 3 above, provided that you release the Modified
+  Version under precisely this License, with the Modified Version filling the
+  role of the Document, thus licensing distribution and modification of the
+  Modified Version to whoever possesses a copy of it. In addition, you must do
+  these things in the Modified Version:
+ </p><div class="orderedlist"><ol class="orderedlist" type="A"><li class="listitem"><p>
+    Use in the Title Page (and on the covers, if any) a title distinct from
+    that of the Document, and from those of previous versions (which should, if
+    there were any, be listed in the History section of the Document). You may
+    use the same title as a previous version if the original publisher of that
+    version gives permission.
+   </p></li><li class="listitem"><p>
+    List on the Title Page, as authors, one or more persons or entities
+    responsible for authorship of the modifications in the Modified Version,
+    together with at least five of the principal authors of the Document (all
+    of its principal authors, if it has fewer than five), unless they release
+    you from this requirement.
+   </p></li><li class="listitem"><p>
+    State on the Title page the name of the publisher of the Modified Version,
+    as the publisher.
+   </p></li><li class="listitem"><p>
+    Preserve all the copyright notices of the Document.
+   </p></li><li class="listitem"><p>
+    Add an appropriate copyright notice for your modifications adjacent to the
+    other copyright notices.
+   </p></li><li class="listitem"><p>
+    Include, immediately after the copyright notices, a license notice giving
+    the public permission to use the Modified Version under the terms of this
+    License, in the form shown in the Addendum below.
+   </p></li><li class="listitem"><p>
+    Preserve in that license notice the full lists of Invariant Sections and
+    required Cover Texts given in the Document's license notice.
+   </p></li><li class="listitem"><p>
+    Include an unaltered copy of this License.
+   </p></li><li class="listitem"><p>
+    Preserve the section Entitled "History", Preserve its Title, and add to it
+    an item stating at least the title, year, new authors, and publisher of the
+    Modified Version as given on the Title Page. If there is no section
+    Entitled "History" in the Document, create one stating the title, year,
+    authors, and publisher of the Document as given on its Title Page, then add
+    an item describing the Modified Version as stated in the previous sentence.
+   </p></li><li class="listitem"><p>
+    Preserve the network location, if any, given in the Document for public
+    access to a Transparent copy of the Document, and likewise the network
+    locations given in the Document for previous versions it was based on.
+    These may be placed in the "History" section. You may omit a network
+    location for a work that was published at least four years before the
+    Document itself, or if the original publisher of the version it refers to
+    gives permission.
+   </p></li><li class="listitem"><p>
+    For any section Entitled "Acknowledgements" or "Dedications", Preserve the
+    Title of the section, and preserve in the section all the substance and
+    tone of each of the contributor acknowledgements and/or dedications given
+    therein.
+   </p></li><li class="listitem"><p>
+    Preserve all the Invariant Sections of the Document, unaltered in their
+    text and in their titles. Section numbers or the equivalent are not
+    considered part of the section titles.
+   </p></li><li class="listitem"><p>
+    Delete any section Entitled "Endorsements". Such a section may not be
+    included in the Modified Version.
+   </p></li><li class="listitem"><p>
+    Do not retitle any existing section to be Entitled "Endorsements" or to
+    conflict in title with any Invariant Section.
+   </p></li><li class="listitem"><p>
+    Preserve any Warranty Disclaimers.
+   </p></li></ol></div><p>
+  If the Modified Version includes new front-matter sections or appendices that
+  qualify as Secondary Sections and contain no material copied from the
+  Document, you may at your option designate some or all of these sections as
+  invariant. To do this, add their titles to the list of Invariant Sections in
+  the Modified Version's license notice. These titles must be distinct from any
+  other section titles.
+ </p><p>
+  You may add a section Entitled "Endorsements", provided it contains nothing
+  but endorsements of your Modified Version by various parties--for example,
+  statements of peer review or that the text has been approved by an
+  organization as the authoritative definition of a standard.
+ </p><p>
+  You may add a passage of up to five words as a Front-Cover Text, and a
+  passage of up to 25 words as a Back-Cover Text, to the end of the list of
+  Cover Texts in the Modified Version. Only one passage of Front-Cover Text and
+  one of Back-Cover Text may be added by (or through arrangements made by) any
+  one entity. If the Document already includes a cover text for the same cover,
+  previously added by you or by arrangement made by the same entity you are
+  acting on behalf of, you may not add another; but you may replace the old
+  one, on explicit permission from the previous publisher that added the old
+  one.
+ </p><p>
+  The author(s) and publisher(s) of the Document do not by this License give
+  permission to use their names for publicity for or to assert or imply
+  endorsement of any Modified Version.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.34"><span class="name">
+    5. COMBINING DOCUMENTS
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.34">#</a></h5></div><p>
+  You may combine the Document with other documents released under this
+  License, under the terms defined in section 4 above for modified versions,
+  provided that you include in the combination all of the Invariant Sections of
+  all of the original documents, unmodified, and list them all as Invariant
+  Sections of your combined work in its license notice, and that you preserve
+  all their Warranty Disclaimers.
+ </p><p>
+  The combined work need only contain one copy of this License, and multiple
+  identical Invariant Sections may be replaced with a single copy. If there are
+  multiple Invariant Sections with the same name but different contents, make
+  the title of each such section unique by adding at the end of it, in
+  parentheses, the name of the original author or publisher of that section if
+  known, or else a unique number. Make the same adjustment to the section
+  titles in the list of Invariant Sections in the license notice of the
+  combined work.
+ </p><p>
+  In the combination, you must combine any sections Entitled "History" in the
+  various original documents, forming one section Entitled "History"; likewise
+  combine any sections Entitled "Acknowledgements", and any sections Entitled
+  "Dedications". You must delete all sections Entitled "Endorsements".
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.38"><span class="name">
+    6. COLLECTIONS OF DOCUMENTS
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.38">#</a></h5></div><p>
+  You may make a collection consisting of the Document and other documents
+  released under this License, and replace the individual copies of this
+  License in the various documents with a single copy that is included in the
+  collection, provided that you follow the rules of this License for verbatim
+  copying of each of the documents in all other respects.
+ </p><p>
+  You may extract a single document from such a collection, and distribute it
+  individually under this License, provided you insert a copy of this License
+  into the extracted document, and follow this License in all other respects
+  regarding verbatim copying of that document.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.41"><span class="name">
+    7. AGGREGATION WITH INDEPENDENT WORKS
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.41">#</a></h5></div><p>
+  A compilation of the Document or its derivatives with other separate and
+  independent documents or works, in or on a volume of a storage or
+  distribution medium, is called an "aggregate" if the copyright resulting from
+  the compilation is not used to limit the legal rights of the compilation's
+  users beyond what the individual works permit. When the Document is included
+  in an aggregate, this License does not apply to the other works in the
+  aggregate which are not themselves derivative works of the Document.
+ </p><p>
+  If the Cover Text requirement of section 3 is applicable to these copies of
+  the Document, then if the Document is less than one half of the entire
+  aggregate, the Document's Cover Texts may be placed on covers that bracket
+  the Document within the aggregate, or the electronic equivalent of covers if
+  the Document is in electronic form. Otherwise they must appear on printed
+  covers that bracket the whole aggregate.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.44"><span class="name">
+    8. TRANSLATION
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.44">#</a></h5></div><p>
+  Translation is considered a kind of modification, so you may distribute
+  translations of the Document under the terms of section 4. Replacing
+  Invariant Sections with translations requires special permission from their
+  copyright holders, but you may include translations of some or all Invariant
+  Sections in addition to the original versions of these Invariant Sections.
+  You may include a translation of this License, and all the license notices in
+  the Document, and any Warranty Disclaimers, provided that you also include
+  the original English version of this License and the original versions of
+  those notices and disclaimers. In case of a disagreement between the
+  translation and the original version of this License or a notice or
+  disclaimer, the original version will prevail.
+ </p><p>
+  If a section in the Document is Entitled "Acknowledgements", "Dedications",
+  or "History", the requirement (section 4) to Preserve its Title (section 1)
+  will typically require changing the actual title.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.47"><span class="name">
+    9. TERMINATION
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.47">#</a></h5></div><p>
+  You may not copy, modify, sublicense, or distribute the Document except as
+  expressly provided for under this License. Any other attempt to copy, modify,
+  sublicense or distribute the Document is void, and will automatically
+  terminate your rights under this License. However, parties who have received
+  copies, or rights, from you under this License will not have their licenses
+  terminated so long as such parties remain in full compliance.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.49"><span class="name">
+    10. FUTURE REVISIONS OF THIS LICENSE
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.49">#</a></h5></div><p>
+  The Free Software Foundation may publish new, revised versions of the GNU
+  Free Documentation License from time to time. Such new versions will be
+  similar in spirit to the present version, but may differ in detail to address
+  new problems or concerns. See
+  <a class="link" href="http://www.gnu.org/copyleft/" target="_blank">http://www.gnu.org/copyleft/</a>.
+ </p><p>
+  Each version of the License is given a distinguishing version number. If the
+  Document specifies that a particular numbered version of this License "or any
+  later version" applies to it, you have the option of following the terms and
+  conditions either of that specified version or of any later version that has
+  been published (not as a draft) by the Free Software Foundation. If the
+  Document does not specify a version number of this License, you may choose
+  any version ever published (not as a draft) by the Free Software Foundation.
+ </p><div class="sect4 bridgehead"><h5 class="title legal" id="id-1.4.2.11.4.52"><span class="name">
+    ADDENDUM: How to use this License for your documents
+  </span><a title="Permalink" class="permalink" href="#id-1.4.2.11.4.52">#</a></h5></div><div class="verbatim-wrap"><pre class="screen">Copyright (c) YEAR YOUR NAME.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled “GNU
+Free Documentation License”.</pre></div><p>
+  If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+  replace the “with...Texts.” line with this:
+ </p><div class="verbatim-wrap"><pre class="screen">with the Invariant Sections being LIST THEIR TITLES, with the
+Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.</pre></div><p>
+  If you have Invariant Sections without Cover Texts, or some other combination
+  of the three, merge those two alternatives to suit the situation.
+ </p><p>
+  If your document contains nontrivial examples of program code, we recommend
+  releasing these examples in parallel under your choice of free software
+  license, such as the GNU General Public License, to permit their use in free
+  software.
+ </p></section></section></div></section></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="#sec-ha-quick-nfs-usagescenario"><span class="title-number">1 </span><span class="title-name">Usage Scenario</span></a></span></li><li><span class="sect1"><a href="#sec-ha-quick-nfs-installation"><span class="title-number">2 </span><span class="title-name">Installing a Basic Two-Node Cluster</span></a></span></li><li><span class="sect1"><a href="#sec-ha-quick-nfs-lvm"><span class="title-number">3 </span><span class="title-name">Creating an LVM Device</span></a></span></li><li><span class="sect1"><a href="#sec-ha-quick-nfs-drbd-device"><span class="title-number">4 </span><span class="title-name">Creating a DRBD Device</span></a></span></li><li><span class="sect1"><a href="#sec-ha-quick-nfs-initial-pacemaker"><span class="title-number">5 </span><span class="title-name">Adjusting Pacemaker's Configuration</span></a></span></li><li><span class="sect1"><a href="#sec-ha-quick-nfs-resources"><span class="title-number">6 </span><span class="title-name">Creating Cluster Resources</span></a></span></li><li><span class="sect1"><a href="#sec-ha-quick-nfs-use"><span class="title-number">7 </span><span class="title-name">Using the NFS Service</span></a></span></li><li><span class="appendix"><a href="#id-1.4.2.11"><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></span><ul><li><span class="sect1"><a href="#id-1.4.2.11.4"><span class="title-number">A.1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
+                 2023</span></div></div></footer></body></html>
