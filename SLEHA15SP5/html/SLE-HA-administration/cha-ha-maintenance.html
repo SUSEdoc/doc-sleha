@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Executing maintenance tasks | Administration Guide | SLE HA 15 SP5</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2026-04-23"/>
-<meta name="dcterms.modified" content="2026-04-23"/>
-<meta name="dcterms.dateSubmitted" content="2026-05-12"/>
+<meta name="dcterms.created" content="2026-06-30"/>
+<meta name="dcterms.modified" content="2026-06-30"/>
+<meta name="dcterms.dateSubmitted" content="2026-06-30"/>
 <meta name="title" content="Executing maintenance tasks | SLE HA 15 SP5"/>
 <meta name="description" content="To perform maintenance tasks on the cluster nodes, you might need to stop the resources running on that node, to move them, or to shut down or reboot the …"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -45,9 +45,9 @@
       }
     ],
       
-    "dateCreated": "2026-04-23T00:00+02:00",
-    "dateModified": "2026-04-23T00:00+02:00",
-    "datePublished": "2026-05-12T13:39+02:00",
+    "dateCreated": "2026-06-30T00:00+02:00",
+    "dateModified": "2026-06-30T00:00+02:00",
+    "datePublished": "2026-06-30T03:32+02:00",
 
     "about": [
       
@@ -214,13 +214,18 @@
      Start a Web browser and log in to the cluster as described in
      <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-login" title="5.4.2. Logging in">Section 5.4.2, “Logging in”</a>.
     </p></li><li class="step"><p>
-     In the left navigation bar, select <span class="guimenu">Cluster Status</span>.
+     In the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>.
     </p></li><li class="step"><p>
-     In one of the individual nodes' views, click the wrench icon next to the
-     node and select <span class="guimenu">Maintenance</span>.
+       Switch to the <span class="guimenu">Nodes</span> tab and find the node you want to put into
+       maintenance mode.
+     </p></li><li class="step"><p>
+     In the <span class="guimenu">Maintenance</span> column, click the toggle to turn on maintenance mode.
     </p></li><li class="step"><p>
-      After you have finished your maintenance task, click the wrench icon next to the node
-     and select <span class="guimenu">Ready</span>.
+       Click <span class="guimenu">OK</span> to confirm. The toggle changes from green to red.
+     </p></li><li class="step"><p>
+      After you have finished your maintenance task, click the toggle again to turn off
+      maintenance mode and click <span class="guimenu">OK</span> to confirm. The toggle changes
+      from red to green.
     </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-node-standby" data-id-title="Putting a node into standby mode"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.6 </span><span class="title-name">Putting a node into standby mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-node-standby">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
     To put a node into standby mode on the CRM Shell, use the following command:
    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm node standby <em class="replaceable">NODENAME</em></code></pre></div><p>
@@ -229,15 +234,18 @@
      Start a Web browser and log in to the cluster as described in
      <a class="xref" href="cha-ha-config-basics.html#sec-conf-hawk2-login" title="5.4.2. Logging in">Section 5.4.2, “Logging in”</a>.
     </p></li><li class="step"><p>
-     In the left navigation bar, select <span class="guimenu">Cluster Status</span>.
+     In the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>.
     </p></li><li class="step"><p>
-     In one of the individual nodes' views, click the wrench icon next to the
-     node and select <span class="guimenu">Standby</span>.
+       Switch to the <span class="guimenu">Nodes</span> tab and find the node you want to put into
+       standby mode.
+     </p></li><li class="step"><p>
+     In the <span class="guimenu">Standby</span> column, click the toggle to turn on standby mode.
     </p></li><li class="step"><p>
-     Finish the maintenance task for the node.
-    </p></li><li class="step"><p>
-     To deactivate the standby mode, click the wrench icon next to the node
-     and select <span class="guimenu">Ready</span>.
+       Click <span class="guimenu">OK</span> to confirm. The toggle changes from green to red.
+     </p></li><li class="step"><p>
+      After you have finished your maintenance task, click the toggle again to turn off
+      standby mode and click <span class="guimenu">OK</span> to confirm. The toggle changes
+      from red to green.
     </p></li></ol></div></div></section><section class="sect1" id="sec-ha-maint-shutdown-node" data-id-title="Stopping the cluster services on a node"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">28.7 </span><span class="title-name">Stopping the cluster services on a node</span></span> <a title="Permalink" class="permalink" href="cha-ha-maintenance.html#sec-ha-maint-shutdown-node">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_maintenance.xml" title="Edit source document"> </a></div></div></div></div></div><p>
   You can move the services off the node in an orderly fashion
   before shutting down or rebooting the node.
