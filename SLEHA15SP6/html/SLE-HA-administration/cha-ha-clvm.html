@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Cluster Logical Volume Manager (Cluster LVM) | Administration Guide | SLE HA 15 SP6</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
+<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
+<meta name="dcterms.created" content="2026-03-04"/>
+<meta name="dcterms.modified" content="2026-03-04"/>
+<meta name="dcterms.dateSubmitted" content="2026-05-12"/>
+<meta name="title" content="Cluster Logical Volume Manager (Cluster LVM) | SLE HA …"/>
+<meta name="description" content="The term Cluster LVM indicates that LVM is being used in a cluster environment. When managing shared storage on a cluster, every node must be informed abo…"/>
+<meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
+<meta name="product-number" content="15 SP6"/>
+<meta name="book-title" content="Administration Guide"/>
+<meta name="chapter-title" content="Chapter 24. Cluster Logical Volume Manager (Cluster LVM)"/>
+<meta name="tracker-url" content="https://bugzilla.suse.com/enter_bug.cgi"/>
+<meta name="tracker-type" content="bsc"/>
+<meta name="tracker-bsc-component" content="Documentation"/>
+<meta name="tracker-bsc-product" content="PUBLIC SUSE Linux Enterprise High Availability Extension 15 SP6"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Administration Guide"/>
+<meta property="og:description" content="Set up, configure and maintain HA clusters"/>
+<meta property="og:type" content="article"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Administration Guide"/>
+<meta name="twitter:description" content="Set up, configure and maintain HA clusters"/>
+<script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": ["TechArticle"],
+    "image": "https://www.suse.com/assets/img/suse-white-logo-green.svg",
+    "name": "Cluster Logical Volume Manager (Cluster LVM) | SLE HA 15 SP6",
+     "isPartOf": {
+      "@type": "CreativeWorkSeries",
+      "name": "Products &amp; Solutions"
+    },
+    
+    "inLanguage": "en",
+    
+
+    "headline": "Cluster Logical Volume Manager (Cluster LVM)",
+  
+    "description": "The term Cluster LVM indicates that LVM is being used in a cluster environment. When managing shared storage on a cluster, every node must be informe…",
+      
+    "author": [
+      {
+        "@type": "Corporation",
+        "name": "SUSE Product &amp; Solution Documentation Team",
+        "url": "https://documentation.suse.com"
+      }
+    ],
+      
+    "dateCreated": "2026-03-04T00:00+02:00",
+    "dateModified": "2026-03-04T00:00+02:00",
+    "datePublished": "2026-05-12T13:39+02:00",
+
+    "about": [
+      
+    ],
+    "mentions": [
+      { "@type": "SoftwareApplication",
+        "name": "SLE HA",
+        "softwareVersion": "15 SP6",
+        "applicationCategory": "Operating System",
+        "operatingSystem": "Linux"
+      }
+    ],
+    
+    "sameAs": [
+          "https://www.facebook.com/SUSEWorldwide/about",
+          "https://www.youtube.com/channel/UCHTfqIzPKz4f_dri36lAQGA",
+          "https://twitter.com/SUSE",
+          "https://www.linkedin.com/company/suse"
+    ],
+    "publisher": {
+      "@type": "Corporation",
+      "name": "SUSE",
+      "url": "https://documentation.suse.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+      }
+    }
+  }</script>
+<link rel="prev" href="cha-ha-drbd.html" title="Chapter 23. DRBD"/><link rel="next" href="cha-ha-cluster-md.html" title="Chapter 25. Cluster multi-device (Cluster MD)"/><link type="text/css" rel="preload" as="style" onload="this.rel='stylesheet'" href="https://documentation.suse.com/docserv/res/fonts/suse/suse.css"/><script src="static/js/script-purejs.js" type="text/javascript"></script><script src="static/js/highlight.js" type="text/javascript"></script><script>hljs.highlightAll();</script><script src="static/js/ui-modifiers.js" type="text/javascript"></script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Administration Guide</a><span class="sep">|</span><a class="crumb" href="part-storage.html">Storage and data replication</a><span class="sep">|</span><a class="crumb" href="cha-ha-clvm.html">Cluster Logical Volume Manager (Cluster LVM)</a></div></div><main id="_content"><nav id="_side-toc-overall" tabindex="0" class="side-toc"><div class="side-title">Administration Guide</div><ol role="list"><li role="listitem"><a href="pre-ha.html" class=" "><span class="title-number"> </span><span class="title-name">Preface</span></a></li><li role="listitem"><a href="part-install.html" class="has-children "><span class="title-number">I </span><span class="title-name">Installation and setup</span></a><ol role="list"><li role="listitem"><a href="cha-ha-concepts.html" class=" "><span class="title-number">1 </span><span class="title-name">Product overview</span></a></li><li role="listitem"><a href="cha-ha-requirements.html" class=" "><span class="title-number">2 </span><span class="title-name">System requirements and recommendations</span></a></li><li role="listitem"><a href="cha-ha-install.html" class=" "><span class="title-number">3 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></li><li role="listitem"><a href="cha-ha-ycluster.html" class=" "><span class="title-number">4 </span><span class="title-name">Using the YaST cluster module</span></a></li></ol></li><li role="listitem"><a href="part-config.html" class="has-children "><span class="title-number">II </span><span class="title-name">Configuration and administration</span></a><ol role="list"><li role="listitem"><a href="cha-ha-config-basics.html" class=" "><span class="title-number">5 </span><span class="title-name">Configuration and administration basics</span></a></li><li role="listitem"><a href="sec-ha-config-basics-resources.html" class=" "><span class="title-number">6 </span><span class="title-name">Configuring cluster resources</span></a></li><li role="listitem"><a href="sec-ha-config-basics-constraints.html" class=" "><span class="title-number">7 </span><span class="title-name">Configuring resource constraints</span></a></li><li role="listitem"><a href="cha-ha-manage-resources.html" class=" "><span class="title-number">8 </span><span class="title-name">Managing cluster resources</span></a></li><li role="listitem"><a href="sec-ha-config-basics-remote.html" class=" "><span class="title-number">9 </span><span class="title-name">Managing services on remote hosts</span></a></li><li role="listitem"><a href="cha-ha-agents.html" class=" "><span class="title-number">10 </span><span class="title-name">Adding or modifying resource agents</span></a></li><li role="listitem"><a href="cha-ha-monitor-clusters.html" class=" "><span class="title-number">11 </span><span class="title-name">Monitoring clusters</span></a></li><li role="listitem"><a href="cha-ha-fencing.html" class=" "><span class="title-number">12 </span><span class="title-name">Fencing and STONITH</span></a></li><li role="listitem"><a href="cha-ha-storage-protect.html" class=" "><span class="title-number">13 </span><span class="title-name">Storage protection and SBD</span></a></li><li role="listitem"><a href="cha-ha-qdevice.html" class=" "><span class="title-number">14 </span><span class="title-name">QDevice and QNetd</span></a></li><li role="listitem"><a href="cha-ha-acl.html" class=" "><span class="title-number">15 </span><span class="title-name">Access control lists</span></a></li><li role="listitem"><a href="cha-ha-netbonding.html" class=" "><span class="title-number">16 </span><span class="title-name">Network device bonding</span></a></li><li role="listitem"><a href="cha-ha-lb.html" class=" "><span class="title-number">17 </span><span class="title-name">Load balancing</span></a></li><li role="listitem"><a href="cha-ha-virtualization.html" class=" "><span class="title-number">18 </span><span class="title-name">High Availability for virtualization</span></a></li><li role="listitem"><a href="cha-ha-geo.html" class=" "><span class="title-number">19 </span><span class="title-name">Geo clusters (multi-site clusters)</span></a></li></ol></li><li role="listitem" class="active"><a href="part-storage.html" class="has-children you-are-here"><span class="title-number">III </span><span class="title-name">Storage and data replication</span></a><ol role="list"><li role="listitem"><a href="cha-ha-storage-dlm.html" class=" "><span class="title-number">20 </span><span class="title-name">Distributed Lock Manager (DLM)</span></a></li><li role="listitem"><a href="cha-ha-ocfs2.html" class=" "><span class="title-number">21 </span><span class="title-name">OCFS2</span></a></li><li role="listitem"><a href="cha-ha-gfs2.html" class=" "><span class="title-number">22 </span><span class="title-name">GFS2</span></a></li><li role="listitem"><a href="cha-ha-drbd.html" class=" "><span class="title-number">23 </span><span class="title-name">DRBD</span></a></li><li role="listitem"><a href="cha-ha-clvm.html" class=" you-are-here"><span class="title-number">24 </span><span class="title-name">Cluster Logical Volume Manager (Cluster LVM)</span></a></li><li role="listitem"><a href="cha-ha-cluster-md.html" class=" "><span class="title-number">25 </span><span class="title-name">Cluster multi-device (Cluster MD)</span></a></li><li role="listitem"><a href="cha-ha-samba.html" class=" "><span class="title-number">26 </span><span class="title-name">Samba clustering</span></a></li><li role="listitem"><a href="cha-ha-rear.html" class=" "><span class="title-number">27 </span><span class="title-name">Disaster recovery with ReaR (Relax-and-Recover)</span></a></li></ol></li><li role="listitem"><a href="part-maintenance.html" class="has-children "><span class="title-number">IV </span><span class="title-name">Maintenance and upgrade</span></a><ol role="list"><li role="listitem"><a href="cha-ha-maintenance.html" class=" "><span class="title-number">28 </span><span class="title-name">Executing maintenance tasks</span></a></li><li role="listitem"><a href="cha-ha-migration.html" class=" "><span class="title-number">29 </span><span class="title-name">Upgrading your cluster and updating software packages</span></a></li></ol></li><li role="listitem"><a href="part-appendix.html" class="has-children "><span class="title-number">V </span><span class="title-name">Appendix</span></a><ol role="list"><li role="listitem"><a href="app-ha-troubleshooting.html" class=" "><span class="title-number">A </span><span class="title-name">Troubleshooting</span></a></li><li role="listitem"><a href="app-naming.html" class=" "><span class="title-number">B </span><span class="title-name">Naming conventions</span></a></li><li role="listitem"><a href="app-ha-management.html" class=" "><span class="title-number">C </span><span class="title-name">Cluster management tools (command line)</span></a></li><li role="listitem"><a href="app-crmreport-nonroot.html" class=" "><span class="title-number">D </span><span class="title-name">Running cluster reports without <code class="systemitem">root</code> access</span></a></li></ol></li><li role="listitem"><a href="gl-heartb.html" class=" "><span class="title-number"> </span><span class="title-name">Glossary</span></a></li><li role="listitem"><a href="bk02ape.html" class=" "><span class="title-number">E </span><span class="title-name">GNU licenses</span></a></li> </ol> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section class="chapter" id="cha-ha-clvm" data-id-title="Cluster Logical Volume Manager (Cluster LVM)"><div class="titlepage"><div><div class="version-info">Applies to  <span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP6</span></div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">24 </span><span class="title-name">Cluster Logical Volume Manager (Cluster LVM)</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div><div><div class="titlepage-revhistory"><a aria-label="Revision History: Administration Guide" hreflang="en" href="rh-cha-ha-clvm.html" target="_blank">Revision History: Administration Guide</a></div></div><div><div class="abstract"><p>
+          The term <span class="quote">“<span class="quote">Cluster LVM</span>”</span> indicates that LVM is being used in a cluster environment.
+    When managing shared storage on a cluster, every node must be informed
+    about changes to the storage subsystem. Logical Volume
+    Manager (LVM) supports transparent management of volume groups
+    across the whole cluster. Volume groups shared among multiple nodes
+    can be managed using the same commands as local storage.
+   </p><div id="id-1.4.5.7.2.1.2" class="admonition important compact"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><p>
+            From SUSE Linux Enterprise 15 onward, the High Availability extension uses <code class="systemitem">lvmlockd</code>
+            instead of <code class="systemitem">clvmd</code>.
+          </p></div></div></div></div></div><section class="sect1" id="sec-ha-clvm-overview" data-id-title="Conceptual overview"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">24.1 </span><span class="title-name">Conceptual overview</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-overview">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Cluster LVM is coordinated with different tools:
+  </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.5.7.3.3.1"><span class="term">Logical Volume Manager (LVM)</span></dt><dd><p>
+      LVM provides a virtual pool of disk space and enables flexible distribution of
+      one logical volume over several disks.
+     </p></dd><dt id="id-1.4.5.7.3.3.2"><span class="term">Volume groups and logical volumes</span></dt><dd><p>
+      Volume groups (VGs) and logical volumes (LVs) are basic concepts of LVM.
+      A volume group is a storage pool of multiple physical
+      disks. A logical volume belongs to a volume group and can be seen as an
+      elastic volume on which you can create a file system.
+     </p></dd><dt id="id-1.4.5.7.3.3.3"><span class="term"><code class="literal">LVM-activate</code> resource agent</span></dt><dd><p>
+      In a cluster environment, VGs consist of shared storage and can be used either by
+      multiple nodes concurrently, or by one node at a time with the ability to migrate
+      to other nodes. To protect the LVM metadata on shared storage, the cluster uses <code class="literal">LVM-activate</code> to manage the activation of LVs in a
+      particular VG. <code class="literal">LVM-activate</code> has two LV activation modes:
+     </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           In <span><em class="emphasis">shared mode</em></span>, LVs can be active on multiple nodes concurrently.
+           Locking is managed by <code class="systemitem">lvmlockd</code>. This mode is useful for
+           cluster file systems like GFS2, for example.
+         </p></li><li class="listitem"><p>
+           In <span><em class="emphasis">exclusive mode</em></span>, LVs can only be active on one node at a time.
+           Exclusive access to the LV is managed either by <code class="systemitem">lvmlockd</code> or
+           by using the <code class="systemitem">system_id</code>. This mode is useful for virtual machine
+           disks or for local file systems like <code class="systemitem">ext4</code>, for example.
+         </p></li></ul></div><div id="id-1.4.5.7.3.3.3.2.3" class="admonition important compact"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><p>
+            <code class="systemitem">lvmlockd</code> with sanlock is not officially supported.
+          </p></div></dd><dt id="id-1.4.5.7.3.3.4"><span class="term">Distributed Lock Manager (DLM)</span></dt><dd><p>
+      DLM coordinates cluster-wide locking. It is required when using
+      <code class="systemitem">lvmlockd</code>.
+    </p></dd></dl></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">For more information </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#id-1.4.5.7.3.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+        <code class="command">crm ra info LVM-activate</code>
+      </p></li><li class="listitem"><p>
+        <code class="command">man lvmlockd</code>
+      </p></li><li class="listitem"><p>
+        <code class="command">man lvmsystemid</code>
+      </p></li></ul></div></section><section class="sect1" id="sec-ha-clvm-requirements" data-id-title="Requirements"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">24.2 </span><span class="title-name">Requirements</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-requirements">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        A shared storage device is available, such as Fibre Channel, FCoE, SCSI, iSCSI SAN,
+        or NVMe-oF, for example. Volume groups must have at least one disk, but typically have
+        multiple disks.
+      </p></li><li class="listitem"><p>
+        Make sure the following packages are installed:
+        <code class="systemitem">lvm2</code> and
+        <code class="systemitem">lvm2-lockd</code>.
+      </p></li><li class="listitem"><p>
+        From SUSE Linux Enterprise 15 onward, the High Availability extension uses <code class="systemitem">lvmlockd</code>
+        instead of <code class="systemitem">clvmd</code>. Make sure the <code class="systemitem">clvmd</code>
+        daemon is not running, otherwise <code class="systemitem">lvmlockd</code> will fail to start.
+      </p></li></ul></div></section><section class="sect1" id="sec-ha-clvm-config" data-id-title="Configuring Cluster LVM with lvmlockd"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">24.3 </span><span class="title-name">Configuring Cluster LVM with <code class="systemitem">lvmlockd</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-config">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    You can configure Cluster LVM in one of the following ways, depending on your storage
+    and cluster setup:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        <a class="xref" href="cha-ha-clvm.html#sec-ha-clvm-config-resources" title="24.3.1. Configuring Cluster LVM in shared mode">Section 24.3.1, “Configuring Cluster LVM in shared mode”</a>. Use this mode for active/active clusters
+        where the LVs need to be active on all nodes at once.
+      </p></li><li class="listitem"><p>
+        <a class="xref" href="cha-ha-clvm.html#sec-ha-clvm-config-resources-exclusive" title="24.3.2. Configuring Cluster LVM in exclusive mode">Section 24.3.2, “Configuring Cluster LVM in exclusive mode”</a>. Use this mode for active/passive
+        clusters where the LVs only need to be active on one node at a time.
+      </p></li></ul></div><section class="sect2" id="sec-ha-clvm-config-resources" data-id-title="Configuring Cluster LVM in shared mode"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">24.3.1 </span><span class="title-name">Configuring Cluster LVM in shared mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-config-resources">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Perform the following steps on one node to configure a shared VG for an active/active cluster:
+   </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-dlm" title="Creating a DLM resource">Creating a DLM resource</a>
+     </p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvmlockd" title="Creating an lvmlockd resource">Creating an <code class="systemitem">lvmlockd</code> resource</a></p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-vg-lv" title="Creating a shared VG and LV">Creating a shared VG and LV</a></p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvm-activate" title="Creating an LVM-activate resource">Creating an LVM-activate resource</a>
+     </p></li></ol></div><div class="procedure" id="pro-ha-clvm-rsc-dlm" data-id-title="Creating a DLM resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.1: </span><span class="title-name">Creating a DLM resource </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-dlm">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Check the current configuration of the cluster resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show</code></pre></div></li><li class="step"><p>
+      If you have already configured a DLM resource (and a corresponding
+      base group and base clone), continue with <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvmlockd" title="Creating an lvmlockd resource">Procedure 24.2, “Creating an <code class="systemitem">lvmlockd</code> resource”</a>.
+     </p><p>
+      Otherwise, configure a DLM resource and a corresponding base group and
+      base clone as described in <a class="xref" href="cha-ha-storage-dlm.html#pro-dlm-resources" title="Configuring a base group for DLM">Procedure 20.1, “Configuring a base group for DLM”</a>.
+     </p></li></ol></div></div><div class="procedure" id="pro-ha-clvm-rsc-lvmlockd" data-id-title="Creating an lvmlockd resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.2: </span><span class="title-name">Creating an <code class="systemitem">lvmlockd</code> resource </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvmlockd">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Run the following command to see the usage of this resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure ra info lvmlockd</code></pre></div></li><li class="step"><p>
+      Configure an <code class="systemitem">lvmlockd</code> resource as follows:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive lvmlockd lvmlockd \
+    op start timeout="90" \
+    op stop timeout="100" \
+    op monitor interval="30" timeout="90"</code></pre></div></li><li class="step"><p>
+      To ensure the <code class="systemitem">lvmlockd</code> resource is started on every node,
+      add the primitive resource to the base group for storage you have created in
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-dlm" title="Creating a DLM resource">Procedure 24.1, “Creating a DLM resource”</a>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure modgroup g-storage add lvmlockd</code></pre></div></li><li class="step"><p>
+      Review your changes:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show</code></pre></div></li><li class="step"><p>Check the status of the resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div><div class="procedure" id="pro-ha-clvm-rsc-vg-lv" data-id-title="Creating a shared VG and LV"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.3: </span><span class="title-name">Creating a shared VG and LV </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-vg-lv">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+     Assuming you already have two shared disks, create a shared VG with them:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgcreate --shared vg1 /dev/disk/by-id/<em class="replaceable">DEVICE_ID1</em> /dev/disk/by-id/<em class="replaceable">DEVICE_ID2</em></code></pre></div></li><li class="step"><p>
+      Create an LV and do not activate it initially:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lvcreate --activate n --size 10G --name lv1 vg1</code></pre></div></li></ol></div></div><div class="procedure" id="pro-ha-clvm-rsc-lvm-activate" data-id-title="Creating an LVM-activate resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.4: </span><span class="title-name">Creating an LVM-activate resource </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvm-activate">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Run the following command to see the usage of this resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure ra info LVM-activate</code></pre></div></li><li class="step"><p>
+      Configure a resource to manage the activation of your VG. For shared mode managed by
+      <code class="systemitem">lvmlockd</code>, you must specify <code class="literal">vg_access_mode=lvmlockd</code>
+      and <code class="literal">activation_mode=shared</code>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive vg1 LVM-activate \
+    params vgname=vg1 vg_access_mode=lvmlockd activation_mode=shared \
+    op start timeout=90s interval=0 \
+    op stop timeout=90s interval=0 \
+    op monitor interval=30s timeout=90s</code></pre></div></li><li class="step"><p>
+        Make sure the VG can only be activated on nodes where the DLM and
+        <code class="systemitem">lvmlockd</code> resources are already running:
+      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           <span><span class="emphasis"><strong>One VG:</strong></span></span>
+          </p><p>
+            Because this VG is active on multiple nodes, you can add it to the cloned
+            <code class="literal">g-storage</code> group, which already has internal colocation
+            and order constraints:
+          </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure modgroup g-storage add vg1</code></pre></div></li><li class="listitem"><p>
+            <span><span class="emphasis"><strong>Multiple VGs:</strong></span></span>
+          </p><p>
+            Do <span><em class="emphasis">not</em></span> add multiple VGs to the group, because this
+            creates a dependency between the VGs. For multiple VGs, clone the resources and add
+            constraints to the clones:
+          </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure clone cl-vg1 vg1 meta interleave=true</code>
+<code class="prompt root"># </code><code class="command">crm configure clone cl-vg2 vg2 meta interleave=true</code>
+<code class="prompt root"># </code><code class="command">crm configure colocation col-vg-with-dlm inf: ( cl-vg1 cl-vg2 ) cl-storage</code>
+<code class="prompt root"># </code><code class="command">crm configure order o-dlm-before-vg Mandatory: cl-storage ( cl-vg1 cl-vg2 )</code></pre></div></li></ul></div></li><li class="step"><p>
+      Check the status of the resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div></section><section class="sect2" id="sec-ha-clvm-config-resources-exclusive" data-id-title="Configuring Cluster LVM in exclusive mode"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">24.3.2 </span><span class="title-name">Configuring Cluster LVM in exclusive mode</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-config-resources-exclusive">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Perform the following steps on the active node to configure a local VG for an
+    active/passive cluster:
+   </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-dlm-exclusive" title="Creating a DLM resource">Creating a DLM resource</a>
+     </p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvmlockd-exclusive" title="Creating an lvmlockd resource">Creating an <code class="systemitem">lvmlockd</code> resource</a></p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-vg-lv-exclusive" title="Creating a local VG and LV on shared storage">Creating a local VG and LV on shared storage</a></p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvm-activate-exclusive" title="Creating an LVM-activate resource">Creating an LVM-activate resource</a>
+     </p></li></ol></div><div class="procedure" id="pro-ha-clvm-rsc-dlm-exclusive" data-id-title="Creating a DLM resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.5: </span><span class="title-name">Creating a DLM resource </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-dlm-exclusive">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Check the current configuration of the cluster resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show</code></pre></div></li><li class="step"><p>
+      If you have already configured a DLM resource (and a corresponding
+      base group and base clone), continue with <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvmlockd" title="Creating an lvmlockd resource">Procedure 24.2, “Creating an <code class="systemitem">lvmlockd</code> resource”</a>.
+     </p><p>
+      Otherwise, configure a DLM resource and a corresponding base group and
+      base clone as described in <a class="xref" href="cha-ha-storage-dlm.html#pro-dlm-resources" title="Configuring a base group for DLM">Procedure 20.1, “Configuring a base group for DLM”</a>.
+     </p></li></ol></div></div><div class="procedure" id="pro-ha-clvm-rsc-lvmlockd-exclusive" data-id-title="Creating an lvmlockd resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.6: </span><span class="title-name">Creating an <code class="systemitem">lvmlockd</code> resource </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvmlockd-exclusive">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Run the following command to see the usage of this resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure ra info lvmlockd</code></pre></div></li><li class="step"><p>
+      Configure an <code class="systemitem">lvmlockd</code> resource as follows:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive lvmlockd lvmlockd \
+    op start timeout="90" \
+    op stop timeout="100" \
+    op monitor interval="30" timeout="90"</code></pre></div></li><li class="step"><p>
+      To ensure the <code class="systemitem">lvmlockd</code> resource is started on every node,
+      add the primitive resource to the base group for storage you have created in
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-rsc-dlm" title="Creating a DLM resource">Procedure 24.1, “Creating a DLM resource”</a>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure modgroup g-storage add lvmlockd</code></pre></div></li><li class="step"><p>
+      Review your changes:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show</code></pre></div></li><li class="step"><p>Check the status of the resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div><div class="procedure" id="pro-ha-clvm-rsc-vg-lv-exclusive" data-id-title="Creating a local VG and LV on shared storage"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.7: </span><span class="title-name">Creating a local VG and LV on shared storage </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-vg-lv-exclusive">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+     Assuming you already have two shared disks, create a local VG with them:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgcreate vg1 /dev/disk/by-id/<em class="replaceable">DEVICE_ID1</em> /dev/disk/by-id/<em class="replaceable">DEVICE_ID2</em></code></pre></div></li><li class="step"><p>
+      Create an LV and do not activate it initially:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lvcreate --activate n --size 10G --name lv1 vg1</code></pre></div></li></ol></div></div><div class="procedure" id="pro-ha-clvm-rsc-lvm-activate-exclusive" data-id-title="Creating an LVM-activate resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.8: </span><span class="title-name">Creating an LVM-activate resource </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-rsc-lvm-activate-exclusive">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Run the following command to see the usage of this resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure ra info LVM-activate</code></pre></div></li><li class="step"><p>
+      Configure a resource to manage the activation of your VG. For exclusive mode managed by
+      <code class="systemitem">lvmlockd</code>, you must specify <code class="literal">vg_access_mode=lvmlockd</code>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive vg1 LVM-activate \
+    params vgname=vg1 vg_access_mode=lvmlockd \
+    op start timeout=90s interval=0 \
+    op stop timeout=90s interval=0 \
+    op monitor interval=30s timeout=90s</code></pre></div><p>
+        Exclusive mode is the default setting, so you don't need to specify
+        <code class="literal">activation_mode=exclusive</code>.
+      </p></li><li class="step"><p>
+        Make sure the VG can only be activated on nodes where the DLM and
+        <code class="systemitem">lvmlockd</code> resources are already running:
+      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+           <span><span class="emphasis"><strong>One VG:</strong></span></span>
+          </p><p>
+            Because this VG is only active on a single node, do <span><em class="emphasis">not</em></span> add it
+            to the cloned <code class="literal">g-storage</code> group. Instead, add constraints directly
+            to the resource:
+          </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure colocation col-vg-with-dlm inf: vg1 cl-storage</code>
+<code class="prompt root"># </code><code class="command">crm configure order o-dlm-before-vg Mandatory: cl-storage vg1</code></pre></div></li><li class="listitem"><p>
+            <span><span class="emphasis"><strong>Multiple VGs:</strong></span></span>
+          </p><p>
+            For multiple VGs, you can add constraints to multiple resources at once:
+          </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure colocation col-vg-with-dlm inf: ( vg1 vg2 ) cl-storage</code>
+<code class="prompt root"># </code><code class="command">crm configure order o-dlm-before-vg Mandatory: cl-storage ( vg1 vg2 )</code></pre></div></li></ul></div></li><li class="step"><p>
+      Check the status of the resources:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-lvm-config-systemid" data-id-title="Configuring LVM with system_id"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">24.4 </span><span class="title-name">Configuring LVM with <code class="systemitem">system_id</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-lvm-config-systemid">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    Perform the following steps on the active node to configure a local VG for an
+    active/passive cluster:
+   </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-lvm-rsc-systemid" title="Configuring LVM to use system_id">Configuring LVM to use <code class="systemitem">system_id</code></a></p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-lvm-rsc-vg-lv-systemid" title="Creating a local VG and LV on shared storage">Creating a local VG and LV on shared storage</a></p></li><li class="listitem"><p>
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-lvm-rsc-lvm-activate-systemid" title="Creating an LVM-activate resource">Creating an LVM-activate resource</a>
+     </p></li></ol></div><div class="procedure" id="pro-ha-lvm-rsc-systemid" data-id-title="Configuring LVM to use system_id"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.9: </span><span class="title-name">Configuring LVM to use <code class="systemitem">system_id</code> </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-lvm-rsc-systemid">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+        Start a shell and log in as <code class="systemitem">root</code>.
+       </p></li><li class="step"><p>
+        Open the <code class="filename">/etc/lvm/lvm.conf</code> file.
+       </p></li><li class="step"><p>
+         Make sure the <code class="literal">use_lvmlockd</code> line is commented out or set to
+         <code class="literal">0</code>.
+       </p></li><li class="step"><p>
+         Uncomment the <code class="literal">system_id_source</code> line and change the value to
+         <code class="literal">uname</code>:
+       </p><div class="verbatim-wrap"><pre class="screen">system_id_source = "uname"</pre></div><p>
+         This means that the VG gets its <code class="systemitem">system_id</code> from the
+         host name (<code class="command">uname -n</code>) of whichever node the VG is currently
+         active on. If the VG moves to another node, the <code class="systemitem">system_id</code>
+         changes to the host name of the new node.
+       </p></li><li class="step"><p>
+         Save and exit the file.
+       </p></li><li class="step"><p>
+         Copy the updated configuration to all nodes:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster copy /etc/lvm/lvm.conf</code></pre></div></li></ol></div></div><div class="procedure" id="pro-ha-lvm-rsc-vg-lv-systemid" data-id-title="Creating a local VG and LV on shared storage"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.10: </span><span class="title-name">Creating a local VG and LV on shared storage </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-lvm-rsc-vg-lv-systemid">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+     Assuming you already have two shared disks, create a local VG with them:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgcreate vg1 /dev/disk/by-id/<em class="replaceable">DEVICE_ID1</em> /dev/disk/by-id/<em class="replaceable">DEVICE_ID2</em></code></pre></div></li><li class="step"><p>
+      Create an LV and do not activate it initially:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lvcreate --activate n --size 10G --name lv1 vg1</code></pre></div></li><li class="step"><p>
+        Reboot the other cluster nodes to refresh their LVM metadata. When LVM metadata
+        is not protected by <code class="systemitem">lvmlockd</code>, the other nodes might still
+        use the old disk layout cached in their memory and thus remain unaware that the
+        on-disk metadata has changed.
+      </p><div id="id-1.4.5.7.6.5.5.2" data-id-title="Refreshing LVM metadata without rebooting the nodes" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Refreshing LVM metadata without rebooting the nodes</div><p>
+          If you can't reboot the other nodes immediately, you can run the following commands
+          on each node to help refresh their LVM metadata. However, we still recommend
+          rebooting the nodes as soon as you can.
+        </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+              Rescan the physical volumes:
+            </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">pvscan --cache</code></pre></div></li><li class="listitem"><p>
+              Rescan the volume groups:
+            </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgscan</code></pre></div></li><li class="listitem"><p>
+              Refresh the status of the logical volumes:
+            </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lvscan</code></pre></div></li></ol></div></div></li></ol></div></div><div class="procedure" id="pro-ha-lvm-rsc-lvm-activate-systemid" data-id-title="Creating an LVM-activate resource"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.11: </span><span class="title-name">Creating an LVM-activate resource </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-lvm-rsc-lvm-activate-systemid">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Start a shell and log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Run the following command to see the usage of this resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure ra info LVM-activate</code></pre></div></li><li class="step"><p>
+      Configure a resource to manage the activation of your VG. For exclusive mode managed by the
+      <code class="systemitem">system_id</code>, you must specify <code class="literal">vg_access_mode=system_id</code>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive vg1 LVM-activate \
+    params vgname=vg1 vg_access_mode=system_id \
+    op start timeout=90s interval=0 \
+    op stop timeout=90s interval=0 \
+    op monitor interval=30s timeout=90s</code></pre></div><p>
+        Exclusive mode is the default setting, so you don't need to specify
+        <code class="literal">activation_mode=exclusive</code>.
+      </p></li><li class="step"><p>
+      Check the status of the resource:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div></section><section class="sect1" id="sec-ha-clvm-scenario-iscsi" data-id-title="Scenario: Cluster LVM with iSCSI on SANs"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">24.5 </span><span class="title-name">Scenario: Cluster LVM with iSCSI on SANs</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-scenario-iscsi">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following scenario uses two SAN boxes, which export their iSCSI
+    targets to several clients. The general idea is displayed in
+    <a class="xref" href="cha-ha-clvm.html#fig-ha-clvm-scenario-iscsi" title="Setup of a shared disk with Cluster LVM">Figure 24.1, “Setup of a shared disk with Cluster LVM”</a>.
+   </p><div class="figure" id="fig-ha-clvm-scenario-iscsi"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_clvm.png"><img src="images/ha_clvm.png" width="45%" alt="Setup of a shared disk with Cluster LVM" title="Setup of a shared disk with Cluster LVM"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 24.1: </span><span class="title-name">Setup of a shared disk with Cluster LVM </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#fig-ha-clvm-scenario-iscsi">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div><div id="id-1.4.5.7.7.4" data-id-title="Data loss" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Data loss</div><p>
+     The following procedures will destroy any data on your disks.
+    </p></div><p>
+    Configure only one SAN box first. Each SAN box needs to export its own
+    iSCSI target. Proceed as follows:
+   </p><div class="procedure" id="pro-ha-clvm-scenario-iscsi-targets" data-id-title="Configuring iSCSI targets (SAN)"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.12: </span><span class="title-name">Configuring iSCSI targets (SAN) </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-scenario-iscsi-targets">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Run YaST and click <span class="guimenu">Network
+      Services</span> › <span class="guimenu">iSCSI LIO Target</span> to
+      start the iSCSI Server module.
+     </p></li><li class="step"><p>
+      If you want to start the iSCSI target whenever your computer is
+      booted, choose <span class="guimenu">When Booting</span>, otherwise choose
+      <span class="guimenu">Manually</span>.
+     </p></li><li class="step"><p>
+      If you have a firewall running, enable <span class="guimenu">Open Port in
+      Firewall</span>.
+     </p></li><li class="step"><p>
+      Switch to the <span class="guimenu">Global</span> tab. If you need
+      authentication, enable incoming or outgoing authentication or both. In
+      this example, we select <span class="guimenu">No Authentication</span>.
+     </p></li><li class="step"><p>
+      Add a new iSCSI target:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+        Switch to the <span class="guimenu">Targets</span> tab.
+       </p></li><li class="step"><p>
+        Click <span class="guimenu">Add</span>.
+       </p></li><li class="step" id="st-ha-clvm-iscsi-iqn"><p>
+        Enter a target name. The name needs to be formatted like this:
+       </p><div class="verbatim-wrap"><pre class="screen">iqn.<em class="replaceable">DATE</em>.<em class="replaceable">DOMAIN</em></pre></div><p>
+        For more information about the format, refer to <em class="citetitle">Section
+        3.2.6.3.1. Type "iqn." (iSCSI Qualified Name) </em> at
+        <a class="link" href="https://www.ietf.org/rfc/rfc3720.txt" target="_blank">https://www.ietf.org/rfc/rfc3720.txt</a>.
+       </p></li><li class="step"><p>
+        If you want a more descriptive name, you can change it if
+        your identifier is unique for your different targets.
+       </p></li><li class="step"><p>
+        Click <span class="guimenu">Add</span>.
+       </p></li><li class="step"><p>
+        Enter the device name in <span class="guimenu">Path</span> and use a
+        <span class="guimenu">Scsiid</span>.
+       </p></li><li class="step"><p>
+        Click <span class="guimenu">Next</span> twice.
+       </p></li></ol></li><li class="step"><p>
+      Confirm the warning box with <span class="guimenu">Yes</span>.
+     </p></li><li class="step"><p>
+      Open the configuration file <code class="filename">/etc/iscsi/iscsid.conf</code>
+      and change the parameter <code class="literal">node.startup</code> to
+      <code class="literal">automatic</code>.
+     </p></li></ol></div></div><p>
+    Now set up your iSCSI initiators as follows:
+   </p><div class="procedure" id="pro-ha-clvm-scenarios-iscsi-initiator" data-id-title="Configuring iSCSI initiators"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.13: </span><span class="title-name">Configuring iSCSI initiators </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-scenarios-iscsi-initiator">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Run YaST and click <span class="guimenu">Network
+      Services</span> › <span class="guimenu">iSCSI Initiator</span>.
+     </p></li><li class="step"><p>
+      If you want to start the iSCSI initiator whenever your computer is
+      booted, choose <span class="guimenu">When Booting</span>, otherwise set
+      <span class="guimenu">Manually</span>.
+     </p></li><li class="step"><p>
+      Change to the <span class="guimenu">Discovery</span> tab and click the
+      <span class="guimenu">Discovery</span> button.
+     </p></li><li class="step"><p>
+      Add the IP address and the port of your iSCSI target (see
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-scenario-iscsi-targets" title="Configuring iSCSI targets (SAN)">Procedure 24.12, “Configuring iSCSI targets (SAN)”</a>). Normally, you
+      can leave the port as it is and use the default value.
+     </p></li><li class="step"><p>
+      If you use authentication, insert the incoming and outgoing user name
+      and password, otherwise activate <span class="guimenu">No Authentication</span>.
+     </p></li><li class="step"><p>
+      Select <span class="guimenu">Next</span>. The found connections are displayed in
+      the list.
+     </p></li><li class="step"><p>
+      Proceed with <span class="guimenu">Finish</span>.
+     </p></li><li class="step"><p>
+      Open a shell, log in as <code class="systemitem">root</code>.
+     </p></li><li class="step"><p>
+      Test if the iSCSI initiator has been started successfully:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">iscsiadm -m discovery -t st -p 192.168.3.100</code>
+192.168.3.100:3260,1 iqn.2010-03.de.jupiter:san1</pre></div></li><li class="step"><p>
+      Establish a session:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">iscsiadm -m node -l -p 192.168.3.100 -T iqn.2010-03.de.jupiter:san1</code>
+Logging in to [iface: default, target: iqn.2010-03.de.jupiter:san1, portal: 192.168.3.100,3260]
+Login to [iface: default, target: iqn.2010-03.de.jupiter:san1, portal: 192.168.3.100,3260]: successful</pre></div><p>
+      See the device names with <code class="command">lsscsi</code>:
+     </p><div class="verbatim-wrap"><pre class="screen">...
+[4:0:0:2]    disk    IET      ...     0     /dev/sdd
+[5:0:0:1]    disk    IET      ...     0     /dev/sde</pre></div><p>
+      Look for entries with <code class="literal">IET</code> in their third column. In
+      this case, the devices are <code class="filename">/dev/sdd</code> and
+      <code class="filename">/dev/sde</code>.
+     </p></li></ol></div></div><div class="procedure" id="pro-ha-clvm-scenarios-iscsi-lvm" data-id-title="Creating the shared volume groups"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 24.14: </span><span class="title-name">Creating the shared volume groups </span></span><a title="Permalink" class="permalink" href="cha-ha-clvm.html#pro-ha-clvm-scenarios-iscsi-lvm">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      Open a <code class="systemitem">root</code> shell on one of the nodes you have run the iSCSI
+      initiator from
+      <a class="xref" href="cha-ha-clvm.html#pro-ha-clvm-scenarios-iscsi-initiator" title="Configuring iSCSI initiators">Procedure 24.13, “Configuring iSCSI initiators”</a>.
+     </p></li><li class="step"><p>
+     Create the shared volume group on disks <code class="filename">/dev/sdd</code> and
+     <code class="filename">/dev/sde</code>, using their stable device names (for example, in
+      <code class="filename">/dev/disk/by-id/</code>):
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgcreate --shared testvg /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em></code></pre></div></li><li class="step"><p>
+      Create logical volumes as needed:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lvcreate --name lv1 --size 500M testvg</code></pre></div></li><li class="step"><p>
+      Check the volume group with <code class="command">vgdisplay</code>:
+     </p><div class="verbatim-wrap"><pre class="screen">  --- Volume group ---
+      VG Name               testvg
+      System ID
+      Format                lvm2
+      Metadata Areas        2
+      Metadata Sequence No  1
+      VG Access             read/write
+      VG Status             resizable
+      MAX LV                0
+      Cur LV                0
+      Open LV               0
+      Max PV                0
+      Cur PV                2
+      Act PV                2
+      VG Size               1016,00 MB
+      PE Size               4,00 MB
+      Total PE              254
+      Alloc PE / Size       0 / 0
+      Free  PE / Size       254 / 1016,00 MB
+      VG UUID               UCyWw8-2jqV-enuT-KH4d-NXQI-JhH3-J24anD</pre></div></li><li class="step"><p>
+      Check the shared state of the volume group with the command <code class="command">vgs</code>:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgs</code>
+  VG       #PV #LV #SN Attr   VSize     VFree
+  vgshared   1   1   0 wz--ns 1016.00m  1016.00m</pre></div><p>
+      The <code class="literal">Attr</code> column shows the volume attributes. In this example,
+      the volume group is writable (<code class="literal">w</code>),
+      resizeable (<code class="literal">z</code>), the allocation policy is normal (<code class="literal">n</code>),
+      and it is a shared resource (<code class="literal">s</code>).
+      See the man page of <code class="command">vgs</code> for details.</p></li></ol></div></div><p>
+    After you have created the volumes and started your resources you should have new device
+    names under <code class="filename">/dev/testvg</code>, for example <code class="filename">/dev/testvg/lv1</code>.
+    This indicates the LV has been activated for use.
+   </p></section><section class="sect1" id="sec-ha-clvm-drbd" data-id-title="Configuring eligible LVM devices explicitly"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">24.6 </span><span class="title-name">Configuring eligible LVM devices explicitly</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-drbd">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   When several devices seemingly share the same physical volume signature
+   (as can be the case for multipath devices or DRBD), we recommend to
+   explicitly configure the devices which LVM scans for PVs.
+  </p><p>
+   For example, if the command <code class="command">vgcreate</code> uses the physical
+   device instead of using the mirrored block device, DRBD will be confused.
+   This may result in a split-brain condition for DRBD.
+  </p><p>
+   To deactivate a single device for LVM, do the following:
+  </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     Edit the file <code class="filename">/etc/lvm/lvm.conf</code> and search for the
+     line starting with <code class="literal">filter</code>.
+    </p></li><li class="step"><p>
+     The patterns there are handled as regular expressions. A leading
+     <span class="quote">“<span class="quote">a</span>”</span> means to accept a device pattern to the scan, a
+     leading <span class="quote">“<span class="quote">r</span>”</span> rejects the devices that follow the device
+     pattern.
+    </p></li><li class="step"><p>
+     To remove a device named <code class="filename">/dev/sdb1</code>, add the
+     following expression to the filter rule:
+    </p><div class="verbatim-wrap"><pre class="screen">"r|^/dev/sdb1$|"</pre></div><p>
+     The complete filter line will look like the following:
+    </p><div class="verbatim-wrap"><pre class="screen">filter = [ "r|^/dev/sdb1$|", "r|/dev/.*/by-path/.*|", "r|/dev/.*/by-id/.*|", "a/.*/" ]</pre></div><p>
+     A filter line that accepts DRBD and MPIO devices but rejects all other
+     devices would look like this:
+    </p><div class="verbatim-wrap"><pre class="screen">filter = [ "a|/dev/drbd.*|", "a|/dev/.*/by-id/dm-uuid-mpath-.*|", "r/.*/" ]</pre></div></li><li class="step"><p>
+     Write the configuration file and copy it to all cluster nodes.
+    </p></li></ol></div></div></section><section class="sect1" id="sec-ha-clvm-migrate" data-id-title="Online migration from mirror LV to cluster MD"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">24.7 </span><span class="title-name">Online migration from mirror LV to cluster MD</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-migrate">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   Starting with SUSE Linux Enterprise High Availability 15, <code class="systemitem">cmirrord</code> in Cluster LVM is deprecated. We highly
+   recommend to migrate the mirror logical volumes in your cluster to cluster MD.
+   Cluster MD stands for cluster multi-device and is a software-based
+   RAID storage solution for a cluster.
+  </p><section class="sect2" id="sec-ha-clvm-migrate-setup-before" data-id-title="Example setup before migration"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">24.7.1 </span><span class="title-name">Example setup before migration</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-migrate-setup-before">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     Let us assume you have the following example setup:
+    </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+    You have a two-node cluster consisting of the nodes <code class="literal">alice</code>
+    and <code class="literal">bob</code>.
+   </p></li><li class="listitem"><p>
+     A mirror logical volume named <code class="literal">test-lv</code> was
+     created from a volume group named <code class="literal">cluster-vg2</code>.
+    </p></li><li class="listitem"><p>
+     The volume group <code class="literal">cluster-vg2</code> is composed of the
+     disks <code class="filename">/dev/vdb</code> and <code class="filename">/dev/vdc</code>.
+   </p></li></ul></div><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lsblk</code>
+NAME                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda                                   253:0    0   40G  0 disk
+├─vda1                                253:1    0    4G  0 part [SWAP]
+└─vda2                                253:2    0   36G  0 part /
+vdb                                   253:16   0   20G  0 disk
+├─cluster--vg2-test--lv_mlog_mimage_0 254:0    0    4M  0 lvm
+│ └─cluster--vg2-test--lv_mlog        254:2    0    4M  0 lvm
+│   └─cluster--vg2-test--lv           254:5    0   12G  0 lvm
+└─cluster--vg2-test--lv_mimage_0      254:3    0   12G  0 lvm
+  └─cluster--vg2-test--lv             254:5    0   12G  0 lvm
+vdc                                   253:32   0   20G  0 disk
+├─cluster--vg2-test--lv_mlog_mimage_1 254:1    0    4M  0 lvm
+│ └─cluster--vg2-test--lv_mlog        254:2    0    4M  0 lvm
+│   └─cluster--vg2-test--lv           254:5    0   12G  0 lvm
+└─cluster--vg2-test--lv_mimage_1      254:4    0   12G  0 lvm
+  └─cluster--vg2-test--lv             254:5    0   12G  0 lvm</pre></div><div id="adm-migration-fail" data-id-title="Avoiding migration failures" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Avoiding migration failures</div><p>
+   Before you start the migration procedure, check the capacity and degree
+   of utilization of your logical and physical volumes. If the logical volume
+   uses 100% of the physical volume capacity, the migration might fail with an
+   <code class="literal">insufficient free space</code> error on the target volume.
+   How to prevent this migration failure depends on the options used for
+   mirror log:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p><span class="formalpara-title">Is the mirror log itself mirrored (<code class="option">mirrored</code>
+       option) and allocated on the same device as the mirror leg?</span> (For example, this might be the case if you have created the
+       logical volume for a <code class="systemitem">cmirrord</code> setup on SUSE Linux Enterprise High Availability 11 or 12 as
+       described in the <a class="link" href="https://documentation.suse.com/sle-ha/12-SP5/html/SLE-HA-all/cha-ha-clvm.html#sec-ha-clvm-config-cmirrord" target="_blank">
+        Administration Guide for those versions</a>.)</p><p>
+      By default, <code class="command">mdadm</code> reserves a certain amount of space
+      between the start of a device and the start of array data. During migration,
+      you can check for the unused padding space and reduce it with the
+      <code class="option">data-offset</code> option as shown in <a class="xref" href="cha-ha-clvm.html#step-data-offset" title="Step 1.d">Step 1.d</a>
+      and following.
+     </p><p>
+      The <code class="option">data-offset</code> must leave enough space on the device
+      for cluster MD to write its metadata to it. However, the offset
+      must be small enough for the remaining capacity of the device to accommodate
+      all physical volume extents of the migrated volume. Because the volume may
+      have spanned the complete device minus the mirror log, the offset must be
+      smaller than the size of the mirror log.
+     </p><p>
+      We recommend to set the <code class="option">data-offset</code> to 128 kB.
+      If no value is specified for the offset, its default value is 1 kB
+      (1024 bytes).
+     </p></li><li class="listitem"><p><span class="formalpara-title">
+      Is the mirror log written to a different device (<code class="option">disk</code>
+      option) or kept in memory (<code class="option">core</code> option)?</span>
+      Before starting the migration, either enlarge the size of the physical
+      volume or reduce the size of the logical volume (to free more space for
+      the physical volume).
+     </p></li></ul></div></div></section><section class="sect2" id="sec-ha-clvm-migrate-lv2clustermd" data-id-title="Migrating a mirror LV to cluster MD"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">24.7.2 </span><span class="title-name">Migrating a mirror LV to cluster MD</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#sec-ha-clvm-migrate-lv2clustermd">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    The following procedure is based on <a class="xref" href="cha-ha-clvm.html#sec-ha-clvm-migrate-setup-before" title="24.7.1. Example setup before migration">Section 24.7.1, “Example setup before migration”</a>.
+    Adjust the instructions to match your setup and replace the names for the
+    LVs, VGs, disks, and the cluster MD device accordingly.
+  </p><p>
+  The migration does not involve any downtime. The file system can
+  still be mounted during the migration procedure.
+ </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     On node <code class="literal">alice</code>, execute the following steps:
+    </p><ol type="a" class="substeps"><li class="step"><p>
+     Convert the mirror logical volume <code class="literal">test-lv</code>
+     to a linear logical volume:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">lvconvert -m0 cluster-vg2/test-lv /dev/vdc</code></pre></div></li><li class="step"><p>
+      Remove the physical volume <code class="filename">/dev/vdc</code> from the volume
+      group <code class="literal">cluster-vg2</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgreduce cluster-vg2 /dev/vdc</code></pre></div></li><li class="step"><p>
+      Remove this physical volume from LVM:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">pvremove /dev/vdc</code></pre></div><p>When you run <code class="command">lsblk</code> now, you get:</p><div class="verbatim-wrap"><pre class="screen">NAME                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda                     253:0    0   40G  0 disk
+├─vda1                  253:1    0    4G  0 part [SWAP]
+└─vda2                  253:2    0   36G  0 part /
+vdb                     253:16   0   20G  0 disk
+└─cluster--vg2-test--lv 254:5    0   12G  0 lvm
+vdc                     253:32   0   20G  0 disk</pre></div></li><li class="step" id="step-data-offset"><p>
+      Create a cluster MD device <code class="filename">/dev/md0</code> with the disk
+     <code class="filename">/dev/vdc</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mdadm --create /dev/md0 --bitmap=clustered \
+     --metadata=1.2 --raid-devices=1 --force --level=mirror \
+     /dev/vdc --data-offset=128</code></pre></div><p>
+     For details on why to use the <code class="option">data-offset</code> option,
+     see <a class="xref" href="cha-ha-clvm.html#adm-migration-fail" title="Important: Avoiding migration failures">Important: Avoiding migration failures</a>.
+    </p></li></ol></li><li class="step"><p>
+     On node <code class="literal">bob</code>, assemble this MD device:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mdadm --assemble md0 /dev/vdc</code></pre></div><p>
+     If your cluster consists of more than two nodes, execute this step on all
+     remaining nodes in your cluster.
+    </p></li><li class="step"><p>Back on node <code class="literal">alice</code>:
+   </p><ol type="a" class="substeps"><li class="step"><p>
+     Initialize the MD device <code class="filename">/dev/md0</code> as physical volume
+     for use with LVM:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">pvcreate /dev/md0</code></pre></div></li><li class="step"><p>
+     Add the MD device <code class="filename">/dev/md0</code> to the volume group
+     <code class="literal">cluster-vg2</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgextend cluster-vg2 /dev/md0</code></pre></div></li><li class="step"><p>
+     Move the data from the disk <code class="filename">/dev/vdb</code> to the
+     <code class="filename">/dev/md0</code> device:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">pvmove /dev/vdb /dev/md0</code></pre></div></li><li class="step"><p>
+     Remove the physical volume <code class="filename">/dev/vdb</code> from the volume
+     <code class="literal">group cluster-vg2</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">vgreduce cluster-vg2 /dev/vdb</code></pre></div></li><li class="step"><p>
+     Remove the label from the device so that LVM no longer recognizes it as
+     physical volume:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">pvremove /dev/vdb</code></pre></div></li><li class="step"><p>
+     Add <code class="filename">/dev/vdb</code> to the MD device <code class="filename">/dev/md0</code>:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mdadm --grow /dev/md0 --raid-devices=2 --add /dev/vdb</code></pre></div></li></ol></li></ol></div></div></section><section class="sect2" id="ex-ha-clvm-migrate-setup-after" data-id-title="Example setup after migration"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">24.7.3 </span><span class="title-name">Example setup after migration</span></span> <a title="Permalink" class="permalink" href="cha-ha-clvm.html#ex-ha-clvm-migrate-setup-after">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_cluster_lvm.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+   When you run <code class="command">lsblk</code> now, you get:
+  </p><div class="verbatim-wrap"><pre class="screen">NAME                      MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+vda                       253:0    0   40G  0 disk
+├─vda1                    253:1    0    4G  0 part  [SWAP]
+└─vda2                    253:2    0   36G  0 part  /
+vdb                       253:16   0   20G  0 disk
+└─md0                       9:0    0   20G  0 raid1
+  └─cluster--vg2-test--lv 254:5    0   12G  0 lvm
+vdc                       253:32   0   20G  0 disk
+└─md0                       9:0    0   20G  0 raid1
+  └─cluster--vg2-test--lv 254:5    0   12G  0 lvm</pre></div></section></section></section><nav class="bottom-pagination"><div><a class="pagination-link prev" href="cha-ha-drbd.html"><span class="pagination-relation">Previous</span><span class="pagination-label"><span class="title-number">Chapter 23 </span>DRBD</span></a> </div><div><a class="pagination-link next" href="cha-ha-cluster-md.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Chapter 25 </span>Cluster multi-device (Cluster MD)</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="cha-ha-clvm.html#sec-ha-clvm-overview"><span class="title-number">24.1 </span><span class="title-name">Conceptual overview</span></a></span></li><li><span class="sect1"><a href="cha-ha-clvm.html#sec-ha-clvm-requirements"><span class="title-number">24.2 </span><span class="title-name">Requirements</span></a></span></li><li><span class="sect1"><a href="cha-ha-clvm.html#sec-ha-clvm-config"><span class="title-number">24.3 </span><span class="title-name">Configuring Cluster LVM with <code class="systemitem">lvmlockd</code></span></a></span></li><li><span class="sect1"><a href="cha-ha-clvm.html#sec-ha-lvm-config-systemid"><span class="title-number">24.4 </span><span class="title-name">Configuring LVM with <code class="systemitem">system_id</code></span></a></span></li><li><span class="sect1"><a href="cha-ha-clvm.html#sec-ha-clvm-scenario-iscsi"><span class="title-number">24.5 </span><span class="title-name">Scenario: Cluster LVM with iSCSI on SANs</span></a></span></li><li><span class="sect1"><a href="cha-ha-clvm.html#sec-ha-clvm-drbd"><span class="title-number">24.6 </span><span class="title-name">Configuring eligible LVM devices explicitly</span></a></span></li><li><span class="sect1"><a href="cha-ha-clvm.html#sec-ha-clvm-migrate"><span class="title-number">24.7 </span><span class="title-name">Online migration from mirror LV to cluster MD</span></a></span></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE  2026</span></div></div></footer>
+<script type="text/javascript" src="static/js/language-switcher.js"> </script></body></html>
