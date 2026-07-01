@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>GFS2 | Administration Guide | SLE HA 15 SP7</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2025-05-13"/>
-<meta name="dcterms.modified" content="2025-05-13"/>
-<meta name="dcterms.dateSubmitted" content="2026-06-30"/>
+<meta name="dcterms.created" content="2026-07-02"/>
+<meta name="dcterms.modified" content="2026-07-02"/>
+<meta name="dcterms.dateSubmitted" content="2026-07-01"/>
 <meta name="title" content="GFS2 | SLE HA 15 SP7"/>
 <meta name="description" content="Explore GFS2, a shared disk file system enabling concurrent access across Linux cluster nodes through peer-based operations and lock manager integration"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -45,9 +45,9 @@
       }
     ],
       
-    "dateCreated": "2025-05-13T00:00+02:00",
-    "dateModified": "2025-05-13T00:00+02:00",
-    "datePublished": "2026-06-30T03:26+02:00",
+    "dateCreated": "2026-07-02T00:00+02:00",
+    "dateModified": "2026-07-02T00:00+02:00",
+    "datePublished": "2026-07-01T01:57+02:00",
 
     "about": [
       
@@ -325,22 +325,36 @@
     </p><p>
      A message on the screen shows if the action has been successful.
     </p></li></ol></div></div></section><section class="sect1" id="sec-ha-migrate-ocfs2-gfs2" data-id-title="Migrating from OCFS2 to GFS2"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">26.6 </span><span class="title-name">Migrating from OCFS2 to GFS2</span></span> <a title="Permalink" class="permalink" href="cha-ha-gfs2.html#sec-ha-migrate-ocfs2-gfs2">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_gfs2.xml" title="Edit source document"> </a></div></div></div></div></div><p>
-    OCFS2 is deprecated in SUSE Linux Enterprise High Availability 15 SP7. It will not be supported in future
-    releases.
-  </p><div id="id-1.4.5.5.8.3" data-id-title="No reflink support in GFS2" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: No reflink support in GFS2</div><p>
-      Unlike OCFS2, GFS2 does <span><em class="emphasis">not</em></span> support the reflink feature.
-    </p></div><p>
-    This procedure shows one method of migrating from OCFS2 to GFS2. It assumes
-    you have a single OCFS2 volume that is part of the <code class="literal">g-storage</code> group.
+    OCFS2 is deprecated in SUSE Linux Enterprise High Availability 15 SP7. It will not be included in SUSE Linux Enterprise High Availability 16.
   </p><p>
-    The steps for preparing new block storage and backing up data depend on your specific setup.
+    This procedure shows one method of migrating from OCFS2 to GFS2 with minimal service disruption.
+    It assumes you have a single OCFS2 volume (named <code class="literal">ocfs2-1</code>) that is part of
+    the <code class="literal">g-storage</code> group and is mounted on <code class="filename">/mnt/shared</code>.
+    The GFS2 volume will be added to the cluster on the <span><em class="emphasis">same</em></span> mount point,
+    so you won't need to edit any other configuration that specifies that mount point.
+    This procedure requires a short service interruption to the OCFS2 storage.
+  </p><p>
+    The steps for preparing new block storage depend on your specific setup.
     See the relevant documentation if you need more details.
   </p><p>
     You only need to perform this procedure on <span><em class="emphasis">one</em></span> of the cluster nodes.
-  </p><div id="id-1.4.5.5.8.7" data-id-title="Test this procedure first" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Test this procedure first</div><p>
+  </p><div id="id-1.4.5.5.8.6" data-id-title="No reflink support in GFS2" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: No reflink support in GFS2</div><p>
+      Unlike OCFS2, GFS2 does <span><em class="emphasis">not</em></span> support the reflink feature.
+    </p></div><div id="id-1.4.5.5.8.7" data-id-title="Test this procedure first" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Test this procedure first</div><p>
       Thoroughly test this procedure in a test environment before performing it in a
       production environment.
-    </p></div><div class="procedure" id="pro-migrate-ocfs2-gfs2" data-id-title="Migrating from OCFS2 to GFS2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 26.7: </span><span class="title-name">Migrating from OCFS2 to GFS2 </span></span><a title="Permalink" class="permalink" href="cha-ha-gfs2.html#pro-migrate-ocfs2-gfs2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_gfs2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    </p></div><div class="orderedlist"><div class="title-container"><div class="orderedlist-title-wrap"><div class="orderedlist-title"><span class="title-number-name"><span class="title-name">Procedure overview </span></span><a title="Permalink" class="permalink" href="cha-ha-gfs2.html#id-1.4.5.5.8.8">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_gfs2.xml" title="Edit source document"> </a></div></div><p>
+      To migrate from OCFS2 to GFS2, perform the following tasks:
+    </p><ol class="orderedlist" type="1"><li class="listitem"><p>
+        <a class="xref" href="cha-ha-gfs2.html#pro-migrate-ocfs2-gfs2-prepare-new-volume" title="Preparing the new GFS2 volume">Procedure 26.7, “Preparing the new GFS2 volume”</a>
+      </p></li><li class="listitem"><p>
+        <a class="xref" href="cha-ha-gfs2.html#pro-migrate-ocfs2-gfs2-copy-data" title="Copying the OCFS2 data to the new GFS2 volume">Procedure 26.8, “Copying the OCFS2 data to the new GFS2 volume”</a>
+      </p></li><li class="listitem"><p>
+        <a class="xref" href="cha-ha-gfs2.html#pro-migrate-ocfs2-gfs2-replace-cluster-resources" title="Replacing OCFS2 with GFS2 in the cluster">Procedure 26.9, “Replacing OCFS2 with GFS2 in the cluster”</a>
+      </p></li></ol></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Requirements </span></span><a title="Permalink" class="permalink" href="cha-ha-gfs2.html#id-1.4.5.5.8.9">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_gfs2.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+        Make sure all the nodes are fully up to date to avoid mismatched kernel requirements
+        between OCFS2 and GFS2.
+      </p></li></ul></div><div class="procedure" id="pro-migrate-ocfs2-gfs2-prepare-new-volume" data-id-title="Preparing the new GFS2 volume"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 26.7: </span><span class="title-name">Preparing the new GFS2 volume </span></span><a title="Permalink" class="permalink" href="cha-ha-gfs2.html#pro-migrate-ocfs2-gfs2-prepare-new-volume">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_gfs2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
      Prepare a block device for the GFS2 volume.
     </p><p>
       To check the disk space required, run <code class="command">df -h</code> on the OCFS2 mount point.
@@ -350,17 +364,25 @@ Filesystem     Size  Used Avail Use% Mounted on
 /dev/sdb        10G  2.3G  7.8G  23% /mnt/shared</pre></div><p>
       Make a note of the disk name under <code class="literal">Filesystem</code>. This will be useful
       later to help check if the migration worked.
-    </p><div id="id-1.4.5.5.8.8.2.5" data-id-title="OCFS2 disk usage" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: OCFS2 disk usage</div><p>
+    </p><div id="id-1.4.5.5.8.10.2.5" data-id-title="OCFS2 disk usage" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: OCFS2 disk usage</div><p>
         Because some OCFS2 system files can hold disk space instead of returning it to the
         global bitmap file, the actual disk usage might be less than the amount shown in the
         <code class="command">df -h</code> output.
       </p></div></li><li class="step"><p>
       Install the GFS2 packages on all nodes in the cluster. You can do this on all nodes at once
       with the following command:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster run "zypper install -y gfs2-utils gfs2-kmp-default"</code></pre></div></li><li class="step"><p>
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster run "zypper install -y gfs2-utils gfs2-kmp-default"</code></pre></div><div id="id-1.4.5.5.8.10.3.3" data-id-title="Mismatched OCFS2 and GFS2 kernel requirements" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Mismatched OCFS2 and GFS2 kernel requirements</div><p>
+        If your nodes aren't up to date, installing GFS2 might also install a new kernel version.
+        This new kernel version might be incompatible with the current version of OCFS2, so the
+        OCFS2 resource will fail to start after you reboot the node.
+      </p><p>
+        You can avoid this situation by making sure the nodes are up to date before you install
+        GFS2. However, if this error has already occurred, you can resolve it by installing the
+        latest version of the <span class="package">ocfs2-kmp-default</span> package.
+      </p></div></li><li class="step"><p>
       Create and format the GFS2 volume using the <code class="command">mkfs.gfs2</code> utility. For information
       about the syntax for this command, refer to the <code class="command">mkfs.gfs2</code> man page.
-     </p><div id="id-1.4.5.5.8.8.4.2" data-id-title="Key differences between mkfs.ofs2 and mkfs.gfs2" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Key differences between <code class="command">mkfs.ofs2</code> and <code class="command">mkfs.gfs2</code></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+     </p><div id="id-1.4.5.5.8.10.4.2" data-id-title="Key differences between mkfs.ofs2 and mkfs.gfs2" class="admonition tip normal"><img class="symbol" alt="Tip" title="Tip" src="static/images/icon-tip.svg"/><div class="admon-title">Tip: Key differences between <code class="command">mkfs.ofs2</code> and <code class="command">mkfs.gfs2</code></div><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
              OCFS2 uses <code class="literal">-C</code> to specify the cluster size and <code class="literal">-b</code>
              to specify the block size. GFS2 also specifies the block size with <code class="literal">-b</code>,
              but has no cluster size setting so does not use <code class="literal">-C</code>.
@@ -378,17 +400,54 @@ Filesystem     Size  Used Avail Use% Mounted on
        <code class="literal">FSNAME</code> is used to identify this file system and must therefore be unique.
      </p><p>
        Always use a stable device name for devices shared between cluster nodes.
+     </p></li></ol></div></div><div class="procedure" id="pro-migrate-ocfs2-gfs2-copy-data" data-id-title="Copying the OCFS2 data to the new GFS2 volume"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 26.8: </span><span class="title-name">Copying the OCFS2 data to the new GFS2 volume </span></span><a title="Permalink" class="permalink" href="cha-ha-gfs2.html#pro-migrate-ocfs2-gfs2-copy-data">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_gfs2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+       Create a temporary mount point for the GFS2 volume:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mkdir /mnt/gfs2_temp</code></pre></div><p>
+      This temporary mount point is only used to copy the data from the OCFS2 volume to the
+      GFS2 volume.
      </p></li><li class="step"><p>
+       Mount the GFS2 volume on the temporary mount point:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mount /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> /mnt/gfs2_temp</code></pre></div></li><li class="step"><p>
+       Copy the data from the OCFS2 volume to the GFS2 volume:
+     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">rsync -aHAXW --info=progress2 /mnt/shared/ /mnt/gfs2_temp/</code></pre></div><p>
+      This could take a long time, depending on the amount of data. Run
+      <code class="command">rsync --help</code> for more information about the options used in this command.
+     </p></li><li class="step"><p>
+       The OCFS2 volume might have gathered more data during the copy operation. Follow these
+       steps to copy the additional data and prevent OCFS2 from gathering more data:
+     </p><ol type="a" class="substeps"><li class="step"><p>
+          List and make a note of the OCFS2 volume's current mount options:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mount -l | grep ocfs2</code></pre></div></li><li class="step"><p>
+          Stop the OCFS2 resource to prevent it from gathering additonal data. Use
+          <code class="option">--wait</code> to make sure the resource has really stopped before
+          the command returns:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm --wait resource stop ocfs2-1</code></pre></div><p>
+          This also unmounts the volume from <code class="filename">/mnt/shared</code> and stops any
+          resources that depend on OCFS2, such as resources that start after it in an order
+          constraint.
+        </p></li><li class="step"><p>
+          Manually mount the OCFS2 volume so you can retrieve the additional data. Use the same
+          mount options it had before:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mount -t ocfs2 -o <em class="replaceable">MOUNT_OPTIONS</em> /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em> /mnt/shared</code></pre></div></li><li class="step"><p>
+          Copy the additional data from the OCFS2 volume to the GFS2 volume:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">rsync -aHAX --delete /mnt/shared/ /mnt/gfs2_temp/</code></pre></div><p>
+          Run <code class="command">rsync --help</code> for more information about the options used
+          in this command.
+        </p></li><li class="step"><p>
+          Unmount the OCFS2 volume again:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">umount /mnt/shared</code></pre></div></li></ol></li><li class="step"><p>
+      Check the contents of the temporary GFS2 mount point to make sure the data appears:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ls -l /mnt/gfs2_temp/</code></pre></div></li><li class="step"><p>
+      Unmount the GFS2 volume from the temporary mount point:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">umount /mnt/gfs2_temp</code></pre></div></li></ol></div></div><div class="procedure" id="pro-migrate-ocfs2-gfs2-replace-cluster-resources" data-id-title="Replacing OCFS2 with GFS2 in the cluster"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 26.9: </span><span class="title-name">Replacing OCFS2 with GFS2 in the cluster </span></span><a title="Permalink" class="permalink" href="cha-ha-gfs2.html#pro-migrate-ocfs2-gfs2-replace-cluster-resources">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_gfs2.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
      Put the cluster into maintenance mode:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm maintenance on</code></pre></div></li><li class="step"><p>
-       Back up the OCFS2 volume's data.
-     </p></li><li class="step"><p>
        Start the CRM Shell in interactive mode:
      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code></pre></div></li><li class="step"><p>
       Delete the OCFS2 resource:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">delete ocfs2-1</code></pre></div></li><li class="step"><p>
-      Mount the GFS2 file system on every node in the cluster, using the <span><em class="emphasis">same</em></span>
-      mount point that was used for the OCFS2 file system:
+      Mount the GFS2 volume on every node in the cluster, using the <span><em class="emphasis">same</em></span>
+      mount point that was used for the OCFS2 volume:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">primitive gfs2-1 ocf:heartbeat:Filesystem \
 params device="/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>" directory="/mnt/shared" fstype="gfs2" \
 op monitor interval="20" timeout="40" \
@@ -396,11 +455,11 @@ op start timeout="60" op stop timeout="60" \
 meta target-role="Started"</code></pre></div></li><li class="step"><p>
       Add the GFS2 primitive to the <code class="literal">g-storage</code> group:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">modgroup g-storage add gfs2-1</code></pre></div></li><li class="step"><p>
-      Review your changes with <code class="command">show</code>.
-    </p></li><li class="step"><p>
-      If everything is correct, submit your changes with <code class="command">commit</code> and leave the
-      crm live configuration with <code class="command">quit</code>.
-    </p></li><li class="step"><p>
+      Review your changes:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">show changed</code></pre></div></li><li class="step"><p>
+      If everything is correct, submit your changes and leave the crm live configuration:
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)# </code><code class="command">commit</code>
+<code class="prompt custom">crm(live)# </code><code class="command">quit</code></pre></div></li><li class="step"><p>
        Take the cluster out of maintenance mode:
      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm maintenance off</code></pre></div></li><li class="step"><p>
        Check the status of the cluster, with expanded details about the group
@@ -416,10 +475,7 @@ Filesystem     Size  Used Avail Use% Mounted on
       restarting. This issue should resolve itself if you wait a short time and then run the
       command again.
      </p></li><li class="step"><p>
-      Restore the data from the backup to the GFS2 volume.
-    </p></li><li class="step"><p>
-      To make sure that the data appears correctly, check the contents of the mount point.
-      For example:
+      Check the contents of the mount point to make sure the data still appears correctly:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">ls -l /mnt/shared/</code></pre></div><p>
       You can also run this command on other nodes to make sure the data is being shared correctly.
     </p></li><li class="step"><p>
