@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Upgrading your cluster and updating software packages | Administration Guide | SLE HA 15 SP7</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2025-04-14"/>
-<meta name="dcterms.modified" content="2025-04-14"/>
-<meta name="dcterms.dateSubmitted" content="2026-07-01"/>
+<meta name="dcterms.created" content="2026-07-17"/>
+<meta name="dcterms.modified" content="2026-07-17"/>
+<meta name="dcterms.dateSubmitted" content="2026-07-17"/>
 <meta name="title" content="Upgrading your cluster and updating software packages …"/>
 <meta name="description" content="Understand how to upgrade SUSE Linux Enterprise High Availability clusters to new versions or service packs"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -45,9 +45,9 @@
       }
     ],
       
-    "dateCreated": "2025-04-14T00:00+02:00",
-    "dateModified": "2025-04-14T00:00+02:00",
-    "datePublished": "2026-07-01T01:57+02:00",
+    "dateCreated": "2026-07-17T00:00+02:00",
+    "dateModified": "2026-07-17T00:00+02:00",
+    "datePublished": "2026-07-17T01:19+02:00",
 
     "about": [
       
@@ -287,7 +287,38 @@
         to the original places.
        </p></li><li class="step"><p>Bring back node alice into cluster:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster start</code></pre></div></li><li class="step"><p>Check that resources are fine.</p></li></ol></li><li class="step"><p>Repeat <a class="xref" href="cha-ha-migration.html#st-ha-migration-rolling-alice" title="Step 2">Step 2</a> for node
       bob.
-     </p></li></ol></div></div></section></section><section class="sect1" id="sec-ha-migration-update" data-id-title="Updating software packages on cluster nodes"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">33.3 </span><span class="title-name">Updating software packages on cluster nodes</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-update">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.6.4.5.2" data-id-title="Active cluster stack" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Active cluster stack</div><p>
+     </p></li></ol></div></div></section><section class="sect2" id="sec-ha-migration-upgrade-precheck" data-id-title="Pre-upgrade check for SUSE Linux Enterprise High Availability 16"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">33.2.5 </span><span class="title-name">Pre-upgrade check for SUSE Linux Enterprise High Availability 16</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-upgrade-precheck">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+        You can use the cluster health check tool to make sure the High Availability cluster can safely upgrade
+        from SLE HA 15 to SLE HA 16. The tool reports any issues that will prevent the upgrade,
+        as well as issues that can be fixed during or after the upgrade.
+      </p><p>
+    You can perform this procedure on any node in the cluster.
+  </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+        Log in to the node either as the <code class="systemitem">root</code> user or as a user with <code class="command">sudo</code>
+        privileges.
+      </p></li><li class="step"><p>
+        Run the cluster health check:
+      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt user">&gt; </code><code class="command">sudo crm cluster health sles16</code></pre></div><p>
+        This command reports issues in two categories:
+      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+            The <code class="literal">WARN</code> category indicates cluster configuration that isn't
+            recommended, such as deprecated features. Issues in this category can be fixed during
+            or after the upgrade, so the migration check passes. For example:
+          </p><div class="verbatim-wrap"><pre class="screen">[WARN] Corosync transport "udpu" will be deprecated in favor of "knet" in corosync 3.</pre></div></li><li class="listitem"><p>
+            The <code class="literal">FAIL</code> category indicates cluster configuration that can't be
+            fixed during or after the upgrade, such as removed resource agents. Issues in this
+            category must be fixed before you can upgrade the cluster, so the migration check fails.
+            The command's output will tell you what to fix. For example:
+          </p><div class="verbatim-wrap"><pre class="screen">[FAIL] The following resource agents will be removed in SLES 16.
+       * ocf:heartbeat:IPaddr: please replace it with ocf:heartbeat:IPaddr2</pre></div></li></ul></div></li><li class="step"><p>
+        Fix any <code class="literal">FAIL</code> issues, then run the cluster health check again to make
+        sure you didn't miss anything.
+      </p></li></ol></div></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">For more information </span></span><a title="Permalink" class="permalink" href="cha-ha-migration.html#id-1.4.6.4.4.7.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
+        <code class="command">crm cluster help health</code>
+      </p></li><li class="listitem"><p>
+        <a class="link" href="https://documentation.suse.com/sle-ha/16.0/html/HA-upgrading/" target="_blank">
+        <em class="citetitle">Upgrading from SLE HA 15 to SLE HA 16.0</em></a>
+      </p></li></ul></div></section></section><section class="sect1" id="sec-ha-migration-update" data-id-title="Updating software packages on cluster nodes"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">33.3 </span><span class="title-name">Updating software packages on cluster nodes</span></span> <a title="Permalink" class="permalink" href="cha-ha-migration.html#sec-ha-migration-update">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_migration.xml" title="Edit source document"> </a></div></div></div></div></div><div id="id-1.4.6.4.5.2" data-id-title="Active cluster stack" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Active cluster stack</div><p>
     Before starting a package update for a node, either <span><em class="emphasis">stop</em></span>
     the cluster stack <span><em class="emphasis">on that node</em></span> or put the
     <span><em class="emphasis">node into maintenance mode</em></span>, depending on whether the
