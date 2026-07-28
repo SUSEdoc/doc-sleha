@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><title>SLEHA 15 | Geo Clustering Guide</title><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Geo Clustering Guide | SLEHA 15</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
+<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
+<meta name="dcterms.modified" content=""/>
+<meta name="dcterms.dateSubmitted" content="2026-07-28"/>
 <meta name="title" content="Geo Clustering Guide | SLEHA 15"/>
-<meta name="description" content="This document covers the setup options and parameters for Geo clusters and their components, such as booth ticket manager, the specific Csync2 setup,…"/>
+<meta name="description" content="This document covers the setup options and parameters for Geo clusters and their components, such as booth ticket manager, the specific Csync2 setup, and …"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability Extension"/>
 <meta name="product-number" content="15"/>
 <meta name="book-title" content="Geo Clustering Guide"/>
@@ -9,39 +12,68 @@
 <meta name="tracker-type" content="bsc"/>
 <meta name="tracker-bsc-component" content="Documentation"/>
 <meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 15"/>
-<meta property="og:title" content="Geo Clustering Guide | SLEHA 15"/>
-<meta property="og:description" content="This document covers the setup options and parameters for Geo clusters and their components, such as booth ticket manager, the specific Csync2 setup,…"/>
+<meta name="publisher" content="SUSE"/><meta property="og:title" content="Geo Clustering Guide | SLEHA 15"/>
+<meta property="og:description" content="This document covers the setup options and parameters for G…"/>
 <meta property="og:type" content="article"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Geo Clustering Guide | SLEHA 15"/>
-<meta name="twitter:description" content="This document covers the setup options and parameters for Geo clusters and their components, such as booth ticket manager, the specific Csync2 setup,…"/>
+<meta name="twitter:description" content="This document covers the setup options and parameters for G…"/>
+<script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": ["TechArticle"],
+    "image": "https://www.suse.com/assets/img/suse-white-logo-green.svg",
+    "name": "Geo Clustering Guide | SLEHA 15",
+    "isPartOf": {
+      "@type": "CreativeWorkSeries",
+      "name": "Products &amp; Solutions"
+    },
+    "inLanguage": "en",
+    "headline": "Geo Clustering Guide",
+    "description": "This document covers the setup options and parameters for Geo clusters and their components, such as booth ticket manager, the specific Csync2 setup,…",
+    "author": [
+      {
+        "@type": "Corporation",
+        "name": "SUSE Product &amp; Solution Documentation Team",
+        "url": "https://documentation.suse.com"
+      }
+    ],
+    "datePublished": "2026-07-28T11:57+02:00",
+    "about": [
 
-<script type="text/javascript">
-
-if ( window.location.protocol.toLowerCase() != 'file:' ) {
-  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
-};
-
-</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
-
-$(document).ready(function() {
-  $('.verbatim-wrap.highlight').each(function(i, block) {
-    hljs.highlightBlock(block);
-  });
-});
-hljs.configure({
-  useBR: false
-});
-
-</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/book_sle_ha_geo.xml"/></head><body class="draft single normal offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="#book-sleha-geo">Geo Clustering Guide</a></div></div><main id="_content"><nav class="side-toc placebo" id="_side-toc-overall"> </nav><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="book" id="book-sleha-geo" data-id-title="Geo Clustering Guide"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability Extension</span> <span class="productnumber">15</span></div><div class="title-container"><div class="title-container"><h1 class="title"><em class="citetitle">Geo Clustering Guide</em> <a title="Permalink" class="permalink" href="#book-sleha-geo">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/book_sle_ha_geo.xml" title="Edit source document"> </a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/book_sle_ha_geo.xml" title="Edit source document"> </a></div></div><div class="abstract"><p>
+    ],
+    "mentions": [
+      { "@type": "SoftwareApplication",
+        "name": "SLEHA",
+        "softwareVersion": "15",
+        "applicationCategory": "Operating System",
+        "operatingSystem": "Linux"
+      }
+    ],
+    "sameAs": [
+          "https://www.facebook.com/SUSEWorldwide/about",
+          "https://www.youtube.com/channel/UCHTfqIzPKz4f_dri36lAQGA",
+          "https://twitter.com/SUSE",
+          "https://www.linkedin.com/company/suse"
+    ],
+    "publisher": {
+      "@type": "Corporation",
+      "name": "SUSE",
+      "url": "https://documentation.suse.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+      }
+    }
+  }</script>
+<link type="text/css" rel="preload" as="style" onload="this.rel='stylesheet'" href="https://documentation.suse.com/docserv/res/fonts/suse/suse.css"/><script src="static/js/script-purejs.js" type="text/javascript"></script><script src="static/js/highlight.js" type="text/javascript"></script><script>hljs.highlightAll();</script><script src="static/js/ui-modifiers.js" type="text/javascript"></script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/book_sle_ha_geo.xml"/></head><body class="draft single normal offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="#book-sleha-geo">Geo Clustering Guide</a></div></div><main id="_content"><nav class="side-toc placebo" id="_side-toc-overall"> </nav><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="book" id="book-sleha-geo" data-id-title="Geo Clustering Guide"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability Extension</span> <span class="productnumber">15</span></div><div class="title-container"><div class="title-container"><h1 class="title"><em class="citetitle">Geo Clustering Guide</em> <a title="Permalink" class="permalink" href="#book-sleha-geo">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/book_sle_ha_geo.xml" title="Edit source document"> </a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/book_sle_ha_geo.xml" title="Edit source document"> </a></div></div><div class="abstract"><p>
       This document covers the setup options and parameters for Geo clusters and
    their components, such as booth ticket manager, the specific Csync2 setup, and the
    configuration of the required cluster resources (and how to transfer them to
    other sites in case of changes). Learn how to monitor and manage Geo clusters
    from command line or with the Hawk2 Web interface.
-    </p></div><div class="date"><span class="imprint-label">Publication Date: </span>January 05, 2023
-</div></div></div><div class="toc"><ul><li><span class="chapter"><a href="#cha-ha-geo-challenges"><span class="title-number">1 </span><span class="title-name">Challenges for Geo Clusters</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-concept"><span class="title-number">2 </span><span class="title-name">Conceptual Overview</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-req"><span class="title-number">3 </span><span class="title-name">Requirements</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-booth"><span class="title-number">4 </span><span class="title-name">Setting Up the Booth Services</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-booth-basic"><span class="title-number">4.1 </span><span class="title-name">Booth Configuration and Setup Options</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-ticket-types"><span class="title-number">4.2 </span><span class="title-name">Automatic versus Manual Tickets</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-default"><span class="title-number">4.3 </span><span class="title-name">Using the Default Booth Setup</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-multi"><span class="title-number">4.4 </span><span class="title-name">Using a Multi-Tenant Booth Setup</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-sync"><span class="title-number">4.5 </span><span class="title-name">Synchronizing the Booth Configuration to All Sites and Arbitrators</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-setup-booth-service"><span class="title-number">4.6 </span><span class="title-name">Enabling and Starting the Booth Services</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-setup-booth-reconfig"><span class="title-number">4.7 </span><span class="title-name">Reconfiguring Booth While Running</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-sync"><span class="title-number">5 </span><span class="title-name">Synchronizing Configuration Files Across All Sites and Arbitrators</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-booth-sync-csync2-setup"><span class="title-number">5.1 </span><span class="title-name">Csync2 Setup for Geo Clusters</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-sync-csync2-start"><span class="title-number">5.2 </span><span class="title-name">Synchronizing Changes with Csync2</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-rsc"><span class="title-number">6 </span><span class="title-name">Configuring Cluster Resources and Constraints</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-rsc-ticket-dep"><span class="title-number">6.1 </span><span class="title-name">Configuring Ticket Dependencies of Resources</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-rsc-boothd"><span class="title-number">6.2 </span><span class="title-name">Configuring a Resource Group for <code class="systemitem">boothd</code></span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-rsc-order"><span class="title-number">6.3 </span><span class="title-name">Adding an Ordering Constraint</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-rsc-sync-cib"><span class="title-number">6.4 </span><span class="title-name">Transferring the Resource Configuration to Other Cluster Sites</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-ip-relocation"><span class="title-number">7 </span><span class="title-name">Setting Up IP Relocation via DNS Update</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-manage"><span class="title-number">8 </span><span class="title-name">Managing Geo Clusters</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-manage-cli"><span class="title-number">8.1 </span><span class="title-name">Managing Tickets From Command Line</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-manage-hawk2"><span class="title-number">8.2 </span><span class="title-name">Managing Tickets with Hawk2</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-trouble"><span class="title-number">9 </span><span class="title-name">Troubleshooting</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-upgrade"><span class="title-number">10 </span><span class="title-name">Upgrading to the Latest Product Version</span></a></span></li><li><span class="chapter"><a href="#sec-ha-geo-more"><span class="title-number">11 </span><span class="title-name">For More Information</span></a></span></li><li><span class="appendix"><a href="#id-1.5.14"><span class="title-number">A </span><span class="title-name">GNU Licenses</span></a></span><ul><li><span class="sect1"><a href="#id-1.5.14.4"><span class="title-number">A.1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="list-of-figures"><div class="toc-title">List of Figures</div><ul><li><span class="figure"><a href="#fig-ha-geo-example-setup"><span class="number">2.1 </span><span class="name">Two-Site Cluster—2x2 Nodes + Arbitrator (Optional)</span></a></span></li><li><span class="figure"><a href="#fig-yast-ha-geo-booth"><span class="number">4.1 </span><span class="name">Example Ticket Dependency</span></a></span></li><li><span class="figure"><a href="#fig-ha-geo-csync-config"><span class="number">5.1 </span><span class="name">Example Csync2 Setup for Geo Clusters</span></a></span></li><li><span class="figure"><a href="#id-1.5.10.4.6.4.2"><span class="number">8.1 </span><span class="name">Hawk2—Ticket Details</span></a></span></li><li><span class="figure"><a href="#id-1.5.10.4.8"><span class="number">8.2 </span><span class="name">Hawk2 Simulator—Tickets</span></a></span></li></ul></div><div class="list-of-examples"><div class="toc-title">List of Examples</div><ul><li><span class="example"><a href="#ex-ha-booth-conf-default"><span class="number">4.1 </span><span class="name">A Booth Configuration File</span></a></span></li><li><span class="example"><a href="#ex-ha-conf-booth-multi-1"><span class="number">4.2 </span><span class="name"><code class="filename">/etc/booth/apac.conf</code></span></a></span></li><li><span class="example"><a href="#ex-ha-conf-booth-multi-2"><span class="number">4.3 </span><span class="name"><code class="filename">/etc/booth/emea.conf</code></span></a></span></li><li><span class="example"><a href="#ex-ha-geo-dyn-dns-rsc-config"><span class="number">7.1 </span><span class="name">Resource Configuration for Dynamic DNS Update</span></a></span></li></ul></div><div><div xml:lang="en" class="legalnotice" id="id-1.5.2.5"><p>
-  Copyright © 2006–2023
+    </p></div><div class="date"><span class="imprint-label">Publication Date: </span>July 28, 2026
+</div></div></div><div class="toc"><ul><li><span class="chapter"><a href="#cha-ha-geo-challenges"><span class="title-number">1 </span><span class="title-name">Challenges for Geo Clusters</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-concept"><span class="title-number">2 </span><span class="title-name">Conceptual Overview</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-req"><span class="title-number">3 </span><span class="title-name">Requirements</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-booth"><span class="title-number">4 </span><span class="title-name">Setting Up the Booth Services</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-booth-basic"><span class="title-number">4.1 </span><span class="title-name">Booth Configuration and Setup Options</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-ticket-types"><span class="title-number">4.2 </span><span class="title-name">Automatic versus Manual Tickets</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-default"><span class="title-number">4.3 </span><span class="title-name">Using the Default Booth Setup</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-multi"><span class="title-number">4.4 </span><span class="title-name">Using a Multi-Tenant Booth Setup</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-sync"><span class="title-number">4.5 </span><span class="title-name">Synchronizing the Booth Configuration to All Sites and Arbitrators</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-setup-booth-service"><span class="title-number">4.6 </span><span class="title-name">Enabling and Starting the Booth Services</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-setup-booth-reconfig"><span class="title-number">4.7 </span><span class="title-name">Reconfiguring Booth While Running</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-sync"><span class="title-number">5 </span><span class="title-name">Synchronizing Configuration Files Across All Sites and Arbitrators</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-booth-sync-csync2-setup"><span class="title-number">5.1 </span><span class="title-name">Csync2 Setup for Geo Clusters</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-booth-sync-csync2-start"><span class="title-number">5.2 </span><span class="title-name">Synchronizing Changes with Csync2</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-rsc"><span class="title-number">6 </span><span class="title-name">Configuring Cluster Resources and Constraints</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-rsc-ticket-dep"><span class="title-number">6.1 </span><span class="title-name">Configuring Ticket Dependencies of Resources</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-rsc-boothd"><span class="title-number">6.2 </span><span class="title-name">Configuring a Resource Group for <code class="systemitem">boothd</code></span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-rsc-order"><span class="title-number">6.3 </span><span class="title-name">Adding an Ordering Constraint</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-rsc-sync-cib"><span class="title-number">6.4 </span><span class="title-name">Transferring the Resource Configuration to Other Cluster Sites</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-ip-relocation"><span class="title-number">7 </span><span class="title-name">Setting Up IP Relocation via DNS Update</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-manage"><span class="title-number">8 </span><span class="title-name">Managing Geo Clusters</span></a></span><ul><li><span class="sect1"><a href="#sec-ha-geo-manage-cli"><span class="title-number">8.1 </span><span class="title-name">Managing Tickets From Command Line</span></a></span></li><li><span class="sect1"><a href="#sec-ha-geo-manage-hawk2"><span class="title-number">8.2 </span><span class="title-name">Managing Tickets with Hawk2</span></a></span></li></ul></li><li><span class="chapter"><a href="#cha-ha-geo-trouble"><span class="title-number">9 </span><span class="title-name">Troubleshooting</span></a></span></li><li><span class="chapter"><a href="#cha-ha-geo-upgrade"><span class="title-number">10 </span><span class="title-name">Upgrading to the Latest Product Version</span></a></span></li><li><span class="chapter"><a href="#sec-ha-geo-more"><span class="title-number">11 </span><span class="title-name">For More Information</span></a></span></li><li><span class="appendix"><a href="#id-1.5.14"><span class="title-number">A </span><span class="title-name">GNU Licenses</span></a></span><ul><li><span class="sect1"><a href="#id-1.5.14.4"><span class="title-number">A1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="list-of-figures"><div class="toc-title">List of Figures</div><ul><li><span class="figure"><a href="#fig-ha-geo-example-setup"><span class="number">2.1 </span><span class="name">Two-Site Cluster—2x2 Nodes + Arbitrator (Optional)</span></a></span></li><li><span class="figure"><a href="#fig-yast-ha-geo-booth"><span class="number">4.1 </span><span class="name">Example Ticket Dependency</span></a></span></li><li><span class="figure"><a href="#fig-ha-geo-csync-config"><span class="number">5.1 </span><span class="name">Example Csync2 Setup for Geo Clusters</span></a></span></li><li><span class="figure"><a href="#id-1.5.10.4.6.4.2"><span class="number">8.1 </span><span class="name">Hawk2—Ticket Details</span></a></span></li><li><span class="figure"><a href="#id-1.5.10.4.8"><span class="number">8.2 </span><span class="name">Hawk2 Simulator—Tickets</span></a></span></li></ul></div><div class="list-of-examples"><div class="toc-title">List of Examples</div><ul><li><span class="example"><a href="#ex-ha-booth-conf-default"><span class="number">4.1 </span><span class="name">A Booth Configuration File</span></a></span></li><li><span class="example"><a href="#ex-ha-conf-booth-multi-1"><span class="number">4.2 </span><span class="name"><code class="filename">/etc/booth/apac.conf</code></span></a></span></li><li><span class="example"><a href="#ex-ha-conf-booth-multi-2"><span class="number">4.3 </span><span class="name"><code class="filename">/etc/booth/emea.conf</code></span></a></span></li><li><span class="example"><a href="#ex-ha-geo-dyn-dns-rsc-config"><span class="number">7.1 </span><span class="name">Resource Configuration for Dynamic DNS Update</span></a></span></li></ul></div><div><div xml:lang="en" class="legalnotice" id="id-1.5.2.5"><p>
+  Copyright © 2006–2026
 
   SUSE LLC and contributors. All rights reserved.
  </p><p>
@@ -95,7 +127,7 @@ hljs.configure({
  </p><p>
   If the communication between two booth instances breaks down, it might be
   because of a network breakdown between the cluster sites
-  <span class="emphasis"><em>or</em></span> because of
+  <span><em class="emphasis">or</em></span> because of
   an outage of one cluster site. In this case, you need an additional instance
   (a third cluster site or an
   <code class="literal">arbitrator</code>) to
@@ -107,7 +139,7 @@ hljs.configure({
   The most common scenario probably is a Geo cluster with two sites and a
   single arbitrator on a third site. This requires three booth instances.
  </p><p>
-   It is also possible to run a two-site Geo cluster <span class="emphasis"><em>without</em></span>
+   It is also possible to run a two-site Geo cluster <span><em class="emphasis">without</em></span>
    an arbitrator. In this case, a Geo cluster administrator needs to manually manage
    the tickets. If a ticket should be granted to more than one site at the same time,
    booth displays a warning.
@@ -217,7 +249,7 @@ hljs.configure({
      that have run the resources before.
     </p><p>
       If automatic failover in case of a split brain scenario is
-      <span class="emphasis"><em>not</em></span> required, administrators can also grant manual
+      <span><em class="emphasis">not</em></span> required, administrators can also grant manual
       tickets to the healthy site. How to manage tickets from command line is
       described in <a class="xref" href="#sec-ha-geo-manage-cli" title="8.1. Managing Tickets From Command Line">Section 8.1</a>.
     </p></dd></dl></div></section><section class="chapter" id="cha-ha-geo-req" data-id-title="Requirements"><div class="titlepage"><div><div><div class="title-container"><h1 class="title"><span class="title-number-name"><span class="title-number">3 </span><span class="title-name">Requirements</span></span> <a title="Permalink" class="permalink" href="#cha-ha-geo-req">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/geo_requirements_i.xml" title="Edit source document"> </a></div></div></div></div></div><div class="itemizedlist"><div class="title-container"><div class="itemizedlist-title-wrap"><div class="itemizedlist-title"><span class="title-number-name"><span class="title-name">Software Requirements </span></span><a title="Permalink" class="permalink" href="#id-1.5.5.2">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/geo_requirements_i.xml" title="Edit source document"> </a></div></div><ul class="itemizedlist"><li class="listitem"><p>
@@ -248,7 +280,7 @@ hljs.configure({
     If nodes are not synchronized, log files and cluster reports are very hard
     to analyze.
    </p></li><li class="listitem"><p>
-    Use an <span class="emphasis"><em>uneven</em></span> number of sites in your Geo
+    Use an <span><em class="emphasis">uneven</em></span> number of sites in your Geo
     cluster. In case the network connection breaks down, this makes sure that
     there still is a majority of sites (to avoid a split brain scenario). In
     case you have an even number of cluster sites, use an arbitrator for
@@ -300,8 +332,8 @@ hljs.configure({
     For setups including multiple Geo clusters, it is possible to <span class="quote">“<span class="quote">share</span>”</span> the same arbitrator (as
  of SUSE Linux Enterprise High Availability Extension 12). By providing several booth configuration files, you can
  start multiple booth instances on the same arbitrator, with each booth
- instance running on a different port. That way, you can use <span class="emphasis"><em>one</em></span> machine to serve as
- arbitrator for <span class="emphasis"><em>different</em></span> Geo clusters. For details on how to configure booth for multiple
+ instance running on a different port. That way, you can use <span><em class="emphasis">one</em></span> machine to serve as
+ arbitrator for <span><em class="emphasis">different</em></span> Geo clusters. For details on how to configure booth for multiple
    Geo clusters, refer to <a class="xref" href="#sec-ha-geo-booth-multi" title="4.4. Using a Multi-Tenant Booth Setup">Section 4.4, “Using a Multi-Tenant Booth Setup”</a>.
   </p><p>
    To prevent malicious parties from disrupting the booth service, you can
@@ -405,7 +437,7 @@ ticket = "ticketB" <a class="xref" href="#co-ha-geo-booth-config-ticket"><span c
       <a class="link" href="https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html" target="_blank">https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html</a>.
      </p></td></tr><tr><td style="width: 5%; vertical-align: top; text-align: left; "><p><a href="#co-ha-geo-booth-mode"><span class="callout">7</span></a> </p></td><td style="vertical-align: top; text-align: left; "><p>Optional parameter. Defines the ticket mode. By default, all
       tickets are managed by booth. To define tickets which are managed by
-      the administrator (<span class="emphasis"><em>manual tickets</em></span>), set the
+      the administrator (<span><em class="emphasis">manual tickets</em></span>), set the
       <em class="parameter">mode</em> parameter to
       <code class="literal">MANUAL</code> or <code class="literal">manual</code>.
      </p><p>Manual tickets do not have <em class="parameter">expire</em>,
@@ -450,7 +482,7 @@ ticket = "ticketB" <a class="xref" href="#co-ha-geo-booth-config-ticket"><span c
      </p><p>
       The scripts in this directory are executed in alphabetical order. All
       scripts will be called before <code class="systemitem">boothd</code> tries to acquire or renew a
-      ticket. For the ticket to be granted or renewed, <span class="emphasis"><em>all</em></span>
+      ticket. For the ticket to be granted or renewed, <span><em class="emphasis">all</em></span>
       scripts must succeed. The semantics are the same as for a single script:
       On exit code other than <code class="literal">0</code>, <code class="systemitem">boothd</code> relinquishes the
       ticket.
@@ -463,7 +495,7 @@ ticket = "ticketB" <a class="xref" href="#co-ha-geo-booth-config-ticket"><span c
       <code class="filename">/etc/booth.d<em class="replaceable">TICKET_NAME</em></code>
       directory contains the <code class="command">service-runnable</code> script. This
       simple script is based on <code class="command">crm_simulate</code>. It can be used
-      to test whether a particular cluster resource <span class="emphasis"><em>can</em></span> be
+      to test whether a particular cluster resource <span><em class="emphasis">can</em></span> be
       run on the current cluster site. That means, it checks if the cluster is
       healthy enough to run the resource (all resource dependencies are
       fulfilled, the cluster partition has quorum, no dirty nodes, etc.). For
@@ -607,8 +639,8 @@ ticket = "ticketB" <a class="xref" href="#co-ha-geo-booth-config-ticket"><span c
     For setups including multiple Geo clusters, it is possible to <span class="quote">“<span class="quote">share</span>”</span> the same arbitrator (as
  of SUSE Linux Enterprise High Availability Extension 12). By providing several booth configuration files, you can
  start multiple booth instances on the same arbitrator, with each booth
- instance running on a different port. That way, you can use <span class="emphasis"><em>one</em></span> machine to serve as
- arbitrator for <span class="emphasis"><em>different</em></span> Geo clusters.
+ instance running on a different port. That way, you can use <span><em class="emphasis">one</em></span> machine to serve as
+ arbitrator for <span><em class="emphasis">different</em></span> Geo clusters.
   </p><p>
    Let us assume you have two Geo clusters, one in EMEA (Europe, the Middle
    East and Africa), and one in the Asia-Pacific region (APAC).
@@ -687,7 +719,7 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
      The <code class="filename">service-runnable</code> script referenced here is
      included in the product as an example. It is a simple script based on
      <code class="command">crm_simulate</code>. It can be used to test whether a
-     particular cluster resource <span class="emphasis"><em>can</em></span> be run on the current
+     particular cluster resource <span><em class="emphasis">can</em></span> be run on the current
      cluster site. That means, it checks if the cluster is healthy enough to
      run the resource (all resource dependencies are fulfilled, the cluster
      partition has quorum, no dirty nodes, etc.). For example, if a service in
@@ -746,7 +778,7 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
       <code class="literal">@</code> denotes the possibility to run the service with a
       parameter, which is in this case the name of the configuration file.
      </p><p>
-      To <span class="emphasis"><em>enable</em></span> the booth service on an arbitrator, use
+      To <span><em class="emphasis">enable</em></span> the booth service on an arbitrator, use
       the following command:
      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> enable booth@booth</pre></div><p>
       After the service has been enabled from command line, YaST
@@ -754,7 +786,7 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
       is not disabled). In that case, it will disappear from the service list
       in YaST the next time systemd is restarted.
      </p><p>
-      The command to <span class="emphasis"><em>start</em></span> the booth service depends on
+      The command to <span><em class="emphasis">start</em></span> the booth service depends on
       your booth setup:
      </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
         If you are using the default setup as described in
@@ -888,7 +920,7 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
      </p></dd><dt id="vle-ha-geo-csync-ha-global-cfg"><span class="term"><code class="filename">/etc/csync2.cfg/ha_global.cfg</code>
     </span></dt><dd><p>
       This file defines the Csync2 synchronization group
-      <code class="literal">ha_global</code>. The group spans <span class="emphasis"><em>all</em></span>
+      <code class="literal">ha_global</code>. The group spans <span><em class="emphasis">all</em></span>
       cluster nodes across multiple sites, including the arbitrator. As it is
       recommended to use a separate key for each Csync2 synchronization group,
       this group uses <code class="filename">/etc/csync2/ha_global.key</code> for
@@ -941,7 +973,7 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
      The Csync2 authentication key for each synchronization group must be
      available on all members of that group.
     </p></li><li class="listitem"><p>
-     Csync2 must be running on <span class="emphasis"><em>all</em></span> nodes and the
+     Csync2 must be running on <span><em class="emphasis">all</em></span> nodes and the
      arbitrator.
     </p></li></ul></div><p>
    Before the first Csync2 run, you therefore need to make the following
@@ -950,7 +982,7 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
      Log in to one machine per synchronization group and generate an
      authentication key for the respective group:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">csync2</code> -k <em class="replaceable">NAME_OF_KEYFILE</em></pre></div><p>
-     However, do <span class="emphasis"><em>not</em></span> regenerate the key file on any other
+     However, do <span><em class="emphasis">not</em></span> regenerate the key file on any other
      member of the same group.
     </p><p>
      With regard to <a class="xref" href="#fig-ha-geo-csync-config" title="Example Csync2 Setup for Geo Clusters">Figure 5.1, “Example Csync2 Setup for Geo Clusters”</a>, this would
@@ -958,12 +990,12 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
      <code class="filename">/etc/csync2/ha_global.key</code> and one local key
      (<code class="filename">/etc/csync2/ha_local.key</code>) per site.
     </p></li><li class="step"><p>
-     Copy each key file to <span class="emphasis"><em>all</em></span> members of the respective
+     Copy each key file to <span><em class="emphasis">all</em></span> members of the respective
      synchronization group. With regard to
      <a class="xref" href="#fig-ha-geo-csync-config" title="Example Csync2 Setup for Geo Clusters">Figure 5.1, “Example Csync2 Setup for Geo Clusters”</a>:
     </p><ol type="a" class="substeps"><li class="step"><p>
        Copy <code class="filename">/etc/csync2/ha_global.key</code> to
-       <span class="emphasis"><em>all</em></span> parties (the arbitrator and all cluster nodes
+       <span><em class="emphasis">all</em></span> parties (the arbitrator and all cluster nodes
        on all sites of your Geo cluster). The key file needs to be available
        on all hosts listed within the <code class="literal">ha_global</code> group that
        is defined in <code class="filename">ha_global.cfg</code>.
@@ -984,7 +1016,7 @@ ticket = "tkt-sap-prod" <a class="xref" href="#co-ha-geo-booth-config-ticket"><s
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">systemctl</code> start csync2.socket</pre></div></li></ol></div></div><div class="procedure" id="pro-ha-geo-setup-csync2-start" data-id-title="Synchronizing Files with Csync2"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 5.1: </span><span class="title-name">Synchronizing Files with Csync2 </span></span><a title="Permalink" class="permalink" href="#pro-ha-geo-setup-csync2-start">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/geo_sync_i.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
      To initially synchronize all files once, execute the following command on
      the machine that you want to copy the configuration
-     <span class="emphasis"><em>from</em></span>:
+     <span><em class="emphasis">from</em></span>:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">csync2</code> <code class="option">-xv</code></pre></div><p>
      This will synchronize all the files once by pushing them to the other
      members of the synchronization groups. If all files are synchronized
@@ -1004,7 +1036,7 @@ Finished with 1 errors.</pre></div></li><li class="step"><p>
    For more information on the Csync2 options, run
    <code class="command">csync2 </code> <code class="option">-help</code>.
   </p><div id="id-1.5.7.6.8" data-id-title="Pushing Synchronization After Any Changes" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Pushing Synchronization After Any Changes</div><p>
-    Csync2 only pushes changes. It does <span class="emphasis"><em>not</em></span> continuously
+    Csync2 only pushes changes. It does <span><em class="emphasis">not</em></span> continuously
     synchronize files between the machines.
    </p><p>
     Each time you update files that need to be synchronized, you need to push
@@ -1050,7 +1082,7 @@ Finished with 1 errors.</pre></div></li><li class="step"><p>
 
     <a class="xref" href="#sec-ha-geo-rsc-sync-cib" title="6.4. Transferring the Resource Configuration to Other Cluster Sites">Section 6.4, “Transferring the Resource Configuration to Other Cluster Sites”</a>
    </p></li></ul></div><div id="id-1.5.8.8" data-id-title="No CIB Synchronization Across Sites" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: No CIB Synchronization Across Sites</div><p>
-   The CIB is <span class="emphasis"><em>not</em></span> automatically synchronized across
+   The CIB is <span><em class="emphasis">not</em></span> automatically synchronized across
    cluster sites of a Geo cluster. All resources that must be highly
    available across the Geo cluster need to be configured for each site
    accordingly or need to be transferred to the other site or sites.
@@ -1347,7 +1379,7 @@ Finished with 1 errors.</pre></div></li><li class="step"><p>
     manage tickets fully manually with <code class="command">crm_ticket</code> or
     <code class="command">crm site ticket</code>. Both commands are only
     available on cluster nodes. Use them with great care as they
-     <span class="emphasis"><em>cannot</em></span> verify if the same ticket is already granted
+     <span><em class="emphasis">cannot</em></span> verify if the same ticket is already granted
     elsewhere. For more information, read the man pages. </p><p> As long as booth is up and running, only use the
     <code class="command">booth</code> for manual intervention. </p></div><section class="sect2" id="sec-ha-geo-manage-cli-booth" data-id-title="Overview of booth Commands"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">8.1.1 </span><span class="title-name">Overview of <code class="command">booth</code> Commands</span></span> <a title="Permalink" class="permalink" href="#sec-ha-geo-manage-cli-booth">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15/xml/geo_manage_i.xml" title="Edit source document"> </a></div></div></div></div></div><p>
    The <code class="command">booth</code> commands can be run on any machine in the cluster,
@@ -1389,11 +1421,11 @@ booth[27900]: 2014/08/13_10:21:23 info: revoke succeeded!</pre></div><p> Booth c
          administrator can override the automatic process and manually grant
          the ticket to the site that is still up and running. In this
          situation, the <code class="option">-F</code> options tells booth
-          <span class="emphasis"><em>not</em></span> to wait for a response from other,
+          <span><em class="emphasis">not</em></span> to wait for a response from other,
          unreachable sites (so ignoring the parameters
          <em class="parameter">expire</em> and <em class="parameter">acquire-after</em>,
          if defined for this ticket). Instead, booth will immediately grant the
-         ticket to the specified site.</p></li><li class="listitem"><p><span class="formalpara-title">Manual Tickets. </span>When using <span class="emphasis"><em>manual</em></span> tickets, <code class="command">booth
+         ticket to the specified site.</p></li><li class="listitem"><p><span class="formalpara-title">Manual Tickets. </span>When using <span><em class="emphasis">manual</em></span> tickets, <code class="command">booth
          grant -F</code> makes booth grant the ticket immediately to the
          specified site.</p></li></ul></div><div id="id-1.5.10.3.4.3.4.2.4" data-id-title="Potential Loss of Data" class="admonition warning normal"><img class="symbol" alt="Warning" title="Warning" src="static/images/icon-warning.svg"/><div class="admon-title">Warning: Potential Loss of Data</div><p>Before using <code class="command">booth grant -F</code>, make sure that no
        other site (which is online) owns the same ticket. If the same ticket is
@@ -1979,5 +2011,5 @@ Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.</pre></d
   releasing these examples in parallel under your choice of free software
   license, such as the GNU General Public License, to permit their use in free
   software.
- </p></section></section></div></section></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
-                 2023</span></div></div></footer></body></html>
+ </p></section></section></div></section></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE  2026</span></div></div></footer>
+<script type="text/javascript" src="static/js/language-switcher.js"> </script></body></html>
