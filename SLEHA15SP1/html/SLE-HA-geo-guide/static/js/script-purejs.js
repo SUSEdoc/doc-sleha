@@ -96,28 +96,17 @@ function share(service) {
 
 // --- line of legacy jquery-based stuff ---
 
-var bugtrackerUrl = $('meta[name="tracker-url"]').attr("content");
-var bugtrackerType = $('meta[name="tracker-type"]').attr("content");
+var bugtrackerUrl = document
+  .querySelector('meta[name="tracker-url"]')
+  .getAttribute("content");
+var bugtrackerType = document
+  .querySelector('meta[name="tracker-type"]')
+  .getAttribute("content");
 
-// we handle Github (= gh) and bugzilla.suse.com (= bsc), default to bsc
-if (bugtrackerType != "gh" && bugtrackerType != "bsc") {
+// Handle Github (= gh) and bugzilla.suse.com (= bsc), default to bsc
+if (bugtrackerType !== "gh" && bugtrackerType !== "bsc") {
   bugtrackerType = "bsc";
 }
-
-// For Bugzilla
-var bscComponent = $('meta[name="tracker-bsc-component"]').attr("content");
-if (!bscComponent) {
-  bscComponent = "Documentation"; // default component
-}
-var bscProduct = $('meta[name="tracker-bsc-product"]').attr("content");
-var bscAssignee = $('meta[name="tracker-bsc-assignee"]').attr("content");
-var bscVersion = $('meta[name="tracker-bsc-version"]').attr("content");
-var bscTemplate = $('meta[name="tracker-bsc-template"]').attr("content");
-// For GitHub
-var ghAssignee = $('meta[name="tracker-gh-assignee"]').attr("content");
-var ghLabels = $('meta[name="tracker-gh-labels"]').attr("content");
-var ghMilestone = $('meta[name="tracker-gh-milestone"]').attr("content");
-var ghTemplate = $('meta[name="tracker-gh-template"]').attr("content");
 
 function show_meta() {
   console.groupCollapsed("Global variables");
@@ -276,67 +265,68 @@ function bugReportScrollSpy() {
 }
 
 function addClipboardButtons() {
-  $(".verbatim-wrap > pre").each(function () {
-    var clipButton = $("<button/>", {
-      class: "clip-button",
-      text: "Copy",
-      click: function () {
-        var elm = this.previousSibling;
-        copyToClipboard(elm);
-        elm.parentElement.classList.add("copy-success");
-        setTimeout(function () {
-          elm.parentElement.classList.remove("copy-success");
-        }, 1000);
-      },
+  document.querySelectorAll(".verbatim-wrap > pre").forEach(function (element) {
+    var clipButton = document.createElement("button");
+    clipButton.className = "clip-button";
+    clipButton.textContent = "Copy";
+    clipButton.addEventListener("click", function () {
+      var elm = this.previousSibling;
+      copyToClipboard(elm);
+      elm.parentElement.classList.add("copy-success");
+      setTimeout(function () {
+        elm.parentElement.classList.remove("copy-success");
+      }, 1000);
     });
-    $(this).after(clipButton);
-    return true;
+
+    element.after(clipButton);
   });
 }
 
 function copyToClipboard(elm) {
-  // use temporary hidden form element for selection and copy action
+  // Use a temporary hidden form element for selection and copy action
   var targetId = "__hiddenCopyText__";
-  target = document.getElementById(targetId);
+  var target = document.getElementById(targetId);
+
   if (!target) {
-    var target = document.createElement("textarea");
+    target = document.createElement("textarea");
     target.style.position = "fixed";
     target.style.left = "-9999px";
     target.style.top = "0";
     target.id = targetId;
     document.body.appendChild(target);
   } else {
-    // empty out old content
+    // Empty out old content
     target.textContent = "";
   }
-  $(elm)
-    .contents()
-    .each(function () {
-      try {
-        // we only want user-selectable elements, but not prompts.
-        // (notably, if we have deeper nesting of inline elements, this
-        // detection will fail but it should be good enough for common cases)
-        if (getComputedStyle(this)["user-select"] != "none") {
-          target.textContent += this.textContent;
-        }
-      } catch (e) {
-        // it's not an element node but a text node, so we always want it
-        target.textContent += this.textContent;
+
+  Array.from(elm.childNodes).forEach(function (node) {
+    try {
+      // We only want user-selectable elements, but not prompts.
+      // (Notably, if we have deeper nesting of inline elements, this
+      // detection will fail but it should be good enough for common cases)
+      if (getComputedStyle(node)["user-select"] !== "none") {
+        target.textContent += node.textContent;
       }
-    });
-  // select the content
+    } catch (e) {
+      // It's not an element node but a text node, so we always want it
+      target.textContent += node.textContent;
+    }
+  });
+
+  // Select the content
   var currentFocus = document.activeElement;
   target.focus();
   target.setSelectionRange(0, target.value.length);
 
-  // copy the selection
+  // Copy the selection
   var succeed;
   try {
     succeed = document.execCommand("copy");
   } catch (e) {
     succeed = false;
   }
-  // restore original focus
+
+  // Restore original focus
   if (currentFocus && typeof currentFocus.focus === "function") {
     currentFocus.focus();
   }
@@ -347,21 +337,34 @@ function copyToClipboard(elm) {
 function hashActivator() {
   if (location.hash.length) {
     var locationhash = location.hash.replace(/(:|\.|\[|\])/g, "\\$1");
-    if ($(locationhash).is(".free-id")) {
-      $(locationhash).next(".qandaentry").addClass("active");
+
+    var element = document.querySelector(locationhash);
+
+    if (element && element.classList.contains("free-id")) {
+      var qandaentry = element.nextElementSibling;
+      if (qandaentry && qandaentry.classList.contains("qandaentry")) {
+        qandaentry.classList.add("active");
+      }
     }
-    if ($(locationhash).is(".question")) {
-      location.hash = $(locationhash)
-        .parent(".qandaentry")
-        .prev(".free-id")
-        .attr("id");
+
+    if (element && element.classList.contains("question")) {
+      var qandaentry = element.parentElement;
+      if (qandaentry && qandaentry.classList.contains("qandaentry")) {
+        var freeId = qandaentry.previousElementSibling;
+        if (freeId && freeId.classList.contains("free-id")) {
+          location.hash = freeId.getAttribute("id");
+        }
+      }
     }
   }
 }
 
 // INIT!
 
-$(function () {
+var bscComponent, bscProduct, bscAssignee, bscVersion, bscTemplate;
+var ghAssignee, ghLabels, ghMilestone, ghTemplate;
+
+document.addEventListener("DOMContentLoaded", function () {
   console.group("Start SUSE script.js");
 
   eBody = document.body;
@@ -371,6 +374,38 @@ $(function () {
   eSideTocAll = document.getElementById("_side-toc-overall");
   eSideTocPage = document.getElementById("_side-toc-page");
 
+  // For Bugzilla
+  bscComponent =
+    document
+      .querySelector('meta[name="tracker-bsc-component"]')
+      ?.getAttribute("content") || "Documentation"; // default component
+  bscProduct = document
+    .querySelector('meta[name="tracker-bsc-product"]')
+    ?.getAttribute("content");
+  bscAssignee = document
+    .querySelector('meta[name="tracker-bsc-assignee"]')
+    ?.getAttribute("content");
+  bscVersion = document
+    .querySelector('meta[name="tracker-bsc-version"]')
+    ?.getAttribute("content");
+  bscTemplate = document
+    .querySelector('meta[name="tracker-bsc-template"]')
+    ?.getAttribute("content");
+
+  // For GitHub
+  ghAssignee = document
+    .querySelector('meta[name="tracker-gh-assignee"]')
+    ?.getAttribute("content");
+  ghLabels = document
+    .querySelector('meta[name="tracker-gh-labels"]')
+    ?.getAttribute("content");
+  ghMilestone = document
+    .querySelector('meta[name="tracker-gh-milestone"]')
+    ?.getAttribute("content");
+  ghTemplate = document
+    .querySelector('meta[name="tracker-gh-template"]')
+    ?.getAttribute("content");
+
   eBody.classList.remove("js-off");
   eBody.classList.add("js-on");
   if (location.protocol.match(/^http/)) {
@@ -378,7 +413,7 @@ $(function () {
   }
 
   hashActivator();
-  window.onhashchange = hashActivator;
+  window.addEventListener("hashchange", hashActivator);
 
   lastScrollPosition = window.scrollY;
   // stickies();
@@ -390,56 +425,35 @@ $(function () {
     false
   );
 
-  if (document.getElementById("_share-fb") !== null) {
-    document.getElementById("_share-fb").addEventListener(
-      "click",
-      function (e) {
-        share("fb");
-        e.preventDefault();
-      },
-      false
-    );
+  function addClickListener(elementId, callback) {
+    var element = document.getElementById(elementId);
+    if (element !== null) {
+      element.addEventListener(
+        "click",
+        function (e) {
+          callback();
+          e.preventDefault();
+        },
+        false
+      );
+    }
   }
-  if (document.getElementById("_share-in") !== null) {
-    document.getElementById("_share-in").addEventListener(
-      "click",
-      function (e) {
-        share("in");
-        e.preventDefault();
-      },
-      false
-    );
-  }
-  if (document.getElementById("_share-tw") !== null) {
-    document.getElementById("_share-tw").addEventListener(
-      "click",
-      function (e) {
-        share("tw");
-        e.preventDefault();
-      },
-      false
-    );
-  }
-  if (document.getElementById("_share-mail") !== null) {
-    document.getElementById("_share-mail").addEventListener(
-      "click",
-      function (e) {
-        share("mail");
-        e.preventDefault();
-      },
-      false
-    );
-  }
-  if (document.getElementById("_print-button") !== null) {
-    document.getElementById("_print-button").addEventListener(
-      "click",
-      function (e) {
-        print();
-        e.preventDefault();
-      },
-      false
-    );
-  }
+
+  addClickListener("_share-fb", function () {
+    share("fb");
+  });
+  addClickListener("_share-in", function () {
+    share("in");
+  });
+  addClickListener("_share-tw", function () {
+    share("tw");
+  });
+  addClickListener("_share-mail", function () {
+    share("mail");
+  });
+  addClickListener("_print-button", function () {
+    print();
+  });
 
   if (
     document.getElementById("_utilitynav-search") !== null &&
@@ -521,7 +535,7 @@ $(function () {
   if (eSideTocAll !== null) {
     document
       .querySelectorAll("#_side-toc-overall li > a.has-children")
-      .forEach((elm) => {
+      .forEach(function (elm) {
         elm.addEventListener(
           "click",
           function (e) {
@@ -575,7 +589,7 @@ $(function () {
     );
   }
 
-  document.querySelectorAll(".question").forEach((elm) => {
+  document.querySelectorAll(".question").forEach(function (elm) {
     elm.addEventListener(
       "click",
       function () {
@@ -603,100 +617,88 @@ $(function () {
 function addBugLinks() {
   show_meta();
 
-  if (typeof bugtrackerUrl != "string") {
+  if (typeof bugtrackerUrl !== "string") {
     console.warn(
       "Didn't find meta[tracker-url]. Couldn't create report links. :-("
     );
     return false;
   }
 
-  $(".title-container").each(function (index) {
-    /* This function is applied to the following structure:
-       <div class="title-container">
-         <hX class="title">
-           <span class="title-number-name">
-             <span class="title-number">...</span>
-             <span class="title-name">...</span>
-           </span>
-           <a class="permalink title="Permalink" href="...">#</a>
-         </hX>
-       </div>
-       <div class="icons">
-          <a class="icon-reportbug"><img src="..."/></a>
-          <a class="icon-editsource" href="..."><img src="..."/></a>
-       </div>
+  document
+    .querySelectorAll(".title-container")
+    .forEach(function (container, index) {
+      console.groupCollapsed(`addBugLinks ${index}`);
+      var url = "";
+      var icons = container.querySelector(".icons");
+      var iconReportBug = icons ? icons.querySelector(".icon-reportbug") : null;
+      var permalink = container.querySelector(".permalink");
+      var titleNumberName = container.querySelector(".title-number-name");
+      var firstTitle = container.querySelector(".title");
 
-     Sometimes we have this structure (for example, in a title):
+      if (!permalink) {
+        // If permalink is not available, use the global URL
+        permalink = document.createElement("span");
+        permalink.setAttribute("href", window.location.href);
+        permalink.textContent = "#";
+      }
 
-     <div class="title-container">
-       <div class="table-title-wrap">
-         <h6 class="table-title">
-           <span class="title-number-name">
-             <span class="title-number">...</span>
-             <span class="title-name">...</span>
-           </span>
-         </h6>
-       </div>
-     </div
+      console.log(
+        "title-number-name:",
+        titleNumberName,
+        "\npermalink:",
+        permalink.href,
+        "\ntitle-number:",
+        // We need to check first as titles can have no div
+        // with "title-number-name" class
+        titleNumberName ? titleNumberName.querySelector(".title-number") : "n/a"
+      );
 
-     or even this
+      // Create empty <span> element
+      var sectionName = document.createElement("span");
 
-     <div class="title-container">
-        <h1 class="title">
-          ...
-          <a class="permalink title="Permalink" href="...">#</a>
-        </h1>
-        <div class="icons">...</div>
-     </div>
-    */
-    console.groupCollapsed(`addBugLinks ${index}`);
-    var url = "";
-    var icons = this.getElementsByClassName("icons")[0];
-    var icon_reportbug = icons.getElementsByClassName("icon-reportbug")[0];
-    var permalink = this.getElementsByClassName("permalink")[0];
-    var title_number_name = this.getElementsByClassName("title-number-name")[0];
-    var firsttitle = this.getElementsByClassName("title")[0];
+      if (titleNumberName) {
+        sectionName = titleNumberName.querySelector(".title-name");
+      } else if (firstTitle !== undefined) {
+        sectionName = firstTitle;
+      }
 
-    if (permalink == undefined) {
-      // If permalink is not available, use the global URL
-      permalink = document.createElement("span");
-      permalink.setAttribute("href", window.location.href);
-      permalink.textContent = "#";
-    }
+      if (bugtrackerType === "bsc") {
+        url = bugzillaUrl(sectionName.innerText, permalink.href);
+      } else {
+        url = githubUrl(sectionName.innerText, permalink.href);
+      }
 
-    console.log(
-      "title-number-name:",
-      title_number_name,
-      "\npermalink:",
-      permalink.href,
-      "\ntitle-number:",
-      // We need to check first as titles can have no div
-      // with "title-number-name" class
-      title_number_name != undefined
-        ? title_number_name.getElementsByClassName("title-number")[0]
-        : "n/a"
-    );
+      if (iconReportBug) {
+        iconReportBug.setAttribute("href", url);
+      }
 
-    // Create empty <span> element
-    var sectionName = document.createElement("span");
+      console.groupEnd();
+      return true;
+    });
+}
 
-    if (title_number_name != undefined) {
-      sectionName = title_number_name.getElementsByClassName("title-name")[0];
-    } else if (firsttitle != undefined) {
-      sectionName = firsttitle;
-    }
-
-    if (bugtrackerType == "bsc") {
-      url = bugzillaUrl(sectionName.innerText, permalink.href);
-    } else {
-      url = githubUrl(sectionName.innerText, permalink.href);
-    }
-
-    if (icon_reportbug != undefined) {
-      icon_reportbug.setAttribute("href", url);
-    }
-
-    console.groupEnd();
-    return true;
-  });
+function showTabContent(event) {
+     var tab = event.target.closest('.tab')
+      if (tab) {
+          var tabs = tab.parentElement;
+   
+          // Get the index of the clicked tab
+          var index = Array.from(tabs.children).indexOf(tab);
+   
+          // Hide all tab contents
+          Array.from(tabs.nextElementSibling.children).forEach(content => {
+              content.style.display = 'none';
+          });
+   
+          // Remove "active" class from all tabs
+          tabs.querySelectorAll('.tab').forEach(tab => {
+              tab.classList.remove('active-tab');
+          });
+   
+          // Display the selected tab content
+          tabs.nextElementSibling.children[index].style.display = 'block';
+   
+          // Add "active" class to the clicked tab
+          tab.classList.add('active-tab');
+      }
 }
