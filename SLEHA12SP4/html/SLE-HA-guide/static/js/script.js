@@ -149,15 +149,15 @@ function githubUrl(sectionName, permalink) {
   };
   var url = bugtrackerUrl
      + "?title=" + encodeURIComponent('[doc] Issue in "' + sectionName + '"')
-     + "&amp;body=" + encodeURIComponent(body);
+     + "&body=" + encodeURIComponent(body);
   if (ghAssignee) {
-    url += "&amp;assignee=" + encodeURIComponent(ghAssignee);
+    url += "&assignee=" + encodeURIComponent(ghAssignee);
   }
   if (ghMilestone) {
-    url += "&amp;milestone=" + encodeURIComponent(ghMilestone);
+    url += "&milestone=" + encodeURIComponent(ghMilestone);
   }
   if (ghLabels) {
-    url += "&amp;labels=" + encodeURIComponent(ghLabels);
+    url += "&labels=" + encodeURIComponent(ghLabels);
   }
 
   console.log("url=", url);
@@ -373,8 +373,8 @@ $(function() {
 
 
   lastScrollPosition = window.scrollY;
-  stickies();
-  window.addEventListener('scroll', function(){ stickies(); }, false);
+  // stickies();
+  // window.addEventListener('scroll', function(){ stickies(); }, false);
 
 
   if ( document.getElementById('_share-fb') !== null ) {
@@ -584,4 +584,30 @@ function addBugLinks() {
     return true;
   });
 
+}
+
+function showTabContent(event) {
+  var tab = event.target.closest('.tab')
+   if (tab) {
+       var tabs = tab.parentElement;
+
+       // Get the index of the clicked tab
+       var index = Array.from(tabs.children).indexOf(tab);
+
+       // Hide all tab contents
+       Array.from(tabs.nextElementSibling.children).forEach(content => {
+           content.style.display = 'none';
+       });
+
+       // Remove "active" class from all tabs
+       tabs.querySelectorAll('.tab').forEach(tab => {
+           tab.classList.remove('active-tab');
+       });
+
+       // Display the selected tab content
+       tabs.nextElementSibling.children[index].style.display = 'block';
+
+       // Add "active" class to the clicked tab
+       tab.classList.add('active-tab');
+   }
 }

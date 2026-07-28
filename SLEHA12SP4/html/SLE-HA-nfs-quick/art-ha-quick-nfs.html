@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 12 SP4 | Highly Available NFS Storage with DRBD and Pacemaker</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
-<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
-<meta name="title" content="Highly Available NFS Storage with DRBD and Pacemaker | SLE …"/>
-<meta name="description" content="This document describes how to set up highly available…"/>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Highly Available NFS Storage with DRBD and Pacemaker | SLE HA 12 SP4</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
+<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
+<meta name="dcterms.modified" content=""/>
+<meta name="dcterms.dateSubmitted" content="2026-07-28"/>
+<meta name="title" content="Highly Available NFS Storage with DRBD and Pacemaker |…"/>
+<meta name="description" content="This document describes how to set up highly available NFS storage in a two-node cluster, using the following components of SUSE Linux Enterprise High Ava…"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
 <meta name="product-number" content="12 SP4"/>
 <meta name="book-title" content="Highly Available NFS Storage with DRBD and Pacemaker"/>
@@ -11,29 +13,60 @@
 <meta name="tracker-bsc-component" content="Documentation"/>
 <meta name="tracker-bsc-product" content="SUSE Linux Enterprise High Availability Extension 12 SP4"/>
 <meta name="publisher" content="SUSE"/><meta property="og:title" content="Highly Available NFS Storage with DRBD and Pacemaker |…"/>
-<meta property="og:description" content="This document describes how to set up highly available NFS storage in a two-node cluster, using the following components of …"/>
+<meta property="og:description" content="This document describes how to set up highly available NFS …"/>
 <meta property="og:type" content="article"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Highly Available NFS Storage with DRBD and Pacemaker |…"/>
-<meta name="twitter:description" content="This document describes how to set up highly available NFS storage in a two-node cluster, using the following components of …"/>
-<link rel="prev" href="book-sleha-techguides.html" title="Technical Guides"/><link rel="next" href="bk02ar01apa.html" title="A. GNU licenses"/><script type="text/javascript">
+<meta name="twitter:description" content="This document describes how to set up highly available NFS …"/>
+<script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": ["TechArticle"],
+    "image": "https://www.suse.com/assets/img/suse-white-logo-green.svg",
+    "name": "Highly Available NFS Storage with DRBD and Pacemaker | SLE HA 12 SP4",
+    "isPartOf": {
+      "@type": "CreativeWorkSeries",
+      "name": "Products &amp; Solutions"
+    },
+    "inLanguage": "en",
+    "headline": "Highly Available NFS Storage with DRBD and Pacemaker",
+    "alternativeHeadline": "SUSE Linux Enterprise High Availability 12 SP4",
+    "description": "This document describes how to set up highly available NFS storage in a two-node cluster, using the following components of SUSE Linux Enterprise Hig…",
+    "author": [
+      {
+        "@type": "Corporation",
+        "name": "SUSE Product &amp; Solution Documentation Team",
+        "url": "https://documentation.suse.com"
+      }
+    ],
+    "datePublished": "2026-07-28T12:17+02:00",
+    "about": [
 
-if ( window.location.protocol.toLowerCase() != 'file:' ) {
-  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
-};
-
-</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/jquery-1.12.4.min.js" type="text/javascript"> </script><script src="static/js/script.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
-
-$(document).ready(function() {
-  $('.verbatim-wrap.highlight').each(function(i, block) {
-    hljs.highlightBlock(block);
-  });
-});
-hljs.configure({
-  useBR: false
-});
-
-</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Highly Available NFS Storage with DRBD and Pacemaker</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Highly Available NFS Storage with DRBD and Pacemaker</div> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="article" id="art-ha-quick-nfs" data-id-title="Highly Available NFS Storage with DRBD and Pacemaker"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">12 SP4</span></div><div><div class="title-container"><h1 class="title">Highly Available NFS Storage with DRBD and Pacemaker <a title="Permalink" class="permalink" href="art-ha-quick-nfs.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div><div><h3 class="subtitle"><em>SUSE Linux Enterprise High Availability 12 SP4</em></h3></div><div class="date"><span class="imprint-label">Publication Date: </span>November 08, 2023
+    ],
+    "mentions": [
+      { "@type": "SoftwareApplication",
+        "name": "SLE HA",
+        "softwareVersion": "12 SP4",
+        "applicationCategory": "Operating System",
+        "operatingSystem": "Linux"
+      }
+    ],
+    "sameAs": [
+          "https://www.facebook.com/SUSEWorldwide/about",
+          "https://www.youtube.com/channel/UCHTfqIzPKz4f_dri36lAQGA",
+          "https://twitter.com/SUSE",
+          "https://www.linkedin.com/company/suse"
+    ],
+    "publisher": {
+      "@type": "Corporation",
+      "name": "SUSE",
+      "url": "https://documentation.suse.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+      }
+    }
+  }</script>
+<link rel="next" href="bk02ar01apa.html" title="A. GNU licenses"/><link type="text/css" rel="preload" as="style" onload="this.rel='stylesheet'" href="https://documentation.suse.com/docserv/res/fonts/suse/suse.css"/><script src="static/js/script-purejs.js" type="text/javascript"></script><script src="static/js/highlight.js" type="text/javascript"></script><script>hljs.highlightAll();</script><script src="static/js/ui-modifiers.js" type="text/javascript"></script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Highly Available NFS Storage with DRBD and Pacemaker</a></div></div><main id="_content"><nav id="_side-toc-overall" tabindex="0" class="side-toc"><div class="side-title">Highly Available NFS Storage with DRBD and Pacemaker</div> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="article" id="art-ha-quick-nfs" data-id-title="Highly Available NFS Storage with DRBD and Pacemaker"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">12 SP4</span></div><div><div class="title-container"><h1 class="title">Highly Available NFS Storage with DRBD and Pacemaker <a title="Permalink" class="permalink" href="art-ha-quick-nfs.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div><div><h3 class="subtitle"><em>SUSE Linux Enterprise High Availability 12 SP4</em></h3></div><div class="date"><span class="imprint-label">Publication Date: </span>July 28, 2026
 </div><div><div class="abstract"><p>
      This document describes how to set up highly available NFS storage in a
     two-node cluster, using the following components of
@@ -47,7 +80,7 @@ hljs.configure({
      The process for configuring highly available NFS storage has been improved in
      versions 12 SP5 and 15 SP3.
     </p></div></div></div></div></div><div><div xml:lang="en" class="legalnotice" id="id-1.4.2.3.5"><p>
-  Copyright © 2006–2023
+  Copyright © 2006–2026
 
   SUSE LLC and contributors. All rights reserved.
  </p><p>
@@ -84,7 +117,7 @@ hljs.configure({
      This avoids split brain scenarios.
     </p></li><li class="listitem"><p>
      Failover of resources from one node to the other if the active host breaks
-     down (<span class="emphasis"><em>active/passive</em></span> setup).
+     down (<span><em class="emphasis">active/passive</em></span> setup).
     </p></li><li class="listitem"><p>
      Local storage on each host. The data is synchronized between the
      hosts using DRBD on top of LVM.
@@ -99,7 +132,7 @@ hljs.configure({
    described in the Installation and Setup Quick Start. The Installation and Setup Quick Start describes
    how to use the crm shell to set up a
    cluster with minimal effort.
-  </p></section><section class="sect1" id="sec-ha-quick-nfs-lvm" data-id-title="Creating an LVM Device"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">3 </span><span class="title-name">Creating an LVM Device</span></span> <a title="Permalink" class="permalink" href="art-ha-quick-nfs.html#sec-ha-quick-nfs-lvm">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>LVM (<span class="emphasis"><em>Logical Volume Manager</em></span>) enables
+  </p></section><section class="sect1" id="sec-ha-quick-nfs-lvm" data-id-title="Creating an LVM Device"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">3 </span><span class="title-name">Creating an LVM Device</span></span> <a title="Permalink" class="permalink" href="art-ha-quick-nfs.html#sec-ha-quick-nfs-lvm">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>LVM (<span><em class="emphasis">Logical Volume Manager</em></span>) enables
     flexible distribution of hard disk space over several file
     systems.
    </p><p>To prepare your disks for LVM, do the following:</p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
@@ -200,7 +233,7 @@ include /etc/drbd.d/*.res;</pre></div><p>
      After you have prepared your DRBD configuration, proceed as follows:
     </p><div class="procedure"><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p> If you use a firewall in your cluster, open port
               <code class="systemitem">7790</code> in your firewall configuration. </p></li><li class="step"><p>The first time you do this, execute the following
-        commands on <span class="emphasis"><em>both</em></span> nodes (in our example, <code class="systemitem">alice</code>
+        commands on <span><em class="emphasis">both</em></span> nodes (in our example, <code class="systemitem">alice</code>
         and <code class="systemitem">bob</code>):
       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">drbdadm</code> create-md nfs
 <code class="prompt root"># </code><code class="command">drbdadm</code> up nfs</pre></div><p> This initializes the metadata storage and creates the
@@ -280,7 +313,7 @@ include /etc/drbd.d/*.res;</pre></div><p>
      command, or run <code class="command">drbdadm status</code>.
    </p></section><section class="sect2" id="sec-ha-quick-nfs-resources-nfsserver" data-id-title="NFS Kernel Server Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.2 </span><span class="title-name">NFS Kernel Server Resource</span></span> <a title="Permalink" class="permalink" href="art-ha-quick-nfs.html#sec-ha-quick-nfs-resources-nfsserver">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><p>
     In the crm shell, the resource for the NFS server
-    daemons must be configured as a <span class="emphasis"><em>clone</em></span> of a
+    daemons must be configured as a <span><em class="emphasis">clone</em></span> of a
     <code class="literal">systemd</code> resource type.
    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> nfsserver \
   systemd:nfs-server \
@@ -292,7 +325,7 @@ include /etc/drbd.d/*.res;</pre></div><p>
     NFS Kernel server processes on both nodes.
    </p></section><section class="sect2" id="sec-ha-quick-nfs-resources-lvm" data-id-title="File System Resource"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">6.3 </span><span class="title-name">File System Resource</span></span> <a title="Permalink" class="permalink" href="art-ha-quick-nfs.html#sec-ha-quick-nfs-resources-lvm">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP4/xml/art_sle_ha_nfs_quick.xml" title="Edit source document"> </a></div></div></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
       Configure the file system type resource as follows (but
-      <span class="emphasis"><em>do not</em></span> commit this configuration yet):
+      <span><em class="emphasis">do not</em></span> commit this configuration yet):
      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive</code> fs_work \
   ocf:heartbeat:Filesystem \
   params device=/dev/drbd0 \
@@ -300,7 +333,7 @@ include /etc/drbd.d/*.res;</pre></div><p>
     fstype=ext3 \
   op monitor interval="10s"</pre></div></li><li class="listitem"><p>
       Combine these resources into a Pacemaker resource
-      <span class="emphasis"><em>group</em></span>:
+      <span><em class="emphasis">group</em></span>:
      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group</code> g-nfs fs_work</pre></div></li><li class="listitem"><p>
       Add the following constraints to make sure that the group is started
       on the same node on which the DRBD multi-state resource is in the
@@ -356,10 +389,10 @@ include /etc/drbd.d/*.res;</pre></div><p>
    This section outlines how to use the highly available NFS service from an
    NFS client.
   </p><p>
-   To connect to the NFS service, make sure to use the <span class="emphasis"><em>virtual IP
+   To connect to the NFS service, make sure to use the <span><em class="emphasis">virtual IP
    address</em></span> to connect to the cluster rather than a physical IP
    configured on one of the cluster nodes' network interfaces. For compatibility
-   reasons, use the <span class="emphasis"><em>full</em></span> path of the NFS export on the server.
+   reasons, use the <span><em class="emphasis">full</em></span> path of the NFS export on the server.
   </p><p>In its simplest form, the command to mount the NFS export looks like
    this:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mount</code> -t nfs 192.168.1.11:/srv/nfs/work /home/work</pre></div><p>
    To configure a specific transport protocol (<code class="option">proto</code>)
@@ -371,5 +404,5 @@ include /etc/drbd.d/*.res;</pre></div><p>
    <code class="option">vers=3</code> after the <code class="option">-o</code> option.
   </p><p>
    For further NFS mount options, consult the <code class="command">nfs</code> man page.
-  </p></section></section><nav class="bottom-pagination"><div> </div><div><a class="pagination-link next" href="bk02ar01apa.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Appendix A </span>GNU licenses</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-usagescenario"><span class="title-number">1 </span><span class="title-name">Usage Scenario</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-installation"><span class="title-number">2 </span><span class="title-name">Installing a Basic Two-Node Cluster</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-lvm"><span class="title-number">3 </span><span class="title-name">Creating an LVM Device</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-drbd-device"><span class="title-number">4 </span><span class="title-name">Creating a DRBD Device</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-initial-pacemaker"><span class="title-number">5 </span><span class="title-name">Adjusting Pacemaker's Configuration</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-resources"><span class="title-number">6 </span><span class="title-name">Creating Cluster Resources</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-use"><span class="title-number">7 </span><span class="title-name">Using the NFS Service</span></a></span></li><li><span class="appendix"><a href="bk02ar01apa.html"><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></span><ul><li><span class="sect1"><a href="bk02ar01apa.html#id-1.4.2.11.4"><span class="title-number">A.1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
-                 2023</span></div></div></footer></body></html>
+  </p></section></section><nav class="bottom-pagination"><div> </div><div><a class="pagination-link next" href="bk02ar01apa.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Appendix A </span>GNU licenses</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-usagescenario"><span class="title-number">1 </span><span class="title-name">Usage Scenario</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-installation"><span class="title-number">2 </span><span class="title-name">Installing a Basic Two-Node Cluster</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-lvm"><span class="title-number">3 </span><span class="title-name">Creating an LVM Device</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-drbd-device"><span class="title-number">4 </span><span class="title-name">Creating a DRBD Device</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-initial-pacemaker"><span class="title-number">5 </span><span class="title-name">Adjusting Pacemaker's Configuration</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-resources"><span class="title-number">6 </span><span class="title-name">Creating Cluster Resources</span></a></span></li><li><span class="sect1"><a href="art-ha-quick-nfs.html#sec-ha-quick-nfs-use"><span class="title-number">7 </span><span class="title-name">Using the NFS Service</span></a></span></li><li><span class="appendix"><a href="bk02ar01apa.html"><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></span><ul><li><span class="sect1"><a href="bk02ar01apa.html#id-1.4.2.11.4"><span class="title-number">A1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE  2026</span></div></div></footer>
+<script type="text/javascript" src="static/js/language-switcher.js"> </script></body></html>
