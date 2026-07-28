@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>SLE HA 15 SP2 | Geo Clustering Quick Start</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style.css"/>
-<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/"/>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Geo Clustering Quick Start | SLE HA 15 SP2</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
+<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
+<meta name="dcterms.created" content="2020-07-21"/>
+<meta name="dcterms.modified" content="2020-07-21"/>
+<meta name="dcterms.dateSubmitted" content="2026-07-28"/>
 <meta name="title" content="Geo Clustering Quick Start | SLE HA 15 SP2"/>
 <meta name="description" content="How to perform the basic setup of a Geo cluster, using the Geo bootstrap scripts provided by the crm shell"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -17,35 +20,27 @@
 <meta name="twitter:title" content="Geo Clustering Quick Start"/>
 <meta name="twitter:description" content="Set up a Geo cluster"/>
 <script type="application/ld+json">{
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": ["TechArticle"],
     "image": "https://www.suse.com/assets/img/suse-white-logo-green.svg",
-    
-     "isPartOf": {
+    "name": "Geo Clustering Quick Start | SUSE Linux Enterprise High Availability 15 SP2",
+    "isPartOf": {
       "@type": "CreativeWorkSeries",
       "name": "Products &amp; Solutions"
     },
-    
     "inLanguage": "en",
-    
-
     "headline": "Geo Clustering Quick Start",
-  
     "description": "How to perform the basic setup of a Geo cluster, using the Geo bootstrap scripts provided by the crm shell",
-      
     "author": [
       {
         "@type": "Corporation",
         "name": "SUSE Product &amp; Solution Documentation Team",
-        "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+        "url": "https://documentation.suse.com"
       }
     ],
-      
+    "dateCreated": "2020-07-21T00:00+02:00",
     "dateModified": "2020-07-21T00:00+02:00",
-      
-    "datePublished": "2020-07-21T00:00+02:00",
-      
-
+    "datePublished": "2026-07-28T11:54+02:00",
     "about": [
       {
         "@type": "Thing",
@@ -60,18 +55,14 @@
         "name": "Clustering"
       }
     ],
-  
     "mentions": [
-      
       { "@type": "SoftwareApplication",
         "name": "SUSE Linux Enterprise High Availability",
         "softwareVersion": "15 SP2",
         "applicationCategory": "Operating System",
         "operatingSystem": "Linux"
       }
-      
     ],
-    
     "sameAs": [
           "https://www.facebook.com/SUSEWorldwide/about",
           "https://www.youtube.com/channel/UCHTfqIzPKz4f_dri36lAQGA",
@@ -88,32 +79,15 @@
       }
     }
   }</script>
-<link rel="prev" href="bk01ar01apb.html" title="B. GNU licenses"/><link rel="next" href="bk01ar02apc.html" title="A. GNU licenses"/><script type="text/javascript">
-
-if ( window.location.protocol.toLowerCase() != 'file:' ) {
-  document.write('<link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"></link>');
-};
-
-</script><noscript><link rel="stylesheet" type="text/css" href="https://documentation.suse.com/docserv/res/fonts/poppins/poppins.css"/></noscript><script src="static/js/script-purejs.js" type="text/javascript"> </script><script src="static/js/highlight.min.js" type="text/javascript"> </script><script>
-
-$(document).ready(function() {
-  $('.verbatim-wrap.highlight').each(function(i, block) {
-    hljs.highlightBlock(block);
-  });
-});
-hljs.configure({
-  useBR: false
-});
-
-</script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Geo Clustering Quick Start</a></div></div><main id="_content"><nav id="_side-toc-overall" class="side-toc"><div class="side-title">Geo Clustering Quick Start</div> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="article" id="art-sleha-geo-quick" data-id-title="Geo Clustering Quick Start"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP2</span></div><div><div class="title-container"><h1 class="title">Geo Clustering Quick Start <a title="Permalink" class="permalink" href="art-sleha-geo-quick.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div><div class="date"><span class="imprint-label">Publication Date: </span>January 16, 2025
+<link rel="next" href="bk01ar02apc.html" title="A. GNU licenses"/><link type="text/css" rel="preload" as="style" onload="this.rel='stylesheet'" href="https://documentation.suse.com/docserv/res/fonts/suse/suse.css"/><script src="static/js/script-purejs.js" type="text/javascript"></script><script src="static/js/highlight.js" type="text/javascript"></script><script>hljs.highlightAll();</script><script src="static/js/ui-modifiers.js" type="text/javascript"></script><meta name="edit-url" content="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml"/></head><body class="draft wide offline js-off" onload="$('#betawarn-button-wrap').toggle();if (document.cookie.length > 0) {if (document.cookie.indexOf('betawarn=closed') != -1){$('#betawarn').toggle()}};"><div id="betawarn" style="position:fixed;bottom:0;z-index:9025;background-color:#FDE8E8;padding:1em;margin-left:10%;margin-right:10%;display:block;border-top:.75em solid #E11;width:80%"><p style="color:#333;margin:1em 0;padding:0;">This is a draft document that was built and uploaded automatically. It may document beta software and be incomplete or even incorrect. <strong>Use this document at your own risk.</strong></p> <div id="betawarn-button-wrap" style="display:none;margin:0;padding:0;"><a href="#" onclick="$('#betawarn').toggle();var d=new Date();d.setTime(d.getTime()+(0.5*24*60*60*1000));document.cookie='betawarn=closed; expires='+d.toUTCString()+'; path=/'; return false;" style="color:#333;text-decoration:underline;float:left;margin-top:.5em;padding:1em;display:block;background-color:#FABEBE;">I understand this is a draft</a></div></div><div class="bypass-block"><a href="#_content">Jump to content</a><a href="#_bottom-pagination">Jump to page navigation: previous page [access key p]/next page [access key n]</a></div><header id="_mainnav"><div class="growth-inhibitor"><img src="static/images/logo.svg" alt="Logo" class="logo"/></div></header><div class="crumbs"><div class="growth-inhibitor"><a class="crumb" href="index.html">Geo Clustering Quick Start</a></div></div><main id="_content"><nav id="_side-toc-overall" tabindex="0" class="side-toc"><div class="side-title">Geo Clustering Quick Start</div> </nav><button id="_open-side-toc-overall" title="Contents"> </button><article class="documentation"><button id="_unfold-side-toc-page">On this page</button><section xml:lang="en" class="article" id="art-sleha-geo-quick" data-id-title="Geo Clustering Quick Start"><div class="titlepage"><div><div class="big-version-info"><span class="productname">SUSE Linux Enterprise High Availability</span> <span class="productnumber">15 SP2</span></div><div><div class="title-container"><h1 class="title">Geo Clustering Quick Start <a title="Permalink" class="permalink" href="art-sleha-geo-quick.html#">#</a></h1><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div><div class="date"><span class="imprint-label">Publication Date: </span>July 28, 2026
 </div><div><div class="abstract"><p>
      Geo clustering protects workloads across globally distributed data
    centers. This document guides you through the basic setup of a
    Geo cluster, using the Geo bootstrap scripts provided by the
    <code class="systemitem">ha-cluster-bootstrap</code>
    package.
-   </p></div></div><div><div class="titlepage-revhistory"><a aria-label="Revision History" hreflang="en" href="rh-art-sleha-geo-quick.html" target="_blank">Revision History: Geo Clustering Quick Start</a></div></div></div></div><div><div xml:lang="en" class="legalnotice" id="id-1.3.3.2.4"><p>
-  Copyright © 2006–2025
+   </p></div></div><div><div class="titlepage-revhistory"><a aria-label="Revision History: Geo Clustering Quick Start" hreflang="en" href="rh-art-sleha-geo-quick.html" target="_blank">Revision History: Geo Clustering Quick Start</a></div></div></div></div><div><div xml:lang="en" class="legalnotice" id="id-1.3.3.2.4"><p>
+  Copyright © 2006–2026
 
   SUSE LLC and contributors. All rights reserved.
  </p><p>
@@ -146,7 +120,7 @@ hljs.configure({
    that every ticket is granted to no more than one site at a time.
   </p><p>
    If the communication between two booth instances breaks down, it might be
-   because of a network breakdown between the cluster sites <span class="emphasis"><em>or</em></span>
+   because of a network breakdown between the cluster sites <span><em class="emphasis">or</em></span>
    because of an outage of one cluster site. In this case, you need an additional
    instance (a third cluster site or an <code class="literal">arbitrator</code>) to reach
    consensus about decisions (such as failover of resources across sites).
@@ -157,7 +131,7 @@ hljs.configure({
    
    
   </p><div class="figure" id="fig-ha-geo-quick-example-geosetup"><div class="figure-contents"><div class="mediaobject"><a href="images/ha_geocluster.png"><img src="images/ha_geocluster.png" width="85%" alt="Two-Site Cluster—2x2 Nodes + Arbitrator (Optional)" title="Two-Site Cluster—2x2 Nodes + Arbitrator (Optional)"/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 1: </span><span class="title-name">Two-Site Cluster—2x2 Nodes + Arbitrator (Optional) </span></span><a title="Permalink" class="permalink" href="art-sleha-geo-quick.html#fig-ha-geo-quick-example-geosetup">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div></div><p>
-   It is also possible to run a two-site Geo cluster <span class="emphasis"><em>without</em></span>
+   It is also possible to run a two-site Geo cluster <span><em class="emphasis">without</em></span>
    an arbitrator. In this case, a Geo cluster administrator needs to manually manage
    the tickets. If a ticket should be granted to more than one site at the same time,
    booth displays a warning.
@@ -230,7 +204,7 @@ hljs.configure({
     If nodes are not synchronized, log files and cluster reports are very hard
     to analyze.
    </p></li><li class="listitem"><p>
-    Use an <span class="emphasis"><em>uneven</em></span> number of sites in your Geo
+    Use an <span><em class="emphasis">uneven</em></span> number of sites in your Geo
     cluster. In case the network connection breaks down, this makes sure that
     there still is a majority of sites (to avoid a split brain scenario). In
     case you have an even number of cluster sites, use an arbitrator for
@@ -298,7 +272,7 @@ hljs.configure({
    Deployment Guide</a> for SUSE Linux Enterprise Server.
   </p><div class="procedure" id="pro-ha-geo-quick-inst-pattern" data-id-title="Installing the High Availability and Geo Clustering Patterns"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 1: </span><span class="title-name">Installing the High Availability and Geo Clustering Patterns </span></span><a title="Permalink" class="permalink" href="art-sleha-geo-quick.html#pro-ha-geo-quick-inst-pattern">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA15SP2/xml/art_sle_ha_geo_quick.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
      Install the High Availability and Geo clustering patterns from the command line:</p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">zypper install -t pattern ha_sles ha_geo</code></pre></div></li><li class="step"><p>
-       Install the High Availability and Geo clustering patterns on <span class="emphasis"><em>all</em></span> machines that
+       Install the High Availability and Geo clustering patterns on <span><em class="emphasis">all</em></span> machines that
        will be part of your cluster.
     </p><div id="id-1.3.3.7.4.3.2" data-id-title="Installing software packages on all nodes" class="admonition note normal"><img class="symbol" alt="Note" title="Note" src="static/images/icon-note.svg"/><div class="admon-title">Note: Installing software packages on all nodes</div><p>
       For an automated installation of SUSE Linux Enterprise Server 15 SP2 and SUSE Linux Enterprise High Availability 15 SP2,
@@ -452,7 +426,7 @@ meta target-role=Stopped<span class="callout" id="co-geo-quick-rsc-stopped">4</s
      If you did not replace the self-signed certificate for Hawk2 on every
      cluster node with your own certificate (or a certificate signed by an
      official Certificate Authority) yet, do the following: Log in to Hawk2 on
-     <span class="emphasis"><em>every</em></span> node in <span class="emphasis"><em>every</em></span> cluster
+     <span><em class="emphasis">every</em></span> node in <span><em class="emphasis">every</em></span> cluster
      at least once. Verify the certificate (or add an exception in the
      browser to bypass the warning). Otherwise Hawk2 cannot connect to the
      cluster.
@@ -519,7 +493,7 @@ meta target-role=Stopped<span class="callout" id="co-geo-quick-rsc-stopped">4</s
       For details, see <span class="intraxref">Book “Geo Clustering Guide”, Chapter 6 “Configuring Cluster Resources and Constraints”</span>.
      </p></dd><dt id="id-1.3.3.12.3.4"><span class="term">Initially Granting a Ticket to a Site</span></dt><dd><p>
       Before booth can manage a certain ticket within the Geo cluster, you
-      initially need to <span class="emphasis"><em>grant</em></span> it to a site manually. You
+      initially need to <span><em class="emphasis">grant</em></span> it to a site manually. You
       can use either the booth client command line tool or Hawk2 to grant a
       ticket.
      </p><p>
@@ -552,5 +526,5 @@ meta target-role=Stopped<span class="callout" id="co-geo-quick-rsc-stopped">4</s
      Find information about data replication across Geo clusters via DRBD in the following
      <a class="link" href="https://documentation.suse.com/sbp/all/html/SBP-DRBD/index.html" target="_blank"><em class="citetitle">SUSE Best Practices</em>
      document</a>.
-    </p></li></ul></div></section></section><nav class="bottom-pagination"><div> </div><div><a class="pagination-link next" href="bk01ar02apc.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Appendix A </span>GNU licenses</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-concept"><span class="title-number">1 </span><span class="title-name">Conceptual Overview</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-scenario"><span class="title-number">2 </span><span class="title-name">Usage Scenario</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-req"><span class="title-number">3 </span><span class="title-name">Requirements</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-scripts"><span class="title-number">4 </span><span class="title-name">Overview of the Geo Bootstrap Scripts</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-inst"><span class="title-number">5 </span><span class="title-name">Installing the High Availability and Geo Clustering Packages</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-ha-cluster-geo-init"><span class="title-number">6 </span><span class="title-name">Setting Up the First Site of a Geo Cluster</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-ha-cluster-geo-join"><span class="title-number">7 </span><span class="title-name">Adding Another Site to a Geo Cluster</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-ha-cluster-geo-init-arbitrator"><span class="title-number">8 </span><span class="title-name">Adding the Arbitrator</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-monitor"><span class="title-number">9 </span><span class="title-name">Monitoring the Cluster Sites</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-next"><span class="title-number">10 </span><span class="title-name">Next Steps</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-more"><span class="title-number">11 </span><span class="title-name">For More Information</span></a></span></li><li><span class="appendix"><a href="bk01ar02apc.html"><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></span><ul><li><span class="sect1"><a href="bk01ar02apc.html#id-1.3.3.14.4"><span class="title-number">A.1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-fb" href="#" title="Facebook"> </a></li><li><a id="_share-in" href="#" title="LinkedIn"> </a></li><li><a id="_share-tw" href="#" title="Twitter/X"> </a></li><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE
-                 2025</span></div></div></footer></body></html>
+    </p></li></ul></div></section></section><nav class="bottom-pagination"><div> </div><div><a class="pagination-link next" href="bk01ar02apc.html"><span class="pagination-relation">Next</span><span class="pagination-label"><span class="title-number">Appendix A </span>GNU licenses</span></a> </div></nav></article><aside id="_side-toc-page" class="side-toc"><div class="side-title">On this page</div><div class="toc"><ul><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-concept"><span class="title-number">1 </span><span class="title-name">Conceptual Overview</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-scenario"><span class="title-number">2 </span><span class="title-name">Usage Scenario</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-req"><span class="title-number">3 </span><span class="title-name">Requirements</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-scripts"><span class="title-number">4 </span><span class="title-name">Overview of the Geo Bootstrap Scripts</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-inst"><span class="title-number">5 </span><span class="title-name">Installing the High Availability and Geo Clustering Packages</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-ha-cluster-geo-init"><span class="title-number">6 </span><span class="title-name">Setting Up the First Site of a Geo Cluster</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-ha-cluster-geo-join"><span class="title-number">7 </span><span class="title-name">Adding Another Site to a Geo Cluster</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-ha-cluster-geo-init-arbitrator"><span class="title-number">8 </span><span class="title-name">Adding the Arbitrator</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-monitor"><span class="title-number">9 </span><span class="title-name">Monitoring the Cluster Sites</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-next"><span class="title-number">10 </span><span class="title-name">Next Steps</span></a></span></li><li><span class="sect1"><a href="art-sleha-geo-quick.html#sec-ha-geo-quick-more"><span class="title-number">11 </span><span class="title-name">For More Information</span></a></span></li><li><span class="appendix"><a href="bk01ar02apc.html"><span class="title-number">A </span><span class="title-name">GNU licenses</span></a></span><ul><li><span class="sect1"><a href="bk01ar02apc.html#id-1.3.3.14.4"><span class="title-number">A1 </span><span class="title-name">GNU Free Documentation License</span></a></span></li></ul></li></ul></div><div class="side-title">Share this page</div><ul class="share"><li><a id="_share-mail" href="#" title="E-Mail"> </a></li><li><a id="_print-button" href="#" title="Print this page"> </a></li></ul> </aside></main><footer id="_footer"><div class="growth-inhibitor"><div class="copy"><span class="copy__rights">© SUSE  2026</span></div></div></footer>
+<script type="text/javascript" src="static/js/language-switcher.js"> </script></body></html>
