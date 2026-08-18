@@ -3,7 +3,7 @@
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
 <meta name="dcterms.created" content="2025-11-19"/>
 <meta name="dcterms.modified" content="2025-11-19"/>
-<meta name="dcterms.dateSubmitted" content="2026-07-28"/>
+<meta name="dcterms.dateSubmitted" content="2026-08-18"/>
 <meta name="title" content="Configuration and administration basics | SLE HA 15 SP6"/>
 <meta name="description" content="The main purpose of an HA cluster is to manage user services. Typical examples of user services are an Apache Web server or a database. From the user's po…"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -41,7 +41,7 @@
     ],
     "dateCreated": "2025-11-19T00:00+02:00",
     "dateModified": "2025-11-19T00:00+02:00",
-    "datePublished": "2026-07-28T11:55+02:00",
+    "datePublished": "2026-08-18T00:35+02:00",
     "about": [
 
     ],
@@ -1178,7 +1178,7 @@ Membership information
 +       expected_votes: 1
 +       two_node: 0</pre></div><p>
    For more details, see
-   <a class="link" href="https://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync" target="_blank">https://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync</a>.
+   <a class="link" href="https://crmsh.github.io/man-4.6/#cmdhelp_corosync" target="_blank">https://crmsh.github.io/man-4.6/#cmdhelp_corosync</a>.
   </p></section><section class="sect2" id="sec-ha-config-crm-setpwd" data-id-title="Setting passwords independent of cib.xml"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">5.5.12 </span><span class="title-name">Setting passwords independent of <code class="filename">cib.xml</code></span></span> <a title="Permalink" class="permalink" href="cha-ha-config-basics.html#sec-ha-config-crm-setpwd">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
    If your cluster configuration contains sensitive information, such
    as passwords, it should be stored in local files. That way, these
