@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Configuring and Managing Cluster Resources (Command Line) | Administration Guide | SLE HA 12 SP5</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2024-01-15"/>
-<meta name="dcterms.modified" content="2024-01-15"/>
-<meta name="dcterms.dateSubmitted" content="2026-07-28"/>
+<meta name="dcterms.created" content="2026-08-18"/>
+<meta name="dcterms.modified" content="2026-08-18"/>
+<meta name="dcterms.dateSubmitted" content="2026-08-18"/>
 <meta name="title" content="Configuring and Managing Cluster Resources (Command Li…"/>
 <meta name="description" content="To configure and manage cluster resources, either use the CRM Shell (crmsh) command line utility or HA Web Konsole (Hawk2), a Web-based user interface. Th…"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -39,9 +39,9 @@
         "url": "https://documentation.suse.com"
       }
     ],
-    "dateCreated": "2024-01-15T00:00+02:00",
-    "dateModified": "2024-01-15T00:00+02:00",
-    "datePublished": "2026-07-28T11:52+02:00",
+    "dateCreated": "2026-08-18T00:00+02:00",
+    "dateModified": "2026-08-18T00:00+02:00",
+    "datePublished": "2026-08-18T00:31+02:00",
     "about": [
 
     ],
@@ -527,10 +527,7 @@ Membership information
 -       expected_votes: 2
 -       two_node: 1
 +       expected_votes: 1
-+       two_node: 0</pre></div><p>
-   For more details, see
-   <a class="link" href="http://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync" target="_blank">http://crmsh.nongnu.org/crm.8.html#cmdhelp_corosync</a>.
-  </p></section><section class="sect1" id="sec-ha-config-crm-global" data-id-title="Configuring Global Cluster Options"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.3 </span><span class="title-name">Configuring Global Cluster Options</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm-global">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
++       two_node: 0</pre></div></section><section class="sect1" id="sec-ha-config-crm-global" data-id-title="Configuring Global Cluster Options"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">7.3 </span><span class="title-name">Configuring Global Cluster Options</span></span> <a title="Permalink" class="permalink" href="cha-ha-manual-config.html#sec-ha-config-crm-global">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/maintenance/SLEHA12SP5/xml/ha_config_cli.xml" title="Edit source document"> </a></div></div></div></div></div><p>
    Global cluster options control how the cluster behaves when confronted
    with certain situations. The predefined values can usually be kept.
    However, to make key functions of your cluster work correctly, you need
