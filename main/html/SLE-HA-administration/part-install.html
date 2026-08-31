@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Installation and setup | Administration Guide | SLE HA 15 SP7</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2025-06-17"/>
-<meta name="dcterms.modified" content="2025-06-17"/>
-<meta name="dcterms.dateSubmitted" content="2026-08-25"/>
+<meta name="dcterms.created" content="2026-08-28"/>
+<meta name="dcterms.modified" content="2026-08-28"/>
+<meta name="dcterms.dateSubmitted" content="2026-08-31"/>
 <meta name="title" content="Installation and setup | SLE HA 15 SP7"/>
 <meta name="description" content="Installation and setup"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -39,9 +39,9 @@
         "url": "https://documentation.suse.com"
       }
     ],
-    "dateCreated": "2025-06-17T00:00+02:00",
-    "dateModified": "2025-06-17T00:00+02:00",
-    "datePublished": "2026-08-25T06:40+02:00",
+    "dateCreated": "2026-08-28T00:00+02:00",
+    "dateModified": "2026-08-28T00:00+02:00",
+    "datePublished": "2026-08-31T00:34+02:00",
     "about": [
 
     ],
@@ -96,14 +96,11 @@
     prerequisites for SUSE® Linux Enterprise High Availability. It also includes recommendations
     for cluster setup.
    </p></dd><li><span class="chapter"><a href="cha-ha-log-in.html"><span class="title-number">4 </span><span class="title-name">Logging in to the cluster nodes</span></a></span></li><dd class="toc-abstract"><p>
-        The CRM Shell (<code class="systemitem">crmsh</code>) uses passwordless SSH access for communication between the nodes.
-        If you set up the cluster with <code class="command">crm cluster init</code>, the script checks
-        for SSH keys and generates them if they do not exist. If you set up the cluster
-        with the YaST cluster module, you must configure the SSH keys yourself.
-      </p><p>
-        By default, <code class="systemitem">crmsh</code> performs certain operations as the <code class="systemitem">root</code> user. However, if you
-        cannot allow passwordless root SSH access, you can set up the cluster as a user with
-        <code class="command">sudo</code> privileges instead.
+        By default, the CRM Shell (<code class="systemitem">crmsh</code>) performs certain operations as the <code class="systemitem">root</code> user,
+        and uses passwordless SSH access for communication between the nodes. However, if you
+        cannot allow passwordless <code class="systemitem">root</code> SSH access, you can install the cluster as a user with
+        <code class="command">sudo</code> privileges instead. This chapter explains how to log into the nodes
+        as a user with sufficient permissions to install and configure a High Availability cluster.
       </p></dd><li><span class="chapter"><a href="cha-ha-install.html"><span class="title-number">5 </span><span class="title-name">Installing SUSE Linux Enterprise High Availability</span></a></span></li><dd class="toc-abstract"><p>
      The packages for configuring and managing a cluster are included in the High Availability installation pattern.
      This pattern is only available after the SUSE Linux Enterprise High Availability extension (SLE HA) is installed.
