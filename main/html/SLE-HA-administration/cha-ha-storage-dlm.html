@@ -3,7 +3,7 @@
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
 <meta name="dcterms.created" content="2025-05-13"/>
 <meta name="dcterms.modified" content="2025-05-13"/>
-<meta name="dcterms.dateSubmitted" content="2026-08-31"/>
+<meta name="dcterms.dateSubmitted" content="2026-09-07"/>
 <meta name="title" content="Distributed Lock Manager (DLM) | SLE HA 15 SP7"/>
 <meta name="description" content="Explore how the Distributed Lock Manager (DLM) in the kernel enables active-active storage for OCFS2, GFS2, Cluster MD, and Cluster LVM (lvmlockd)"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -41,7 +41,7 @@
     ],
     "dateCreated": "2025-05-13T00:00+02:00",
     "dateModified": "2025-05-13T00:00+02:00",
-    "datePublished": "2026-08-31T00:34+02:00",
+    "datePublished": "2026-09-07T06:42+02:00",
     "about": [
 
     ],
@@ -129,7 +129,7 @@
      resources:
     </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group g-storage dlm</code></pre></div></li><li class="step"><p>
      Clone the <code class="literal">g-storage</code> group so that it runs on all nodes:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code> <code class="command">clone cl-storage g-storage \
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">clone cl-storage g-storage \
   meta interleave=true target-role=Started</code></pre></div></li><li class="step"><p>
      Review your changes with <code class="command">show</code>.
     </p></li><li class="step"><p>
@@ -157,7 +157,7 @@
   op stop timeout=100 interval=0 \
   op monitor interval=60 timeout=60</code></pre></div></li><li class="step"><p>
      Clone the <code class="literal">dlm</code> resource so that it runs on all nodes:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code> <code class="command">clone cl-dlm dlm meta interleave=true</code></pre></div></li><li class="step"><p>
+    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">clone cl-dlm dlm meta interleave=true</code></pre></div></li><li class="step"><p>
      Review your changes with <code class="command">show</code>.
     </p></li><li class="step"><p>
      If everything is correct, submit your changes with
