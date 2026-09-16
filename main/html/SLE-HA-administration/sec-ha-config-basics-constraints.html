@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Configuring resource constraints | Administration Guide | SLE HA 15 SP7</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2026-04-10"/>
-<meta name="dcterms.modified" content="2026-04-10"/>
-<meta name="dcterms.dateSubmitted" content="2026-09-07"/>
+<meta name="dcterms.created" content="2026-09-11"/>
+<meta name="dcterms.modified" content="2026-09-11"/>
+<meta name="dcterms.dateSubmitted" content="2026-09-16"/>
 <meta name="title" content="Configuring resource constraints | SLE HA 15 SP7"/>
 <meta name="description" content="Configure resource constraints to specify cluster node assignments, define load order, and manage dependencies between resources"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -39,9 +39,9 @@
         "url": "https://documentation.suse.com"
       }
     ],
-    "dateCreated": "2026-04-10T00:00+02:00",
-    "dateModified": "2026-04-10T00:00+02:00",
-    "datePublished": "2026-09-07T06:42+02:00",
+    "dateCreated": "2026-09-11T00:00+02:00",
+    "dateModified": "2026-09-11T00:00+02:00",
+    "datePublished": "2026-09-16T03:14+02:00",
     "about": [
 
     ],
@@ -184,47 +184,51 @@
      </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.6.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-loc-constraint.png"><img src="images/hawk2-loc-constraint.png" width="100%" alt="The Create Location screen includes a field to add a Constraint ID, a list to select resources from, and tabs to view other Simple and Advanced settings." title="The Create Location screen includes a field to add a Constraint ID, a list to select resources from, and tabs to view other Simple and Advanced settings."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 11.1: </span><span class="title-name">Hawk2—location constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.6.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-locational" data-id-title="Adding location constraints with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.4.2 </span><span class="title-name">Adding location constraints with <code class="systemitem">crmsh</code></span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-locational">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
      The <code class="command">location</code> command defines on which nodes a resource
      may be run, may not be run or is preferred to be run.
-    </p><p>
-     A simple example that expresses a preference to run the
-     resource <code class="literal">fs1</code> on the node with the name
-     <code class="systemitem">alice</code> to 100 would be the
-     following:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location loc-fs1 fs1 100: alice</code></pre></div><p>
-     Another example is a location with ping:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive ping ping \
-    params name=ping dampen=5s multiplier=100 host_list="r1 r2" \
-    op monitor timeout=60s interval=10s</code>
-<code class="prompt custom">crm(live)configure# </code><code class="command">clone cl-ping ping meta interleave=true</code>
-<code class="prompt custom">crm(live)configure# </code><code class="command">location loc-node_pref internal_www \
-    rule 50: #uname eq alice \
-    rule ping: defined ping</code></pre></div><p>
-     The parameter <em class="parameter">host_list</em> is a space-separated list
-     of hosts to ping and count.
-     Another use case for location constraints are grouping primitives as a
-     <span><em class="emphasis">resource set</em></span>. This can be useful if several
-     resources depend on, for example, a ping attribute for network
-     connectivity. In former times, the <code class="literal">-inf/ping</code> rules
-     needed to be duplicated several times in the configuration, making it
-     unnecessarily complex.
-    </p><p>
-     The following example creates a resource set
-     <code class="varname">loc-alice</code>, referencing the virtual IP addresses
-     <code class="varname">vip1</code> and <code class="varname">vip2</code>:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive vip1 IPaddr2 params ip=192.168.1.5 op monitor timeout=20s interval=10s</code>
-<code class="prompt custom">crm(live)configure# </code><code class="command">primitive vip2 IPaddr2 params ip=192.168.1.6 op monitor timeout=20s interval=10s</code>
-<code class="prompt custom">crm(live)configure# </code><code class="command">location loc-alice { vip1 vip2 } inf: alice</code></pre></div><p>
-     In some cases it is much more efficient and convenient to use resource
-     patterns for your <code class="command">location</code> command. A resource
-     pattern is a regular expression between two slashes. For example, the
-     above virtual IP addresses can be all matched with the following:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">location loc-alice /vip.*/ inf: alice</code></pre></div></section></section><section class="sect1" id="sec-ha-conf-add-colocation-constraints" data-id-title="Adding colocation constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">11.5 </span><span class="title-name">Adding colocation constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-colocation-constraints">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    </p><div class="procedure" id="pro-crmsh-constraints-location" data-id-title="Adding location constraints with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.2: </span><span class="title-name">Adding location constraints with <code class="systemitem">crmsh</code> </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-crmsh-constraints-location">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          Log in either as the <code class="systemitem">root</code> user or as a user with <code class="command">sudo</code> privileges.
+        </p></li><li class="step"><p>
+          Add a location constraint. The basic command requires a name, at least one resource,
+          a score, and a node:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure location <em class="replaceable">LOCATION_NAME RESOURCE SCORE: NODE</em></code></pre></div><p>
+          The <em class="replaceable">SCORE</em> can be <code class="literal">inf</code>,
+          <code class="literal">-inf</code> or a number (positive or negative).
+        </p><div class="variablelist"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Additional options </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.6.5.3.3.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.4.5.6.5.3.3.4.2"><span class="term">Resource sets</span></dt><dd><p>
+                You can use curly brackets to include multiple resources in a location
+                constraint. In this example, <code class="literal">res1</code> and <code class="literal">res2</code>
+                must both run on node <code class="literal">alice</code>:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure location res1-2-alice { res1 res2 } inf: alice</code></pre></div></dd><dt id="id-1.4.4.5.6.5.3.3.4.3"><span class="term">Resource patterns</span></dt><dd><p>
+                You can use a resource pattern (a regular expression between two slashes)
+                to refer to multiple resources. If you add new resources with the same name
+                pattern, they will also be included in the location constraint. In this
+                example, any resources beginning with <code class="literal">res</code> must run on
+                node <code class="literal">alice</code>:
+          </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure location all-res-alice /res.*/ inf: alice</code></pre></div></dd><dt id="id-1.4.4.5.6.5.3.3.4.4"><span class="term">Resource discovery</span></dt><dd><p>
+                In most cases, you should keep the default
+                <code class="literal">resource-discovery=always</code>. This means that the cluster
+                checks whether the resource is already running, to help avoid unwanted
+                instances of the resource. However, if necessary, you can change it to
+                <code class="literal">never</code> or <code class="literal">exclusive</code>.
+              </p></dd><dt id="id-1.4.4.5.6.5.3.3.4.5"><span class="term">Rules</span></dt><dd><p>
+                Instead of specifying a single node, you can use a rule to refer to multiple
+                nodes. If you add more nodes that meet the rule, they will also be included
+                in the location constraint. In this example, <code class="literal">res1</code> can't
+                run on any node where the custom node attribute <code class="literal">memory</code>
+                is less than <code class="literal">4096</code>:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure location res1-no-small-nodes res1 \
+  rule -inf: memory lt 4096</code></pre></div></dd></dl></div></li><li class="step"><p>
+          Check the status to see which node the resources are now running on:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-conf-add-colocation-constraints" data-id-title="Adding colocation constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">11.5 </span><span class="title-name">Adding colocation constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-colocation-constraints">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
    A colocation constraint tells the cluster which resources may or may not
    run together on a node. As a colocation constraint defines a dependency
    between resources, you need at least two resources to create a colocation
    constraint.
   </p><p>
    You can add colocation constraints using either Hawk2 or <code class="systemitem">crmsh</code>.
-  </p><section class="sect2" id="sec-conf-hawk2-cons-col" data-id-title="Adding colocation constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.5.1 </span><span class="title-name">Adding colocation constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-col">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-colocation" data-id-title="Adding colocation constraints"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.2: </span><span class="title-name">Adding colocation constraints </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-colocation">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+  </p><div id="id-1.4.4.5.7.4" data-id-title="Resource start order" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Resource start order</div><p>
+        Colocation constraints <span><em class="emphasis">don't</em></span> affect the order in which the resources
+        start. If you want resources to run on the same node <span><em class="emphasis">and</em></span> start in a
+        specific order, create a resource group.
+      </p></div><section class="sect2" id="sec-conf-hawk2-cons-col" data-id-title="Adding colocation constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.5.1 </span><span class="title-name">Adding colocation constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-col">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-colocation" data-id-title="Adding colocation constraints"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.3: </span><span class="title-name">Adding colocation constraints </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-colocation">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
       Log in to Hawk2:
      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
       From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Constraint</span> › <span class="guimenu">Colocation</span>.
@@ -272,7 +276,7 @@
      </p></li><li class="step"><p>
       Click <span class="guimenu">Create</span> to finish the configuration. A message at
       the top of the screen shows if the action has been successful.
-     </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.7.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-col-constraint.png"><img src="images/hawk2-col-constraint.png" width="100%" alt="The Create Colocation screen includes fields to add a Constraint ID and a Score, a section to add resources and their traits, and a field to add a Node Attribute." title="The Create Colocation screen includes fields to add a Constraint ID and a Score, a section to add resources and their traits, and a field to add a Node Attribute."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 11.2: </span><span class="title-name">Hawk2—colocation constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.7.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-collocational" data-id-title="Adding colocation constraints with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.5.2 </span><span class="title-name">Adding colocation constraints with <code class="systemitem">crmsh</code></span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-collocational">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.7.5.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-col-constraint.png"><img src="images/hawk2-col-constraint.png" width="100%" alt="The Create Colocation screen includes fields to add a Constraint ID and a Score, a section to add resources and their traits, and a field to add a Node Attribute." title="The Create Colocation screen includes fields to add a Constraint ID and a Score, a section to add resources and their traits, and a field to add a Node Attribute."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 11.2: </span><span class="title-name">Hawk2—colocation constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.7.5.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-collocational" data-id-title="Adding colocation constraints with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.5.2 </span><span class="title-name">Adding colocation constraints with <code class="systemitem">crmsh</code></span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-collocational">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
      The <code class="command">colocation</code> command is used to define what
      resources should run on the same or on different nodes.
     </p><p>
@@ -282,22 +286,48 @@
      is called <span><em class="emphasis">advisory</em></span> and the cluster may decide not
      to follow them in favor of not stopping other resources if there is a
      conflict.
-    </p><p>
-     For example, to always run the resources <code class="literal">resource1</code>
-     and <code class="literal">resource2</code> on the same node, use the following constraint:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation col-2resource inf: resource1 resource2</code></pre></div><p>
-      Resources are placed relative to the last resource in the list. In the example above,
-      <code class="literal">resource2</code> is assigned to a node <span><em class="emphasis">first</em></span>, and
-      <code class="literal">resource1</code> is placed relative to <code class="literal">resource2</code>.
-    </p><p>
-     For promotable clones, you can also specify whether the clone is in the promoted or unpromoted
-     role. For example, to always run the resource <code class="literal">resource1</code> on the same node
-     where <code class="literal">clone1</code> is in the promoted role, use the following constraint:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">colocation col-res1-prom-clone inf: resource1 clone1:Promoted</code></pre></div><div id="id-1.4.4.5.7.5.9" data-id-title="Resource start order" class="admonition important normal"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><div class="admon-title">Important: Resource start order</div><p>
-        Colocation constraints <span><em class="emphasis">don't</em></span> affect the order in which the resources
-        start. If you want resources to run on the same node <span><em class="emphasis">and</em></span> start in a
-        specific order, create a resource group.
-      </p></div></section></section><section class="sect1" id="sec-ha-conf-add-order-constraints" data-id-title="Adding order constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">11.6 </span><span class="title-name">Adding order constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-order-constraints">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    </p><div class="procedure" id="pro-crmsh-constraints-colocation" data-id-title="Adding colocation constraints with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.4: </span><span class="title-name">Adding colocation constraints with <code class="systemitem">crmsh</code> </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-crmsh-constraints-colocation">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          Log in either as the <code class="systemitem">root</code> user or as a user with <code class="command">sudo</code> privileges.
+        </p></li><li class="step"><p>
+          Add a colocation constraint. The basic command requires a name, a score and at
+          least two resources:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure colocation <em class="replaceable">COLOCATION_NAME SCORE: RESOURCE1 RESOURCE2</em></code></pre></div><p>
+          The <em class="replaceable">SCORE</em> can be <code class="literal">inf</code>,
+          <code class="literal">-inf</code> or a number (positive or negative).
+        </p><p>
+          <em class="replaceable">RESOURCE2</em> is assigned to a node <span><em class="emphasis">first</em></span>,
+          and <em class="replaceable">RESOURCE1</em> is placed relative to
+          <em class="replaceable">RESOURCE2</em>.
+        </p><div class="variablelist"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Additional options </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.7.6.4.3.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.4.5.7.6.4.3.5.2"><span class="term">Resource sets</span></dt><dd><p>
+                You can use round brackets or square brackets to group resources in a colocation
+                constraint. In this example, <code class="literal">res1</code> and <code class="literal">res2</code>
+                must run on the same node as <code class="literal">res3</code>, but aren't otherwise
+                dependent on each other:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure colocation res1-2-with-res3 \
+  inf: [ res1 res2 ] res3</code></pre></div><p>
+                Round brackets are treated as special characters in most shells, so for
+                <code class="command">crm</code> commands that aren't in interactive mode, you must
+                escape the brackets with <code class="literal">\</code>:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure colocation res1-2-with-res3 \
+  inf: \( res1 res2 \) res3</code></pre></div><p>
+                For more information about the difference between round and square brackets,
+                run <code class="command">crm help Resourcesets</code>.
+              </p></dd><dt id="id-1.4.4.5.7.6.4.3.5.3"><span class="term">Roles</span></dt><dd><p>
+                You can require a role (<code class="literal">Started</code>, <code class="literal">Stopped</code>,
+                <code class="literal">Promoted</code> or <code class="literal">Unpromoted</code>) for one or more
+                resources. The colocation constraint only applies when the resource is in
+                this role. In this example, <code class="literal">res1</code> must run on the same node
+                where <code class="literal">clone2</code> is in the <code class="literal">Promoted</code> role:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure colocation res1-with-pr-clone2 \
+  inf: res1 clone2:Promoted</code></pre></div></dd><dt id="id-1.4.4.5.7.6.4.3.5.4"><span class="term">Node attributes</span></dt><dd><p>
+                You can use a node attribute to colocate resources on a group of nodes instead
+                of one node. In this example, <code class="literal">res1</code> and <code class="literal">res2</code>
+                don't have to run on the same node, but must run on nodes with the same value
+                for the <code class="literal">datacenter</code> node attribute:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure colocation res1-2-same-dc \
+  inf: res1 res2 node-attribute=datacenter</code></pre></div></dd></dl></div></li><li class="step"><p>
+          Check the status to see which node the resources are now running on:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-conf-add-order-constraints" data-id-title="Adding order constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">11.6 </span><span class="title-name">Adding order constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-conf-add-order-constraints">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
    Order constraints can be used to start or stop a service right before or
    after a different resource meets a special condition, such as being started,
    stopped, or promoted to primary. For example, you cannot mount a file system
@@ -305,8 +335,19 @@
    a dependency between resources, you need at least two resources to create
    an order constraint.
   </p><p>
+    Instead of a score, order constraints have a <span><em class="emphasis">kind</em></span>. The kind can be one
+    of the following:
+  </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
+        <code class="literal">Mandatory</code>: Resources <span><em class="emphasis">must</em></span> start in this order.
+      </p></li><li class="listitem"><p>
+        <code class="literal">Optional</code>: The start order is only a preference.
+      </p></li><li class="listitem"><p>
+        <code class="literal">Serialize</code>: A resource must finish starting before the next resource
+        can begin starting. This is useful for resources that put a high load on the node
+        during start-up, for example.
+      </p></li></ul></div><p>
    You can add order constraints using either Hawk2 or <code class="systemitem">crmsh</code>.
-  </p><section class="sect2" id="sec-conf-hawk2-cons-order" data-id-title="Adding order constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.6.1 </span><span class="title-name">Adding order constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-order">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-order" data-id-title="Adding an order constraint"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.3: </span><span class="title-name">Adding an order constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-order">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+  </p><section class="sect2" id="sec-conf-hawk2-cons-order" data-id-title="Adding order constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.6.1 </span><span class="title-name">Adding order constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-order">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-order" data-id-title="Adding an order constraint"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.5: </span><span class="title-name">Adding an order constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-order">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
       Log in to Hawk2:
      </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
       From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Add Constraint</span> › <span class="guimenu">Order</span>.
@@ -353,12 +394,39 @@
      </p></li><li class="step"><p>
       Confirm your changes to finish the configuration. A message at the top of
       the screen shows if the action has been successful.
-     </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.8.4.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-order-constraint.png"><img src="images/hawk2-order-constraint.png" width="100%" alt="The Create Order screen includes fields to add a Constraint ID and a Kind, a drop-down list to select whether the constraint is Symmetrical (the resources stop in the reverse of the order they started in) and a section to add resources and their traits." title="The Create Order screen includes fields to add a Constraint ID and a Kind, a drop-down list to select whether the constraint is Symmetrical (the resources stop in the reverse of the order they started in) and a section to add resources and their traits."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 11.3: </span><span class="title-name">Hawk2—order constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.8.4.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-ordering" data-id-title="Adding order constraints using crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.6.2 </span><span class="title-name">Adding order constraints using <code class="systemitem">crmsh</code></span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-ordering">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+     </p></li></ol></div></div><div class="figure" id="id-1.4.4.5.8.6.3"><div class="figure-contents"><div class="mediaobject"><a href="images/hawk2-order-constraint.png"><img src="images/hawk2-order-constraint.png" width="100%" alt="The Create Order screen includes fields to add a Constraint ID and a Kind, a drop-down list to select whether the constraint is Symmetrical (the resources stop in the reverse of the order they started in) and a section to add resources and their traits." title="The Create Order screen includes fields to add a Constraint ID and a Kind, a drop-down list to select whether the constraint is Symmetrical (the resources stop in the reverse of the order they started in) and a section to add resources and their traits."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 11.3: </span><span class="title-name">Hawk2—order constraint </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.8.6.3">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></section><section class="sect2" id="sec-ha-manual-config-constraints-ordering" data-id-title="Adding order constraints using crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.6.2 </span><span class="title-name">Adding order constraints using <code class="systemitem">crmsh</code></span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-constraints-ordering">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
      The <code class="command">order</code> command defines a sequence of action.
-    </p><p>
-     For example, to always start <code class="literal">resource1</code> before
-     <code class="literal">resource2</code>, use the following constraint:
-    </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">order res1_before_res2 Mandatory: resource1 resource2</code></pre></div></section></section><section class="sect1" id="sec-ha-config-basics-constraints-rscset" data-id-title="Using resource sets to define constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">11.7 </span><span class="title-name">Using resource sets to define constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-rscset">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+    </p><div class="procedure" id="pro-crmsh-constraints-order" data-id-title="Adding order constraints using crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.6: </span><span class="title-name">Adding order constraints using <code class="systemitem">crmsh</code> </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-crmsh-constraints-order">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+          Log in either as the <code class="systemitem">root</code> user or as a user with <code class="command">sudo</code> privileges.
+        </p></li><li class="step"><p>
+          Add an order constraint. The basic command requires a name, a kind, and at least
+          two resources:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure order <em class="replaceable">ORDER_NAME KIND: RESOURCE1 RESOURCE2</em></code></pre></div><p>
+          The <em class="replaceable">KIND</em> can be <code class="literal">Mandatory</code>,
+          <code class="literal">Optional</code> or <code class="literal">Serialize</code>.
+        </p><div class="variablelist"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Additional options </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.8.7.3.3.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.4.5.8.7.3.3.4.2"><span class="term">Resource sets</span></dt><dd><p>
+                You can use round brackets or square brackets to group resources in an order
+                constraint. In this example, <code class="literal">res1</code> must start first, and then
+                <code class="literal">res2</code> and <code class="literal">res3</code> can start in any order:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure order res1-first Mandatory: res1 [ res2 res3 ]</code></pre></div><p>
+                Round brackets are treated as special characters in most shells, so for
+                <code class="command">crm</code> commands that aren't in interactive mode, you must
+                escape the brackets with <code class="literal">\</code>:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure order res1-first Mandatory: res1 \( res2 res3 \)</code></pre></div><p>
+                For more information about the difference between round and square brackets,
+                run <code class="command">crm help Resourcesets</code>.
+              </p></dd><dt id="id-1.4.4.5.8.7.3.3.4.3"><span class="term">Symmetry</span></dt><dd><p>
+                In most cases, you should keep the default <code class="literal">symmetrical=true</code>,
+                which means that resources stop in the reverse of their start order. However,
+                if necessary, you can change it to <code class="literal">false</code>.
+              </p></dd><dt id="id-1.4.4.5.8.7.3.3.4.4"><span class="term">Actions</span></dt><dd><p>
+                You can require a resource to perform an action (<code class="literal">start</code>,
+                <code class="literal">stop</code>, <code class="literal">promote</code> or <code class="literal">demote</code>)
+                before or after another resource starts. In this example, <code class="literal">res1</code>
+                must start before <code class="literal">clone2</code> can be promoted:
+              </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure order res1-pr-clone2 Mandatory: res1 clone2:promote</code></pre></div></dd></dl></div></li><li class="step"><p>
+          You can view all order constraints with the following command:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure show type:order</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-constraints-rscset" data-id-title="Using resource sets to define constraints"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">11.7 </span><span class="title-name">Using resource sets to define constraints</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-config-basics-constraints-rscset">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
      As an alternative format for defining location, colocation or order
      constraints, you can use <span><em class="emphasis">resource sets</em></span>, where
      primitives are grouped together in one set. Previously this was
@@ -370,7 +438,7 @@
      understand and maintain.
    </p><p>
     You can configure resource sets using either Hawk2 or <code class="systemitem">crmsh</code>.
-   </p><section class="sect2" id="sec-conf-hawk2-cons-set" data-id-title="Using resource sets to define constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.7.1 </span><span class="title-name">Using resource sets to define constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-set">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-sets" data-id-title="Using a resource set for constraints"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.4: </span><span class="title-name">Using a resource set for constraints </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-sets">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+   </p><section class="sect2" id="sec-conf-hawk2-cons-set" data-id-title="Using resource sets to define constraints with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.7.1 </span><span class="title-name">Using resource sets to define constraints with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-cons-set">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-constraints-sets" data-id-title="Using a resource set for constraints"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.7: </span><span class="title-name">Using a resource set for constraints </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-sets">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
        To use a resource set within a location constraint:
       </p><ol type="a" class="substeps"><li class="step"><p>
          Proceed as outlined in <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-location" title="Adding a location constraint">Procedure 11.1, “Adding a location constraint”</a>,
@@ -387,8 +455,8 @@
        To use a resource set within a colocation or order constraint:
       </p><ol type="a" class="substeps"><li class="step"><p>
          Proceed as described in
-         <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-colocation" title="Adding colocation constraints">Procedure 11.2, “Adding colocation constraints”</a> or
-         <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-order" title="Adding an order constraint">Procedure 11.3, “Adding an order constraint”</a>, apart from the
+         <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-colocation" title="Adding colocation constraints">Procedure 11.3, “Adding colocation constraints”</a> or
+         <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-constraints-order" title="Adding an order constraint">Procedure 11.5, “Adding an order constraint”</a>, apart from the
          step where you define the resources for the constraint
          (<a class="xref" href="sec-ha-config-basics-constraints.html#step-hawk2-col-rsc" title="Step 5.a">Step 5.a</a> or
          <a class="xref" href="sec-ha-config-basics-constraints.html#step-hawk2-order-rsc" title="Step 6.a">Step 6.a</a>):
@@ -512,7 +580,7 @@
       If there is no STONITH resource defined (or
       <code class="literal">stonith-enabled</code> is set to
       <code class="literal">false</code>), the resource does not migrate.
-     </p></li></ul></div><section class="sect2" id="sec-conf-hawk2-failover" data-id-title="Specifying resource failover nodes with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.8.1 </span><span class="title-name">Specifying resource failover nodes with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-failover" data-id-title="Specifying a failover node"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.5: </span><span class="title-name">Specifying a failover node </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-failover">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+     </p></li></ul></div><section class="sect2" id="sec-conf-hawk2-failover" data-id-title="Specifying resource failover nodes with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.8.1 </span><span class="title-name">Specifying resource failover nodes with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-conf-hawk2-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-failover" data-id-title="Specifying a failover node"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.8: </span><span class="title-name">Specifying a failover node </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-failover">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
        Log in to Hawk2:
       </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
        Configure a location constraint for the resource as described in
@@ -520,7 +588,7 @@
       </p></li><li class="step"><p>
        Add the <code class="literal">migration-threshold</code> meta attribute to the
        resource as described in
-       <a class="xref" href="cha-ha-manage-resources.html#pro-conf-hawk2-rsc-modify" title="Modifying a resource or group">Procedure 12.1: Modifying a resource or group</a>,
+       <a class="xref" href="cha-ha-manage-resources.html#pro-conf-hawk2-rsc-modify" title="Modifying a resource">Procedure 12.1: Modifying a resource</a>,
        <a class="xref" href="cha-ha-manage-resources.html#step-hawk2-rsc-modify-params" title="Step 5">Step 5</a>
        and enter a value for the migration-threshold. The value should be
        positive and less than INFINITY.
@@ -538,7 +606,7 @@
       </p></li></ol></div></div><p>
      Instead of letting the fail count for a resource expire automatically, you
      can also clean up fail counts for a resource manually at any time. Refer to
-     <a class="xref" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-cleanup" title="12.5.1. Cleaning up cluster resources with Hawk2">Section 12.5.1, “Cleaning up cluster resources with Hawk2”</a> for details.
+     <a class="xref" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-cleanup" title="12.6.1. Cleaning up cluster resources with Hawk2">Section 12.6.1, “Cleaning up cluster resources with Hawk2”</a> for details.
     </p></section><section class="sect2" id="sec-ha-manual-config-failover" data-id-title="Specifying resource failover nodes with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.8.2 </span><span class="title-name">Specifying resource failover nodes with <code class="systemitem">crmsh</code></span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-ha-manual-config-failover">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><p>
      To determine a resource failover, use the meta attribute
      <code class="literal">migration-threshold</code>. If the fail count exceeds
@@ -587,12 +655,12 @@
        This option is almost equivalent to disabling automatic failback.
       </p></dd><dt id="id-1.4.4.5.11.4.5"><span class="term">Value is <code class="literal">-INFINITY</code>:</span></dt><dd><p>
        The resource always moves away from its current location.
-      </p></dd></dl></div><section class="sect2" id="sec-config-hawk2-failback" data-id-title="Specifying resource failback nodes with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.9.1 </span><span class="title-name">Specifying resource failback nodes with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-config-hawk2-failback">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-stickiness" data-id-title="Specifying resource stickiness"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.6: </span><span class="title-name">Specifying resource stickiness </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-stickiness">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+      </p></dd></dl></div><section class="sect2" id="sec-config-hawk2-failback" data-id-title="Specifying resource failback nodes with Hawk2"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">11.9.1 </span><span class="title-name">Specifying resource failback nodes with Hawk2</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#sec-config-hawk2-failback">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-hawk2-stickiness" data-id-title="Specifying resource stickiness"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.9: </span><span class="title-name">Specifying resource stickiness </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-stickiness">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
        Log in to Hawk2:
       </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
        Add the <code class="literal">resource-stickiness</code> meta attribute to the
        resource as described in
-       <a class="xref" href="cha-ha-manage-resources.html#pro-conf-hawk2-rsc-modify" title="Modifying a resource or group">Procedure 12.1: Modifying a resource or group</a>,
+       <a class="xref" href="cha-ha-manage-resources.html#pro-conf-hawk2-rsc-modify" title="Modifying a resource">Procedure 12.1: Modifying a resource</a>,
        <a class="xref" href="cha-ha-manage-resources.html#step-hawk2-rsc-modify-params" title="Step 5">Step 5</a>.
       </p></li><li class="step"><p>
        Specify a value between <code class="literal">-INFINITY</code> and
@@ -735,7 +803,7 @@
      Utilization attributes are used to configure both the resource's
      requirements and the capacity a node provides. You first need to configure a
      node's capacity before you can configure the capacity a resource requires.
-    </p><div class="procedure" id="pro-hawk2-utilization-node" data-id-title="Configuring the capacity a node provides"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.7: </span><span class="title-name">Configuring the capacity a node provides </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    </p><div class="procedure" id="pro-hawk2-utilization-node" data-id-title="Configuring the capacity a node provides"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.10: </span><span class="title-name">Configuring the capacity a node provides </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
        Log in to Hawk2:
       </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
        From the left navigation bar, select <span class="guimenu">Monitoring</span> › <span class="guimenu">Status</span>.
@@ -763,19 +831,19 @@
       </p></li><li class="step"><p>
        Confirm your changes. A message at the top of the screen shows if the
        action has been successful.
-      </p></li></ol></div></div><div class="procedure" id="pro-hawk2-utilization-rsc" data-id-title="Configuring the capacity a resource requires"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.8: </span><span class="title-name">Configuring the capacity a resource requires </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-rsc">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
+      </p></li></ol></div></div><div class="procedure" id="pro-hawk2-utilization-rsc" data-id-title="Configuring the capacity a resource requires"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.11: </span><span class="title-name">Configuring the capacity a resource requires </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-rsc">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><p>
       Configure the capacity a certain resource requires from a node either when
       creating a primitive resource or when editing an existing primitive resource.
      </p><p>
       Before you can add utilization attributes to a resource, you need to have
       set utilization attributes for your cluster nodes as described in
-      <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node" title="Configuring the capacity a node provides">Procedure 11.7</a>.
+      <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node" title="Configuring the capacity a node provides">Procedure 11.10</a>.
      </p><ol class="procedure" type="1"><li class="step"><p>
        Log in to Hawk2:
       </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
        To add a utilization attribute to an existing resource, go to <span class="guimenu">Manage</span> › <span class="guimenu">Status</span> and open
        the resource configuration dialog as described in
-       <a class="xref" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-edit" title="12.2.1. Editing resources and groups with Hawk2">Section 12.2.1, “Editing resources and groups with Hawk2”</a>.
+       <a class="xref" href="cha-ha-manage-resources.html#sec-conf-hawk2-manage-edit" title="12.2.1. Editing resources with Hawk2">Section 12.2.1, “Editing resources with Hawk2”</a>.
       </p><p>
        If you create a new resource, go to <span class="guimenu">Configuration</span> › <span class="guimenu">Add Resource</span> and proceed as described in
        <a class="xref" href="sec-ha-config-basics-resources.html#sec-conf-hawk2-rsc-primitive" title="10.4.1. Creating primitive resources with Hawk2">Section 10.4.1, “Creating primitive resources with Hawk2”</a>.
@@ -785,7 +853,7 @@
       </p></li><li class="step"><p>
        From the empty drop-down box, select one of the utilization attributes
        that you have configured for the nodes in
-       <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node" title="Configuring the capacity a node provides">Procedure 11.7</a>.
+       <a class="xref" href="sec-ha-config-basics-constraints.html#pro-hawk2-utilization-node" title="Configuring the capacity a node provides">Procedure 11.10</a>.
       </p></li><li class="step"><p>
        In the empty text box next to the attribute, enter an attribute value. The
        value must be an integer.
@@ -802,7 +870,7 @@
      effect. Several strategies are available to schedule the load. For example,
      you can concentrate it on as few nodes as possible, or balance it evenly
      over all available nodes.
-    </p><div class="procedure" id="pro-ha-config-hawk2-placement" data-id-title="Setting the placement strategy"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.9: </span><span class="title-name">Setting the placement strategy </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-ha-config-hawk2-placement">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    </p><div class="procedure" id="pro-ha-config-hawk2-placement" data-id-title="Setting the placement strategy"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.12: </span><span class="title-name">Setting the placement strategy </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#pro-ha-config-hawk2-placement">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
        Log in to Hawk2:
       </p><div class="verbatim-wrap"><pre class="screen">https://<em class="replaceable">HAWKSERVER</em>:7630/</pre></div></li><li class="step"><p>
        From the left navigation bar, select <span class="guimenu">Configuration</span> › <span class="guimenu">Cluster Configuration</span> to open the respective screen. It shows global
@@ -830,7 +898,7 @@
      configuration of cluster nodes and resources. You now additionally want
      to configure the capacities a certain node provides and the capacity a
      certain resource requires.
-    </p><div class="procedure" id="id-1.4.4.5.12.22.4" data-id-title="Adding or modifying utilization attributes with crm"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.10: </span><span class="title-name">Adding or modifying utilization attributes with <code class="command">crm</code> </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.12.22.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
+    </p><div class="procedure" id="id-1.4.4.5.12.22.4" data-id-title="Adding or modifying utilization attributes with crm"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 11.13: </span><span class="title-name">Adding or modifying utilization attributes with <code class="command">crm</code> </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-constraints.html#id-1.4.4.5.12.22.4">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_resource_constraints.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
        Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code>
        interactive shell:
       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code></pre></div></li><li class="step"><p>

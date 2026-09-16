@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Configuring cluster resources | Administration Guide | SLE HA 15 SP7</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2025-11-27"/>
-<meta name="dcterms.modified" content="2025-11-27"/>
-<meta name="dcterms.dateSubmitted" content="2026-09-07"/>
+<meta name="dcterms.created" content="2026-09-10"/>
+<meta name="dcterms.modified" content="2026-09-10"/>
+<meta name="dcterms.dateSubmitted" content="2026-09-16"/>
 <meta name="title" content="Configuring cluster resources | SLE HA 15 SP7"/>
 <meta name="description" content="Configure cluster resources to manage websites, email servers, databases, and other applications, ensuring high availability and consistent access"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -39,9 +39,9 @@
         "url": "https://documentation.suse.com"
       }
     ],
-    "dateCreated": "2025-11-27T00:00+02:00",
-    "dateModified": "2025-11-27T00:00+02:00",
-    "datePublished": "2026-09-07T06:42+02:00",
+    "dateCreated": "2026-09-10T00:00+02:00",
+    "dateModified": "2026-09-10T00:00+02:00",
+    "datePublished": "2026-09-16T03:14+02:00",
     "about": [
 
     ],
@@ -302,22 +302,45 @@
        Click <span class="guimenu">Create</span> to finish the configuration. A message at the
        top of the screen shows if the action has been successful.
       </p></li></ol></div></div></section><section class="sect2" id="sec-ha-manual-config-create" data-id-title="Creating primitive resources with crmsh"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">10.4.2 </span><span class="title-name">Creating primitive resources with <code class="systemitem">crmsh</code></span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-manual-config-create">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><div class="procedure" id="pro-ha-manual-config-create" data-id-title="Adding a primitive resource with crmsh"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 10.3: </span><span class="title-name">Adding a primitive resource with <code class="systemitem">crmsh</code> </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#pro-ha-manual-config-create">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
-       Log in as <code class="systemitem">root</code> and start the <code class="command">crm</code> tool:
-      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure</code></pre></div></li><li class="step"><p>
-       Configure a primitive IP address:
-      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive myIP IPaddr \
-      params ip=127.0.0.99 op monitor interval=60s</code></pre></div><p>
-       The previous command configures a <span class="quote">“<span class="quote">primitive</span>”</span> with the
-       name <code class="literal">myIP</code>. You need to choose a class (here
-       <code class="literal">ocf</code>), provider (<code class="literal">heartbeat</code>), and
-       type (<code class="literal">IPaddr</code>). Furthermore, this primitive expects
-       other parameters like the IP address. Change the address to your
-       setup.
-      </p></li><li class="step"><p>
-       Display and review the changes you have made:
-      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">show</code></pre></div></li><li class="step"><p>
-       Commit your changes to take effect:
-      </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">commit</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-resources-advanced-groups" data-id-title="Creating resource groups"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10.5 </span><span class="title-name">Creating resource groups</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-advanced-groups">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
+         Log in either as the <code class="systemitem">root</code> user or as a user with <code class="command">sudo</code> privileges.
+       </p></li><li class="step"><p>
+         Show the required and optional parameters for a resource agent:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm ra info <em class="replaceable">RESOURCE_AGENT</em></code></pre></div></li><li class="step"><p>
+       Configure a primitive resource. The basic command requires at least a name,
+       a resource agent, and any parameters required by the resource agent:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive <em class="replaceable">RESOURCE_NAME RESOURCE_AGENT</em> \
+  params <em class="replaceable">ATTRIBUTE=VALUE</em></code></pre></div><p>
+         This example shows a basic cluster resource for managing an IP address:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive myIP IPaddr2 params ip=192.168.1.10
+</code></pre></div><div class="variablelist"><div class="title-container"><div class="variablelist-title-wrap"><div class="variablelist-title"><span class="title-number-name"><span class="title-name">Additional options </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.6.8.2.4.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div><dl class="variablelist"><dt id="id-1.4.4.4.6.8.2.4.5.2"><span class="term">Operations</span></dt><dd><p>
+               To show the supported operations for a resource agent, run
+               <code class="command">crm ra info <em class="replaceable">RESOURCE_AGENT</em></code>
+               and scroll to the bottom of the output. You can configure the operations as
+               advised or change them as required. For example, to clone a resource, the
+               primitive must have two monitor operations (one for each role):
+             </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive db1 mysql \
+  op monitor timeout=30 interval=10 role=Promoted \
+  op monitor timeout=30 interval=20 role=Unpromoted</code></pre></div><div id="id-1.4.4.4.6.8.2.4.5.2.2.3" class="admonition important compact"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><p>
+                 Before configuring a primitive in a production environment, we recommend
+                 testing it to make sure the <code class="literal">start</code> and <code class="literal">stop</code>
+                 timeouts are long enough under load. Timeouts that are too short can lead to
+                 resource failure and potentially node fencing.
+               </p></div></dd><dt id="id-1.4.4.4.6.8.2.4.5.3"><span class="term">Meta attributes</span></dt><dd><p>
+               Meta attributes change how the cluster treats a resource.
+               To show all the meta attributes available for primitives, run
+               <code class="command">crm_resource --list-options primitive</code>. For example,
+               <code class="literal">allow-migrate</code> enables live migration for a VM resource:
+             </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive VM1 VirtualDomain \
+  params config="/mnt/shared/VM1.xml" \
+  meta allow-migrate=true</code></pre></div></dd><dt id="id-1.4.4.4.6.8.2.4.5.4"><span class="term">Utilization attributes</span></dt><dd><p>
+               If the cluster nodes have utilization attributes configured, you can add these
+               attributes to cluster resources to help with load balancing. For example, if
+               the nodes have the attribute <code class="literal">memory</code>, you can add the same
+               attribute to a resource so that it can only run on nodes with enough capacity:
+             </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm configure primitive web1 apache \
+  utilization memory=1024</code></pre></div></dd></dl></div></li><li class="step"><p>
+         Check the status of the resource:
+       </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm status</code></pre></div></li></ol></div></div></section></section><section class="sect1" id="sec-ha-config-basics-resources-advanced-groups" data-id-title="Creating resource groups"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">10.5 </span><span class="title-name">Creating resource groups</span></span> <a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#sec-ha-config-basics-resources-advanced-groups">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div></div></div><p>
     Some cluster resources depend on other components or resources. They
     require that each component or resource starts in a specific order and
     runs together on the same server as the resources it depends on. To
@@ -331,7 +354,7 @@
      resource group would run on one or more servers. In case of a software
      or hardware malfunction, the group would fail over to another server
      in the cluster, similar to an individual cluster resource.
-    </p></div></div></div><div class="figure" id="id-1.4.4.4.7.5"><div class="figure-contents"><div class="mediaobject"><a href="images/webserver_groupresource_a.svg"><img src="images/webserver_groupresource_a.svg" width="63%" alt="This diagram shows a box at the top, labeled “Web server group resource”. The box contains three Apps: a green App, an orange App, and a blue App. Below this, there are three boxes with corresponding colors: the green box is labeled with the number 1 and “IP address”, the orange box is labeled with the number 2 and “File system”, and the blue box is labeled with the number 3 and “Web server software”. On the left, “Load order” has three arrows pointing to the number on each box. On the right, “Individual resource” has three arrows pointing to each box." title="This diagram shows a box at the top, labeled “Web server group resource”. The box contains three Apps: a green App, an orange App, and a blue App. Below this, there are three boxes with corresponding colors: the green box is labeled with the number 1 and “IP address”, the orange box is labeled with the number 2 and “File system”, and the blue box is labeled with the number 3 and “Web server software”. On the left, “Load order” has three arrows pointing to the number on each box. On the right, “Individual resource” has three arrows pointing to each box."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 10.2: </span><span class="title-name">Group resource </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#id-1.4.4.4.7.5">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div><p>
+    </p></div></div></div><div class="figure" id="fig-ha-resources-what-is-group"><div class="figure-contents"><div class="mediaobject"><a href="images/webserver_groupresource_a.svg"><img src="images/webserver_groupresource_a.svg" width="80%" alt="This diagram shows a box representing a node. The box contains four individual resources and a smaller box containing three more resources. The smaller box represents a resource group. A zoomed-in view of the resource group shows that the resources are an IP address, an XFS file system and an Apache Web server. The resources are numbered to show the start order in one direction and the reversed stop order in the other direction." title="This diagram shows a box representing a node. The box contains four individual resources and a smaller box containing three more resources. The smaller box represents a resource group. A zoomed-in view of the resource group shows that the resources are an IP address, an XFS file system and an Apache Web server. The resources are numbered to show the start order in one direction and the reversed stop order in the other direction."/></a></div></div><div class="title-container"><div class="figure-title-wrap"><div class="figure-title"><span class="title-number-name"><span class="title-number">Figure 10.2: </span><span class="title-name">Resource group </span></span><a title="Permalink" class="permalink" href="sec-ha-config-basics-resources.html#fig-ha-resources-what-is-group">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_configuring_resources.xml" title="Edit source document"> </a></div></div></div><p>
     Groups have the following properties:
    </p><div class="variablelist"><dl class="variablelist"><dt id="id-1.4.4.4.7.7.1"><span class="term">Starting and stopping</span></dt><dd><p>
        Resources are started in the order they appear in and stopped in
