@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Disaster recovery with ReaR (Relax-and-Recover) | Administration Guide | SLE HA 15 SP5</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2026-10-14"/>
-<meta name="dcterms.modified" content="2026-10-14"/>
-<meta name="dcterms.dateSubmitted" content="2026-10-29"/>
+<meta name="dcterms.created" content="2026-10-30"/>
+<meta name="dcterms.modified" content="2026-10-30"/>
+<meta name="dcterms.dateSubmitted" content="2026-11-02"/>
 <meta name="title" content="Disaster recovery with ReaR (Relax-and-Recover) | SLE …"/>
 <meta name="description" content="Learn how to customize ReaR scripts to prepare your production environment for disaster recovery with tailored Bash-based solutions"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -39,9 +39,9 @@
         "url": "https://documentation.suse.com"
       }
     ],
-    "dateCreated": "2026-10-14T00:00+02:00",
-    "dateModified": "2026-10-14T00:00+02:00",
-    "datePublished": "2026-10-29T12:22+02:00",
+    "dateCreated": "2026-10-30T00:00+02:00",
+    "dateModified": "2026-10-30T00:00+02:00",
+    "datePublished": "2026-11-02T23:14+02:00",
     "about": [
 
     ],
@@ -189,11 +189,10 @@
        restore the snapshots as they have been before on the original
        system.
       </p></dd><dt id="id-1.4.5.10.3.8.3.3"><span class="term">Your SLE system needs matching ReaR configuration</span></dt><dd><p>
-       For example, the setups in SLE12 GA, SLE12 SP1, and SLE12 SP2 have several
-       incompatible Btrfs default structures. As such, it is
-       crucial to use a matching ReaR configuration file. See the example
-       files <code class="filename">/usr/share/rear/conf/examples/SLE12*-btrfs-example.conf</code>.
-       
+       New SLE versions might have different default Btrfs structures, so you should use
+       the closest matching example from the <code class="filename">/usr/share/rear/conf/examples/</code>
+       directory as the starting point for your configuration and adjust it for your specific system.
+       Currently, the latest example file is <code class="filename">SLE12-SP2-btrfs-example.conf</code>.
       </p></dd></dl></div></section><section class="sect2" id="sec-ha-rear-concept-scenarios" data-id-title="Scenarios and backup tools"><div class="titlepage"><div><div><div class="title-container"><h3 class="title"><span class="title-number-name"><span class="title-number">27.1.7 </span><span class="title-name">Scenarios and backup tools</span></span> <a title="Permalink" class="permalink" href="cha-ha-rear.html#sec-ha-rear-concept-scenarios">#</a></h3><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_rear.xml" title="Edit source document"> </a></div></div></div></div></div><p>
     ReaR can create a disaster recovery system (including a system-specific
     recovery installer) that can be booted from a local medium (like a hard
