@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>High Availability for virtualization | Administration Guide | SLE HA 15 SP7</title><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/><link rel="stylesheet" type="text/css" href="static/css/style-new.css"/>
 <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/"/><link rel="schema.dcterms" href="http://purl.org/dc/terms/"/>
-<meta name="dcterms.created" content="2026-09-25"/>
-<meta name="dcterms.modified" content="2026-09-25"/>
-<meta name="dcterms.dateSubmitted" content="2026-11-02"/>
+<meta name="dcterms.created" content="2026-11-05"/>
+<meta name="dcterms.modified" content="2026-11-05"/>
+<meta name="dcterms.dateSubmitted" content="2026-11-05"/>
 <meta name="title" content="High Availability for virtualization | SLE HA 15 SP7"/>
 <meta name="description" content="Learn how to configure and manage highly available virtual machines as cluster resources using shared storage and lock file management"/>
 <meta name="product-name" content="SUSE Linux Enterprise High Availability"/>
@@ -39,9 +39,9 @@
         "url": "https://documentation.suse.com"
       }
     ],
-    "dateCreated": "2026-09-25T00:00+02:00",
-    "dateModified": "2026-09-25T00:00+02:00",
-    "datePublished": "2026-11-02T23:08+02:00",
+    "dateCreated": "2026-11-05T00:00+02:00",
+    "dateModified": "2026-11-05T00:00+02:00",
+    "datePublished": "2026-11-05T03:19+02:00",
     "about": [
 
     ],
@@ -88,8 +88,8 @@
           see <span class="intraxref">Article “Installation and Setup Quick Start”</span>.
         </p></li></ul></div><p>
       The following procedures describe how to set up highly available virtual machines on
-      block storage, with another block device used as an OCFS2 volume to store the VM lock files
-      and XML configuration files. The virtual machines and the OCFS2 volume are configured as
+      block storage, with another block device used as a GFS2 volume to store the VM lock files
+      and XML configuration files. The virtual machines and the GFS2 volume are configured as
       resources managed by the cluster, with resource constraints to ensure that the
       lock file directory is always available before a virtual machine starts on any node.
       This prevents the virtual machines from starting on multiple nodes.
@@ -104,8 +104,9 @@
           Two or more shared storage devices (or partitions on a single shared device),
           so that all cluster nodes can access the files and storage required by the VMs:
         </p><div class="itemizedlist"><ul class="itemizedlist"><li class="listitem"><p>
-              A device to use as an OCFS2 volume, which will store the VM lock files and XML configuration files.
-              Creating and mounting the OCFS2 volume is explained in the following procedure.
+              A device to use as a GFS2 volume, which will store the VM lock files and XML
+              configuration files. Creating and mounting the GFS2 volume is explained in the
+              following procedure.
             </p></li><li class="listitem"><p>
               A device containing the VM installation source (such as an ISO file or disk image).
             </p></li><li class="listitem"><p>
@@ -125,19 +126,27 @@
     </p><p>
       You only need to run the following commands on one of the cluster nodes.
     </p><div class="procedure" id="pro-ha-virtualization-configuring-cluster-resources" data-id-title="Configuring cluster resources to manage the lock files"><div class="title-container"><div class="procedure-title-wrap"><div class="procedure-title"><span class="title-number-name"><span class="title-number">Procedure 22.1: </span><span class="title-name">Configuring cluster resources to manage the lock files </span></span><a title="Permalink" class="permalink" href="cha-ha-virtualization.html#pro-ha-virtualization-configuring-cluster-resources">#</a></div></div><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div><div class="procedure-contents"><ol class="procedure" type="1"><li class="step"><p>
-          Create an OCFS2 volume on one of the shared storage devices:
-        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mkfs.ocfs2 /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em></code></pre></div></li><li class="step"><p>
+          Create a GFS2 volume on one of the shared storage devices:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">mkfs.gfs2 -t <em class="replaceable">CLUSTERNAME:FSNAME</em> -p lock_dlm -j 32 /dev/disk/by-id/<em class="replaceable">DEVICE_ID</em></code></pre></div><p>
+          <code class="literal">CLUSTERNAME</code> must be the same as the entry <code class="option">cluster_name</code>
+          in the file <code class="filename">/etc/corosync/corosync.conf</code>. The default is
+          <code class="literal">hacluster</code>.
+        </p><p>
+          <code class="literal">FSNAME</code> is used to identify this file system and must therefore be unique.
+        </p><p>
+          For more information about this command, run <code class="command">man mkfs.gfs2</code>.
+        </p></li><li class="step"><p>
           Run <code class="command">crm configure</code> to start the <code class="command">crm</code> interactive shell.
         </p></li><li class="step"><p>
           Create a primitive resource for DLM:
         </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive dlm ocf:pacemaker:controld \
   op monitor interval=60 timeout=60</code></pre></div></li><li class="step"><p>
-          Create a primitive resource for the OCFS2 volume:
-        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive ocfs2 Filesystem \
-  params device="/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>" directory="/mnt/shared" fstype=ocfs2 \
+          Create a primitive resource for the GFS2 volume:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">primitive gfs2 Filesystem \
+  params device="/dev/disk/by-id/<em class="replaceable">DEVICE_ID</em>" directory="/mnt/shared" fstype=gfs2 \
   op monitor interval=20 timeout=40</code></pre></div></li><li class="step"><p>
-          Create a group for the DLM and OCFS2 resources:
-        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group g-virt-lock dlm ocfs2</code></pre></div></li><li class="step"><p>
+          Create a group for the DLM and GFS2 resources:
+        </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">group g-virt-lock dlm gfs2</code></pre></div></li><li class="step"><p>
           Clone the group so that it runs on all nodes:
         </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt custom">crm(live)configure# </code><code class="command">clone cl-virt-lock g-virt-lock \
   meta interleave=true</code></pre></div></li><li class="step"><p>
@@ -154,7 +163,7 @@ Full List of Resources:
   * Clone Set: cl-virt-lock [g-virt-lock]:
     * Started: [ alice bob ]</pre></div></li></ol></div></div></section><section class="sect1" id="sec-ha-virtualization-preparing-the-cluster-nodes" data-id-title="Preparing the cluster nodes to host virtual machines"><div class="titlepage"><div><div><div class="title-container"><h2 class="title"><span class="title-number-name"><span class="title-number">22.4 </span><span class="title-name">Preparing the cluster nodes to host virtual machines</span></span> <a title="Permalink" class="permalink" href="cha-ha-virtualization.html#sec-ha-virtualization-preparing-the-cluster-nodes">#</a></h2><div class="icons"><a target="_blank" class="icon-reportbug" title="Report an issue"> </a><a target="_blank" class="icon-editsource" href="https://github.com/SUSE/doc-sleha/edit/main/xml/ha_virtualization.xml" title="Edit source document"> </a></div></div></div></div></div><p>
       Use this procedure to install and start the required virtualization services, and to
-      configure the nodes to store the VM lock files on the shared OCFS2 volume.
+      configure the nodes to store the VM lock files on the shared GFS2 volume.
     </p><p>
       This procedure uses <code class="command">crm cluster run</code> to run commands on all
       nodes at once. If you prefer to manage each node individually, you can omit the
@@ -167,7 +176,7 @@ Full List of Resources:
         </p><div class="verbatim-wrap"><pre class="screen">lock_manager = "lockd"</pre></div></li><li class="step"><p>
           On the same node, find and enable the <code class="literal">file_lockspace_dir</code> setting in the
           file <code class="filename">/etc/libvirt/qemu-lockd.conf</code>, and change the value to point to
-          a directory on the OCFS2 volume:
+          a directory on the GFS2 volume:
         </p><div class="verbatim-wrap"><pre class="screen">file_lockspace_dir = "/mnt/shared/lockd"</pre></div></li><li class="step"><p>
           Copy these files to the other nodes in the cluster:
         </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">crm cluster copy /etc/libvirt/qemu.conf</code>
@@ -194,7 +203,7 @@ Full List of Resources:
           If the virtual machines are running, shut them down. The cluster will start the VMs
           after you add them as resources.
         </p></li><li class="step"><p>
-          Dump the XML configuration to the OCFS2 volume. Repeat this step for each VM:
+          Dump the XML configuration to the GFS2 volume. Repeat this step for each VM:
         </p><div class="verbatim-wrap"><pre class="screen"><code class="prompt root"># </code><code class="command">virsh dumpxml <em class="replaceable">VM1</em> &gt; /mnt/shared/<em class="replaceable">VM1</em>.xml</code></pre></div><div id="id-1.4.4.16.7.3.4.3" class="admonition important compact"><img class="symbol" alt="Important" title="Important" src="static/images/icon-important.svg"/><p>
             Make sure the XML files do not contain any references to unshared local paths.
           </p></div></li><li class="step"><p>
